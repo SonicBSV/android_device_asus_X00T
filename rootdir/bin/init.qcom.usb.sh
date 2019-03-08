@@ -66,89 +66,110 @@ else
 	soc_id=`cat /sys/devices/system/soc/soc0/id`
 fi
 
-#
-# Allow USB enumeration with default PID/VID
-#
-baseband=`getprop ro.baseband`
+if [ -f /sys/class/android_usb/f_mass_storage/lun/nofua ]; then
+	echo 1  > /sys/class/android_usb/f_mass_storage/lun/nofua
+fi
 
-echo 1  > /sys/class/android_usb/f_mass_storage/lun/nofua
-#usb_config=`getprop persist.vendor.usb.config`
-#if [ "$usb_config" == "" ]; then #USB persist config not set, select default configuration
-      #if [ "$esoc_link" != "" ]; then
-	  #setprop persist.vendor.usb.config diag,diag_mdm,qdss,qdss_mdm,serial_cdev,dpl,rmnet,adb
-      #else
-	  #case "$baseband" in
-	      #"apq")
-	          #setprop persist.vendor.usb.config diag,adb
-	      #;;
-	      #*)
-	      #case "$soc_hwplatform" in
-	          #"Dragon" | "SBC")
-	              #setprop persist.vendor.usb.config diag,adb
-	          #;;
-                  #*)
-		  #soc_machine=${soc_machine:0:3}
-		  #case "$soc_machine" in
-		    #"SDA")
-	              #setprop persist.vendor.usb.config diag,adb
-		    #;;
-		    #*)
-	            #case "$target" in
-	              #"msm8996")
-	                  #setprop persist.vendor.usb.config diag,serial_cdev,serial_tty,rmnet_ipa,mass_storage,adb
-		      #;;
-	              #"msm8909")
-		          #setprop persist.vendor.usb.config diag,serial_smd,rmnet_qti_bam,adb
-		      #;;
-	              #"msm8937")
-			    #if [ -d /config/usb_gadget ]; then
-				       #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
-			    #else
-			               #case "$soc_id" in
-				               #"313" | "320")
-						  #echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
-				                  #setprop persist.vendor.usb.config diag,serial_smd,rmnet_ipa,adb
-				               #;;
-				               #*)
-				                  #setprop persist.vendor.usb.config diag,serial_smd,rmnet_qti_bam,adb
-				               #;;
-			               #esac
-			    #fi
-		      #;;
-	              #"msm8953")
-			      #if [ -d /config/usb_gadget ]; then
-				      #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
-			      #else
-				      #setprop persist.vendor.usb.config diag,serial_smd,rmnet_ipa,adb
-			      #fi
-		      #;;
-	              #"msm8998" | "sdm660" | "apq8098_latv")
-		          #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
-		      #;;
-	              #"sdm845" | "sdm710")
-		          #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
-		      #;;
-	              #"msmnile" | "talos")
-			  #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,qdss,adb
-		      #;;
-	              #*)
-		          #setprop persist.vendor.usb.config diag,adb
-		      #;;
-                    #esac
-		    #;;
-		  #esac
-	          #;;
-	      #esac
-	      #;;
-	  #esac
-      #fi
-#fi
+#
+# Override USB default composition
+#
+# If USB persist config not set, set default configuration
+if [ "$(getprop persist.vendor.usb.config)" == "" -a \
+	"$(getprop init.svc.vendor.usb-gadget-hal-1-0)" != "running" ]; then
+      if [ "$esoc_link" != "" ]; then
+	  setprop persist.vendor.usb.config diag,diag_mdm,qdss,qdss_mdm,serial_cdev,dpl,rmnet,adb
+      else
+	  case "$(getprop ro.baseband)" in
+	      "apq")
+	          setprop persist.vendor.usb.config diag,adb
+	      ;;
+	      *)
+	      case "$soc_hwplatform" in
+	          "Dragon" | "SBC")
+	              setprop persist.vendor.usb.config diag,adb
+	          ;;
+                  *)
+		  soc_machine=${soc_machine:0:3}
+		  case "$soc_machine" in
+		    "SDA")
+	              setprop persist.vendor.usb.config diag,adb
+		    ;;
+		    *)
+	            case "$target" in
+	              "msm8996")
+	                  setprop persist.vendor.usb.config diag,serial_cdev,serial_tty,rmnet_ipa,mass_storage,adb
+		      ;;
+	              "msm8909")
+		          setprop persist.vendor.usb.config diag,serial_smd,rmnet_qti_bam,adb
+		      ;;
+	              "msm8937")
+			    if [ -d /config/usb_gadget ]; then
+				       setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
+			    else
+			               case "$soc_id" in
+				               "313" | "320")
+				                  setprop persist.vendor.usb.config diag,serial_smd,rmnet_ipa,adb
+				               ;;
+				               *)
+				                  setprop persist.vendor.usb.config diag,serial_smd,rmnet_qti_bam,adb
+				               ;;
+			               esac
+			    fi
+		      ;;
+	              "msm8953")
+			      if [ -d /config/usb_gadget ]; then
+				      setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
+			      else
+				      setprop persist.vendor.usb.config diag,serial_smd,rmnet_ipa,adb
+			      fi
+		      ;;
+	              "msm8998" | "sdm660" | "apq8098_latv")
+		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
+		      ;;
+	              "sdm845" | "sdm710")
+		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
+		      ;;
+	              "msmnile" | "talos")
+			  setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,qdss,adb
+		      ;;
+	              *)
+		          setprop persist.vendor.usb.config diag,adb
+		      ;;
+                    esac
+		    ;;
+		  esac
+	          ;;
+	      esac
+	      ;;
+	  esac
+      fi
+fi
+
+# set rndis transport to BAM2BAM_IPA for 8920 and 8940
+if [ "$target" == "msm8937" ]; then
+	if [ ! -d /config/usb_gadget ]; then
+	   case "$soc_id" in
+		"313" | "320")
+		   echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
+		;;
+		*)
+		;;
+	   esac
+	fi
+fi
 
 # set device mode notification to USB driver for SA8150 Auto ADP
 product=`getprop ro.build.product`
 
 case "$product" in
 	"msmnile_au")
+	echo peripheral > /sys/bus/platform/devices/a600000.ssusb/mode
+         ;;
+	*)
+	;;
+esac
+case "$product" in
+	"msmnile_gvmq")
 	echo peripheral > /sys/bus/platform/devices/a600000.ssusb/mode
          ;;
 	*)
@@ -170,6 +191,92 @@ if [ -d /config/usb_gadget ]; then
 		serialno=1234567
 		echo $serialno > /config/usb_gadget/g1/strings/0x409/serialnumber
 	fi
+
+	persist_comp=`getprop persist.sys.usb.config`
+	comp=`getprop sys.usb.config`
+	echo $persist_comp
+	echo $comp
+	if [ "$comp" != "$persist_comp" ]; then
+		echo "setting sys.usb.config"
+		setprop sys.usb.config $persist_comp
+	fi
+
+	setprop sys.usb.configfs 1
+else
+        #
+        # Do target specific things
+        #
+        case "$target" in
+             "msm8974")
+                # Select USB BAM - 2.0 or 3.0
+                echo ssusb > /sys/bus/platform/devices/usb_bam/enable
+             ;;
+             "apq8084")
+                if [ "$baseband" == "apq" ]; then
+                      echo "msm_hsic_host" > /sys/bus/platform/drivers/xhci_msm_hsic/unbind
+                fi
+             ;;
+             "msm8226")
+                if [ -e /sys/bus/platform/drivers/msm_hsic_host ]; then
+                      if [ ! -L /sys/bus/usb/devices/1-1 ]; then
+                          echo msm_hsic_host > /sys/bus/platform/drivers/msm_hsic_host/unbind
+                      fi
+                fi
+             ;;
+             "msm8994" | "msm8992" | "msm8996" | "msm8953")
+                echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
+                echo 131072 > /sys/module/g_android/parameters/mtp_tx_req_len
+                echo 131072 > /sys/module/g_android/parameters/mtp_rx_req_len
+             ;;
+             "msm8937")
+                case "$soc_id" in
+                      "313" | "320")
+                         echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
+                      ;;
+                esac
+             ;;
+        esac
+	persist_comp=`getprop persist.sys.usb.config`
+	comp=`getprop sys.usb.config`
+	echo $persist_comp
+	echo $comp
+	if [ "$comp" != "$persist_comp" ]; then
+		echo "setting sys.usb.config"
+		setprop sys.usb.config $persist_comp
+	fi
+        #
+        # Do target specific things
+        #
+        case "$target" in
+             "msm8974")
+                # Select USB BAM - 2.0 or 3.0
+                echo ssusb > /sys/bus/platform/devices/usb_bam/enable
+             ;;
+             "apq8084")
+                if [ "$baseband" == "apq" ]; then
+                      echo "msm_hsic_host" > /sys/bus/platform/drivers/xhci_msm_hsic/unbind
+                fi
+             ;;
+             "msm8226")
+                if [ -e /sys/bus/platform/drivers/msm_hsic_host ]; then
+                      if [ ! -L /sys/bus/usb/devices/1-1 ]; then
+                          echo msm_hsic_host > /sys/bus/platform/drivers/msm_hsic_host/unbind
+                      fi
+                fi
+             ;;
+             "msm8994" | "msm8992" | "msm8996" | "msm8953")
+                echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
+                echo 131072 > /sys/module/g_android/parameters/mtp_tx_req_len
+                echo 131072 > /sys/module/g_android/parameters/mtp_rx_req_len
+             ;;
+             "msm8937")
+                case "$soc_id" in
+                      "313" | "320")
+                         echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
+                      ;;
+                esac
+             ;;
+        esac
 fi
 
 #
@@ -177,7 +284,7 @@ fi
 #
 diag_extra=`getprop persist.vendor.usb.config.extra`
 if [ "$diag_extra" == "" ]; then
-	setprop persist.vendor.usb.config.extra na
+	setprop persist.vendor.usb.config.extra none
 fi
 
 # enable rps cpus on msm8937 target

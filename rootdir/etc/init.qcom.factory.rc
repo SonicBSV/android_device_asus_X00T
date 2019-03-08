@@ -130,6 +130,167 @@ on ffbm
     trigger boot
     trigger mmi
 
+# Huaqin midify hwdiag selinux by zhangjingzhi at 20180211 For bsp/rom start
+service hwdiag /system/bin/hwdiag
+    class main
+    user root
+    group root
+
+on boot
+    start hwdiag
+# Huaqin midify hwdiag selinux by zhangjingzhi at 20180211 For bsp/rom start
+
+
+
+#Huaqin modiy for log sepolicy to system by zhangjingzhi at 20180306 start
+setprop debug.charger.on 1
+
+#Huaqin add class core for getaplog by miaozhenxing at 20180809 start
+service  getaplog /system/bin/getlog -c
+    class core
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+
+service  stopaplog /system/bin/getlog -s
+    class core
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+
+on property:persist.sys.debug.getaplog=1
+    restart getaplog
+on property:persist.sys.debug.getaplog=0
+    start stopaplog
+#Huaqin add class core for getaplog by miaozhenxing at 20180809 end
+
+service  getqxdmlog /system/bin/getlog -q
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+
+service  stopqxdmlog /system/bin/getlog -x
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+
+on property:persist.sys.debug.getqxdmlog=1
+    restart getqxdmlog
+on property:persist.sys.debug.getqxdmlog=0
+    start stopqxdmlog
+
+
+#Huaqin modiy to getqxdm when test smart_pa by zhangjingzhi at 20180312 start
+on property:sys.debug.getqxdmlog=1
+    restart getqxdmlog
+on property:sys.debug.getqxdmlog=0
+    start stopqxdmlog
+#Huaqin modiy to getqxdm when test smart_pa by zhangjingzhi at 20180312 end
+
+service  cpanrlog  /vendor/bin/sh /vendor/etc/cpanrlog.sh
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+
+service  cptomblog  /vendor/bin/sh /vendor/etc/cptomblog.sh
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+
+service  gettcpdumplog /system/bin/getlog -t
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+
+service  stoptcpdumplog /system/bin/getlog -p
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+#huaqin modiy to close default log by taohuipeng at 20180504 for rom start
+#service  getpersistlog /system/bin/getpersistlog
+#    class main
+#    user root
+#    oneshot
+#    seclabel u:r:logoem:s0
+#huaqin modiy to close default log by taohuipeng at 20180504 for rom end
+on property:persist.sys.debug.gettcpdump=1
+    restart gettcpdumplog
+on property:persist.sys.debug.gettcpdump=0
+    start stoptcpdumplog
+
+service getalllog /vendor/bin/sh /vendor/etc/getalllog.sh
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+on property:persist.sys.debug.getalllog=1
+    restart getalllog
+on property:persist.sys.debug.getalllog=0
+    stop getalllog
+
+# Huaqin add for BugReporter by wangxiaowen at 2018/12/11 start
+service  deletelog /system/bin/deletelog
+    disabled
+    user root
+    oneshot
+    seclabel u:r:logoem:s0
+
+on property:persist.asus.savelogs=0
+    start deletelog
+
+#Huaqin modify for 1272729 by yangzhiyuan at 20190110 start
+service savelogs /system/bin/savelogs
+    disabled
+    user root
+    group sdcard_rw
+    oneshot
+#seclabel u:r:savelogs:s0
+    seclabel u:r:dumpstate:s0
+#Huaqin modify for 1272729 by yangzhiyuan at 20190110 end
+
+on property:persist.asus.savelogs=*
+    start savelogs
+
+service savelogscomplete /system/bin/savelogscomplete
+    disabled
+    user root
+    oneshot
+    seclabel u:r:savelogs:s0
+
+on property:persist.asus.savelogs=0
+    start savelogscomplete
+# Huaqin add for BugReporter by yangzhiyuan at 2018/12/11 end
+
+#huaqin modiy to close default log by taohuipeng at 20180504 for rom start
+#on boot
+#    start getpersistlog
+#    setprop persist.vendor.debug.getaplog 1
+#huaqin modiy to close default log by taohuipeng at 20180504 for rom end
+#Huaqin modiy for log sepolicy to system by zhangjingzhi at 20180306 end
+
+#Huaqin add for control charge by zhangjingzhi at 20180129 start
+on boot
+    chown system system /sys/class/power_supply/battery/charging_enabled
+    chmod 0666 /sys/class/power_supply/battery/charging_enabled
+    chown system system /sys/class/power_supply/battery/input_suspend
+    chmod 0666 /sys/class/power_supply/battery/input_suspend
+#Huaqin add for control charge by zhangjingzhi at 20180129 end
+
+#Huaqin modify for enable diag by zhangjingzhi at 20180130 for rom start
+on property:gsm.diag.enable=1
+    setprop sys.diag.enable 1
+on property:sys.diag.enable=1
+    setprop sys.usb.config ${ro.usb.firstboot.config}
+
+#Huaqin modify for enable diag by zhangjingzhi at 20180130 for rom end
 
 # ========================================================
 #          Start for audio TC
@@ -172,7 +333,7 @@ service vendor.audio_tc229 /vendor/bin/mm-audio-ftm -tc 229
     disabled
     oneshot
 
-service vendor.audio_tc330 /vendor/bin/mm-audio-ftm -tc 230
+service vendor.audio_tc230 /vendor/bin/mm-audio-ftm -tc 230
     user audio
     group audio
     disabled

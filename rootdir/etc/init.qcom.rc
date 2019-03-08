@@ -49,13 +49,6 @@ on early-init
     chmod 0620 /dev/kmsg
 
 on init
-    # Set permissions for persist partition
-    mkdir /mnt/vendor/persist 0771 root system
-
-    # Support legacy paths
-    symlink /sdcard /mnt/sdcard
-    symlink /sdcard /storage/sdcard0
-
     # Create cgroup mount point for memory
     mkdir /sys/fs/cgroup/memory/bg 0750 root system
     write /sys/fs/cgroup/memory/bg/memory.swappiness 140
@@ -74,7 +67,6 @@ on early-boot
     write /sys/kernel/boot_cdsp/boot 1
     write /sys/kernel/boot_slpi/boot 1
     exec u:r:qti_init_shell:s0 -- /vendor/bin/init.qcom.early_boot.sh
-    chown root audio /sys/kernel/boot_adsp/boot
 
     # set wifi link file.
     setprop wlan.driver.ath 0
@@ -83,9 +75,18 @@ on early-boot
     setprop persist.debug.wifi_user_list 1
     setprop wlan.driver.config /vendor/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
 
-    # for backward compatibility
+    # Huaqin modify for ZQL1820P1-98 by wobo at 2018/11/19 start
+    chown root system /dev/input/event3  /*stk3x3x-light*/
+    chgrp system /dev/input/event3
+
+    chown root system /dev/input/event4  /*stk3x3x-proximity*/
+    chgrp system /dev/input/event4
+    # Huaqin modify for ZQL1820P1-98 by wobo at 2018/11/19 end
+
     chown system system /mnt/vendor/persist/sensors
+    # Huaqin modify for ZQL1820P1-122 by zhuqiang at 2018/11/12 start
     chown system system /mnt/vendor/persist/sensors/sns.reg
+    # Huaqin modify for ZQL1820P1-122 by zhuqiang at 2018/11/12 end
     chown system system /mnt/vendor/persist/sensors/sensors_list.txt
     chown system system /mnt/vendor/persist/sensors/registry
     chown system system /mnt/vendor/persist/sensors/registry/registry
@@ -94,7 +95,6 @@ on early-boot
     chown system system /mnt/vendor/persist/sensors/registry/sns_reg_config
     chown system system /mnt/vendor/persist/sensors/registry/config
     chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
-
 
 on boot
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
@@ -110,6 +110,7 @@ on boot
     chown system system /sys/kernel/debug/msm_core/enable
     chown system system /sys/kernel/debug/msm_core/ptable
     chown system system /sys/kernel/boot_slpi/ssr
+    chown system system /sys/kernel/boot_adsp/ssr
     chown system system /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/module/bluetooth_power/parameters/power
     chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
@@ -165,7 +166,11 @@ on boot
     setprop ro.telephony.call_ring.multiple false
 
     #enable camera read sensors data
-    setprop persist.camera.gyro.disable 0
+    # Huaqin add for 1261108 by huqian at 2018/11/29 start
+    # Huaqin add for ZQL1820P1-27 by huqian at 2018/11/12 start
+    setprop persist.vendor.camera.gyro.disable 0
+    # Huaqin add for ZQL1820P1-27 by huqian at 2018/11/12 end
+    # Huaqin add for 1261108 by huqian at 2018/11/29 end
 
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
@@ -201,15 +206,16 @@ on boot
     # an ack packet comes out of order
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
 
-    #[ZQL1650-264] add by suochuanqi for ModemSlientReset start
-    write /sys/bus/msm_subsys/devices/subsys3/restart_level related
-    #[ZQL1650-264] add by suochuanqi for ModemSlientReset end
+    #Huaqin modify for TT1244863 by suochuanqi on 2018/10/09 start
+    write /sys/bus/msm_subsys/devices/subsys4/restart_level related
+    #Huaqin modify for TT1244863 by suochuanqi on 2018/10/09 end
     # Set the console loglevel to < KERN_INFO
     # Set the default message loglevel to KERN_INFO
     write /proc/sys/kernel/printk "6 6 1 7"
-    #[1226433] add by fangzheng for TCP start
-    write /proc/sys/net/ipv4/tcp_mtu_probing 1
-    #[1226433] add by fangzheng for TCP end
+
+    #Huaqin modify for 1650P 1285483 by guanyebin on 2019/2/25 start
+    write /proc/sys/net/ipv4/tcp_mtu_probing 2
+    #Huaqin modify for 1650P 1285483 by guanyebin on 2019/2/25 end
 
     # Allow access for CCID command/response timeout configuration
     chown system system /sys/module/ccid_bridge/parameters/bulk_msg_timeout
@@ -239,18 +245,6 @@ on boot
     chown system system /sys/class/sensors/apds9930-light/poll_delay
     chown system system /sys/class/sensors/apds9930-proximity/enable
     chown system system /sys/class/sensors/apds9930-proximity/poll_delay
-    chown system system /sys/class/sensors/compass/enable
-    chown system system /sys/class/sensors/compass/poll_delay
-    chown system system /sys/class/sensors/bma2x2-accel/enable
-    chown system system /sys/class/sensors/bma2x2-accel/poll_delay
-    chown system system /sys/class/sensors/ltr553-light/enable
-    chown system system /sys/class/sensors/ltr553-light/poll_delay
-    chown system system /sys/class/sensors/ltr553-proximity/enable
-    chown system system /sys/class/sensors/ltr553-proximity/poll_delay
-    chown system system /sys/class/sensors/ap3426-light/enable
-    chown system system /sys/class/sensors/ap3426-light/poll_delay
-    chown system system /sys/class/sensors/ap3426-proximity/enable
-    chown system system /sys/class/sensors/ap3426-proximity/poll_delay
 
     # Create directory used for display
     mkdir /mnt/vendor/persist/display 0770 system graphics
@@ -280,12 +274,6 @@ on post-fs-data
     # Create directory used by media clients
     mkdir /data/vendor/media 0770 mediacodec media
 
-    #Create directories for Fingerprint
-    mkdir /data/vendor/misc/qti_fp 0770 system system
-    mkdir /data/vendor/misc/qti_fp/bg_estimation 0770 system system
-    mkdir /data/vendor/misc/qti_fp/calib_test 0770 system system
-    mkdir /data/vendor/misc/qti_fp/database 0770 system system
-
     # create QDMA dropbox
     mkdir /data/vendor/qdmastats 0700 system system
     mkdir /data/vendor/qdma 0770 system system
@@ -295,17 +283,12 @@ on post-fs-data
     # Create /data/vendor/tzstorage directory for SFS listener
     mkdir /data/vendor/tzstorage 0770 system system
 
-    # Create directory for TZ Apps
-    mkdir /data/misc/qsee 0770 system system
-
     # Create directory for apps access via QTEEConnector
     mkdir /data/vendor/qtee 0770 system system
 
     #Create folder of camera
     mkdir /data/vendor/camera 0770 camera camera
 
-    mkdir /data/media 0770 media_rw media_rw
-    chown media_rw media_rw /data/media
 
     #Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system
@@ -398,7 +381,6 @@ on post-fs-data
 #Hua Qin <zhengwu.lu><2018-01-24> modify for ito test function node permission 1650-181 end
 
     #Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
-    mkdir /data/system 0775 system system
     #symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
 
     #Create directories for Location services
@@ -408,6 +390,11 @@ on post-fs-data
     mkdir /dev/socket/location 0770 gps gps
     mkdir /dev/socket/location/mq 0770 gps gps
     mkdir /dev/socket/location/xtra 0770 gps gps
+    mkdir /data/vendor/location-partner 0770 gps gps
+    mkdir /data/vendor/location-partner/dre 0770 gps gps
+    mkdir /data/vendor/location-partner/ppe 0770 gps gps
+    mkdir /dev/socket/location 0770 gps gps
+    mkdir /dev/socket/location/ehub 0770 gps gps
 
     #Create directory from IMS services
     mkdir /data/shared 0755
@@ -422,7 +409,7 @@ on post-fs-data
     setprop vold.post_fs_data_done 1
 
     #Create a folder for SRS to be able to create a usercfg file
-    mkdir /data/data/media 0770 media media
+    #mkdir /data/data/media 0770 media media
 
     #Create FM dir for patchdownloader
     mkdir /data/vendor/fm 0770 system system
@@ -432,10 +419,6 @@ on post-fs-data
     mkdir /data/vendor/perfd 0770 root system
     chmod 2770 /data/vendor/perfd
     rm /data/vendor/perfd/default_values
-
-    # NFC local data and nfcee xml storage
-    mkdir /data/vendor/nfc 0770 nfc nfc
-    mkdir /data/vendor/nfc/param 0770 nfc nfc
 
     #Create IOP  deamon related dirs
     mkdir /data/vendor/iop 0770 root system
@@ -476,11 +459,8 @@ on post-fs-data
     # Create vpp directory
     mkdir /data/vendor/vpp 0770 media media
 
-    #Create FTM_AP dir for factory test
-    mkdir /data/FTM_AP 0775 system system
-
     #Create dir for TUI
-    mkdir /data/vendor/tui 0600 system drmrpc
+    mkdir /data/vendor/tui 0700 system system
 
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
@@ -488,45 +468,44 @@ on post-fs-data
     # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 start
     #Note: In the post-fs-data phase,init.rc mkdir data/data
     #      So this must place after that.
-    #chmod 0777 /system/bin/PhoneInfoTest
-    #symlink /system/bin/PhoneInfoTest /data/data/PhoneInfoTest
+    chmod 0777 /system/bin/PhoneInfoTest
+    symlink /system/bin/PhoneInfoTest /data/data/PhoneInfoTest
+    #Huaqin update attestation key for ZQL1820-288 by chenweibing on 2018/09/05 start
+    symlink /system/bin/PhoneInfoTest /data/data/UpdateAttestationKey
+    #Huaqin update attestation key for ZQL1820-288 by chenweibing on 2018/09/05 end
+    #Huaqin update device information for ZQL1820-287 by chenweibing on 2018/09/06 start
+    symlink /system/bin/PhoneInfoTest /data/data/UpdateDeviceName 
+    #Huaqin update device information for ZQL1820-287 by chenweibing on 2018/09/06 end
 
-    #setprop persist.sys.nvinit Ready
+    setprop persist.sys.nvinit Ready
     # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 end
 
 # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 start
 # Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
 # Huaqin add for change class core  by xudayi at 2018/05/28 start
-#service nvram_country /vendor/bin/nvram_country
-#    class core
-#    user root
-#    group system
-#    chmod 0644 /vendor/bin/nvram_country
-#    oneshot
+service nvram_country /vendor/bin/nvram_country
+    class core
+    user root
+    group system
+    chmod 0644 /vendor/bin/nvram_country
+    oneshot
 # Huaqin add for change class core  by xudayi at 2018/05/28 end
 
-#service nvram_btwifi /vendor/bin/nvram_btwifi
-#    user root
-#    group system
-#    chmod 0644 /vendor/bin/nvram_btwifi
-#    oneshot
-#    disabled
+service nvram_btwifi /vendor/bin/nvram_btwifi
+    user root
+    group system
+    oneshot
+    disabled
 
-#on property:sys.boot_completed=1
-#start nvram_btwifi
+on property:sys.boot_completed=1
+    start nvram_btwifi
 
-#on property:sys.nvram.btmac=*
-#    setprop ro.btmac ${sys.nvram.btmac}
-#on property:sys.nvram.wifimac=*
-#    setprop ro.wifimac ${sys.nvram.wifimac}
+on property:sys.nvram.btmac=*
+    setprop ro.btmac ${sys.nvram.btmac}
+on property:sys.nvram.wifimac=*
+    setprop ro.wifimac ${sys.nvram.wifimac}
 # Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 end
 # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 end
-
-service nqnfcinfo /vendor/bin/nqnfcinfo
-    class late_start
-    group nfc
-    user system
-    oneshot
 
 service iop /vendor/bin/iop
     class main
@@ -539,17 +518,17 @@ service vendor.ssr_setup /system/vendor/bin/ssr_setup
     oneshot
     disabled
 
-on property:persist.sys.ssr.enable_debug=*
-    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.sys.ssr.enable_debug}
+on property:persist.vendor.sys.ssr.enable_debug=*
+    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.vendor.sys.ssr.enable_debug}
 
-on property:persist.sys.mba_boot_timeout=*
-    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.sys.mba_boot_timeout}
+on property:persist.vendor.sys.mba_boot_timeout=*
+    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.vendor.sys.mba_boot_timeout}
 
-on property:persist.sys.modem_auth_timeout=*
-    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.sys.modem_auth_timeout}
+on property:persist.vendor.sys.modem_auth_timeout=*
+    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.vendor.sys.modem_auth_timeout}
 
-on property:persist.sys.pil_proxy_timeout=*
-    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.sys.pil_proxy_timeout}
+on property:persist.vendor.sys.pil_proxy_timeout=*
+    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.vendor.sys.pil_proxy_timeout}
 
 on property:persist.vendor.ssr.restart_level=*
     start vendor.ssr_setup
@@ -559,6 +538,9 @@ on property:sys.boot_completed=1
     #Reset read ahead for dm-0 and dm-1 to 512kb
     write /sys/block/dm-0/queue/read_ahead_kb 512
     write /sys/block/dm-1/queue/read_ahead_kb 512
+    #  shengzhong  add for pcmark  2018/11/26 start
+    write /sys/devices/virtual/block/dm-2/queue/write_cache "write through"
+    #  shengzhong add for pcmark 2018/11/26 end
     #WDSP FW boot sysfs node used by STHAL
     chown media audio /sys/kernel/wdsp0/boot
     chown media audio /sys/kernel/wcd_cpe0/fw_name
@@ -748,6 +730,28 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
+service vendor.wigig_supplicant /vendor/bin/hw/wpa_supplicant \
+    -iwigig0 -Dnl80211 -c/data/vendor/wifi/wigig_supplicant.conf \
+    -m/data/vendor/wifi/wigig_p2p_supplicant.conf \
+    -O/data/vendor/wifi/wigig_sockets -dd \
+    -e/data/vendor/wifi/wigig_entropy.bin -g@android:wpa_wigig0 \
+    -S wigigsvc
+    #   we will start as root and wpa_supplicant will switch to user wifi
+    #   after setting up the capabilities required for WEXT
+    #   user wifi
+    #   group wifi inet keystore
+    class main
+    socket wpa_wigig0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+# Data Migration
+service vendor.move_wifi_data /system/bin/move_wifi_data.sh
+    class main
+    user  wifi
+    group wifi
+    disabled
+    oneshot
 
 # FST Manager with hostapd (softap) - all settings inside ini file
 service fstman /vendor/bin/fstman -B -ddd -c /data/vendor/wifi/fstman.ini -a 1
@@ -774,12 +778,11 @@ service cnss-daemon /system/vendor/bin/cnss-daemon -n -l
     group system inet net_admin wifi
     capabilities NET_ADMIN
 
-on property:sys.powerctl=*
-    stop cnss-daemon
-
-# WL-ED: Add to fix modem hung issue during shutdown process
 on property:sys.shutdown.requested=*
     stop cnss-daemon
+    #  shengzhong add for pcmark  2018/11/26 start
+    write /sys/devices/virtual/block/dm-2/queue/write_cache "write back"
+    # shengzhong  add for pcmark 2018/11/26 end
 
 service dhcpcd_bt-pan /system/bin/dhcpcd -BKLG
     class late_start
@@ -790,6 +793,18 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     class late_start
     disabled
     oneshot
+
+service ssgqmigd /vendor/bin/ssgqmigd
+    class late_start
+    user radio
+    group radio gps system
+    socket ssgqmig seqpacket 0660 radio inet
+
+service ssgtzd /vendor/bin/ssgtzd
+    class late_start
+    user system
+    group system
+    socket ssgtzd stream 0660 system inet
 
 service mlid /vendor/bin/mlid
     class late_start
@@ -805,7 +820,7 @@ service loc_launcher /system/vendor/bin/loc_launcher
 service qcom-sh /vendor/bin/init.qcom.sh
     class late_start
     user root
-    group root system radio oem_2903 oem_2904 vendor_rfs
+    group root system radio
     oneshot
 
 service vendor-sensor-sh /vendor/bin/init.qcom.sensors.sh
@@ -908,7 +923,7 @@ service vendor.ssr_diag /system/vendor/bin/ssr_diag
 service vendor.diag_mdlog_start /system/vendor/bin/diag_mdlog -c
     class late_start
     user shell
-    group system diag sdcard_rw sdcard_r media_rw oem_2901
+    group system oem_2901 sdcard_rw sdcard_r media_rw
     disabled
     oneshot
 
@@ -916,7 +931,7 @@ service vendor.diag_mdlog_start /system/vendor/bin/diag_mdlog -c
 service vendor.diag_mdlog_stop /system/vendor/bin/diag_mdlog -k
     class late_start
     user shell
-    group system diag sdcard_rw sdcard_r media_rw oem_2901
+    group system oem_2901 sdcard_rw sdcard_r media_rw
     disabled
     oneshot
 
@@ -935,12 +950,6 @@ service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqb
     group root
     disabled
 
-service vendor.msm_irqbl_sdm630 /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance_sdm630.conf
-    class core
-    user root
-    group root
-    disabled
-
 on charger
     setprop persist.sys.usb.config mass_storage
     load_system_props
@@ -953,16 +962,6 @@ on property:init.svc.surfaceflinger=restarting
 on property:vendor.display.lcd_density=*
     setprop ro.sf.lcd_density ${vendor.display.lcd_density}
 
-# Logcat dump daemon, dumps logs to logdump partition
-#service logdumpd /system/bin/logcat -b all -v threadtime -D -w /dev/block/bootdevice/by-name/logdump
-#    class core
-#    writepid /dev/cpuset/system-background/tasks
-#    seclabel u:r:logdumpd:s0
-#    disabled
-
-# Logdumpd is enabled only for userdebug non-perf build
-#on property:ro.logdumpd.enabled=1
-#    start logdumpd
 
 service time_daemon /vendor/bin/time_daemon
     class main
@@ -976,22 +975,39 @@ on property:vendor.rild.libpath=*
 on property:ro.vendor.radio.noril=*
     setprop ro.radio.noril ${ro.vendor.radio.noril}
 
+service seemp_healthd /vendor/bin/seemp_healthd
+    class late_start
+    user system
+    group system
+
 service power_off_alarm /vendor/bin/power_off_alarm
     class core
     group system
     disabled
     oneshot
 
-service bugreport /system/bin/dumpstate -d -p -B -z -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
+service vendor.move_time_data /system/bin/move_time_data.sh
     class main
+    user system
+    group system
     disabled
     oneshot
-    keycodes 114 115 116
 
-service goodix_script /vendor/bin/init.goodix.sh
-    class late_start
-    user root
-    oneshot
+/* Huaqin add for ZQL1820-42 by puqirui at 2018/08/02 start */
+# ------------------- focal fingerprint begin -------------------
+on post-fs-data
+	mkdir /data/vendor/focaltech 0760 system system
+	restorecon /data/vendor/focaltech
+# ------------------- focal fingerprint end ---------------------
+/* Huaqin add for ZQL1820-42 by puqirui at 2018/08/02 start */
+
+
+# Huaqin modify for ZQL1820-1190 by yangzhiyuan at 2018/11/19 start
+on property:persist.asus.ramdump=1
+    write /sys/module/msm_poweroff/parameters/download_mode 1
+on property:persist.asus.ramdump=0
+    write /sys/module/msm_poweroff/parameters/download_mode 0
+# Huaqin modify for ZQL1820-1190 by yangzhiyuan at 2018/11/19 end
 
 #Set GPU Opengles version
 on property:vendor.opengles.version=*
@@ -999,7 +1015,5 @@ on property:vendor.opengles.version=*
 
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
-    setprop ro.gpu.available_frequencies ${vendor.gpu.available_frequencies}
+    setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
 
-on property:vold.decrypt=trigger_restart_framework
-    restart time_daemon
