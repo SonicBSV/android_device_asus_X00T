@@ -396,6 +396,14 @@ on post-fs-data
     mkdir /dev/socket/location 0770 gps gps
     mkdir /dev/socket/location/ehub 0770 gps gps
 
+# Permissions for Touch dclick Mode
+    chown system system /sys/kernel/touchpanel/dclicknode
+    chmod 0664 /sys/kernel/touchpanel/dclicknode
+
+# Permissions for Touch Gesture Mode
+    chown system system /sys/kernel/touchpanel/gesture_mode
+    chmod 0664 /sys/kernel/touchpanel/gesture_mode
+
     #Create directory from IMS services
     mkdir /data/shared 0755
     chown system system /data/shared
@@ -490,22 +498,6 @@ service nvram_country /vendor/bin/nvram_country
     chmod 0644 /vendor/bin/nvram_country
     oneshot
 # Huaqin add for change class core  by xudayi at 2018/05/28 end
-
-service nvram_btwifi /vendor/bin/nvram_btwifi
-    user root
-    group system
-    oneshot
-    disabled
-
-on property:sys.boot_completed=1
-    start nvram_btwifi
-
-on property:sys.nvram.btmac=*
-    setprop ro.btmac ${sys.nvram.btmac}
-on property:sys.nvram.wifimac=*
-    setprop ro.wifimac ${sys.nvram.wifimac}
-# Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 end
-# Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 end
 
 service iop /vendor/bin/iop
     class main

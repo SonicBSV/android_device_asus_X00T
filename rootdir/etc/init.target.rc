@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
+# Copyright (c) 2013-2019, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -40,6 +40,10 @@ on init
     write /dev/stune/system-background/schedtune.colocate 0
     write /dev/stune/foreground/schedtune.colocate 0
     write /dev/stune/top-app/schedtune.colocate 1
+
+    chmod 0664 /sys/devices/virtual/graphics/fb0/idle_time
+    chown system graphics /sys/devices/virtual/graphics/fb0/idle_time
+    write /sys/devices/virtual/graphics/fb0/idle_time 100
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
@@ -173,11 +177,6 @@ on boot
     chown radio radio sys/module/stk3x1x/parameters/call_status_flag
 #Huaqin add for sensors permission-ZQL1650-141 by jianghao at 2018/12/27 end
 
-#Huaqin add for TT1185847 by lingyuguo at 2018/05/16 start
-    chown system system /proc/tpd_gesture
-    chmod 0644 /proc/tpd_gesture
-#Huaqin add for TT1185847 by lingyuguo at 2018/05/16 end
-
 #Huaqin add or ZQL1650-1072 by zhuqiang at 2018/04/23 start
     chown radio radio sys/module/stk3x1x/parameters/call_status_flag
 #Huaqin add for ZQL1650-1072 by zhuqiang at 2018/04/23 end
@@ -198,13 +197,13 @@ on boot
     setprop sys.usb.configfs 1
 
 #Peripheral manager
-service vendor.per_mgr /system/vendor/bin/pm-service
+service vendor.per_mgr /vendor/bin/pm-service
     class core
     user system
     group system
     ioprio rt 4
 
-service vendor.per_proxy /system/vendor/bin/pm-proxy
+service vendor.per_proxy /vendor/bin/pm-proxy
     class core
     user system
     group system
@@ -235,20 +234,20 @@ service time_daemon /vendor/bin/time_daemon
    user root
    group root
 
-service adsprpcd_root /vendor/bin/adsprpcd
+service adsprpcd /vendor/bin/adsprpcd audiopd
    class main
    user media
    group media
 
 ## imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
-service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
+service vendor.imsqmidaemon /vendor/bin/imsqmidaemon
     class main
     user system
     socket ims_qmid stream 0660 system radio
     group radio log diag
 
 # imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
-service vendor.imsdatadaemon /system/vendor/bin/imsdatadaemon
+service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
     class main
     user system
     socket ims_datad stream 0660 system radio
@@ -267,18 +266,18 @@ service energy-awareness /vendor/bin/energy-awareness
     group system
     oneshot
 
-service vendor.pd_mapper /system/vendor/bin/pd-mapper
+service vendor.pd_mapper /vendor/bin/pd-mapper
      class core
 
 on property:vendor.ims.QMI_DAEMON_STATUS=1
     start vendor.imsdatadaemon
 
-service vendor.ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
+service vendor.ims_rtp_daemon /vendor/bin/ims_rtp_daemon
    class main
    user system
    group radio diag inet log
 
-service vendor.imsrcsservice /system/vendor/bin/imsrcsd
+service vendor.imsrcsservice /vendor/bin/imsrcsd
    class main
    user system
    group radio diag inet log wakelock
@@ -286,8 +285,7 @@ service vendor.imsrcsservice /system/vendor/bin/imsrcsd
 on property:vendor.ims.DATA_DAEMON_STATUS=1
     restart vendor.ims_rtp_daemon
 
-
-service ppd /system/vendor/bin/mm-pp-dpps
+service ppd /vendor/bin/mm-pp-dpps
     class late_start
     user system
     group system graphics
@@ -324,7 +322,7 @@ service qfp-daemon /vendor/bin/qfp-daemon
     user system
     group system drmrpc diag input
 
-service vendor.hvdcp_opti /system/vendor/bin/hvdcp_opti
+service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
      class main
      user root
      group system wakelock
@@ -336,14 +334,6 @@ service emmc_prop_init /vendor/bin/sh /vendor/bin/emmc_prop_init.sh
     oneshot
     disabled
 #Huaqin add for ZQL1650-43 by lanshiming at 2018/1/18 end
-
-# Huaqin modify for ZQL1820-1234 by lanshiming at 2018/11/13 start
-# For user build, we don't want the phone die when KE occur
-# Just reboot it
-on property:ro.build.type=user
-   write sys/module/msm_poweroff/parameters/download_mode 0
-
-# Huaqin modify for ZQL1820-1234 by lanshiming at 2018/11/13 end
 
 #Huaqin modify for disable sar in Indonesia by chenyijun5 at 2018/03/20 start
 on property:ro.config.versatility=ID
