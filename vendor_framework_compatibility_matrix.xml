@@ -70,10 +70,10 @@
         </interface>
     </hal>
     <hal format="hidl" optional="true">
-        <name>vendor.qti.hardware.fingerprint</name>
+        <name>vendor.goodix.hardware.fingerprint</name>
         <version>1.0</version>
         <interface>
-            <name>IQtiExtendedFingerprint</name>
+            <name>IGoodixBiometricsFingerprint</name>
             <instance>default</instance>
         </interface>
     </hal>
@@ -131,7 +131,7 @@
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.display.config</name>
-        <version>1.0-2</version>
+        <version>1.0-4</version>
         <interface>
             <name>IDisplayConfig</name>
             <instance>default</instance>
@@ -146,10 +146,26 @@
         </interface>
     </hal>
     <hal format="hidl" optional="true">
-        <name>vendor.nxp.hardware.nfc</name>
+        <name>vendor.nxp.nxpese</name>
         <version>1.0</version>
         <interface>
-            <name>INqNfc</name>
+            <name>INxpEse</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.nxp.nxpnfc</name>
+        <version>1.0</version>
+        <interface>
+            <name>INxpNfc</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.nxp.nxpwiredse</name>
+        <version>1.0</version>
+        <interface>
+            <name>INxpWiredSe</name>
             <instance>default</instance>
         </interface>
     </hal>
