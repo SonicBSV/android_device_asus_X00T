@@ -1,1 +1,2 @@
-require version-trustzone=TZ.BF.4.0.7-00086
+require version-modem=2019-01-08 15:08:46
+require version-firmware=15.2016.1901.339
