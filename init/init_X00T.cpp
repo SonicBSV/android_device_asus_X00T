@@ -1,8 +1,8 @@
 /*
    Copyright (c) 2015, The Linux Foundation. All rights reserved.
    Copyright (C) 2016 The CyanogenMod Project.
-   Copyright (C) 2018 The LineageOS Project
-   Copyright (C) 2018 KudProject Development
+   Copyright (C) 2018-2019 The LineageOS Project
+   Copyright (C) 2018-2019 KudProject Development
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -75,7 +75,7 @@ void property_override_triple(char const system_prop[], char const vendor_prop[]
 void vendor_check_variant()
 {
     struct sysinfo sys;
-    char const *region_file = "/persist/flag/countrycode.txt";
+    char const *region_file = "/mnt/vendor/persist/flag/countrycode.txt";
     char const *build_fingerprint, *product_device, *product_model, *product_name;
     std::string region;
 
@@ -95,12 +95,12 @@ void vendor_check_variant()
     if (sys.totalram > 4096ull * 1024 * 1024) {
         // Russian model
         if (region == "RU") {
-            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_9:9/PKQ1/16.2017.1902.037-20190225:user/release-keys";
+            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_9:8.1.0/OPM1/15.2016.1805.318-20180712:user/release-keys";
             product_device = "ASUS_X00T_9";
 
         // Global model
         } else {
-            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_3:9/PKQ1/16.2017.1902.037-20190225:user/release-keys";
+            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_3:8.1.0/OPM1/15.2016.1805.318-20180712:user/release-keys";
             product_device = "ASUS_X00T_3";
         }
 
@@ -108,12 +108,12 @@ void vendor_check_variant()
     } else {
         // Russian model
         if (region == "RU") {
-            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_6:9/PKQ1/16.2017.1902.037-20190225:user/release-keys";
+            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_6:8.1.0/OPM1/15.2016.1805.318-20180712:user/release-keys";
             product_device = "ASUS_X00T_6";
 
         // Global model
         } else {
-            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.1902.037-20190225:user/release-keys";
+            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_2:8.1.0/OPM1/15.2016.1805.318-20180712:user/release-keys";
             product_device = "ASUS_X00T_2";
         }
     }
