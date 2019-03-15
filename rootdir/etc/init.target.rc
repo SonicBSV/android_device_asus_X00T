@@ -49,10 +49,6 @@ on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
     mount_all /vendor/etc/fstab.qcom
-    swapon_all /vendor/etc/fstab.qcom
-#Huaqin modify for ZQL1650-96 by lanshiming at 2018/1/29 start
-    setprop persist.alreadly_boot_resize true
-#Huaqin modify for ZQL1650-96 by lanshiming at 2018/1/29 end
 
     chown root system /mnt/vendor/persist
     chmod 0771 /mnt/vendor/persist
@@ -63,11 +59,8 @@ on fs
 
 on post-fs
     start vendor.qseecomd
-    exec - system system -- /vendor/bin/init.qti.qseecomd.sh
+    wait_for_prop vendor.sys.listeners.registered true
     write /dev/ipa 1
-#Huaqin add for ZQL1650-43 by lanshiming at 2018/1/18 start
-    start emmc_prop_init
-#Huaqin add for ZQL1650-43 by lanshiming at 2018/1/18 end
 
 on init
     write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
@@ -124,6 +117,26 @@ on boot
 
     # Button backlight
     chown system system /sys/class/leds/lcd-backlight/brightness
+
+    # KCAL permissions
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_enable
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_cont
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_sat
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_hue
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_min
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_val
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_enable
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_cont
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_sat
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_hue
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_min
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_val
+
+    # Vibrator permissions
+    chown root system /sys/class/timed_output/vibrator/vtg_level
+    chmod 0660 /sys/class/timed_output/vibrator/vtg_level
 
 #Huaqin add for als/ps permission by zhuqiang at 2018/8/03 start
     chmod 0644 /sys/class/sensors/stk3x3x-proximity/sensors_enable
@@ -254,12 +267,6 @@ service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
     group system wifi radio inet log diag
     disabled
 
-service vendor.cdsprpcd /vendor/bin/cdsprpcd
-   class main
-   user system
-   group system
-   disabled
-
 service energy-awareness /vendor/bin/energy-awareness
     class main
     user system
@@ -326,14 +333,6 @@ service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
      class main
      user root
      group system wakelock
-
-#Huaqin add for ZQL1650-43 by lanshiming at 2018/1/18 start
-service emmc_prop_init /vendor/bin/sh /vendor/bin/emmc_prop_init.sh
-    class core
-    user root
-    oneshot
-    disabled
-#Huaqin add for ZQL1650-43 by lanshiming at 2018/1/18 end
 
 #Huaqin modify for disable sar in Indonesia by chenyijun5 at 2018/03/20 start
 on property:ro.config.versatility=ID

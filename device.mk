@@ -123,6 +123,7 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@4.0-impl \
     android.hardware.audio.effect@4.0-impl \
     android.hardware.soundtrigger@2.1-impl \
+    android.hardware.soundtrigger@2.0-core \
     android.hardware.audio@2.0-service \
     audio.a2dp.default \
     audio.primary.sdm660 \
@@ -365,6 +366,10 @@ PRODUCT_PACKAGES += \
     android.hidl.manager@1.0 \
     android.hidl.manager@1.0-java
 
+# Huaqin project
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.hq.project=ZQL1650
+
 # HWUI
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapgrowthlimit=288m \
@@ -525,27 +530,16 @@ PRODUCT_COPY_FILES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     init.class_main.sh \
-    init.crda.sh \
-    init.mdm.sh \
-    emmc_prop_init.sh \
-    init.qcom.class_core.sh \
-    init.qcom.coex.sh \
-    init.qcom.crashdata.sh \
-    init.qcom.early_boot.sh \
-    init.qcom.efs.sync.sh \
     init.qcom.post_boot.sh \
-    init.qcom.sdio.sh \
     init.qcom.sensors.sh \
     init.qcom.sh \
     init.qcom.usb.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
-    init.qti.qseecomd.sh \
-    qca6234-service.sh \
+    move_time_data.sh \
+    move_wifi_data.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
-    init.qcom.factory.rc \
-    init.safailnet.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
     init.target.rc \
@@ -612,7 +606,8 @@ PRODUCT_COPY_FILES += \
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
-    android.hardware.sensors@1.0-service
+    android.hardware.sensors@1.0-service \
+    sensors.sdm660
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf 
@@ -739,5 +734,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.hwc.enable_vds=1 \
     persist.debug.coresight.config=stm-events \
     persist.sys.wfd.virtual=0
+
+# Zenfone Parts
+PRODUCT_PACKAGES += \
+    ZenfoneParts
 
 $(call inherit-product, vendor/asus/X00T/X00T-vendor.mk)
