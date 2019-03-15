@@ -220,8 +220,8 @@ TARGET_SCREEN_WIDTH := 1080
 
 # Cabl
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.cabl=0 \
-    ro.vendor.display.cabl=0
+    ro.qualcomm.cabl=2 \
+    ro.vendor.display.cabl=2
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -604,11 +604,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
 
 # Sensors
-PRODUCT_PACKAGES += \
-    android.hardware.sensors@1.0-impl \
-    android.hardware.sensors@1.0-service \
-    sensors.sdm660
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf 
 
