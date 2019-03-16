@@ -28,7 +28,6 @@
 import /vendor/etc/init/hw/init.qcom.usb.rc
 import /vendor/etc/init/hw/init.msm.usb.configfs.rc
 import /vendor/etc/init/hw/init.target.rc
-import /vendor/etc/init/hw/init.qcom.factory.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -66,7 +65,7 @@ on early-boot
     write /sys/kernel/boot_adsp/boot 1
     write /sys/kernel/boot_cdsp/boot 1
     write /sys/kernel/boot_slpi/boot 1
-    exec u:r:qti_init_shell:s0 -- /vendor/bin/init.qcom.early_boot.sh
+    setprop ro.alarm_boot false
 
     # Huaqin modify for ZQL1820P1-98 by wobo at 2018/11/19 start
     chown root system /dev/input/event3  /*stk3x3x-light*/
@@ -466,32 +465,6 @@ on post-fs-data
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
 
-    # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 start
-    #Note: In the post-fs-data phase,init.rc mkdir data/data
-    #      So this must place after that.
-    chmod 0777 /system/bin/PhoneInfoTest
-    symlink /system/bin/PhoneInfoTest /data/data/PhoneInfoTest
-    #Huaqin update attestation key for ZQL1820-288 by chenweibing on 2018/09/05 start
-    symlink /system/bin/PhoneInfoTest /data/data/UpdateAttestationKey
-    #Huaqin update attestation key for ZQL1820-288 by chenweibing on 2018/09/05 end
-    #Huaqin update device information for ZQL1820-287 by chenweibing on 2018/09/06 start
-    symlink /system/bin/PhoneInfoTest /data/data/UpdateDeviceName 
-    #Huaqin update device information for ZQL1820-287 by chenweibing on 2018/09/06 end
-
-    setprop persist.sys.nvinit Ready
-    # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 end
-
-# Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 start
-# Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
-# Huaqin add for change class core  by xudayi at 2018/05/28 start
-service nvram_country /vendor/bin/nvram_country
-    class core
-    user root
-    group system
-    chmod 0644 /vendor/bin/nvram_country
-    oneshot
-# Huaqin add for change class core  by xudayi at 2018/05/28 end
-
 service iop /vendor/bin/iop
     class main
     user root
@@ -576,11 +549,6 @@ on property:vendor.bluetooth.startbtlogger=true
 
 on property:vendor.bluetooth.startbtlogger=false
     stop vendor.bt_logger
-
-service qcom-c_core-sh  /vendor/bin/init.qcom.class_core.sh
-    class core
-    user root
-    oneshot
 
 service qcom-c_main-sh /vendor/bin/init.class_main.sh
     class main
@@ -837,17 +805,6 @@ service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
     disabled
     oneshot
 
-service wifi-sdio-on /vendor/bin/init.qcom.sdio.sh
-    class late_start
-    group wifi inet
-    disabled
-    oneshot
-
-service wifi-crda /vendor/bin/init.crda.sh
-   class late_start
-   user root
-   disabled
-   oneshot
 
 on property:sys.boot_completed=1
     start qcom-post-boot
@@ -873,11 +830,6 @@ service vendor.wigig_hostapd /vendor/bin/hw/hostapd -dd  -j wigighostapd /data/v
     group wifi inet keystore
     oneshot
     disabled
-
-#Huaqin modify for ZQL1650-6 by chengming at 2018/01/30 start
-#ASUS_BSP++ Write IMEI to device ID
-on property:persist.vendor.radio.device.imei=*
-    setprop ro.vendor.deviceid ${persist.vendor.radio.device.imei}
 
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
@@ -980,22 +932,6 @@ service vendor.move_time_data /system/bin/move_time_data.sh
     group system
     disabled
     oneshot
-
-/* Huaqin add for ZQL1820-42 by puqirui at 2018/08/02 start */
-# ------------------- focal fingerprint begin -------------------
-on post-fs-data
-	mkdir /data/vendor/focaltech 0760 system system
-	restorecon /data/vendor/focaltech
-# ------------------- focal fingerprint end ---------------------
-/* Huaqin add for ZQL1820-42 by puqirui at 2018/08/02 start */
-
-
-# Huaqin modify for ZQL1820-1190 by yangzhiyuan at 2018/11/19 start
-on property:persist.asus.ramdump=1
-    write /sys/module/msm_poweroff/parameters/download_mode 1
-on property:persist.asus.ramdump=0
-    write /sys/module/msm_poweroff/parameters/download_mode 0
-# Huaqin modify for ZQL1820-1190 by yangzhiyuan at 2018/11/19 end
 
 #Set GPU Opengles version
 on property:vendor.opengles.version=*
