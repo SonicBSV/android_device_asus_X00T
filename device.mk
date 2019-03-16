@@ -237,7 +237,6 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
     camera.device@3.4-impl \
-    libbinder_vendor \
     Snap
 #    vendor.qti.hardware.camera.device@1.0 \
 #    libmmlib2d_interface \
@@ -529,6 +528,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/commonresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/commonresourceconfigs.xml \
     $(LOCAL_PATH)/configs/targetconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetconfig.xml \
     $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
+
+PRODUCT_BOOT_JARS += \
+       com.qulacomm.qti
 
 # Power
 PRODUCT_PACKAGES += \
