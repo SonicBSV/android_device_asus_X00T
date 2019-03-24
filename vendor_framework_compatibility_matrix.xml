@@ -428,6 +428,14 @@
         </interface>
     </hal>
     <hal format="hidl" optional="true">
+        <name>vendor.lineage.power</name>
+        <version>1.0</version>
+        <interface>
+            <name>ILineagePower</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
         <name>vendor.qti.ims.callinfo</name>
         <version>1.0</version>
         <interface>
