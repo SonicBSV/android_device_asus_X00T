@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-add_lunch_combo syberia_X00T-userdebug
+add_lunch_combo syberia_X00TD-userdebug

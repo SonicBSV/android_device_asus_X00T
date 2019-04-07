@@ -22,7 +22,7 @@
 # definition file).
 #
 
-DEVICE_PATH := device/asus/X00T
+DEVICE_PATH := device/asus/X00TD
 
 BOARD_VENDOR := asus
 
@@ -45,7 +45,7 @@ TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv8-a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := kryo
+TARGET_2ND_CPU_VARIANT := cortex-a73
 
 TARGET_USES_64_BIT_BINDER := true
 
@@ -54,7 +54,7 @@ TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 TARGET_OTA_ASSERT_DEVICE := X00TD,X00T
 
 # Kernel
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=a800000.dwc3 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
@@ -86,6 +86,7 @@ AUDIO_FEATURE_ENABLED_DEV_ARBI := false
 AUDIO_FEATURE_ENABLED_DISPLAY_PORT := true
 AUDIO_FEATURE_ENABLED_DS2_DOLBY_DAP := false
 AUDIO_FEATURE_ENABLED_DTS_EAGLE := false
+AUDIO_FEATURE_ENABLED_DYNAMIC_LOG := false
 AUDIO_FEATURE_ENABLED_EXT_AMPLIFIER := false
 AUDIO_FEATURE_ENABLED_EXTN_FLAC_DECODER := true
 AUDIO_FEATURE_ENABLED_EXTN_FORMATS := true
@@ -105,6 +106,7 @@ AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
 AUDIO_FEATURE_ENABLED_PCM_OFFLOAD := true
 AUDIO_FEATURE_ENABLED_PCM_OFFLOAD_24 := true
 AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
+AUDIO_FEATURE_ENABLED_SSR := false
 AUDIO_FEATURE_ENABLED_RAS := true
 AUDIO_FEATURE_ENABLED_SND_MONITOR := true
 AUDIO_FEATURE_ENABLED_SOURCE_TRACKING := true
@@ -115,10 +117,17 @@ AUDIO_FEATURE_ENABLED_VBAT_MONITOR := true
 AUDIO_FEATURE_ENABLED_VOICE_PRINT := false
 AUDIO_FEATURE_ENABLED_VORBIS_OFFLOAD := true
 AUDIO_FEATURE_ENABLED_WMA_OFFLOAD := true
+AUDIO_FEATURE_ENABLED_KPI_OPTIMIZE := true
+AUDIO_USE_LL_AS_PRIMARY_OUTPUT := true
 BOARD_SUPPORTS_SOUND_TRIGGER := true
 BOARD_USES_ALSA_AUDIO := true
+BOARD_USES_SRS_TRUEMEDIA := false
+DTS_CODEC_M_ := false
+DOLBY_ENABLE := false
 USE_CUSTOM_AUDIO_POLICY := 1
 USE_XML_AUDIO_POLICY_CONF := 1
+MM_AUDIO_ENABLED_SAFX := true
+MM_AUDIO_ENABLED_FTM := true
 
 
 # Bluetooth
@@ -159,7 +168,6 @@ TARGET_USES_HWC2 := true
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
 TARGET_USES_OVERLAY := true
-TARGET_USES_QCOM_DISPLAY_BSP := true
 USE_OPENGL_RENDERER := true
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 6000000
 VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
@@ -194,9 +202,6 @@ DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/vendor_framework_compatibility_matrix.xml
 DEVICE_FRAMEWORK_MANIFEST_FILE := $(DEVICE_PATH)/framework_manifest.xml
-
-# Lights
-#TARGET_PROVIDES_LIBLIGHT := true
 
 # Media
 TARGET_USES_MEDIA_EXTENSIONS := true
@@ -243,7 +248,7 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/recovery.fstab
 BOARD_HAS_LARGE_FILESYSTEM := true
 
 # Releasetools
-TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_X00T
+TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_X00TD
 TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # RIL
@@ -253,7 +258,7 @@ TARGET_RIL_VARIANT := caf
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2019-02-01
+VENDOR_SECURITY_PATCH := 2019-04-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
@@ -264,12 +269,8 @@ SELINUX_IGNORE_NEVERALLOWS := true
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
 
-# Vendor init
-TARGET_INIT_VENDOR_LIB := libinit_X00T
-TARGET_RECOVERY_DEVICE_MODULES := libinit_X00T
-
 # VNDK
-BOARD_VNDK_RUNTIME_DISABLE := true
+#BOARD_VNDK_RUNTIME_DISABLE := true
 #BOARD_VNDK_VERSION := current
 
 # Wifi
@@ -288,4 +289,4 @@ WIFI_DRIVER_OPERSTATE_PATH := "/sys/class/net/wlan0/operstate"
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 
 # inherit from the proprietary version
--include vendor/asus/X00T/BoardConfigVendor.mk
+-include vendor/asus/X00TD/BoardConfigVendor.mk

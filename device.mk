@@ -1,5 +1,5 @@
 # 
-# Copyright (C) 2018 The LineageOS Project
+# Copyright (C) 2018-2019 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,6 +58,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
+    frameworks/native/data/etc/android.hardware.vr.high_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vr.high_performance.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level-0.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version-1_1.xml \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml \
@@ -68,45 +69,9 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.extension_library=libqti-perfd-client.so \
-    persist.vendor.radio.apm_sim_not_pwdn=1 \
-    persist.vendor.radio.sib16_support=1 \
-    persist.vendor.radio.custom_ecc=1 \
-    persist.vendor.radio.rat_on=combine \
-    persist.vendor.qti.telephony.vt_cam_interface=1 \
-    persist.radio.VT_CAM_INTERFACE=1 \
-    persist.radio.schd.cache=3500 \
-    persist.sys.enable_rescue=false \
-    persist.sys.disable_rescue=true \
-    sys.vendor.shutdown.waittime=500 \
-    ro.build.shutdown_timeout=0 \
-    ro.frp.pst=/dev/block/bootdevice/by-name/frp \
-    persist.radio.multisim.config=dsds \
-    persist.vendor.qcomsysd.enabled=1 \
-    rild.libpath=/system/vendor/lib64/libril-qc-qmi-1.so \
-    ro.com.google.clientidbase.ms=android-asus-tpin \
-    debug.sf.recomputecrop=0 \
-    debug.sf.enable_hwc_vds=1 \
-    debug.sf.hw=1 \
-    debug.sf.latch_unsignaled=1 \
-    debug.gralloc.enable_fb_ubwc=1 \
-    dalvik.vm.heapsize=36m \
-    dev.pm.dyn_samplingrate=1 \
-    persist.demo.hdmirotationlock=false \
-    sdm.debug.disable_skip_validate=1 \
-    ro.vendor.at_library=libqti-at.so \
-    persist.vendor.radio.atfwd.start=true \
-    ro.vendor.qti.sys.fw.bg_apps_limit=60 \
-    persist.backup.ntpServer="0.pool.ntp.org"
-
 # Add an extra 10% saturation to display colors
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.sf.color_saturation=1.1
-
-# Additional buffers shared between Camera and Video
-PRODUCT_PROPERTY_OVERRIDES += \
-    vidc.enc.dcvs.extra-buff-count=2
 
 # ADB Debug
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -126,27 +91,31 @@ PRODUCT_PACKAGES += \
     android.hardware.soundtrigger@2.0-core \
     android.hardware.audio@2.0-service \
     audio.a2dp.default \
-    audio.primary.sdm660 \
     audio.r_submix.default \
     audio.usb.default \
     libaudio-resampler \
+    libaudioroute \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
     libvolumelistener \
     tinymix
 
+#    audio.primary.sdm660 \
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/configs/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/configs/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
+    $(LOCAL_PATH)/configs/audio/audio_platform_info_extcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_extcodec.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
+    $(LOCAL_PATH)/configs/audio/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(LOCAL_PATH)/configs/audio/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
     $(LOCAL_PATH)/configs/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
     $(LOCAL_PATH)/configs/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
-    $(LOCAL_PATH)/configs/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml
+    $(LOCAL_PATH)/configs/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml 
 
 PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
@@ -156,39 +125,42 @@ PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.af.client_heap_size_kbyte=7168 \
     af.fast_track_multiplier=1 \
-    vendor.audio_hal.period_size=192 \
-    ro.vendor.audio.sdk.fluencetype=fluence \
-    persist.vendor.audio.fluence.voicecall=true \
-    persist.vendor.audio.fluence.voicerec=false \
-    persist.vendor.audio.fluence.speaker=true \
-    vendor.audio.tunnel.encode=false \
-    persist.vendor.audio.ras.enabled=false \
-    vendor.audio.offload.buffer.size.kb=64 \
+    audio.deep_buffer.media=true \
     audio.offload.min.duration.secs=30 \
     audio.offload.video=true \
-    vendor.audio.offload.track.enable=true \
-    audio.deep_buffer.media=true \
-    vendor.voice.path.for.pcm.voip=true \
-    vendor.audio.offload.multiaac.enable=true \
+    persist.vendor.audio.fluence.speaker=false \
+    persist.vendor.audio.fluence.voicecall=true \
+    persist.vendor.audio.fluence.voicerec=true \
+    persist.vendor.audio.hw.binder.size_kbyte=1024 \
+    persist.vendor.audio.hifi.int_codec=true \
+    persist.vendor.audio.ras.enabled=false \
+    ro.af.client_heap_size_kbyte=7168 \
+    ro.config.media_vol_default=9 \
+    ro.config.media_vol_steps=25 \
+    ro.config.vc_call_vol_steps=7 \
+    ro.vendor.audio.sdk.fluencetype=fluence  \
+    ro.vendor.audio.sdk.ssr=false \
+    vendor.audio.adm.buffering.ms=3 \
     vendor.audio.dolby.ds2.enabled=false \
     vendor.audio.dolby.ds2.hardbypass=false \
+    vendor.audio.flac.sw.decoder.24bit=true \
+    vendor.audio.hw.aac.encoder=true \
+    vendor.audio.noisy.broadcast.delay=600 \
+    vendor.audio.offload.buffer.size.kb=64 \
+    vendor.audio.offload.gapless.enabled=true \
+    vendor.audio.offload.multiaac.enable=true \
     vendor.audio.offload.multiple.enabled=false \
     vendor.audio.offload.passthrough=false \
-    ro.vendor.audio.sdk.ssr=false \
-    vendor.audio.offload.gapless.enabled=true \
-    vendor.audio.safx.pbe.enabled=true \
+    vendor.audio.offload.pstimeout.secs=3 \
+    vendor.audio.offload.track.enable=true \
     vendor.audio.parser.ip.buffer.size=262144 \
-    vendor.audio.flac.sw.decoder.24bit=true \
+    vendor.audio.safx.pbe.enabled=true \
+    vendor.audio.tunnel.encode=false \
     vendor.audio.use.sw.alac.decoder=true \
     vendor.audio.use.sw.ape.decoder=true \
-    vendor.audio.hw.aac.encoder=true \
-    vendor.fm.a2dp.conc.disabled=true \
-    vendor.audio.noisy.broadcast.delay=600 \
-    persist.vendor.audio.hifi.int_codec=true \
-    vendor.audio.offload.pstimeout.secs=3 \
-    vendor.audio.adm.buffering.ms=3
+    vendor.audio_hal.period_size=192 \
+    vendor.voice.path.for.pcm.voip=false
 
 # Automotive
 PRODUCT_PACKAGES += \
@@ -203,25 +175,20 @@ PRODUCT_PACKAGES += \
     libbt-vendor
     
 PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.qcom.bluetooth.soc=cherokee \
     bt.max.hfpclient.connections=1 \
     persist.bt.a2dp.aac_disable=true \
-    persist.vendor.bt.a2dp_offload_cap=sbc \
-    ro.bluetooth.emb_wp_mode=false \
-    ro.bluetooth.wipower=false \
+    persist.bt.enable.multicast=0 \
     persist.bt.hfp.playbackforvr=false \
     persist.bt.hfp.playbackforvoip=false \
+    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
     persist.vendor.btstack.enable.splita2dp=true \
-    persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxhd-aac  
+    ro.bluetooth.emb_wp_mode=true \
+    ro.bluetooth.wipower=true \
+    vendor.qcom.bluetooth.soc=cherokee  
     
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2160
 TARGET_SCREEN_WIDTH := 1080
-
-# Cabl
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.cabl=2 \
-    ro.vendor.display.cabl=2
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -237,16 +204,21 @@ PRODUCT_PACKAGES += \
 #    libmm-qcamera \ 
       
 PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.camera.aux.packagelist=org.codeaurora.snapcam \
-    persist.vendor.camera.expose.aux=1 \
-    persist.vendor.camera.HAL3.enabled=1 \
     persist.vendor.camera.eis.enable=1 \
     persist.ts.rtmakeup=1 \
-    persist.vendor.camera.preview.ubwc=0
+    persist.vendor.camera.HAL3.enabled=1 \
+    persist.vendor.camera.expose.aux=1 \
+    persist.vendor.camera.preview.ubwc=0 \
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam \
+    vendor.camera.hal1.packagelist=com.whatsapp
     
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
+
+# Charging maximum voltage
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.chg.max_volt_mv=9000
 
 # Configstore
 PRODUCT_PACKAGES += \
@@ -254,17 +226,21 @@ PRODUCT_PACKAGES += \
 
 # CNE
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.vendor.cne.feature=1
+    persist.vendor.cne.feature=true
+
+# Dalvik overrides
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapgrowthlimit=256m \
+    dalvik.vm.heapstartsize=8m \
+    dalvik.vm.heapsize=512m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=512k \
+    dalvik.vm.heapmaxfree=8m
 
 # Double tap (D2TW)
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.asus.dclick=1 \
     persist.asus.gesture.type=1000000
-
-# Data modules
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.use_data_netmgrd=true \
-    persist.vendor.data.mode=concurrent
 
 # Display
 PRODUCT_PACKAGES += \
@@ -286,13 +262,6 @@ PRODUCT_PACKAGES += \
     memtrack.sdm660 \
     libgenlock
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.opengles.version=196610 \
-    ro.sf.lcd_density=440 \
-    vendor.display.enable_default_color_mode=1 \
-    vendor.gralloc.enable_fb_ubwc=1 \
-    vendor.display.disable_skip_validate=1
-
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
@@ -302,20 +271,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
 
-# enable PQ feature by default
+# Enable stm-events
 PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.vidc.enc.disable.pq=false
-
-# Enable B service adj transition by default
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.qti.sys.fw.bservice_enable=true \
-    ro.vendor.qti.sys.fw.bservice_limit=5 \
-    ro.vendor.qti.sys.fw.bservice_age=5000
-
-# Enable Delay Service Restart
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.qti.am.reschedule_service=true \
-    ro.vendor.qti.am.reschedule=true
+    persist.debug.coresight.config=stm-events
 
 # Exclude TOF sensor from InputManager
 PRODUCT_COPY_FILES += \
@@ -327,7 +285,9 @@ PRODUCT_COPY_FILES += \
 
 # Fingerprint feature
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.1-service
+    android.hardware.biometrics.fingerprint@2.1
+    
+#    android.hardware.biometrics.fingerprint@2.1-service \
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
@@ -341,10 +301,20 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.broadcastradio@1.0-impl
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.fm.a2dp.conc.disabled=false
+
+# FRP
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.frp.pst=/dev/block/bootdevice/by-name/frp
+
+# FUSE
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.fuse_sdcard=true
+
 # GPS / Location
 PRODUCT_PACKAGES += \
-    libcurl \
-    libsensorndkbridge
+    libcurl 
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/apdr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/apdr.conf \
@@ -354,6 +324,21 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
     $(LOCAL_PATH)/configs/gps/sap.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sap.conf \
     $(LOCAL_PATH)/configs/gps/xtwifi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/xtwifi.conf
+
+# Graphics
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.sf.enable_hwc_vds=1 \
+    debug.sf.early_phase_offset_ns=5000000 \
+    debug.sf.hw=1 \
+    debug.sf.latch_unsignaled=1 \
+    vendor.gralloc.enable_fb_ubwc=1 \
+    debug.hwui.use_buffer_age=false \
+    dev.pm.dyn_samplingrate=1 \
+    persist.demo.hdmirotationlock=false \
+    ro.opengles.version=196610 \
+    ro.sf.lcd_density=440 \
+    sdm.debug.rotator_downscale=1 \
+    vendor.display.enable_default_color_mode=1
     
 # Health
 PRODUCT_PACKAGES += \
@@ -369,15 +354,6 @@ PRODUCT_PACKAGES += \
 # Huaqin project
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.hq.project=ZQL1650
-
-# HWUI
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapgrowthlimit=288m \
-    dalvik.vm.heapstartsize=8m \
-    dalvik.vm.heapsize=768m \
-    dalvik.vm.heaptargetutilization=0.75 \
-    dalvik.vm.heapminfree=512k \
-    dalvik.vm.heapmaxfree=8m
 
 # IMS
 PRODUCT_PACKAGES += \
@@ -405,16 +381,18 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
 
-# Lights
-#PRODUCT_PACKAGES += \
-    lights.sdm660
-
-PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-impl \
-    android.hardware.light@2.0-service
-
+# LED
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.asus.led.on=1
+
+# Location
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.location.osnlp.package=com.google.android.gms \
+    ro.location.osnlp.region.package=""
+
+# Lights
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-service.fmw-RG
 
 # Manifest replacement for non NFC variant
 PRODUCT_COPY_FILES += \
@@ -424,13 +402,31 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml 
-    
+    $(LOCAL_PATH)/configs/media/media_codecs_vendor_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor_audio.xml \
+    $(LOCAL_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
+
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.aac_51_output_enabled=true \
+    media.stagefright.enable-player=true \
+    media.stagefright.enable-http=true \
+    media.stagefright.enable-aac=true \
+    media.stagefright.enable-qcp=true \
+    media.stagefright.enable-scan=true \
+    mm.enable.smoothstreaming=true \
+    vendor.mm.enable.qcom_parser=13631487 \
+    mmp.enable.3g2=true \
+    persist.mm.enable.prefetch=true \
+    vendor.vidc.enc.disable_bframes=1 \
+    vendor.vidc.dec.enable.downscalar=1 \
+    vendor.vidc.enc.disable.pq=false \
+    vidc.enc.dcvs.extra-buff-count=2 \
+    vidc.enc.target_support_bframe=1
 
 # Media Extensions
 PRODUCT_PACKAGES += \
@@ -441,23 +437,18 @@ PRODUCT_PACKAGES += \
     libhypv_intercept \
     mediametrics
 
-# min/max cpu in core control
+# Memory optimizations
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.qti.core_ctl_min_cpu=2 \
-    ro.vendor.qti.core_ctl_max_cpu=4
+    ro.vendor.qti.sys.fw.bservice_enable=true
 
-# Multimedia Modules
+# Misc
 PRODUCT_PROPERTY_OVERRIDES += \
-    media.stagefright.enable-player=true \
-    media.stagefright.enable-http=true \
-    media.stagefright.enable-aac=true \
-    media.stagefright.enable-qcp=true \
-    media.stagefright.enable-scan=true \
-    mmp.enable.3g2=true \
-    media.aac_51_output_enabled=true \
-    mm.enable.smoothstreaming=true \
-    mm.enable.qcom_parser=13631487 \
-    persist.mm.enable.prefetch=true
+    keyguard.no_require_sim=true \
+    persist.vendor.qcomsysd.enabled=1 \
+    ro.additionalbutton.operation=0 \
+    ro.am.reschedule_service=true \
+    ro.sys.fw.use_trim_settings=true \
+    sys.autosuspend.timeout=500000
 
 # Netutils
 PRODUCT_PACKAGES += \
@@ -465,9 +456,14 @@ PRODUCT_PACKAGES += \
     libandroid_net \
     netutils-wrapper-1.0
 
-# Netflix custom property
+# Netflix
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.netflix.bsp_rev=Q660-13149-1
+
+# Netmgr
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.use_data_netmgrd=true \
+    persist.vendor.data.mode=concurrent
 
 # NFC
 PRODUCT_COPY_FILES += \
@@ -488,9 +484,12 @@ PRODUCT_PACKAGES += \
     Tag \
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hardware.nfc_nci=nqx.default \
-    persist.nfc.smartcard.config=SIM1 \
+    ro.hardware.nfc_nci=pn8x \
     ro.nfc.port=I2C
+
+# NTP Server
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.backup.ntpServer="0.pool.ntp.org"
     
 # OMX
 PRODUCT_PACKAGES += \
@@ -506,8 +505,7 @@ PRODUCT_PACKAGES += \
     libOmxVdec \
     libOmxVenc \
     libstagefrighthw \
-    libstagefright_soft_flacdec \
-    libstagefright_wfd
+    libstagefright_soft_flacdec 
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
@@ -518,9 +516,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/commonresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/commonresourceconfigs.xml \
     $(LOCAL_PATH)/configs/targetconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetconfig.xml \
     $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
-
-PRODUCT_BOOT_JARS += \
-    com.qulacomm.qti
 
 # Power
 PRODUCT_PACKAGES += \
@@ -536,6 +531,7 @@ PRODUCT_PACKAGES += \
     init.qcom.post_boot.sh \
     init.qcom.sensors.sh \
     init.qcom.sh \
+    init.fingerprint.sh \
     init.qcom.usb.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
@@ -554,7 +550,7 @@ PRODUCT_PACKAGES += \
 
 # Recovery
 PRODUCT_PACKAGES += \
-    librecovery_updater_X00T
+    librecovery_updater_X00TD
 
 # RIL
 PRODUCT_PACKAGES += \
@@ -572,34 +568,50 @@ PRODUCT_BOOT_JARS += \
     qcrilhook
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.rild.nitz_long_ons_0="" \
-    persist.rild.nitz_long_ons_1="" \
-    persist.rild.nitz_long_ons_2="" \
-    persist.rild.nitz_long_ons_3="" \
-    persist.rild.nitz_short_ons_0="" \
-    persist.rild.nitz_short_ons_1="" \
-    persist.rild.nitz_short_ons_2="" \
-    persist.rild.nitz_short_ons_3="" \
-    persist.rild.nitz_plmn="" \
-    ril.subscription.types=NV,RUIM \
     DEVICE_PROVISIONED=1 \
-    ro.telephony.default_network=20,20 
+    persist.data.iwlan.enable=true \
+    persist.radio.multisim.config=dsds \
+    persist.radio.VT_CAM_INTERFACE=1 \
+    persist.radio.VT_CAM_INTERFACE=2 \
+    persist.vendor.radio.apm_sim_not_pwdn=1 \
+    persist.vendor.radio.atfwd.start=true \
+    persist.vendor.radio.sib16_support=1 \
+    persist.vendor.radio.custom_ecc=1 \
+    persist.vendor.radio.rat_on=combine \
+    persist.vendor.qti.telephony.vt_cam_interface=1 \
+    ril.subscription.types=NV,RUIM \
+    rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
+    ro.carrier=unknown \
+    ro.com.android.dataroaming=false \
+    ro.config.vc_call_vol_steps=11 \
+    ro.ril.ecclist=112,911 \
+    ro.telephony.default_network=20,20 \
+    telephony.lteOnCdmaDevice=1 
 
 # RmNet Data
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.df.dev_name=rmnet_usb0
+    persist.vendor.radio.add_power_save=1
 
 # QCOM
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/privapp-permissions-qti.xml
+
+# QCOM cabl
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.display.cabl=2
+
+# QTI
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.at_library=libqti-at.so \
+    ro.vendor.extension_library=libqti-perfd-client.so \
+    ro.vendor.qti.core_ctl_min_cpu=2 \
+    ro.vendor.qti.core_ctl_max_cpu=4 \
+    ro.vendor.qti.sys.fw.bg_apps_limit=60
 
 # QMI
 PRODUCT_PACKAGES += \
     libjson
-
-# Simulate sdcard on /data/media
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.fuse_sdcard=true
 
 # Seccomp
 PRODUCT_COPY_FILES += \
@@ -607,27 +619,42 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
 
 # Sensors
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl \
+    android.hardware.sensors@1.0-service
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf 
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.sensors.facing=false \
-    ro.vendor.sensors.cmc=false \
-    ro.vendor.sdk.sensors.gestures=false \
-    ro.vendor.sensors.dev_ori=true \
-    ro.vendor.sensors.pmd=true \
-    ro.vendor.sensors.sta_detect=true \
-    ro.vendor.sensors.mot_detect=true
+    ro.vendor.qti.sdk.sensors.gestures=false \
+    ro.vendor.qti.sensors.dev_ori=true \
+    ro.vendor.qti.sensors.pmd=true \
+    ro.vendor.qti.sensors.sta_detect=true \
+    ro.vendor.qti.sensors.mot_detect=true \
+    ro.vendor.qti.sensors.facing=false \
+    ro.vendor.qti.sensors.cmc=false
+
+# Skip Validate Disable
+PRODUCT_PROPERTY_OVERRIDES += \
+    sdm.debug.disable_skip_validate=1 \
+    vendor.display.disable_skip_validate=1
+
+# Shutdown
+PRODUCT_PROPERTY_OVERRIDES += \
+    sys.vendor.shutdown.waittime=500
+
+# System prop for UBWC
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.video.disable.ubwc=1
 
 # Telephony
 PRODUCT_PACKAGES += \
-    telephony-ext
+    telephony-ext 
 
 PRODUCT_BOOT_JARS += \
-    telephony-ext
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    telephony.lteOnCdmaDevice=1
+    telephony-ext \
+    qti-telephony-common
 
 # Tetheroffload
 PRODUCT_PACKAGES += \
@@ -666,24 +693,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libtinyxml2
 
-# Trim properties
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.qti.sys.fw.use_trim_settings=true \
-    ro.vendor.qti.sys.fw.empty_app_percent=50 \
-    ro.vendor.qti.sys.fw.trim_empty_percent=100 \
-    ro.vendor.qti.sys.fw.trim_cache_percent=100 \
-    ro.vendor.qti.sys.fw.trim_enable_memory=2147483648
-
 # USB
 PRODUCT_PACKAGES += \
 	android.hardware.usb@1.0-service.basic
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.service.adb.enable=1 \
-    persist.service.debuggable=1 \
-    persist.sys.usb.config.extra=none \
-    persist.sys.usb.config=mtp,adb \
-    persist.sys.oem.otg_support=true \
     ro.usb.firstboot.config=diag,serial_cdev,rmnet,adb
     
 # Vibrator
@@ -705,13 +719,24 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libnl
 
+PRODUCT_BOOT_JARS += \
+    WfdCommon
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.debug.wfd.enable=1 \
+    persist.hwc.enable_vds=1 \
+    persist.sys.wfd.virtual=0
+
 # whitelisted app
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
+    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml 
 
 # WiFi
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
+    android.hardware.wifi@1.0 \
+    android.hardware.wifi@1.1 \
+    android.hardware.wifi@1.2 \
     hostapd \
     hostapd_cli \
     libwifi-hal-qcom \
@@ -724,17 +749,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/fstman.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/fstman.ini \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
-    $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
+    $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
+    $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
+    $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny \
+    $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf 
 
+# ZRAM disk
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.data.iwlan.enable=true \
-    persist.debug.wfd.enable=1 \
-    persist.hwc.enable_vds=1 \
-    persist.debug.coresight.config=stm-events \
-    persist.sys.wfd.virtual=0
+    ro.vendor.qti.config.zram=true
 
-# Zenfone Parts
-PRODUCT_PACKAGES += \
-    ZenfoneParts
-
-$(call inherit-product, vendor/asus/X00T/X00T-vendor.mk)
+$(call inherit-product, vendor/asus/X00TD/X00TD-vendor.mk)

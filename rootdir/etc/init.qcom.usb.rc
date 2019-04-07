@@ -1,4 +1,4 @@
-# Copyright (c) 2011-2016, 2018 The Linux Foundation. All rights reserved.
+# Copyright (c) 2011-2016, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -44,8 +44,8 @@ on charger
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
     write /sys/class/android_usb/android0/f_ffs/aliases adb
-    enable vendor.qcom-usb-sh
-    start vendor.qcom-usb-sh
+    enable qcom-usb-sh
+    start qcom-usb-sh
     setprop sys.usb.config mass_storage
 
 on boot
@@ -89,21 +89,13 @@ on boot
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
     write /sys/class/android_usb/android0/f_ffs/aliases adb
+    enable qcom-usb-sh
 
-on load_persist_props_action
-    enable vendor.qcom-usb-sh
-
-service vendor.qcom-usb-sh /vendor/bin/init.qcom.usb.sh
+service qcom-usb-sh /vendor/bin/init.qcom.usb.sh
     class core
     user root
     oneshot
     disabled
-
-on property:persist.vendor.usb.config=*
-    setprop persist.sys.usb.config ${persist.vendor.usb.config}
-
-on boot && property:ro.boot.usbconfigfs=true
-        setprop sys.usb.configfs 1
 
 # Following are the parameters required for usb functionality. They provide configurable options like
 # product_id/vendor id and allows specifying required functions:
@@ -425,7 +417,7 @@ on property:sys.usb.config=diag,serial_tty,serial_tty,rmnet_smd,mass_storage,adb
     write /sys/class/android_usb/android0/functions diag,adb,serial,rmnet_smd,mass_storage
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    start vendor.port-bridge
+    start port-bridge
     setprop sys.usb.state ${sys.usb.config}
 
 on property:sys.usb.config=diag,acm_tty,acm_tty,rmnet_smd,mass_storage,adb && property:sys.usb.configfs=0
@@ -438,7 +430,7 @@ on property:sys.usb.config=diag,acm_tty,acm_tty,rmnet_smd,mass_storage,adb && pr
     write /sys/class/android_usb/android0/functions diag,adb,acm,rmnet_smd,mass_storage
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    start vendor.port-bridge
+    start port-bridge
     setprop sys.usb.state ${sys.usb.config}
 
 on property:sys.usb.config=diag,serial_tty,serial_tty,rmnet_smd,mass_storage && property:sys.usb.configfs=0
@@ -450,7 +442,7 @@ on property:sys.usb.config=diag,serial_tty,serial_tty,rmnet_smd,mass_storage && 
     write /sys/class/android_usb/android0/f_serial/transports tty,tty
     write /sys/class/android_usb/android0/functions diag,serial,rmnet_smd,mass_storage
     write /sys/class/android_usb/android0/enable 1
-    start vendor.port-bridge
+    start port-bridge
     setprop sys.usb.state ${sys.usb.config}
 
 on property:sys.usb.config=diag,acm_tty,acm_tty,rmnet_smd,mass_storage && property:sys.usb.configfs=0
@@ -486,7 +478,7 @@ on property:sys.usb.config=diag,acm_smd,acm_tty,rmnet_smd,mass_storage,adb && pr
     write /sys/class/android_usb/android0/functions diag,adb,acm,rmnet_smd,mass_storage
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    start vendor.port-bridge
+    start port-bridge
     setprop sys.usb.state ${sys.usb.config}
 
 on property:sys.usb.config=diag,serial_smd,serial_tty,rmnet_smd,mass_storage && property:sys.usb.configfs=0
