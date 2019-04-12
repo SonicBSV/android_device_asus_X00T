@@ -209,7 +209,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.camera.HAL3.enabled=1 \
     persist.vendor.camera.expose.aux=1 \
     persist.vendor.camera.preview.ubwc=0 \
-    vendor.camera.aux.packagelist=org.codeaurora.snapcam \
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.google.android.GoogleCamera,org.lineageos.snap \
     vendor.camera.hal1.packagelist=com.whatsapp
     
 # Charger
@@ -278,10 +278,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Exclude TOF sensor from InputManager
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
-
-# Factory
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/vendor.qti.hardware.factory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/vendor.qti.hardware.factory.xml
 
 # Fingerprint feature
 PRODUCT_PACKAGES += \
@@ -580,7 +576,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.rat_on=combine \
     persist.vendor.qti.telephony.vt_cam_interface=1 \
     ril.subscription.types=NV,RUIM \
-    rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
+    vendor.rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
     ro.carrier=unknown \
     ro.com.android.dataroaming=false \
     ro.config.vc_call_vol_steps=11 \
@@ -590,7 +586,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # RmNet Data
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.data.df.dev_name=rmnet_usb0
+    persist.data.df.dev_name=rmnet_usb0 \
     persist.vendor.radio.add_power_save=1
 
 # QCOM
