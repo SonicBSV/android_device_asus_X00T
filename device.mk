@@ -196,7 +196,9 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
     camera.device@3.2-impl \
-    Snap
+    SnapdragonCamera
+    
+#    Snap
 #    vendor.qti.hardware.camera.device@1.0 \
 #    libmmlib2d_interface \
 #    libhal_dbg \
@@ -209,6 +211,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.camera.HAL3.enabled=1 \
     persist.vendor.camera.expose.aux=1 \
     persist.vendor.camera.preview.ubwc=0 \
+    persist.vendor.camera.expose.aux=1 \
     vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.google.android.GoogleCamera,org.lineageos.snap \
     vendor.camera.hal1.packagelist=com.whatsapp
     
