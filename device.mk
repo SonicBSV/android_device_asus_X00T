@@ -198,6 +198,7 @@ PRODUCT_PACKAGES += \
     camera.device@3.2-impl \
     SnapdragonCamera
     
+#    Snap
 #    vendor.qti.hardware.camera.device@1.0 \
 #    libmmlib2d_interface \
 #    libhal_dbg \
