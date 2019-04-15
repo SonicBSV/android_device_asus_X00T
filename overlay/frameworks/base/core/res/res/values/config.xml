@@ -487,7 +487,5 @@
          correctly use them when installed on your device.  Otherwise, keep this disabled
          so that applications can still use their own mechanisms. -->
     <bool name="config_enableAutoPowerModes">true</bool>
-    
-    <string name="config_alternativeDeviceKeyHandlerLib" translatable="false">/system/priv-app/ZenfoneParts/ZenfoneParts.apk</string>
-    <string name="config_alternativeDeviceKeyHandlerClass" translatable="false">com.asus.zenparts.KeyHandler</string>
+
 </resources>

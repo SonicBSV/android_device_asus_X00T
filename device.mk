@@ -182,6 +182,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.bt.hfp.playbackforvoip=false \
     persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
     persist.vendor.btstack.enable.splita2dp=true \
+    persist.vendor.bluetooth.modem_nv_support=true \
     ro.bluetooth.emb_wp_mode=true \
     ro.bluetooth.wipower=true \
     vendor.qcom.bluetooth.soc=cherokee  
@@ -196,7 +197,9 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
     camera.device@3.2-impl \
-    Snap
+    SnapdragonCamera
+    
+#    Snap
 #    vendor.qti.hardware.camera.device@1.0 \
 #    libmmlib2d_interface \
 #    libhal_dbg \
@@ -204,12 +207,13 @@ PRODUCT_PACKAGES += \
 #    libmm-qcamera \ 
       
 PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vendor.camera.ois.disable=1 \
     persist.vendor.camera.eis.enable=1 \
     persist.ts.rtmakeup=1 \
     persist.vendor.camera.HAL3.enabled=1 \
     persist.vendor.camera.expose.aux=1 \
     persist.vendor.camera.preview.ubwc=0 \
-    vendor.camera.aux.packagelist=org.codeaurora.snapcam \
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
     vendor.camera.hal1.packagelist=com.whatsapp
     
 # Charger
@@ -298,6 +302,7 @@ PRODUCT_PACKAGES += \
     android.hardware.broadcastradio@1.0-impl
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.hw.fm.init=0 \
     vendor.fm.a2dp.conc.disabled=false
 
 # FRP
@@ -372,6 +377,9 @@ PRODUCT_COPY_FILES += \
 # Keylayout
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl
+    
+PRODUCT_PROPERTY_OVERRIDES += \
+    qemu.hw.mainkeys=0
 
 # Keymaster configuration
 PRODUCT_COPY_FILES += \
@@ -570,18 +578,21 @@ PRODUCT_BOOT_JARS += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     DEVICE_PROVISIONED=1 \
-    persist.data.iwlan.enable=true \
+    persist.vendor.data.iwlan.enable=true \
     persist.radio.multisim.config=dsds \
     persist.radio.VT_CAM_INTERFACE=1 \
-    persist.radio.VT_CAM_INTERFACE=2 \
     persist.vendor.radio.apm_sim_not_pwdn=1 \
     persist.vendor.radio.atfwd.start=true \
     persist.vendor.radio.sib16_support=1 \
     persist.vendor.radio.custom_ecc=1 \
     persist.vendor.radio.rat_on=combine \
     persist.vendor.qti.telephony.vt_cam_interface=1 \
+    ro.com.google.clientidbase=android-asus \
+    ro.com.google.clientidbase.ms=android-asus-tpin \
+    ro.com.google.rlzbrandcode=ASUP \
+    ro.com.google.rlz_ap_whitelist=y0,y5,y6,y7,y9 \
     ril.subscription.types=NV,RUIM \
-    rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
+    vendor.rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
     ro.carrier=unknown \
     ro.com.android.dataroaming=false \
     ro.config.vc_call_vol_steps=11 \
@@ -591,7 +602,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # RmNet Data
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.data.df.dev_name=rmnet_usb0
+    persist.data.df.dev_name=rmnet_usb0 \
     persist.vendor.radio.add_power_save=1
 
 # QCOM
@@ -651,8 +662,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
-    telephony-ext \
-    qti-telephony-common
+    telephony-ext 
 
 PRODUCT_BOOT_JARS += \
     telephony-ext \
@@ -756,10 +766,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
-
-# Zenfone Parts
-PRODUCT_PACKAGES += \
-    ZenfoneParts
 
 # ZRAM disk
 PRODUCT_PROPERTY_OVERRIDES += \
