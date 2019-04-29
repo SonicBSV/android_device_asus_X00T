@@ -320,7 +320,7 @@
     <string name="battery_light_medium_color_title">Зарядка батареи</string>
     <string name="battery_light_full_color_title">Полностью заряжена</string>
     <!-- Lights settings screen, notification light settings -->
-    <string name="notification_light_title">Свет уведомления</string>
+    <string name="notification_light_title">Световая индикация уведомления</string>
     <string name="notification_light_general_title">Общие</string>
     <string name="notification_light_advanced_title">Дополнительно</string>
     <string name="notification_light_applist_title">Приложения</string>
@@ -329,7 +329,7 @@
     <string name="notification_light_default_value">По умолчанию</string>
     <string name="notification_light_missed_call_title">Пропущенный вызов</string>
     <string name="notification_light_voicemail_title">Голосовая почта</string>
-    <string name="notification_light_screen_on">Светить с включенным экраном</string>
+    <string name="notification_light_screen_on">Светить при включенном экране</string>
     <string name="notification_light_zen_mode">Светить в режиме \"Не беспокоить\"</string>
     <string name="keywords_lights_brightness_level">Яркость светодиода</string>
     <string name="notification_light_automagic">Выбирать цвета автоматически</string>
