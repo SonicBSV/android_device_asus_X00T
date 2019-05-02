@@ -252,6 +252,14 @@ on boot
 
 # msm specific files that need to be created on /data
 on post-fs-data
+    mkdir /data/vendor 0777 nfc nfc
+    mkdir /data/vendor/nfc 0777 nfc nfc
+    mkdir /data/vendor/nfc/param 0777 nfc nfc
+    chmod 0660 /dev/pn553
+    chown nfc nfc /dev/pn553
+    mkdir /data/vendor/secure_element 0777  secure_element secure_element
+    chmod 0660 /dev/p73
+    chown secure_element secure_element /dev/p73
     mkdir /data/vendor/misc 01771 system system
 
     # Create directory used for dump collection
@@ -465,6 +473,20 @@ on post-fs-data
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
 
+service nvram_btwifi /system/bin/nvram_btwifi
+    user root
+    group system
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start nvram_btwifi
+
+on property:sys.nvram.btmac=*
+    setprop ro.btmac ${sys.nvram.btmac}
+on property:sys.nvram.wifimac=*
+    setprop ro.wifimac ${sys.nvram.wifimac}
+
 service iop /vendor/bin/iop
     class main
     user root
@@ -474,6 +496,12 @@ service iop /vendor/bin/iop
 
 service vendor.ssr_setup /vendor/bin/ssr_setup
     oneshot
+    disabled
+
+service vendor.ss_ramdump /vendor/bin/subsystem_ramdump
+    class main
+    user system
+    group system
     disabled
 
 on property:ro.vendor.iocgrp.config=1
@@ -502,6 +530,14 @@ on property:persist.vendor.sys.pil_proxy_timeout=*
 
 on property:persist.vendor.ssr.restart_level=*
     start vendor.ssr_setup
+
+on property:persist.vendor.ssr.enable_ramdumps=1
+    write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
+    mkdir /data/vendor/ramdump_ssr 770 system system
+    start vendor.ss_ramdump
+
+on property:persist.vendor.ssr.enable_ramdumps=0
+    write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
 
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
@@ -567,10 +603,11 @@ service vendor.cnd /vendor/bin/cnd
     user system
     group system wifi inet radio wakelock net_admin
 
-service dpmQmiMgr /vendor/bin/dpmQmiMgr
-    class main
-    user system
-    group system
+service vendor.qrtr-ns /vendor/bin/qrtr-ns -f
+    class core
+    user vendor_qrtr
+    group vendor_qrtr
+    capabilities NET_BIND_SERVICE
 
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
@@ -593,13 +630,6 @@ on property:vendor.wc_transport.start_hci=true
 on property:vendor.wc_transport.start_hci=false
     stop vendor.start_hci_filter
 
-service vendor.start_hci_filter /vendor/bin/wcnss_filter
-    class late_start
-    user bluetooth
-    group bluetooth diag system wakelock
-    seclabel u:r:bluetooth:s0
-    disabled
-
 service vendor.bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
     class late_start
     user bluetooth
@@ -621,7 +651,7 @@ service vendor.bt_logger /system/bin/bt_logger
    disabled
    oneshot
 
-service ftmd /system/bin/logwrapper /system/bin/ftmdaemon
+service ftmd /system/bin/logwrapper /vendor/bin/ftmdaemon
     class late_start
     user root
     group bluetooth net_bt_admin misc net_bt_stack diag net_bt
@@ -639,13 +669,6 @@ service vendor.netmgrd /vendor/bin/netmgrd
     class main
     disabled
 
-service vendor.ipacm-diag /vendor/bin/ipacm-diag
-    class main
-    user radio
-    socket ipacm_log_file dgram 660 radio radio
-    group radio diag oem_2901
-    disabled
-
 service vendor.ipacm /vendor/bin/ipacm
     class main
     user radio
@@ -653,12 +676,6 @@ service vendor.ipacm /vendor/bin/ipacm
     disabled
 
 service vendor.dataqti /vendor/bin/qti
-    class main
-    user radio
-    group radio oem_2901 diag usb net_admin
-    disabled
-
-service vendor.dataadpl /vendor/bin/adpl
     class main
     user radio
     group radio oem_2901 diag usb net_admin
@@ -710,14 +727,6 @@ service vendor.wigig_supplicant /vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
-# Data Migration
-service vendor.move_wifi_data /system/bin/move_wifi_data.sh
-    class main
-    user  wifi
-    group wifi
-    disabled
-    oneshot
-
 # FST Manager with hostapd (softap) - all settings inside ini file
 service fstman /vendor/bin/fstman -B -ddd -c /data/vendor/wifi/fstman.ini -a 1
     user wifi
@@ -759,24 +768,6 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service ssgqmigd /vendor/bin/ssgqmigd
-    class late_start
-    user radio
-    group radio gps system
-    socket ssgqmig seqpacket 0660 radio inet
-
-service ssgtzd /vendor/bin/ssgtzd
-    class late_start
-    user system
-    group system
-    socket ssgtzd stream 0660 system inet
-
-service mlid /vendor/bin/mlid
-    class late_start
-    user gps
-    group gps
-    socket mlid stream 0666 gps gps
-
 service loc_launcher /vendor/bin/loc_launcher
     class late_start
     user gps
@@ -790,11 +781,6 @@ service qcom-sh /vendor/bin/init.qcom.sh
 
 service vendor-sensor-sh /vendor/bin/init.qcom.sensors.sh
     class core
-    user root
-    oneshot
-
-service crashdata-sh /vendor/bin/init.qcom.crashdata.sh
-    class late_start
     user root
     oneshot
 
@@ -831,6 +817,15 @@ service vendor.wigig_hostapd /vendor/bin/hw/hostapd -dd  -j wigighostapd /data/v
     oneshot
     disabled
 
+# Huaqin modify for ZQL1820P1-0 by liunianliang at 2018/11/12 start
+#Huaqin modify for ZQL1650-6 by chengming at 2018/01/30 start
+#ASUS_BSP++ Write IMEI to device ID
+on property:persist.radio.device.imei=*
+    setprop ro.deviceid ${persist.radio.device.imei}
+    setprop ro.vendor.deviceid ${persist.radio.device.imei}
+#Huaqin modify for ZQL1650-6 by chengming at 2018/01/30 end
+# Huaqin modify for ZQL1820P1-0 by liunianliang at 2018/11/12 end
+
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
     write /proc/sys/net/ipv4/tcp_adv_win_scale  2
@@ -838,14 +833,14 @@ on property:ro.data.large_tcp_window_size=true
 service vendor.ril-daemon2 /vendor/bin/hw/rild -c 2
     class main
     user radio
-    disabled
+#    disabled
     group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
 service vendor.ril-daemon3 /vendor/bin/hw/rild -c 3
     class main
     user radio
-    disabled
+#    disabled
     group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
@@ -875,6 +870,16 @@ service vendor.diag_mdlog_stop /vendor/bin/diag_mdlog -k
     group system oem_2901 sdcard_rw sdcard_r media_rw
     disabled
     oneshot
+
+service qbcharger /charger -m 1
+    disabled
+    oneshot
+
+on property:sys.qbcharger.enable=true
+    start qbcharger
+
+on property:sys.qbcharger.enable=false
+    stop qbcharger
 
 service qlogd /system/xbin/qlogd
     socket qlogd stream 0662 system system
@@ -926,12 +931,6 @@ service power_off_alarm /vendor/bin/power_off_alarm
     disabled
     oneshot
 
-service vendor.move_time_data /system/bin/move_time_data.sh
-    class main
-    user system
-    group system
-    disabled
-    oneshot
 
 #Set GPU Opengles version
 on property:vendor.opengles.version=*
@@ -940,4 +939,8 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
-
+	
+service vendor.fp_script /vendor/bin/init.fingerprint.sh
+    class late_start
+    user root
+    oneshot
