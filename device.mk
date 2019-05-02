@@ -427,13 +427,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     mm.enable.smoothstreaming=true \
     vendor.mm.enable.qcom_parser=13631486 \
     mmp.enable.3g2=true \
-    persist.mm.enable.prefetch=true \
-    vendor.vidc.enc.disable_bframes=1 \
-    vendor.vidc.dec.enable.downscalar=1 \
-    vendor.vidc.enc.disable.pq=false \
-    vidc.enc.dcvs.extra-buff-count=2 \
-    vidc.enc.target_support_bframe=1
-
+    persist.mm.enable.prefetch=true 
+ 
 # Media Extensions
 PRODUCT_PACKAGES += \
     libavenhancements \
@@ -488,7 +483,7 @@ PRODUCT_PACKAGES += \
     com.android.nfc_extras \
     NfcNci \
     SecureElement \
-    Tag \
+    Tag 
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.nfc_nci=pn8x \
@@ -724,7 +719,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     vidc.enc.target_support_bframe=1 \
     vendor.vidc.enc.disable_bframes=1 \
-    vendor.vidc.dec.enable.downscalar=1
+    vendor.vidc.dec.enable.downscalar=1 \
+    vendor.vidc.enc.disable.pq=false \
+    vidc.enc.dcvs.extra-buff-count=2
 
 # VNDK-SP:
 PRODUCT_PACKAGES += \
