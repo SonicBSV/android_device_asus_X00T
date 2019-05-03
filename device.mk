@@ -205,6 +205,10 @@ PRODUCT_PACKAGES += \
 #    libhal_dbg \
 #    camera.sdm660 \
 #    libmm-qcamera \ 
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/SnapdragonCamera/libjni_snapcammosaic.so:system/lib64/libjni_snapcammosaic.so \
+    $(LOCAL_PATH)/SnapdragonCamera/libjni_snapcamtinyplanet.so:system/lib64/libjni_snapcamtinyplanet.so 
       
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.ts.rtmakeup=1 \
