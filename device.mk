@@ -179,7 +179,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.bluetooth.soc=cherokee \
     vendor.qcom.bluetooth.soc=cherokee \
     bt.max.hfpclient.connections=1 \
-    ro.bluetooth.library_name=libbluetooth_qti.so \
     ro.bluetooth.emb_wp_mode=true \
     ro.bluetooth.wipower=true \
     persist.bt.a2dp.aac_disable=true \
