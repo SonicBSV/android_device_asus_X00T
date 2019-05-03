@@ -358,10 +358,6 @@ PRODUCT_PACKAGES += \
     android.hidl.manager@1.0 \
     android.hidl.manager@1.0-java
 
-# Huaqin project
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.hq.project=ZQL1650
-
 # IMS
 PRODUCT_PACKAGES += \
     ims-ext-common
