@@ -10,17 +10,17 @@
     <!-- Dev Info -->
         <string name="devs_header">Разработчики</string>
     <string name="maintainers_header">Сопровождающие</string>
-    <string name="maintainers_header_summary">These are the Official Devices Maintainers...</string>
+    <string name="maintainers_header_summary">Это официальные лица, поддерживающие устройства...</string>
     <string name="dev_1">Sipun Ku Mahanta</string>
-    <string name="dev1_description">Founder/Developer, Whyred Maintainer</string>
+    <string name="dev1_description">Основатель / Разработчик, сопровождающий Whyred</string>
     <string name="dev_2">Jayant Deshmukh</string>
-    <string name="dev2_description">Core Team/Developer, X01BD Maintainer</string>
+    <string name="dev2_description">Основная команда / разработчик, сопровождающий X01BD</string>
     <string name="dev_3">Pavan Patel</string>
-    <string name="dev3_description">Core Team/Designer, Tulip Maintainer</string>
+    <string name="dev3_description">Основная команда / дизайнер, сопровождающий Tulip</string>
     <string name="dev_4">Titus Joseph</string>
-    <string name="dev4_description">Designer</string>
+    <string name="dev4_description">Дизайнер</string>
     <string name="dev_5">Swapnil Soni</string>
-    <string name="dev5_description">Web Developer</string>
+    <string name="dev5_description">Веб-разработчик</string>
     <!-- Maintainer Info -->
     <string name="device_xiaomi">Xiaomi</string>
     <string name="device_asus">Asus</string>
@@ -687,4 +687,13 @@
     <!-- Lock Clock & Date Size -->
     <string name="lockdate_font_size_title">Размер шрифта даты</string>
     <string name="lockclock_font_size_title">Размер шрифта часов</string>
+    <!-- Aggressive battery -->
+    <string name="aggressive_battery_title">Агрессивная батарея</string>
+    <string name="aggressive_battery_warning_text">Это функции энергосбережения. Они могут создавать помехи службам, предназначенным для работы в режиме ожидания, например навигационным приложениям. Вы можете включить эти приложения в белый список в настройках батареи приложения.</string>
+    <string name="aggressive_idle_title">Агрессивный холостой ход</string>
+    <string name="aggressive_idle_summary">Чаще входить в режим ожидания и меньше просыпаться</string>
+    <string name="aggressive_standby_title">Агрессивный режим ожидания</string>
+    <string name="aggressive_standby_summary">Запретить приложениям запускаться в фоне</string>
+    <string name="aggressive_battery_saver_title">Автоматическое включение экономии заряда батареи</string>
+    <string name="aggressive_battery_saver_summary">Включить агрессивную батарею автоматически при использовании экономии заряда батареи</string>
 </resources>
