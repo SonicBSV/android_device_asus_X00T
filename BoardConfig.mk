@@ -204,9 +204,6 @@ DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/vendor_framework_compatibility_matrix.xml
 DEVICE_FRAMEWORK_MANIFEST_FILE := $(DEVICE_PATH)/framework_manifest.xml
 
-# Lights
-#TARGET_PROVIDES_LIBLIGHT := true
-
 # Media
 TARGET_USES_MEDIA_EXTENSIONS := true
 
@@ -262,7 +259,7 @@ TARGET_RIL_VARIANT := caf
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2019-02-01
+VENDOR_SECURITY_PATCH := 2019-04-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
