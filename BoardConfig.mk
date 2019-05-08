@@ -258,7 +258,7 @@ TARGET_RIL_VARIANT := caf
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2019-04-05
+VENDOR_SECURITY_PATCH := 2019-05-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
