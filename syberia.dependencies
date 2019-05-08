@@ -1,0 +1,17 @@
+[
+ {
+   "repository" : "syberia-project/platform_hardware_qcom_audio",
+   "target_path": "hardware/qcom/audio-caf/msm8998",
+   "branch"     : "9.0-caf-8998"
+ },
+ {
+   "repository" : "syberia-project/platform_hardware_qcom_display",
+   "target_path": "hardware/qcom/display-caf/msm8998",
+   "branch"     : "9.0-caf-8998"
+ },
+ {
+   "repository" : "syberia-project/platform_hardware_qcom_media",
+   "target_path": "hardware/qcom/media-caf/msm8998",
+   "branch"     : "9.0-caf-8998"
+ }
+]
