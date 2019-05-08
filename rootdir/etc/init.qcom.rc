@@ -67,18 +67,7 @@ on early-boot
     write /sys/kernel/boot_slpi/boot 1
     setprop ro.alarm_boot false
 
-    # Huaqin modify for ZQL1820P1-98 by wobo at 2018/11/19 start
-    chown root system /dev/input/event3  /*stk3x3x-light*/
-    chgrp system /dev/input/event3
-
-    chown root system /dev/input/event4  /*stk3x3x-proximity*/
-    chgrp system /dev/input/event4
-    # Huaqin modify for ZQL1820P1-98 by wobo at 2018/11/19 end
-
     chown system system /mnt/vendor/persist/sensors
-    # Huaqin modify for ZQL1820P1-122 by zhuqiang at 2018/11/12 start
-    chown system system /mnt/vendor/persist/sensors/sns.reg
-    # Huaqin modify for ZQL1820P1-122 by zhuqiang at 2018/11/12 end
     chown system system /mnt/vendor/persist/sensors/sensors_list.txt
     chown system system /mnt/vendor/persist/sensors/registry
     chown system system /mnt/vendor/persist/sensors/registry/registry
@@ -156,13 +145,6 @@ on boot
 
 
     setprop ro.telephony.call_ring.multiple false
-
-    #enable camera read sensors data
-    # Huaqin add for 1261108 by huqian at 2018/11/29 start
-    # Huaqin add for ZQL1820P1-27 by huqian at 2018/11/12 start
-    setprop persist.vendor.camera.gyro.disable 0
-    # Huaqin add for ZQL1820P1-27 by huqian at 2018/11/12 end
-    # Huaqin add for 1261108 by huqian at 2018/11/29 end
 
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
@@ -809,14 +791,12 @@ service vendor.wigig_hostapd /vendor/bin/hw/hostapd -dd  -j wigighostapd /data/v
     oneshot
     disabled
 
-# Huaqin modify for ZQL1820P1-0 by liunianliang at 2018/11/12 start
 #Huaqin modify for ZQL1650-6 by chengming at 2018/01/30 start
 #ASUS_BSP++ Write IMEI to device ID
 on property:persist.radio.device.imei=*
     setprop ro.deviceid ${persist.radio.device.imei}
     setprop ro.vendor.deviceid ${persist.radio.device.imei}
 #Huaqin modify for ZQL1650-6 by chengming at 2018/01/30 end
-# Huaqin modify for ZQL1820P1-0 by liunianliang at 2018/11/12 end
 
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
