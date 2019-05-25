@@ -1,0 +1,4 @@
+#============= fsck ==============
+allow fsck block_device:blk_file { read write };
+allow fsck block_device:blk_file open;
+allow fsck block_device:blk_file ioctl;
