@@ -638,13 +638,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf 
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.qti.sdk.sensors.gestures=false \
-    ro.vendor.qti.sensors.dev_ori=true \
-    ro.vendor.qti.sensors.pmd=true \
-    ro.vendor.qti.sensors.sta_detect=true \
-    ro.vendor.qti.sensors.mot_detect=true \
-    ro.vendor.qti.sensors.facing=false \
-    ro.vendor.qti.sensors.cmc=false
+    ro.vendor.sdk.sensors.gestures=false \
+    ro.vendor.sensors.dev_ori=true \
+    ro.vendor.sensors.pmd=true \
+    ro.vendor.sensors.sta_detect=true \
+    ro.vendor.sensors.mot_detect=true \
+    ro.vendor.sensors.facing=false \
+    ro.vendor.sensors.cmc=false
 
 # Skip Validate Disable
 PRODUCT_PROPERTY_OVERRIDES += \
