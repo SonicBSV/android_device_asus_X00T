@@ -617,8 +617,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.qti.sys.fw.bg_apps_limit=60
 
 # QMI
-PRODUCT_PACKAGES += \
-    libjson
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/json/lib/libjson.so:$(TARGET_COPY_OUT_VENDOR)/lib/libjson.so \
+    $(LOCAL_PATH)/configs/json/lib64/libjson.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libjson.so
 
 # Seccomp
 PRODUCT_COPY_FILES += \
