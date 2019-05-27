@@ -135,7 +135,6 @@ MM_AUDIO_ENABLED_FTM := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH_QCOM := true
 QCOM_BT_USE_BTNV := true
-TARGET_USE_QTI_BT_STACK := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 
 # Camera
@@ -148,6 +147,7 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_CHARGER_ENABLE_SUSPEND := true
+WITH_CM_CHARGER := true
 
 # CPUSets
 ENABLE_CPUSETS := true
@@ -270,6 +270,9 @@ include device/qcom/sepolicy/sepolicy.mk
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
+
+# System properties
+-include $(DEVICE_PATH)/system.prop
 
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
