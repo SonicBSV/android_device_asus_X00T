@@ -72,7 +72,13 @@ PRODUCT_COPY_FILES += \
 
 # ADB Debug
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.adb.secure=0
+    ro.adb.secure=0 \
+    ro.secure=0 \
+    ro.debuggable=1 \
+    persist.logd.logpersistd=logcatd \
+    persist.service.adb.enable=1 \
+    persist.sys.usb.config=adb \
+    ro.logd.size.stats=16M
     
 #ANT+ stack
 PRODUCT_PACKAGES += \
@@ -177,7 +183,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.bluetooth.disableabsvol=true \
     persist.vendor.bluetooth.modem_nv_support=true \
     persist.vendor.btstack.enable.splita2dp=true \
-    vendor.bluetooth.soc=cherokee \
     vendor.qcom.bluetooth.soc=cherokee \
     bt.max.hfpclient.connections=1 \
     ro.bluetooth.emb_wp_mode=true \
@@ -185,7 +190,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.bt.a2dp.aac_disable=true \
     persist.bt.hfp.playbackforvr=false \
     persist.bt.hfp.playbackforvoip=false \
-    persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
     persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac 
     
 # Boot animation
@@ -213,10 +217,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.qti.telephony.vt_cam_interface=1 \
     vendor.camera.aux.packagelist=org.codeaurora.snapcam \
     vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk
-    
-# Charger
-PRODUCT_PACKAGES += \
-    charger_res_images
 
 # Charging maximum voltage
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -277,6 +277,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Enable stm-events
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.debug.coresight.config=stm-events
+
+# Enable all system restart_level to relative
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vendor.ssr.restart_level=ALL_ENABLE
 
 # Exclude TOF sensor from InputManager
 PRODUCT_COPY_FILES += \
