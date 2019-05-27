@@ -183,14 +183,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.bluetooth.disableabsvol=true \
     persist.vendor.bluetooth.modem_nv_support=true \
     persist.vendor.btstack.enable.splita2dp=true \
-    vendor.bluetooth.soc=cherokee \
+    vendor.qcom.bluetooth.soc=cherokee \
     bt.max.hfpclient.connections=1 \
     ro.bluetooth.emb_wp_mode=true \
     ro.bluetooth.wipower=true \
     persist.bt.a2dp.aac_disable=true \
     persist.bt.hfp.playbackforvr=false \
     persist.bt.hfp.playbackforvoip=false \
-    persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxhd-aac 
+    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac  
     
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2160
