@@ -218,10 +218,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.qti.telephony.vt_cam_interface=1 \
     vendor.camera.aux.packagelist=org.codeaurora.snapcam \
     vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk
-    
-# Charger
-PRODUCT_PACKAGES += \
-    charger_res_images
 
 # Charging maximum voltage
 PRODUCT_PROPERTY_OVERRIDES += \
