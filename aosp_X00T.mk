@@ -48,7 +48,6 @@ BUILD_FINGERPRINT := Android/sdm660_64/sdm660_64:9/PKQ1/16.2017.1905.053-2019051
 # The following system and vendor props will be set by vendor init
 PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
     ro.product.device \
-    ro.product.model \
     ro.product.name
 
 PRODUCT_VENDOR_PROPERTY_BLACKLIST := \
