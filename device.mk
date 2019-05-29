@@ -571,9 +571,6 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full \
     libprotobuf-cpp-full-rtti
 
-PRODUCT_BOOT_JARS += \
-    qcrilhook
-
 PRODUCT_PROPERTY_OVERRIDES += \
     DEVICE_PROVISIONED=1 \
     persist.rild.nitz_plmn="" \
