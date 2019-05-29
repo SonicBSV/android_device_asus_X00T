@@ -542,8 +542,6 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
-    move_time_data.sh \
-    move_wifi_data.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.qcom.factory \
