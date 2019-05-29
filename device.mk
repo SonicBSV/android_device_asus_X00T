@@ -84,8 +84,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 PRODUCT_PACKAGES += \
     AntHalService \
     libantradio \
-    antradio_app \
-    libvolumelistener
+    antradio_app
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -113,6 +112,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/audio_platform_info_extcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_extcodec.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
+    $(LOCAL_PATH)/configs/audio/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(LOCAL_PATH)/configs/audio/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
     $(LOCAL_PATH)/configs/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
@@ -173,8 +173,12 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.automotive.vehicle@1.0
 
 # Bluetooth
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     libbt-vendor
+ 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:system/etc/bluetooth/bt_profile.conf \
+    $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
     
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.bt.max.hs.connections=2 \
@@ -213,10 +217,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.ts.rtmakeup=1 \
     persist.vendor.camera.HAL3.enabled=1 \
+    persist.vendor.camera.expose.aux=1 \
     persist.vendor.camera.preview.ubwc=0 \
     persist.vendor.qti.telephony.vt_cam_interface=1 \
-    vendor.camera.aux.packagelist=org.codeaurora.snapcam \
-    vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
+    vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile
 
 # Charging maximum voltage
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -287,7 +292,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
 
 # Fingerprint feature
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.fmw-X00T \
     android.hardware.biometrics.fingerprint@2.1
 
@@ -537,8 +542,11 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
+    move_time_data.sh \
+    move_wifi_data.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
+    init.qcom.factory \
     init.qcom.rc \
     init.qcom.usb.rc \
     init.target.rc \
@@ -579,7 +587,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.rild.nitz_short_ons_3="" \
     ril.subscription.types=NV,RUIM \
     ro.telephony.default_network=20,20 \
-    persist.data.iwlan.enable=true \
+    persist.vendor.data.iwlan.enable=true \
     persist.radio.multisim.config=dsds \
     persist.radio.VT_CAM_INTERFACE=1 \
     persist.radio.VT_CAM_INTERFACE=2 \
@@ -594,7 +602,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.clientidbase.ms=android-asus-tpin \
     ro.com.google.rlzbrandcode=ASUP \
     ro.com.google.rlz_ap_whitelist=y0,y5,y6,y7,y9 \
-    rild.libpath=/system/vendor/lib64/libril-qc-qmi-1.so \
+    vendor.rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
     ro.com.android.dataroaming=false \
     ro.ril.ecclist=112,911  
 
@@ -608,8 +616,8 @@ PRODUCT_COPY_FILES += \
 
 # QCOM cabl
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.cabl=2 \
-    ro.vendor.display.cabl=2
+    ro.qualcomm.cabl=0 \
+    ro.vendor.display.cabl=0
 
 # QTI
 PRODUCT_PROPERTY_OVERRIDES += \
