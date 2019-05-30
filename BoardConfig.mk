@@ -268,6 +268,9 @@ BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
 
+# System properties
+-include $(DEVICE_PATH)/system.prop
+
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
 
