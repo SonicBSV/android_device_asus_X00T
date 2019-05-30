@@ -322,6 +322,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # GPS / Location
 PRODUCT_PACKAGES += \
+    libsensorndkbridge \
     libcurl 
 
 PRODUCT_COPY_FILES += \
