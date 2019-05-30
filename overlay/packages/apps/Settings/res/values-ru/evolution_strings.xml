@@ -275,4 +275,13 @@
     <string name="value_equals_default">умолч.</string>
     <!-- Battery temp -->
     <string name="battery_temp_title">Температура батареи</string>
+    
+    <!-- Volume link notification -->
+    <string name="volume_link_notification_title">Связать звук звонка и уведомлений</string>
+	
+    <!-- Selinux -->
+    <string name="selinux_status">Статус SELinux</string>
+    <string name="selinux_status_disabled">Отключено</string>
+    <string name="selinux_status_permissive">Разрешающий</string>
+    <string name="selinux_status_enforcing">Принудительный</string>
 </resources>
