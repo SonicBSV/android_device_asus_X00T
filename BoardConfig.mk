@@ -137,12 +137,13 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 
 # Camera
 BOARD_QTI_CAMERA_32BIT_ONLY := true
-#TARGET_USES_QTI_CAMERA_DEVICE := true
+TARGET_USES_QTI_CAMERA_DEVICE := true
 USE_DEVICE_SPECIFIC_CAMERA := true
 #LIB2D_ROTATION := true
 #TARGET_TS_MAKEUP := true
 
 # Charger
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
 # CPUSets
@@ -262,9 +263,13 @@ VENDOR_SECURITY_PATCH := 2019-05-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
+BOARD_SEPOLICY_VERS := 28.0
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
+
+# System properties
+-include $(DEVICE_PATH)/system.prop
 
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
