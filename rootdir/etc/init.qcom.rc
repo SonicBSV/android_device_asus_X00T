@@ -28,6 +28,7 @@
 import /vendor/etc/init/hw/init.qcom.usb.rc
 import /vendor/etc/init/hw/init.msm.usb.configfs.rc
 import /vendor/etc/init/hw/init.target.rc
+import /vendor/etc/init/hw/init.qcom.factory.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -54,6 +55,9 @@ on init
     write /sys/fs/cgroup/memory/bg/memory.move_charge_at_immigrate 1
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
+
+    # Support legacy paths
+    symlink /sdcard /storage/sdcard0
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
@@ -121,10 +125,10 @@ on boot
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
 
-    mkdir /mnt/vendor/persist/drm 0770 system system
+    mkdir /persist/drm 0770 system system
     mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
-    mkdir /mnt/vendor/persist/misc 0770 system system
-    mkdir /mnt/vendor/persist/alarm 0770 system system
+    mkdir /persist/misc 0770 system system
+    mkdir /persist/alarm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
     restorecon_recursive /mnt/vendor/persist
 
@@ -221,13 +225,13 @@ on boot
     chown system system /sys/class/sensors/apds9930-proximity/poll_delay
 
     # Create directory used for display
+    # for backward compatibility
+    mkdir /persist/display 0770 system graphics
     mkdir /mnt/vendor/persist/display 0770 system graphics
 
     # Create vpp directory
     mkdir /mnt/vendor/persist/vpp 0770 media media
 
-    # load WIGIG platform driver
-    insmod /vendor/lib/modules/msm_11ad_proxy.ko
 
     # Create hvdcp_opti directory
     mkdir /mnt/vendor/persist/hvdcp_opti 0770 root system
@@ -282,20 +286,19 @@ on post-fs-data
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
 
     # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 start
-    mkdir /mnt/vendor/persist/flag 0771 system system
-    chown system system /mnt/vendor/persist/flag
+    mkdir /persist/flag 0771 system system
+    chown system system /persist/flag
 
-    chown system system /mnt/vendor/persist/flag/countrycode.txt
-    chmod 0644 /mnt/vendor/persist/flag/countrycode.txt
-    chown system system /mnt/vendor/persist/flag/cid.txt
-    chmod 0644 /mnt/vendor/persist/flag/cid.txt
-    chown system system /mnt/vendor/persist/flag/colorid.txt
-    chmod 0644 /mnt/vendor/persist/flag/colorid.txt
+    chown system system /persist/flag/countrycode.txt
+    chmod 0644 /persist/flag/countrycode.txt
+    chown system system /persist/flag/cid.txt
+    chmod 0644 /persist/flag/cid.txt
+    chown system system /persist/flag/colorid.txt
+    chmod 0644 /persist/flag/colorid.txt
     /* Huaqin add for MULTI SIM by jindaolun at 2018/3/1 start*/
-    chown system system /mnt/vendor/persist/flag/multisim.txt
-    chmod 0644 /mnt/vendor/persist/flag/multisim.txt
+    chown system system /persist/flag/multisim.txt
+    chmod 0644 /persist/flag/multisim.txt
     /* Huaqin add for MULTI SIM by jindaolun at 2018/3/1 end*/
-
     # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 end
 
     #create port-bridge log dir
@@ -333,9 +336,9 @@ on post-fs-data
 
     # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
     # We chown/chmod /persist again so because mount is run as root + defaults
-    chown root system /mnt/vendor/persist
-    chmod 0771 /mnt/vendor/persist
-    chown system system /mnt/vendor/persist/WCNSS_qcom_wlan_nv.bin
+    chown root system /persist
+    chmod 0771 /persist
+    chown system system /persist/WCNSS_qcom_wlan_nv.bin
     chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
@@ -403,7 +406,7 @@ on post-fs-data
     rm /data/vendor/perfd/default_values
 
     #Create IOP  deamon related dirs
-    mkdir /data/vendor/iop 0770 root system
+    mkdir /data/vendor/iop 0700 root system
 
     # Mark the copy complete flag to not completed
     write /data/vendor/radio/copy_complete 0
@@ -577,6 +580,11 @@ service vendor.cnd /vendor/bin/cnd
     user system
     group system wifi inet radio wakelock net_admin
 
+service dpmQmiMgr /vendor/bin/dpmQmiMgr
+    class main
+    user system
+    group system
+
 service vendor.qrtr-ns /vendor/bin/qrtr-ns -f
     class core
     user vendor_qrtr
@@ -603,6 +611,13 @@ on property:vendor.wc_transport.start_hci=true
 
 on property:vendor.wc_transport.start_hci=false
     stop vendor.start_hci_filter
+
+service vendor.start_hci_filter /vendor/bin/wcnss_filter
+    class late_start
+    user bluetooth
+    group bluetooth diag system wakelock
+    seclabel u:r:bluetooth:s0
+    disabled
 
 service vendor.bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
     class late_start
@@ -641,6 +656,13 @@ service vendor.port-bridge /vendor/bin/port-bridge
 
 service vendor.netmgrd /vendor/bin/netmgrd
     class main
+    disabled
+
+service vendor.ipacm-diag /vendor/bin/ipacm-diag
+    class main
+    user radio
+    socket ipacm_log_file dgram 660 radio radio
+    group radio diag oem_2901
     disabled
 
 service vendor.ipacm /vendor/bin/ipacm
@@ -698,6 +720,14 @@ service vendor.wigig_supplicant /vendor/bin/hw/wpa_supplicant \
     #   group wifi inet keystore
     class main
     socket wpa_wigig0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+# Data Migration
+service vendor.move_wifi_data /system/bin/move_wifi_data.sh
+    class main
+    user  wifi
+    group wifi
     disabled
     oneshot
 
@@ -903,6 +933,12 @@ service power_off_alarm /vendor/bin/power_off_alarm
     disabled
     oneshot
 
+service vendor.move_time_data /system/bin/move_time_data.sh
+    class main
+    user system
+    group system
+    disabled
+    oneshot
 
 #Set GPU Opengles version
 on property:vendor.opengles.version=*
@@ -911,8 +947,3 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
-	
-service vendor.fp_script /vendor/bin/init.fingerprint.sh
-    class late_start
-    user root
-    oneshot
