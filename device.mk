@@ -29,6 +29,13 @@ PRODUCT_AAPT_PREBUILT_DPI := xxhdpi
 # default is nosdcard, S/W button enabled in resource
 PRODUCT_CHARACTERISTICS := nosdcard
 
+# ARCore
+TARGET_INCLUDE_STOCK_ARCORE := true
+
+# ARStickers
+PRODUCT_PACKAGES += \
+    Playground
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
@@ -206,7 +213,8 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
     camera.device@3.2-impl \
-    Snap
+    SnapdragonCamera \
+    GoogleCameraMod
     
 #    vendor.qti.hardware.camera.device@1.0 \
 #    libmmlib2d_interface \
@@ -642,13 +650,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf 
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.sdk.sensors.gestures=false \
-    ro.vendor.sensors.dev_ori=true \
-    ro.vendor.sensors.pmd=true \
-    ro.vendor.sensors.sta_detect=true \
-    ro.vendor.sensors.mot_detect=true \
-    ro.vendor.sensors.facing=false \
-    ro.vendor.sensors.cmc=false
+    ro.vendor.qti.sdk.sensors.gestures=false \
+	ro.vendor.qti.sensors.dev_ori=true \
+	ro.vendor.qti.sensors.pmd=true \
+	ro.vendor.qti.sensors.sta_detect=true \
+	ro.vendor.qti.sensors.mot_detect=true \
+	ro.vendor.qti.sensors.facing=false \
+    ro.vendor.qti.sensors.cmc=false
 
 # Skip Validate Disable
 PRODUCT_PROPERTY_OVERRIDES += \
