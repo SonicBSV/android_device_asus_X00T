@@ -26,10 +26,6 @@ $(call inherit-product, build/make/target/product/treble_common_64.mk)
 $(call inherit-product, vendor/omni/config/common.mk)
 $(call inherit-product, vendor/omni/config/gsm.mk)
 
-TARGET_GAPPS_ARCH := arm64
-IS_PHONE := true
-TARGET_MINIMAL_APPS := false
-
 # Boot animation
 TARGET_ARCH := arm64
 TARGET_DENSITY := xxhdpi

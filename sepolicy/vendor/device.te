@@ -1,3 +1,2 @@
-# Biometrics
 type fingerprintd_device, dev_type;
 type cdfinger_device, dev_type;
