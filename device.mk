@@ -32,10 +32,6 @@ PRODUCT_CHARACTERISTICS := nosdcard
 # ARCore
 TARGET_INCLUDE_STOCK_ARCORE := true
 
-# ARStickers
-PRODUCT_PACKAGES += \
-    Playground
-
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
