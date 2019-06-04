@@ -36,6 +36,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
+import android.hardware.camera2.CameraCharacteristics;
 import android.location.Location;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -72,21 +73,8 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Locale;
-import android.util.Range;
 import java.util.StringTokenizer;
-
-import com.android.camera.SettingsManager;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.params.StreamConfigurationMap;
-import android.hardware.camera2.CaptureRequest;
-import android.hardware.camera2.impl.CameraMetadataNative;
-import android.hardware.camera2.utils.SurfaceUtils;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -174,6 +162,7 @@ public class CameraUtil {
     }
 
     public static boolean isVideoSnapshotSupported(Parameters params) {
+        if (params == null) return false;
         return TRUE.equals(params.get(VIDEO_SNAPSHOT_SUPPORTED));
     }
 
@@ -479,18 +468,32 @@ public class CameraUtil {
         return naturalWidth < naturalHeight;
     }
 
+    public static int getDisplayOrientationCamera2(int degrees, int cameraId) {
+        CameraCharacteristics info = CameraHolder.instance().getCameraCharacteristics(cameraId);
+        int result;
+        if (info.get(CameraCharacteristics.LENS_FACING) ==
+                CameraCharacteristics.LENS_FACING_FRONT) {
+            result = (info.get(CameraCharacteristics.SENSOR_ORIENTATION) + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {
+            result = (info.get(CameraCharacteristics.SENSOR_ORIENTATION) - degrees + 360) % 360;
+        }
+        return result;
+    }
+
     public static int getDisplayOrientation(int degrees, int cameraId) {
         // See android.hardware.Camera.setDisplayOrientation for
         // documentation.
+        int result = 0;
         Camera.CameraInfo info = new Camera.CameraInfo();
         Camera.getCameraInfo(cameraId, info);
-        int result;
         if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
             result = (info.orientation + degrees) % 360;
             result = (360 - result) % 360;  // compensate the mirror
         } else {  // back-facing
             result = (info.orientation - degrees + 360) % 360;
         }
+
         return result;
     }
 
@@ -516,7 +519,7 @@ public class CameraUtil {
     }
 
     private static Point getDefaultDisplaySize(Activity activity, Point size) {
-        activity.getWindowManager().getDefaultDisplay().getSize(size);
+        activity.getWindowManager().getDefaultDisplay().getRealSize(size);
         //cap the display resolution given to getOptimalPreviewSize if the below properties
         //are set. For example if the properties are set as below :
         //adb shell setprop camera.display.umax 1920x1080
@@ -568,6 +571,8 @@ public class CameraUtil {
 
     public static int getOptimalPreviewSize(Activity currentActivity,
             Point[] sizes, double targetRatio) {
+        // TODO(andyhuibers): Don't hardcode this but use device's measurements.
+        final int MAX_ASPECT_HEIGHT = 1080;
         // Use a very small tolerance because we want an exact match.
         final double ASPECT_TOLERANCE = 0.01;
         if (sizes == null) return -1;
@@ -587,6 +592,9 @@ public class CameraUtil {
             Point size = sizes[i];
             double ratio = (double) size.x / size.y;
             if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+
+            // Count sizes with height <= 1080p to mimic camera1 api behavior.
+            if (size.y > MAX_ASPECT_HEIGHT) continue;
 
             double heightDiff = Math.abs(size.y - targetHeight);
             if (heightDiff < minDiff) {
@@ -908,16 +916,32 @@ public class CameraUtil {
     }
 
     public static int getJpegRotation(int cameraId, int orientation) {
+        int rotation = 0;
+        if (orientation == OrientationEventListener.ORIENTATION_UNKNOWN) {
+            orientation = 0;
+        }
+        CameraCharacteristics info = CameraHolder.instance().getCameraCharacteristics(cameraId);
+        if (info.get(CameraCharacteristics.LENS_FACING) ==
+                CameraCharacteristics.LENS_FACING_FRONT) {
+            rotation = (info.get(CameraCharacteristics.SENSOR_ORIENTATION)
+                    - orientation + 360) % 360;
+        } else {  // back-facing camera
+            rotation = (info.get(CameraCharacteristics.SENSOR_ORIENTATION) + orientation) % 360;
+        }
+        return rotation;
+    }
+
+    public static int getJpegRotationForCamera1(int cameraId, int orientation) {
         // See android.hardware.Camera.Parameters.setRotation for
         // documentation.
         int rotation = 0;
         if (orientation == OrientationEventListener.ORIENTATION_UNKNOWN) {
             orientation = 0;
         }
-        CameraInfo info = CameraHolder.instance().getCameraInfo()[cameraId];
-        if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
+        CameraHolder.CameraInfo info = CameraHolder.instance().getCameraInfo()[cameraId];
+        if (info.facing == CameraHolder.CameraInfo.CAMERA_FACING_FRONT) {
             rotation = (info.orientation - orientation + 360) % 360;
-        } else {  // back-facing camera
+        } else { // back-facing camera
             rotation = (info.orientation + orientation) % 360;
         }
         return rotation;
@@ -1309,87 +1333,6 @@ public class CameraUtil {
             return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
                     (long) rhs.getWidth() * rhs.getHeight());
         }
-    }
-
-    public static List<CaptureRequest> createHighSpeedRequestList(CaptureRequest request
-            ,int cameraId) throws CameraAccessException {
-        if (request == null) {
-            throw new IllegalArgumentException("Input capture request must not be null");
-        }
-        Collection<Surface> outputSurfaces = request.getTargets();
-        Range<Integer> fpsRange = request.get(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE);
-
-        StreamConfigurationMap config =
-                SettingsManager.getInstance().getStreamConfigurationMap(cameraId);
-        SurfaceUtils.checkConstrainedHighSpeedSurfaces(outputSurfaces, fpsRange, config);
-
-        // Request list size: to limit the preview to 30fps, need use maxFps/30; to maximize
-        // the preview frame rate, should use maxBatch size for that high speed stream
-        // configuration. We choose the former for now.
-        int requestListSize = fpsRange.getUpper() / 30;
-        List<CaptureRequest> requestList = new ArrayList<CaptureRequest>();
-
-        // Prepare the Request builders: need carry over the request controls.
-        // First, create a request builder that will only include preview or recording target.
-        CameraMetadataNative requestMetadata = new CameraMetadataNative(request.getNativeCopy());
-        // Note that after this step, the requestMetadata is mutated (swapped) and can not be used
-        // for next request builder creation.
-        CaptureRequest.Builder singleTargetRequestBuilder = new CaptureRequest.Builder(
-                requestMetadata, /*reprocess*/false, CameraCaptureSession.SESSION_ID_NONE);
-        singleTargetRequestBuilder.setTag(cameraId);
-
-        // Overwrite the capture intent to make sure a good value is set.
-        Iterator<Surface> iterator = outputSurfaces.iterator();
-        Surface firstSurface = iterator.next();
-        Surface secondSurface = null;
-        if (outputSurfaces.size() == 1 && SurfaceUtils.isSurfaceForHwVideoEncoder(firstSurface)) {
-            singleTargetRequestBuilder.set(CaptureRequest.CONTROL_CAPTURE_INTENT,
-                    CaptureRequest.CONTROL_CAPTURE_INTENT_PREVIEW);
-        } else {
-            // Video only, or preview + video
-            singleTargetRequestBuilder.set(CaptureRequest.CONTROL_CAPTURE_INTENT,
-                    CaptureRequest.CONTROL_CAPTURE_INTENT_VIDEO_RECORD);
-        }
-        singleTargetRequestBuilder.setPartOfCHSRequestList(/*partOfCHSList*/true);
-
-        // Second, Create a request builder that will include both preview and recording targets.
-        CaptureRequest.Builder doubleTargetRequestBuilder = null;
-        if (outputSurfaces.size() == 2) {
-            // Have to create a new copy, the original one was mutated after a new
-            // CaptureRequest.Builder creation.
-            requestMetadata = new CameraMetadataNative(request.getNativeCopy());
-            doubleTargetRequestBuilder = new CaptureRequest.Builder(
-                    requestMetadata, /*reprocess*/false, CameraCaptureSession.SESSION_ID_NONE);
-            doubleTargetRequestBuilder.setTag(cameraId);
-            doubleTargetRequestBuilder.set(CaptureRequest.CONTROL_CAPTURE_INTENT,
-                    CaptureRequest.CONTROL_CAPTURE_INTENT_VIDEO_RECORD);
-            doubleTargetRequestBuilder.addTarget(firstSurface);
-            secondSurface = iterator.next();
-            doubleTargetRequestBuilder.addTarget(secondSurface);
-            doubleTargetRequestBuilder.setPartOfCHSRequestList(/*partOfCHSList*/true);
-            // Make sure singleTargetRequestBuilder contains only recording surface for
-            // preview + recording case.
-            Surface recordingSurface = firstSurface;
-            if (!SurfaceUtils.isSurfaceForHwVideoEncoder(recordingSurface)) {
-                recordingSurface = secondSurface;
-            }
-            singleTargetRequestBuilder.addTarget(recordingSurface);
-        } else {
-            // Single output case: either recording or preview.
-            singleTargetRequestBuilder.addTarget(firstSurface);
-        }
-
-        // Generate the final request list.
-        for (int i = 0; i < requestListSize; i++) {
-            if (i == 0 && doubleTargetRequestBuilder != null) {
-                // First request should be recording + preview request
-                requestList.add(doubleTargetRequestBuilder.build());
-            } else {
-                requestList.add(singleTargetRequestBuilder.build());
-            }
-        }
-
-        return Collections.unmodifiableList(requestList);
     }
 
     public static int dip2px(Context context, float dpValue) {

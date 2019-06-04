@@ -64,7 +64,17 @@ public class FlashToggleButton extends RotateImageView {
         }
         mSettingsManager = SettingsManager.getInstance();
         mIndex = mSettingsManager.getValueIndex(key);
-        if (mIndex == -1) {
+
+        String scene = mSettingsManager.getValue(SettingsManager.KEY_SCENE_MODE);
+        if (scene != null && scene.equals("18")){
+            setVisibility(GONE);
+            return;
+        }
+
+        String userSetting = mContext.getString(
+                R.string.pref_camera_manual_exp_value_user_setting);
+        String manualExposureMode = mSettingsManager.getValue(SettingsManager.KEY_MANUAL_EXPOSURE);
+        if (mIndex == -1 || manualExposureMode.equals(userSetting)) {
             setVisibility(GONE);
             return;
         } else {

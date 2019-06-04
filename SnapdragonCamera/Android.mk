@@ -7,6 +7,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_STATIC_JAVA_LIBRARIES := android-support-v13
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v4
 LOCAL_STATIC_JAVA_LIBRARIES += xmp_toolkit
+LOCAL_STATIC_JAVA_LIBRARIES += androidx.heifwriter_heifwriter
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 LOCAL_SRC_FILES += $(call all-java-files-under, src_pd)
@@ -24,8 +25,9 @@ LOCAL_AAPT_FLAGS := \
 
 LOCAL_PACKAGE_NAME := SnapdragonCamera
 LOCAL_PRIVILEGED_MODULE := true
+LOCAL_PRIVATE_PLATFORM_APIS:=true
 
-LOCAL_SDK_VERSION := current
+#LOCAL_SDK_VERSION := current
 LOCAL_RENDERSCRIPT_TARGET_API := 23
 LOCAL_JACK_ENABLED := disabled
 

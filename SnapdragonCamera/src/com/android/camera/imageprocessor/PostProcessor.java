@@ -100,9 +100,10 @@ public class PostProcessor{
     public static final int FILTER_CHROMAFLASH = 6;
     public static final int FILTER_BLURBUSTER = 7;
     public static final int FILTER_MAX = 8;
+    public static final double FALLOFF_DELAY = 2 * 10e6;
 
     //BestPicture requires 10 which is the biggest among filters
-    private static final int MAX_REQUIRED_IMAGE_NUM = 11;
+    private static final int MAX_REQUIRED_IMAGE_NUM = 3;
     private int mCurrentNumImage = 0;
     private ImageFilter mFilter;
     private int mFilterIndex;
@@ -119,6 +120,7 @@ public class PostProcessor{
     private WatchdogThread mWatchdog;
     private int mOrientation = 0;
     private ImageWriter mImageWriter;
+    private boolean fusionStatus = false;
 
     private static boolean DEBUG_DUMP_FILTER_IMG =
             (PersistUtil.getCamera2Debug() == PersistUtil.CAMERA2_DEBUG_DUMP_IMAGE) ||
@@ -133,6 +135,7 @@ public class PostProcessor{
     private ImageReader mImageReader;
     private ImageReader mZSLReprocessImageReader;
     private boolean mUseZSL = true;
+    private boolean mProcessZSL = true;
     private boolean mSaveRaw = false;
     private Handler mZSLHandler;
     private HandlerThread mZSLHandlerThread;
@@ -143,7 +146,6 @@ public class PostProcessor{
     private TotalCaptureResult mZSLFallOffResult = null;
     private boolean mIsZSLFallOff = false;
     private TotalCaptureResult mLatestResultForLongShot = null;
-    private LinkedList<ZSLQueue.ImageItem> mFallOffImages = new LinkedList<ZSLQueue.ImageItem>();
     private int mPendingContinuousRequestCount = 0;
     public int mMaxRequiredImageNum;
 
@@ -198,50 +200,6 @@ public class PostProcessor{
         }
     }
 
-    private void clearFallOffImage() {
-        for(ZSLQueue.ImageItem item: mFallOffImages ) {
-            try {
-                item.getImage().close();
-                Image raw = item.getRawImage();
-                if (raw != null) {
-                    raw.close();
-                }
-            } catch(Exception e) {
-            }
-        }
-        mFallOffImages.clear();
-    }
-
-    private ZSLQueue.ImageItem findFallOffImage(long timestamp) {
-        ZSLQueue.ImageItem foundImage = null;
-        for(ZSLQueue.ImageItem item: mFallOffImages ) {
-            if(item.getImage().getTimestamp() == timestamp) {
-                foundImage = item;
-                break;
-            }
-        }
-        if(foundImage != null) {
-            mFallOffImages.remove(foundImage);
-        }
-        return foundImage;
-    }
-
-    private void addFallOffImage(ZSLQueue.ImageItem item) {
-        mFallOffImages.add(item);
-        if(mFallOffImages.size() >= MAX_REQUIRED_IMAGE_NUM - 1) {
-            ZSLQueue.ImageItem it = mFallOffImages.getFirst();
-            try {
-                it.getImage().close();
-                Image raw = item.getRawImage();
-                if (raw != null) {
-                    raw.close();
-                }
-            } catch(Exception e) {
-            }
-            mFallOffImages.removeFirst();
-        }
-    }
-
     class ImageHandlerTask implements Runnable, ImageReader.OnImageAvailableListener {
         private ImageWrapper mImageWrapper = null;
         private ImageReader mRawImageReader = null;
@@ -249,6 +207,18 @@ public class PostProcessor{
 
         @Override
         public void onImageAvailable(ImageReader reader) {
+            if (!mProcessZSL) {
+                Image image = reader.acquireNextImage();
+                if (image != null) {
+                    image.close();
+                }
+                if (mSaveRaw && mRawImageReader != null) {
+                   Image rawImage = mRawImageReader.acquireNextImage();
+                   if (rawImage != null)
+                       rawImage.close();
+                }
+                return;
+            }
             try {
                 if(mUseZSL) {
                     if(mController.isLongShotActive() && mPendingContinuousRequestCount > 0) {
@@ -267,35 +237,24 @@ public class PostProcessor{
                         }
                         return;
                     }
+
                     if(mIsZSLFallOff) {
-                        Image image = reader.acquireNextImage();
-                        Image rawImage = null;
-                        if (mSaveRaw && mRawImageReader != null) {
-                            rawImage = mRawImageReader.acquireNextImage();
+                        if (mZSLQueue == null) return;
+                        ZSLQueue.ImageItem foundImage = null;
+                        if (mZSLFallOffResult != null) {
+                            long timestamp = mZSLFallOffResult.get(CaptureResult.SENSOR_TIMESTAMP);
+                            foundImage = mZSLQueue.tryToGetFallOffImage(mZSLFallOffResult,
+                                    timestamp + FALLOFF_DELAY);
                         }
-                        ZSLQueue.ImageItem imageItem = new ZSLQueue.ImageItem();
-                        imageItem.setImage(image,rawImage);
-                        if(mZSLFallOffResult == null) {
-                            addFallOffImage(imageItem);
-                            return;
-                        }
-                        addFallOffImage(imageItem);
-                        ZSLQueue.ImageItem foundImage = findFallOffImage(
-                                mZSLFallOffResult.get(CaptureResult.SENSOR_TIMESTAMP).longValue());
-                        if(foundImage != null && foundImage.getImage() != null) {
-                            Log.d(TAG,"ZSL fall off image is found");
-                            reprocessImage(foundImage.getImage(), mZSLFallOffResult);
-                            Image raw = foundImage.getRawImage();
+                        if (foundImage != null) {
+                            reprocessImage(foundImage.getImage(),foundImage.getMetadata());
+                            Image raw =  foundImage.getRawImage();
                             if (raw != null) {
                                 onRawImageToProcess(raw);
                             }
                             mIsZSLFallOff = false;
-                            clearFallOffImage();
                             mZSLFallOffResult = null;
-                        } else {
-                            clearFallOffImage();
                         }
-                        return;
                     }
 
                     Image image = reader.acquireLatestImage();
@@ -347,9 +306,6 @@ public class PostProcessor{
                 }
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Max images has been already acquired. ");
-                mIsZSLFallOff = false;
-                mZSLFallOffResult = null;
-                clearFallOffImage();
             }
         }
 
@@ -383,6 +339,16 @@ public class PostProcessor{
             mZSLQueue.add(metadata);
         }
         mLatestResultForLongShot = metadata;
+        updateFusionStatus(metadata);
+    }
+
+    private void updateFusionStatus(CaptureResult result) {
+        try {
+            fusionStatus = (result.get(CaptureModule.fusionStatus) != null) &&
+                    (result.get(CaptureModule.fusionStatus) == (byte) 1);
+        } catch (IllegalArgumentException e) {
+            Log.w(TAG, "can't find vendor tag: " + CaptureModule.fusionStatus.toString());
+        }
     }
 
     CameraCaptureSession.CaptureCallback mCaptureCallback = new CameraCaptureSession.CaptureCallback() {
@@ -397,9 +363,8 @@ public class PostProcessor{
             }
             if(mIsZSLFallOff) {
                 mZSLFallOffResult = result;
-            } else {
-                onMetaAvailable(result);
             }
+            onMetaAvailable(result);
         }
 
         @Override
@@ -440,17 +405,25 @@ public class PostProcessor{
     }
 
     public boolean takeZSLPicture() {
+        if (mZSLQueue == null)
+            return false;
         mController.setJpegImageData(null);
         ZSLQueue.ImageItem imageItem = mZSLQueue.tryToGetMatchingItem();
         if(mController.getPreviewCaptureResult() == null ||
                 mController.getPreviewCaptureResult().get(CaptureResult.CONTROL_AE_STATE) == CameraMetadata.CONTROL_AE_STATE_FLASH_REQUIRED) {
             if(DEBUG_ZSL) Log.d(TAG, "Flash required image");
+            if (imageItem != null)
+                imageItem.closeImage();
             imageItem = null;
         }
         if (mController.isSelfieFlash()) {
+            if (imageItem != null)
+                imageItem.closeImage();
             imageItem = null;
         }
         if (mController.isLongShotActive()) {
+            if (imageItem != null)
+                imageItem.closeImage();
             imageItem = null;
         }
         if (imageItem != null) {
@@ -512,12 +485,20 @@ public class PostProcessor{
                 image.close();
                 return;
             }
+            String value = SettingsManager.getInstance().getValue(SettingsManager.KEY_JPEG_QUALITY);
+            int jpegQuality = 85;
+            if (value != null) {
+                jpegQuality = mController.getQualityNumber(value);
+            }
             if (DEBUG_ZSL) Log.d(TAG, "reprocess Image request " + image.getTimestamp());
             CaptureRequest.Builder builder = null;
             try {
-                builder = mCameraDevice.createReprocessCaptureRequest(metadata);
+                builder = fusionStatus ? mCameraDevice.createCaptureRequest(
+                        CameraDevice.TEMPLATE_ZERO_SHUTTER_LAG) :
+                        mCameraDevice.createReprocessCaptureRequest(metadata);
                 builder.set(CaptureRequest.JPEG_ORIENTATION,
                             CameraUtil.getJpegRotation(mController.getMainCameraId(), mController.getDisplayOrientation()));
+                builder.set(CaptureRequest.JPEG_QUALITY, (byte) jpegQuality);
                 builder.set(CaptureRequest.JPEG_THUMBNAIL_SIZE, mController.getThumbSize());
                 builder.set(CaptureRequest.JPEG_THUMBNAIL_QUALITY, (byte)80);
                 builder.set(CaptureRequest.COLOR_CORRECTION_ABERRATION_MODE,
@@ -526,7 +507,7 @@ public class PostProcessor{
                         CaptureRequest.EDGE_MODE_HIGH_QUALITY);
                 builder.set(CaptureRequest.NOISE_REDUCTION_MODE,
                         CaptureRequest.NOISE_REDUCTION_MODE_HIGH_QUALITY);
-                VendorTagUtil.setCdsMode(builder, 2); // CDS 0-OFF, 1-ON, 2-AUTO
+                //VendorTagUtil.setCdsMode(builder, 0); // CDS 0-OFF, 1-ON, 2-AUTO
                 VendorTagUtil.setJpegCropEnable(builder, (byte)1);
                 Rect cropRect = image.getCropRect();
                 if(cropRect == null ||
@@ -554,10 +535,17 @@ public class PostProcessor{
                 }
 
                 builder.addTarget(mZSLReprocessImageReader.getSurface());
+                builder.addTarget(mController.getPreviewSurfaceForSession(
+                        mController.getMainCameraId()));
                 try {
-                    mImageWriter.queueInputImage(image);
+                    if (!fusionStatus) {
+                        mImageWriter.queueInputImage(image);
+                    }
                 } catch (IllegalStateException e) {
                     Log.e(TAG, "Queueing more than it can have");
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                    throw new IllegalStateException("nativeDetachImage failed for image");
                 }
                 mCaptureSession.capture(builder.build(), new CameraCaptureSession.CaptureCallback(){
                     @Override
@@ -581,6 +569,7 @@ public class PostProcessor{
                     }
                 }, mHandler);
             } catch (CameraAccessException e) {
+            } catch (IllegalStateException e) {
             }
         }
     }
@@ -607,6 +596,7 @@ public class PostProcessor{
         PhotoModule.NamedImages.NamedEntity name = mNamedImages.getNextNameEntity();
         String title = (name == null) ? null : name.title;
         mActivity.getMediaSaveService().addRawImage(data, title, "raw");
+        image.close();
     }
 
     enum STATUS {
@@ -687,10 +677,12 @@ public class PostProcessor{
                 || "enable".equals(
                          SettingsManager.getInstance().getValue(SettingsManager.KEY_AUTO_HDR))
                 || SettingsManager.getInstance().isCamera2HDRSupport()
-                || "18".equals(SettingsManager.getInstance().getValue(
-                                  SettingsManager.KEY_SCENE_MODE))
+                || ("18".equals(SettingsManager.getInstance().getValue(
+                                  SettingsManager.KEY_SCENE_MODE)) &&
+                   !"1".equals(SettingsManager.getInstance().getValue(SettingsManager.KEY_HDR_MODE)))
                 || mController.getCameraMode() == CaptureModule.DUAL_MODE
-                || isSupportedQcfa) {
+                || isSupportedQcfa
+                || SettingsManager.getInstance().getSavePictureFormat() == SettingsManager.HEIF_FORMAT){
             mUseZSL = false;
         } else {
             mUseZSL = true;
@@ -736,6 +728,17 @@ public class PostProcessor{
         mCaptureSession = null;
         mImageReader = null;
         mPendingContinuousRequestCount = 0;
+    }
+
+    public void enableZSLQueue(boolean enable) {
+        if (enable) {
+            mProcessZSL = true;
+        } else {
+            mProcessZSL = false;
+            if (mZSLQueue != null) {
+                mZSLQueue.clear();
+            }
+        }
     }
 
     private void startBackgroundThread() {
@@ -1157,7 +1160,15 @@ public class PostProcessor{
     ImageReader.OnImageAvailableListener processedImageAvailableListener = new ImageReader.OnImageAvailableListener() {
         @Override
         public void onImageAvailable(ImageReader reader) {
-            final Image image = reader.acquireNextImage();
+            Image nextImage = null;
+            try {
+                nextImage = reader.acquireNextImage();
+            }catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            if (nextImage == null)
+                return;
+            final Image image = nextImage;
             if(DEBUG_ZSL) Log.d(TAG, "ZSL image Reprocess is done "+image.getTimestamp());
             mSavingHander.post(new Runnable() {
                 public void run() {
@@ -1182,10 +1193,10 @@ public class PostProcessor{
                     } else {
                         mActivity.getMediaSaveService().addImage(
                                 bytes, title, date, null, image.getCropRect().width(), image.getCropRect().height(),
-                                orientation, null, mController.getMediaSavedListener(), mActivity.getContentResolver(), "jpeg");
+                                orientation, exif, mController.getMediaSavedListener(), mActivity.getContentResolver(), "jpeg");
                         mController.updateThumbnailJpegData(bytes);
-                        image.close();
                     }
+                    image.close();
                 }
             });
         }

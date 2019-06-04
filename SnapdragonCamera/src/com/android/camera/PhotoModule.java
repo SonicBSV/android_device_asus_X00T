@@ -239,7 +239,7 @@ public class PhotoModule
 
     private static final boolean PERSIST_SKIP_MEM_CHECK = PersistUtil.isSkipMemoryCheckEnabled();
 
-    private static final String PERSISI_BOKEH_DEBUG = "persist.camera.bokeh.debug";
+    private static final String PERSISI_BOKEH_DEBUG = "persist.sys.camera.bokeh.debug";
     private static final boolean PERSIST_BOKEH_DEBUG_CHECK =
             android.os.SystemProperties.getBoolean(PERSISI_BOKEH_DEBUG, false);
     private static final int MINIMUM_BRIGHTNESS = 0;
@@ -657,7 +657,7 @@ public class PhotoModule
     // camera only
     private void locationFirstRun() {
         boolean enableRecordingLocation = false;
-        if (mActivity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (mActivity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             enableRecordingLocation = true;
         }
@@ -796,8 +796,8 @@ public class PhotoModule
         mParameters = mCameraDevice.getParameters();
         mInitialParams = mCameraDevice.getParameters();
         initializeCapabilities();
-        CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
-        mMirror = (info.facing == CameraInfo.CAMERA_FACING_FRONT);
+        CameraHolder.CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
+        mMirror = (info.facing == CameraHolder.CameraInfo.CAMERA_FACING_FRONT);
         mFocusManager.setMirror(mMirror);
         mFocusManager.setParameters(mInitialParams);
         setupPreview();
@@ -903,7 +903,7 @@ public class PhotoModule
     }
 
     void setPreviewFrameLayoutCameraOrientation(){
-        CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
+        CameraHolder.CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
         //if camera mount angle is 0 or 180, we want to resize preview
         if (info.orientation % 180 == 0){
             mUI.cameraOrientationPreviewResize(true);
@@ -1032,9 +1032,9 @@ public class PhotoModule
                || mFaceDetectionStarted || mCameraState != IDLE) return;
         if (mParameters.getMaxNumDetectedFaces() > 0) {
             mFaceDetectionStarted = true;
-            CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
+            CameraHolder.CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
             mUI.onStartFaceDetection(mDisplayOrientation,
-                    (info.facing == CameraInfo.CAMERA_FACING_FRONT));
+                    (info.facing == CameraHolder.CameraInfo.CAMERA_FACING_FRONT));
             mCameraDevice.setFaceDetectionCallback(mHandler, mUI);
             mCameraDevice.startFaceDetection();
         }
@@ -1509,7 +1509,7 @@ public class PhotoModule
                             .findPreference(CameraSettings.KEY_SELFIE_MIRROR);
                     if (selfieMirrorPref != null && selfieMirrorPref.getValue() != null &&
                             selfieMirrorPref.getValue().equalsIgnoreCase("enable")) {
-                        CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
+                        CameraHolder.CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
                         jpegData = flipJpeg(jpegData, info.orientation, orientation);
                         jpegData = addExifTags(jpegData, orientation);
                     }
@@ -1839,7 +1839,7 @@ public class PhotoModule
 
         // Set rotation and gps data.
         int orientation = mOrientation;
-        mJpegRotation = CameraUtil.getJpegRotation(mCameraId, orientation);
+        mJpegRotation = CameraUtil.getJpegRotationForCamera1(mCameraId, orientation);
         String pictureFormat = mParameters.get(KEY_PICTURE_FORMAT);
         Location loc = getLocationAccordPictureFormat(pictureFormat);
 
@@ -2267,7 +2267,7 @@ public class PhotoModule
                 mCameraId, CameraHolder.instance().getCameraInfo());
         mPreferenceGroup = settings.getPreferenceGroup(R.xml.camera_preferences);
 
-        int numOfCams = Camera.getNumberOfCameras();
+        int numOfCams = CameraHolder.instance().getNumberOfCameras();
 
         Log.e(TAG,"loadCameraPreferences() updating camera_id pref");
 
@@ -2285,8 +2285,8 @@ public class PhotoModule
         int[] largeIconIds = new int[numOfCams];
 
         for(int i=0;i<numOfCams;i++) {
-            CameraInfo info = CameraHolder.instance().getCameraInfo()[i];
-            if(info.facing == CameraInfo.CAMERA_FACING_BACK) {
+            CameraHolder.CameraInfo info = CameraHolder.instance().getCameraInfo()[i];
+            if(info.facing == CameraHolder.CameraInfo.CAMERA_FACING_BACK) {
                 iconIds[i] = R.drawable.ic_switch_back;
                 entries[i] = mActivity.getResources().getString(R.string.pref_camera_id_entry_back);
                 labels[i] = mActivity.getResources().getString(R.string.pref_camera_id_label_back);
@@ -2858,8 +2858,8 @@ public class PhotoModule
         if (mFocusManager != null) {
             mFocusManager.removeMessages();
         } else {
-            CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
-            mMirror = (info.facing == CameraInfo.CAMERA_FACING_FRONT);
+            CameraHolder.CameraInfo info = CameraHolder.instance().getCameraInfo()[mCameraId];
+            mMirror = (info.facing == CameraHolder.CameraInfo.CAMERA_FACING_FRONT);
             String[] defaultFocusModes = mActivity.getResources().getStringArray(
                     R.array.pref_camera_focusmode_default_array);
             mFocusManager = new FocusOverlayManager(mPreferences, defaultFocusModes,
@@ -3097,7 +3097,14 @@ public class PhotoModule
         // This will be called again in checkDisplayRotation(), so there
         // should not be any problem even if mUI is null.
         if (mUI != null) {
-            mUI.setDisplayOrientation(mDisplayOrientation);
+            mActivity.runOnUiThread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            mUI.setDisplayOrientation(mDisplayOrientation);
+                        }
+                    }
+            );
         }
         if (mFocusManager != null) {
             mFocusManager.setDisplayOrientation(mDisplayOrientation);
@@ -3943,7 +3950,7 @@ public class PhotoModule
         int preview_flip_value = PersistUtil.getPreviewFlip();
         int video_flip_value = PersistUtil.getVideoFlip();
         int picture_flip_value = PersistUtil.getPictureFlip();
-        int rotation = CameraUtil.getJpegRotation(mCameraId, mOrientation);
+        int rotation = CameraUtil.getJpegRotationForCamera1(mCameraId, mOrientation);
         mParameters.setRotation(rotation);
         if (rotation == 90 || rotation == 270) {
             // in case of 90 or 270 degree, V/H flip should reverse
