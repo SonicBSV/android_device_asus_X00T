@@ -40,11 +40,11 @@ TARGET_VENDOR := asus
 TARGET_VENDOR_PRODUCT_NAME := X00T
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="blueline-user 9 PQ2A.190305.002 5240760 release-keys" \
+    PRIVATE_BUILD_DESC="walleye-user 9 PQ3A.190505.001 5373320 release-keys" \
     DEVICE_MAINTAINERS="SonicBSV"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
-BUILD_FINGERPRINT := google/blueline/blueline:9/PQ2A.190305.002/5240760:user/release-keys
+BUILD_FINGERPRINT := google/walleye/walleye:9/PQ3A.190505.001/5373320:user/release-keys
 
 
 
