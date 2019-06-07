@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2018 The LineageOS Open Source Project
+# Copyright (C) 2019 The LineageOS Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,7 +66,8 @@ TARGET_KERNEL_SOURCE := kernel/asus/sdm660
 TARGET_KERNEL_CONFIG := X00T_defconfig
 
 # ANT+
-BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
+#TARGET_USES_PREBUILT_ANT := true
+BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
 
 # API
 PRODUCT_SHIPPING_API_LEVEL := 26
@@ -142,6 +143,7 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 #TARGET_TS_MAKEUP := true
 
 # Charger
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.msm
 
@@ -258,26 +260,27 @@ TARGET_RIL_VARIANT := caf
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2019-04-05
+SYSTEM_SECURITY_PATCH := 2019-06-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
+BOARD_SEPOLICY_VERS := 28.0
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
 
+# System properties
+-include $(DEVICE_PATH)/system.prop
+
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
-
-# Vendor init
-TARGET_INIT_VENDOR_LIB := libinit_X00T
-TARGET_RECOVERY_DEVICE_MODULES := libinit_X00T
 
 # VNDK
 #BOARD_VNDK_RUNTIME_DISABLE := true
 #BOARD_VNDK_VERSION := current
 
 # Wifi
+BOARD_USES_CAF_WLAN_HAL := true
 BOARD_HAS_QCOM_WLAN := true
 BOARD_HAS_QCOM_WLAN_SDK := true
 BOARD_WLAN_DEVICE := qcwcn
