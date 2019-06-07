@@ -36,6 +36,7 @@ PRODUCT_BRAND := asus
 PRODUCT_DEVICE := X00T
 PRODUCT_MANUFACTURER := asus
 PRODUCT_NAME := revengeos_X00T
+PRODUCT_MODEL := ZenFone Max Pro M1
 
 PRODUCT_GMS_CLIENTID_BASE := android-asus
 
@@ -43,19 +44,8 @@ TARGET_VENDOR := asus
 TARGET_VENDOR_PRODUCT_NAME := X00T
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="sdm660_64-user 8.1.0 OPM1 3343 release-keys" \
+    PRIVATE_BUILD_DESC="walleye-user 9 PQ3A.190505.001 5373320 release-keys" \
     DEVICE_MAINTAINERS="SonicBSV"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
-BUILD_FINGERPRINT := Android/sdm660_64/sdm660_64:8.1.0/OPM1/15.2016.1902.340-20190216:user/release-keys
-
-# The following system and vendor props will be set by vendor init
-PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
-    ro.product.device \
-    ro.product.model \
-    ro.product.name
-
-PRODUCT_VENDOR_PROPERTY_BLACKLIST := \
-    ro.vendor.product.device \
-    ro.vendor.product.model \
-    ro.vendor.product.name
+BUILD_FINGERPRINT := google/walleye/walleye:9/PQ3A.190505.001/5373320:user/release-keys
