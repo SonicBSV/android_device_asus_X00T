@@ -28,6 +28,7 @@
 import /vendor/etc/init/hw/init.qcom.usb.rc
 import /vendor/etc/init/hw/init.msm.usb.configfs.rc
 import /vendor/etc/init/hw/init.target.rc
+import /vendor/etc/init/hw/init.qcom.factory.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -55,6 +56,9 @@ on init
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
 
+    # Support legacy paths
+    symlink /sdcard /storage/sdcard0
+
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
 
@@ -67,18 +71,16 @@ on early-boot
     write /sys/kernel/boot_slpi/boot 1
     setprop ro.alarm_boot false
 
-    # Huaqin modify for ZQL1820P1-98 by wobo at 2018/11/19 start
-    chown root system /dev/input/event3  /*stk3x3x-light*/
-    chgrp system /dev/input/event3
-
-    chown root system /dev/input/event4  /*stk3x3x-proximity*/
-    chgrp system /dev/input/event4
-    # Huaqin modify for ZQL1820P1-98 by wobo at 2018/11/19 end
+    # for backward compatibility
+    chown system system /persist/sensors
+    chown system system /persist/sensors/registry
+    chown system system /persist/sensors/registry/registry
+    chown system system /persist/sensors/registry/registry/sensors_registry
+    chown system system /persist/sensors/sensors_settings
+    chown system system /persist/sensors/registry/config
+    chmod 0664 /persist/sensors/sensors_settings
 
     chown system system /mnt/vendor/persist/sensors
-    # Huaqin modify for ZQL1820P1-122 by zhuqiang at 2018/11/12 start
-    chown system system /mnt/vendor/persist/sensors/sns.reg
-    # Huaqin modify for ZQL1820P1-122 by zhuqiang at 2018/11/12 end
     chown system system /mnt/vendor/persist/sensors/sensors_list.txt
     chown system system /mnt/vendor/persist/sensors/registry
     chown system system /mnt/vendor/persist/sensors/registry/registry
@@ -132,10 +134,10 @@ on boot
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
 
-    mkdir /mnt/vendor/persist/drm 0770 system system
+    mkdir /persist/drm 0770 system system
     mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
-    mkdir /mnt/vendor/persist/misc 0770 system system
-    mkdir /mnt/vendor/persist/alarm 0770 system system
+    mkdir /persist/misc 0770 system system
+    mkdir /persist/alarm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
     restorecon_recursive /mnt/vendor/persist
 
@@ -156,13 +158,6 @@ on boot
 
 
     setprop ro.telephony.call_ring.multiple false
-
-    #enable camera read sensors data
-    # Huaqin add for 1261108 by huqian at 2018/11/29 start
-    # Huaqin add for ZQL1820P1-27 by huqian at 2018/11/12 start
-    setprop persist.vendor.camera.gyro.disable 0
-    # Huaqin add for ZQL1820P1-27 by huqian at 2018/11/12 end
-    # Huaqin add for 1261108 by huqian at 2018/11/29 end
 
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
@@ -239,27 +234,19 @@ on boot
     chown system system /sys/class/sensors/apds9930-proximity/poll_delay
 
     # Create directory used for display
+    # for backward compatibility
+    mkdir /persist/display 0770 system graphics
     mkdir /mnt/vendor/persist/display 0770 system graphics
 
     # Create vpp directory
     mkdir /mnt/vendor/persist/vpp 0770 media media
 
-    # load WIGIG platform driver
-    insmod /vendor/lib/modules/msm_11ad_proxy.ko
 
     # Create hvdcp_opti directory
     mkdir /mnt/vendor/persist/hvdcp_opti 0770 root system
 
 # msm specific files that need to be created on /data
 on post-fs-data
-    mkdir /data/vendor 0777 nfc nfc
-    mkdir /data/vendor/nfc 0777 nfc nfc
-    mkdir /data/vendor/nfc/param 0777 nfc nfc
-    chmod 0660 /dev/pn553
-    chown nfc nfc /dev/pn553
-    mkdir /data/vendor/secure_element 0777  secure_element secure_element
-    chmod 0660 /dev/p73
-    chown secure_element secure_element /dev/p73
     mkdir /data/vendor/misc 01771 system system
 
     # Create directory used for dump collection
@@ -308,20 +295,19 @@ on post-fs-data
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
 
     # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 start
-    mkdir /mnt/vendor/persist/flag 0771 system system
-    chown system system /mnt/vendor/persist/flag
+    mkdir /persist/flag 0771 system system
+    chown system system /persist/flag
 
-    chown system system /mnt/vendor/persist/flag/countrycode.txt
-    chmod 0644 /mnt/vendor/persist/flag/countrycode.txt
-    chown system system /mnt/vendor/persist/flag/cid.txt
-    chmod 0644 /mnt/vendor/persist/flag/cid.txt
-    chown system system /mnt/vendor/persist/flag/colorid.txt
-    chmod 0644 /mnt/vendor/persist/flag/colorid.txt
+    chown system system /persist/flag/countrycode.txt
+    chmod 0644 /persist/flag/countrycode.txt
+    chown system system /persist/flag/cid.txt
+    chmod 0644 /persist/flag/cid.txt
+    chown system system /persist/flag/colorid.txt
+    chmod 0644 /persist/flag/colorid.txt
     /* Huaqin add for MULTI SIM by jindaolun at 2018/3/1 start*/
-    chown system system /mnt/vendor/persist/flag/multisim.txt
-    chmod 0644 /mnt/vendor/persist/flag/multisim.txt
+    chown system system /persist/flag/multisim.txt
+    chmod 0644 /persist/flag/multisim.txt
     /* Huaqin add for MULTI SIM by jindaolun at 2018/3/1 end*/
-
     # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 end
 
     #create port-bridge log dir
@@ -359,9 +345,9 @@ on post-fs-data
 
     # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
     # We chown/chmod /persist again so because mount is run as root + defaults
-    chown root system /mnt/vendor/persist
-    chmod 0771 /mnt/vendor/persist
-    chown system system /mnt/vendor/persist/WCNSS_qcom_wlan_nv.bin
+    chown root system /persist
+    chmod 0771 /persist
+    chown system system /persist/WCNSS_qcom_wlan_nv.bin
     chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
@@ -429,7 +415,7 @@ on post-fs-data
     rm /data/vendor/perfd/default_values
 
     #Create IOP  deamon related dirs
-    mkdir /data/vendor/iop 0770 root system
+    mkdir /data/vendor/iop 0700 root system
 
     # Mark the copy complete flag to not completed
     write /data/vendor/radio/copy_complete 0
@@ -603,6 +589,11 @@ service vendor.cnd /vendor/bin/cnd
     user system
     group system wifi inet radio wakelock net_admin
 
+service dpmQmiMgr /vendor/bin/dpmQmiMgr
+    class main
+    user system
+    group system
+
 service vendor.qrtr-ns /vendor/bin/qrtr-ns -f
     class core
     user vendor_qrtr
@@ -629,6 +620,13 @@ on property:vendor.wc_transport.start_hci=true
 
 on property:vendor.wc_transport.start_hci=false
     stop vendor.start_hci_filter
+
+service vendor.start_hci_filter /vendor/bin/wcnss_filter
+    class late_start
+    user bluetooth
+    group bluetooth diag system wakelock
+    seclabel u:r:bluetooth:s0
+    disabled
 
 service vendor.bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
     class late_start
@@ -667,6 +665,13 @@ service vendor.port-bridge /vendor/bin/port-bridge
 
 service vendor.netmgrd /vendor/bin/netmgrd
     class main
+    disabled
+
+service vendor.ipacm-diag /vendor/bin/ipacm-diag
+    class main
+    user radio
+    socket ipacm_log_file dgram 660 radio radio
+    group radio diag oem_2901
     disabled
 
 service vendor.ipacm /vendor/bin/ipacm
@@ -724,6 +729,14 @@ service vendor.wigig_supplicant /vendor/bin/hw/wpa_supplicant \
     #   group wifi inet keystore
     class main
     socket wpa_wigig0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+# Data Migration
+service vendor.move_wifi_data /system/bin/move_wifi_data.sh
+    class main
+    user  wifi
+    group wifi
     disabled
     oneshot
 
@@ -817,14 +830,12 @@ service vendor.wigig_hostapd /vendor/bin/hw/hostapd -dd  -j wigighostapd /data/v
     oneshot
     disabled
 
-# Huaqin modify for ZQL1820P1-0 by liunianliang at 2018/11/12 start
 #Huaqin modify for ZQL1650-6 by chengming at 2018/01/30 start
 #ASUS_BSP++ Write IMEI to device ID
 on property:persist.radio.device.imei=*
     setprop ro.deviceid ${persist.radio.device.imei}
     setprop ro.vendor.deviceid ${persist.radio.device.imei}
 #Huaqin modify for ZQL1650-6 by chengming at 2018/01/30 end
-# Huaqin modify for ZQL1820P1-0 by liunianliang at 2018/11/12 end
 
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
@@ -931,6 +942,12 @@ service power_off_alarm /vendor/bin/power_off_alarm
     disabled
     oneshot
 
+service vendor.move_time_data /system/bin/move_time_data.sh
+    class main
+    user system
+    group system
+    disabled
+    oneshot
 
 #Set GPU Opengles version
 on property:vendor.opengles.version=*
@@ -939,8 +956,3 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
-	
-service vendor.fp_script /vendor/bin/init.fingerprint.sh
-    class late_start
-    user root
-    oneshot

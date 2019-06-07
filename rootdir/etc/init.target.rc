@@ -85,7 +85,7 @@ on boot
     write /dev/cpuset/foreground/cpus 0-7
     write /dev/cpuset/foreground/boost/cpus 0-7
     write /dev/cpuset/background/cpus 0-7
-    write /dev/cpuset/system-background/cpus 0-7   
+    write /dev/cpuset/system-background/cpus 0-7
     ####Regionalization config and prop files####
     chmod 0644 /mnt/vendor/persist/speccfg/spec
     chmod 0644 /mnt/vendor/persist/speccfg/devicetype
@@ -176,10 +176,6 @@ on boot
     chown radio radio sys/module/stk3x1x/parameters/call_status_flag
 #Huaqin add for sensors permission-ZQL1650-141 by jianghao at 2018/12/27 end
 
-#Huaqin add or ZQL1650-1072 by zhuqiang at 2018/04/23 start
-    chown radio radio sys/module/stk3x1x/parameters/call_status_flag
-#Huaqin add for ZQL1650-1072 by zhuqiang at 2018/04/23 end
-
 #Create folder dump yuv images while debugging
     mkdir /data/vendor/camera 0770 camera camera
 
@@ -228,15 +224,15 @@ service thermal-engine /vendor/bin/thermal-engine
    socket thermal-send-rule stream 0660 system system
    group root
 
-service time_daemon /vendor/bin/time_daemon
-   class late_start
-   user root
-   group root
-
 service adsprpcd /vendor/bin/adsprpcd audiopd
    class main
    user media
    group media
+
+service audiod /vendor/bin/audiod
+   class late_start
+   user system
+   group system
 
 ## imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
 service vendor.imsqmidaemon /vendor/bin/imsqmidaemon
@@ -271,6 +267,18 @@ service vendor.imsrcsservice /vendor/bin/imsrcsd
 
 on property:vendor.ims.DATA_DAEMON_STATUS=1
     restart vendor.ims_rtp_daemon
+
+service cnss_diag /vendor/bin/cnss_diag -q -f -t HELIUM
+   class main
+   user system
+   group system wifi inet sdcard_rw media_rw diag
+   oneshot
+
+service energy-awareness /vendor/bin/energy-awareness
+    class main
+    user system
+    group system
+    oneshot
 
 service ppd /vendor/bin/mm-pp-dpps
     class late_start
@@ -328,12 +336,3 @@ on boot
     chmod 0666 /dev/nq-nci
     chown system system /dev/nq-nci
 #Huaqin porting nfc for ZQL1650-1157 by daiweiwei at 2018/4/17 end
-
-# Huaqin add for ZQL1820-84 by liunianliang at 2018/07/16 start
-# for reduce power consumption.
-on property:sys.boot_completed=1
-    write /sys/class/gpio/export 12
-    write /sys/class/gpio/gpio12/direction out
-    write /sys/class/gpio/gpio12/value 0
-    write /sys/class/gpio/unexport 12
-# Huaqin add for ZQL1820-84 by liunianliang at 2018/07/16 end
