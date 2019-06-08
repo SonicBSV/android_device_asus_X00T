@@ -93,27 +93,28 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 #ANT+ stack
 PRODUCT_PACKAGES += \
     AntHalService \
-    libantradio \
     antradio_app
+    
+#    libantradio \
 
 # Audio
 PRODUCT_PACKAGES += \
-    android.hardware.audio@4.0-impl \
-    android.hardware.audio.effect@4.0-impl \
-    android.hardware.soundtrigger@2.1-impl \
-    android.hardware.soundtrigger@2.0-core \
-    android.hardware.audio@2.0-service \
     audio.a2dp.default \
     audio.r_submix.default \
     audio.usb.default \
     libaudio-resampler \
     libaudioroute \
-    libqcompostprocbundle \
-    libqcomvisualizer \
-    libqcomvoiceprocessing \
-    libvolumelistener \
     tinymix
 
+#    libqcompostprocbundle \
+#    libqcomvisualizer \
+#    libqcomvoiceprocessing \
+#    libvolumelistener \
+#    android.hardware.soundtrigger@2.1-impl \
+#    android.hardware.soundtrigger@2.0-core \
+#    android.hardware.audio@4.0-impl \
+#    android.hardware.audio.effect@4.0-impl \
+#    android.hardware.audio@2.0-service \
 #    audio.primary.sdm660 \
 
 PRODUCT_COPY_FILES += \
@@ -213,17 +214,12 @@ TARGET_SCREEN_WIDTH := 1080
 # Camera
 PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0:32 \
-    android.hardware.camera.provider@2.4-impl \
-    android.hardware.camera.provider@2.4-service \
     camera.device@3.2-impl \
     SnapdragonCamera \
     GoogleCameraMod
     
-#    vendor.qti.hardware.camera.device@1.0 \
-#    libmmlib2d_interface \
-#    libhal_dbg \
-#    camera.sdm660 \
-#    libmm-qcamera \ 
+#    android.hardware.camera.provider@2.4-impl \
+#    android.hardware.camera.provider@2.4-service \    
       
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.ts.rtmakeup=1 \
@@ -554,7 +550,6 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
-    fix_baseband.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.qcom.factory.rc \
@@ -596,6 +591,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ril.subscription.types=NV,RUIM \
     ro.telephony.default_network=20,20 \
     persist.vendor.data.iwlan.enable=true \
+    persist.data.iwlan.enable=true \
     persist.radio.multisim.config=dsds \
     persist.radio.VT_CAM_INTERFACE=1 \
     persist.radio.VT_CAM_INTERFACE=2 \
@@ -620,7 +616,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # QCOM
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/privapp-permissions-qti.xml
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+
+# QMI
+PRODUCT_PACKAGES += \
+    libjson
 
 # QCOM cabl
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -634,10 +634,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.qti.core_ctl_min_cpu=2 \
     ro.vendor.qti.core_ctl_max_cpu=4 \
     ro.vendor.qti.sys.fw.bg_apps_limit=60
-
-# QMI
-PRODUCT_PACKAGES += \
-    libjson
 
 #QTI performance
 PRODUCT_BOOT_JARS += \
@@ -654,17 +650,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
     android.hardware.sensors@1.0-service
-    
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf 
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.qti.sdk.sensors.gestures=false \
-	ro.vendor.qti.sensors.dev_ori=true \
-	ro.vendor.qti.sensors.pmd=true \
-	ro.vendor.qti.sensors.sta_detect=true \
-	ro.vendor.qti.sensors.mot_detect=true \
-	ro.vendor.qti.sensors.facing=false \
+    ro.vendor.qti.sensors.dev_ori=true \
+    ro.vendor.qti.sensors.pmd=true \
+    ro.vendor.qti.sensors.sta_detect=true \
+    ro.vendor.qti.sensors.mot_detect=true \
+    ro.vendor.qti.sensors.facing=false \
     ro.vendor.qti.sensors.cmc=false
 
 # Skip Validate Disable
@@ -770,13 +766,14 @@ PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0 \
     android.hardware.wifi@1.1 \
     android.hardware.wifi@1.2 \
-    hostapd \
-    hostapd_cli \
     libwifi-hal-qcom \
     libqsap_sdk \
     wificond \
-    wpa_supplicant \
     wpa_supplicant.conf 
+    
+#    hostapd_cli \
+#    hostapd \
+#    wpa_supplicant \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/fstman.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/fstman.ini \
