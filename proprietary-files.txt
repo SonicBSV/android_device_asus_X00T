@@ -113,38 +113,6 @@ vendor/lib64/libhdr_tm.so
 vendor/lib/hw/vulkan.sdm660.so
 vendor/lib64/hw/vulkan.sdm660.so
 
-# Media - from ZE620KL - PPR1.180610.009.WW_Phone-16.0615.1905.100-0
-vendor/lib/libAlacSwDec.so
-vendor/lib/libApeSwDec.so
-vendor/lib/libFlacSwDec.so
-vendor/lib/libI420colorconvert.so
-vendor/lib/libOmxAacDec.so
-vendor/lib/libOmxEvrcDec.so
-vendor/lib/libOmxQcelp13Dec.so
-vendor/lib/libOmxVpp.so
-vendor/lib/libOmxAlacDec.so
-vendor/lib/libOmxAlacDecSw.so
-vendor/lib/libOmxAmrDec.so
-vendor/lib/libOmxAmrwbplusDec.so
-vendor/lib/libOmxApeDec.so
-vendor/lib/libOmxApeDecSw.so
-vendor/lib/libOmxDsdDec.so
-vendor/lib/libOmxG711Dec.so
-vendor/lib/libOmxVideoDSMode.so
-vendor/lib/libOmxWmaDec.so
-vendor/lib/libdsd2pcm.so
-vendor/lib/libgpustats.so
-vendor/lib/libmm-color-convertor.so
-vendor/lib/libmmsw_detail_enhancement.so
-vendor/lib/libmmsw_math.so
-vendor/lib/libmmsw_opencl.so
-vendor/lib/libmmsw_platform.so
-vendor/lib/libvpphvx.so
-vendor/lib/libvpplibrary.so
-vendor/lib/libvqzip.so
-vendor/lib64/libgpustats.so
-
-
 # Postprocessing - from ZE620KL - PPR1.180610.009.WW_Phone-16.0615.1905.100-0
 vendor/bin/hw/vendor.display.color@1.0-service
 vendor/bin/mm-pp-dpps
