@@ -514,18 +514,19 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # OMX
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
-    libextmedia_jni \
-    libmm-omxcore \
-    libOmxAacEnc:32 \
-    libOmxAmrEnc:32 \
-    libOmxCore:32 \
-    libOmxEvrcEnc:32 \
-    libOmxG711Enc:32 \
-    libOmxQcelp13Enc:32 \
-    libOmxVdec:32 \
-    libOmxVenc:32 \
     libstagefrighthw \
     libstagefright_soft_flacdec 
+
+#    libextmedia_jni \
+#    libmm-omxcore \
+#    libOmxAacEnc:32 \
+#    libOmxAmrEnc:32 \
+#    libOmxCore:32 \
+#    libOmxEvrcEnc:32 \
+#    libOmxG711Enc:32 \
+#    libOmxQcelp13Enc:32 \
+#    libOmxVdec:32 \
+#    libOmxVenc:32 \
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
