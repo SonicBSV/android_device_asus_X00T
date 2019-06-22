@@ -99,22 +99,22 @@ PRODUCT_PACKAGES += \
 
 # Audio
 PRODUCT_PACKAGES += \
-    audio.a2dp.default \
-    audio.r_submix.default \
-    audio.usb.default \
+    android.hardware.audio@2.0-service \
+    android.hardware.soundtrigger@2.0-core:32
     libaudio-resampler \
     libaudioroute \
     tinymix
 
+#    audio.a2dp.default \
+#    audio.r_submix.default \
+#    audio.usb.default \
 #    libqcompostprocbundle \
 #    libqcomvisualizer \
 #    libqcomvoiceprocessing \
 #    libvolumelistener \
 #    android.hardware.soundtrigger@2.1-impl \
-#    android.hardware.soundtrigger@2.0-core \
 #    android.hardware.audio@4.0-impl \
 #    android.hardware.audio.effect@4.0-impl \
-#    android.hardware.audio@2.0-service \
 #    audio.primary.sdm660 \
 
 PRODUCT_COPY_FILES += \
@@ -299,7 +299,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
 
 # Fingerprint feature
-#PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.fmw-X00T \
     android.hardware.biometrics.fingerprint@2.1
 
@@ -445,7 +445,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
  
 # Media Extensions
 PRODUCT_PACKAGES += \
-    libavenhancements \
     libavmediaserviceextensions \
     libmediametrics \
     libregistermsext \
@@ -509,19 +508,20 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # OMX
 PRODUCT_PACKAGES += \
-    libc2dcolorconvert \
-    libextmedia_jni \
-    libmm-omxcore \
-    libOmxAacEnc:32 \
-    libOmxAmrEnc:32 \
-    libOmxCore:32 \
-    libOmxEvrcEnc:32 \
-    libOmxG711Enc:32 \
-    libOmxQcelp13Enc:32 \
-    libOmxVdec:32 \
-    libOmxVenc:32 \
     libstagefrighthw \
-    libstagefright_soft_flacdec 
+    libstagefright_soft_flacdec
+    
+#    libc2dcolorconvert \
+#    libextmedia_jni \
+#    libmm-omxcore \
+#    libOmxAacEnc:32 \
+#    libOmxAmrEnc:32 \
+#    libOmxCore:32 \
+#    libOmxEvrcEnc:32 \
+#    libOmxG711Enc:32 \
+#    libOmxQcelp13Enc:32 \
+#    libOmxVdec:32 \
+#    libOmxVenc:32 \ 
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
@@ -769,11 +769,10 @@ PRODUCT_PACKAGES += \
     libwifi-hal-qcom \
     libqsap_sdk \
     wificond \
-    wpa_supplicant.conf 
-    
-#    hostapd_cli \
-#    hostapd \
-#    wpa_supplicant \
+    wpa_supplicant.conf \
+    hostapd_cli \
+    hostapd \
+    wpa_supplicant 
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/fstman.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/fstman.ini \
