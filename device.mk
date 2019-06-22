@@ -100,7 +100,7 @@ PRODUCT_PACKAGES += \
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-service \
-    android.hardware.soundtrigger@2.0-core:32
+    android.hardware.soundtrigger@2.0-core:32 \
     libaudio-resampler \
     libaudioroute \
     tinymix
