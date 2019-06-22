@@ -8,19 +8,6 @@ vendor/lib/hw/com.qualcomm.qti.ant@1.0-impl.so
 vendor/lib64/com.qualcomm.qti.ant@1.0.so
 vendor/lib64/hw/com.qualcomm.qti.ant@1.0-impl.so
 
-# Display - from ZE620KL - PPR1.180610.009.WW_Phone-16.0615.1905.100-0
-etc/permissions/com.qti.snapdragon.sdk.display.xml
--framework/com.qti.snapdragon.sdk.display.jar
-lib64/libsdm-disp-apis.so
-lib64/vendor.display.color@1.0.so
-lib64/vendor.display.color@1.1.so
-lib64/vendor.display.color@1.2.so
-lib64/vendor.display.postproc@1.0.so
-lib64/vendor.qti.hardware.qdutils_disp@1.0.so
-vendor/bin/hw/vendor.qti.hardware.qdutils_disp@1.0-service-qti
-vendor/etc/init/vendor.qti.hardware.qdutils_disp@1.0-service-qti.rc
-vendor/lib64/vendor.qti.hardware.qdutils_disp@1.0.so
-
 # DRM - from stock android 8.1.0
 vendor/bin/qseecomd
 vendor/lib/libGPreqcancel.so
@@ -143,15 +130,3 @@ vendor/lib/libvpphvx.so
 vendor/lib/libvpplibrary.so
 vendor/lib/libvqzip.so
 vendor/lib64/libgpustats.so
-
-
-# Postprocessing - from ZE620KL - PPR1.180610.009.WW_Phone-16.0615.1905.100-0
-vendor/bin/hw/vendor.display.color@1.0-service
-vendor/bin/mm-pp-dpps
-vendor/etc/init/vendor.display.color@1.0-service.rc
-vendor/lib/libdisp-aba.so
-vendor/lib64/libdisp-aba.so
-vendor/lib64/vendor.display.color@1.0.so
-vendor/lib64/vendor.display.color@1.1.so
-vendor/lib64/vendor.display.color@1.2.so
-vendor/lib64/vendor.display.postproc@1.0.so
