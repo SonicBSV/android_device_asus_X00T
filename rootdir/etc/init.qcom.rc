@@ -56,9 +56,6 @@ on init
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
 
-    # Support legacy paths
-    symlink /sdcard /storage/sdcard0
-
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
 
@@ -394,8 +391,6 @@ on post-fs-data
     mkdir /data/shared 0755
     chown system system /data/shared
 
-    #Create directory for hostapd
-    mkdir /data/hostapd 0770 system wifi
 
     # Create /data/time folder for time-services
     mkdir /data/vendor/time/ 0700 system system
@@ -458,6 +453,17 @@ on post-fs-data
 
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
+
+# Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 start
+# Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
+# Huaqin add for change class core  by xudayi at 2018/05/28 start
+service nvram_country /vendor/bin/nvram_country
+    class core
+    user root
+    group system
+    chmod 0644 /vendor/bin/nvram_country
+    oneshot
+# Huaqin add for change class core  by xudayi at 2018/05/28 end
 
 service nvram_btwifi /system/bin/nvram_btwifi
     user root
@@ -686,10 +692,17 @@ service vendor.dataqti /vendor/bin/qti
     group radio oem_2901 diag usb net_admin
     disabled
 
+service vendor.dataadpl /system/vendor/bin/adpl
+    class main
+    user radio
+    group radio oem_2901 diag usb net_admin
+    disabled
+
 service vendor.sensors.qti /vendor/bin/sensors.qti
     class core
-    user root
-    group root
+    user system
+    group system
+    disabled
 
 on property:ro.vendor.use_data_netmgrd=false
     # netmgr not supported on specific target
@@ -781,6 +794,24 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     disabled
     oneshot
 
+service ssgqmigd /vendor/bin/ssgqmigd
+    class late_start
+    user radio
+    group radio gps system
+    socket ssgqmig seqpacket 0660 radio inet
+
+service ssgtzd /vendor/bin/ssgtzd
+    class late_start
+    user system
+    group system
+    socket ssgtzd stream 0660 system inet
+
+service mlid /vendor/bin/mlid
+    class late_start
+    user gps
+    group gps
+    socket mlid stream 0666 gps gps
+
 service loc_launcher /vendor/bin/loc_launcher
     class late_start
     user gps
@@ -866,16 +897,14 @@ service vendor.ssr_diag /vendor/bin/ssr_diag
     group system
     disabled
 
-#ASUS-BBSP Modify for saving modem log - Control by Property - Send mask cleanup to modem at exit+
-service vendor.diag_mdlog_start /vendor/bin/diag_mdlog -c
+service diag_mdlog_start /system/vendor/bin/diag_mdlog
     class late_start
     user shell
     group system oem_2901 sdcard_rw sdcard_r media_rw
     disabled
     oneshot
 
-#ASUS-BBSP Modify for saving modem log - Add oem_2901 Permission+
-service vendor.diag_mdlog_stop /vendor/bin/diag_mdlog -k
+service diag_mdlog_stop /system/vendor/bin/diag_mdlog -k
     class late_start
     user shell
     group system oem_2901 sdcard_rw sdcard_r media_rw
