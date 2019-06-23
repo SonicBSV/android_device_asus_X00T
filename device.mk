@@ -103,6 +103,9 @@ PRODUCT_PACKAGES += \
     android.hardware.soundtrigger@2.0-core:32 \
     libaudio-resampler \
     libaudioroute \
+    tinycap \
+    tinyplay \
+    tinypcminfo \
     tinymix
 
 #    audio.a2dp.default \
@@ -527,7 +530,7 @@ PRODUCT_PACKAGES += \
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay 
 
-# Perf configuration
+# Perf
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/commonresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/commonresourceconfigs.xml \
     $(LOCAL_PATH)/configs/targetconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetconfig.xml \
@@ -572,10 +575,11 @@ PRODUCT_PACKAGES += \
     android.hardware.radio.config@1.0 \
     android.hardware.radio.deprecated@1.0 \
     android.hardware.secure_element@1.0 \
-    librmnetctl \
     libxml2 \
     libprotobuf-cpp-full \
     libprotobuf-cpp-full-rtti
+    
+#    librmnetctl \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     DEVICE_PROVISIONED=1 \
