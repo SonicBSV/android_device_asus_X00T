@@ -211,7 +211,6 @@ TARGET_SCREEN_WIDTH := 1080
 PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0:32 \
     camera.device@3.2-impl \
-    SnapdragonCamera \
     GoogleCameraMod
     
 #    android.hardware.camera.provider@2.4-impl \
@@ -505,6 +504,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # OMX
 PRODUCT_PACKAGES += \
+    libstagefrighthw \
+    libstagefright_soft_flacdec \
     libc2dcolorconvert \
     libmm-omxcore \
     libOmxAacEnc:32 \
@@ -514,9 +515,7 @@ PRODUCT_PACKAGES += \
     libOmxG711Enc:32 \
     libOmxQcelp13Enc:32 \
     libOmxVdec:32 \
-    libOmxVenc:32 \ 
-    libstagefrighthw \
-    libstagefright_soft_flacdec
+    libOmxVenc:32
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
