@@ -170,7 +170,13 @@
     <string name="clock_date_right">Время справа</string>
     <string name="clock_date_left">Время слева</string>
     <string name="clock_date_position">Позиция даты</string>
-	
+    <string name="date_cat">Date</string>
+    <string name="clock_cat">Clock</string>
+    <string name="status_bar_clock_font_style_title">Font style</string>
+    <string name="status_bar_clock_font_style_summary">%1$s</string>
+    <string name="status_bar_clock_font_size_title">Font size</string>
+    <string name="status_bar_clock_color_title">Font color</string>
+
     <!-- Lockscreen cover art -->
     <string name="media_art_title">Медиа обложка</string>
     <string name="media_art_summary">Включить обложку мультимедиа на экране блокировки</string>
@@ -225,7 +231,7 @@
     <string name="heads_up_summary_enabled">Всплывающие уведомления включены</string>
     <string name="heads_up_summary_disabled">Всплывающие уведомления отключены</string>
     <string name="heads_up_time_out_title">Время ожидания</string>
-    <string name="heads_up_time_out_summary">Уведомления будут отображаться в течение <xliff:g id="number">%d</xliff:g> seconds</string>
+    <string name="heads_up_time_out_summary">Уведомления будут отображаться в течение <xliff:g id="number">%d</xliff:g> секунд(ы)</string>
     <string name="heads_up_time_out_2sec">2 секунды</string>
     <string name="heads_up_time_out_4sec">4 секунды</string>
     <string name="heads_up_time_out_5sec">5 секунд</string>
@@ -234,7 +240,7 @@
     <string name="heads_up_time_out_10sec">10 секунд</string>
     <string name="heads_up_snooze_title">Время повтора</string>
     <string name="heads_up_snooze_summary_one_minute">Смахнув уведомление вверх оно отложится на 1 минуту.</string>
-    <string name="heads_up_snooze_summary">Смахнув уведомление вверх оно отложится на <xliff:g id="number">%d</xliff:g> minutes</string>
+    <string name="heads_up_snooze_summary">Смахнув уведомление вверх оно отложится на <xliff:g id="number">%d</xliff:g> минуты</string>
     <string name="heads_up_snooze_disabled_summary">Время повтора отключено</string>
     <string name="heads_up_snooze_1min">1 минута</string>
     <string name="heads_up_snooze_5min">5 минут</string>
@@ -270,6 +276,10 @@
     <string name="show_carrier_keyguard">Только на экране блокировки</string>
     <string name="show_carrier_statusbar">Только в строке состояния</string>
     <string name="show_carrier_enabled">На экране блокировки и в строке состояния</string>
+    <string name="status_bar_carrier_size">Carrier label size</string>
+    <string name="status_bar_carrier_font_style_title">Carrier label font</string>
+    <string name="status_bar_carrier_font_style_summary">%1$s</string>
+    <string name="status_bar_carrier_color">Carrier label color</string>
 
     <!-- Hide notch -->
     <string name="hide_notch_title">Скрыть вырез</string>
@@ -395,4 +405,187 @@
     <string name="lockscreen_info_title">Предметы под часами</string>
     <string name="lockscreen_info_summary">Показать дату, погоду, будильник и дзен на экране блокировки</string>
 
+    <!-- Lockscreen clock styles -->
+    <string name="lockscreen_clock_selection_title">Стиль часов</string>
+    <string name="lockscreen_clock_selection_digital">По умолчанию</string>
+    <string name="lockscreen_clock_selection_digital_bold">Цифровой (жирный)</string>
+    <string name="lockscreen_clock_selection_analog">Аналоговый</string>
+    <string name="lockscreen_clock_selection_sammy">Сэмми</string>
+    <string name="lockscreen_clock_selection_sammy_bold">Сэмми (жирный)</string>
+    <string name="lockscreen_clock_selection_sammy_accent">Сэмми с акцентом</string>
+    <string name="lockscreen_clock_selection_sammy_accent_alt">Сэмми с акцентом (альт)</string>
+    <string name="lockscreen_clock_selection_shishu_dreams" translatable="false">Shishu Dreams</string>
+    <string name="lockscreen_clock_selection_shishu_immensity" translatable="false">Shishu Immensity</string>
+    <string name="lockscreen_clock_selection_shishu_nerves">Shishu Nerves</string>
+    <string name="lockscreen_clock_selection_gradient_btlglogo">Градиентные часы (с bootleg логотипом)</string>
+    <string name="lockscreen_clock_selection_gradient_shishu">Градиентные часы (c shishu логотипом)</string>
+    <string name="lockscreen_clock_selection_gradient_full">Часы с полным градиентом</string>
+    <string name="lockscreen_clock_selection_gradient_likeqs">Монохромные градиентные часы</string>
+    <string name="lockscreen_clock_selection_text">Текст</string>
+
+    <!-- Lockscreen Date styles -->
+    <string name="lockscreen_date_selection_title">Стиль даты</string>
+    <string name="lockscreen_date_selection_default">По умолчанию</string>
+    <string name="lockscreen_date_selection_str_box">Полупрозрачная коробка</string>
+    <string name="lockscreen_date_selection_str_round">Полупрозрачная коробка (круглая)</string>
+    <string name="lockscreen_date_selection_qbeta_style">Q Бета таблетка</string>
+    <string name="lockscreen_date_selection_str_accent">Скругленный, простой и с акцентом</string>
+    <string name="lockscreen_date_selection_str_accent_day">Скругленный, простой и с акцентом (альт)</string>
+    <string name="lockscreen_date_selection_str_accent_transparent">Скругленный, прозрачный и с акцентом</string>
+    <string name="lockscreen_date_selection_str_accent_transparent_day">Скругленный, прозрачный и с акцентом (альт)</string>
+    <string name="lockscreen_date_selection_str_gradient">Градиент</string>
+    <string name="lockscreen_date_selection_str_border_accent">Темный с акцентированными границами</string>
+    <string name="lockscreen_date_selection_str_border_gradient">Темный с градиентными границами</string>
+
+    <!-- Data disabled icon -->
+    <string name="data_disabled_icon_title">Показать значок отключенного мобильного интернета</string>
+    <string name="data_disabled_icon_summary">Отображать крестик рядом с сигнальной полосой, когда мобильный интернет отключен</string>
+
+    <!-- Notification guts kill app button -->
+    <string name="notification_guts_kill_app_button_title">Кнопка "Убить приложение"</string>
+    <string name="notification_guts_kill_app_button_summary">Показывать кнопку "Убить приложение" в меню уведомлений при длинном нажатии</string>
+
+    <!-- QS tile styles -->
+    <string name="qs_tile_style_title">Стиль плитки панели быстрых настроек</string>
+    <string name="qstile_default">По умолчанию</string>
+    <string name="qstile_circle_trim">Круг с отделкой</string>
+    <string name="qstile_dual_tone_circle">Двухцветный круг</string>
+    <string name="qstile_squircle_trim">Squircle с отделкой</string>
+    <string name="qstile_circle_gradient">Круг с градиентом</string>
+    <string name="qstile_cookie">Печенье</string>
+    <string name="qstile_wavey">Волнистый</string>
+    <string name="qstile_circle_dualtone">Круг с двойным тоном</string>
+    <string name="qstile_pokesign">Pokesign</string>
+    <string name="qstile_ninja">Ниндзя</string>
+    <string name="qstile_dottedcircle">Пунктирный круг</string>
+    <string name="qstile_attemptmountain">An attempt of a mountain</string>
+    <string name="qstile_squaremedo">The Squaremedo</string>
+    <string name="qstile_hexagon">Шестиугольник</string>
+    <string name="qstile_star">Звезда</string>
+    <string name="qstile_gear">Шестерня</string>
+    <string name="qstile_diamond">Брилиант</string>
+    <string name="qstile_circleoutline">Контур круга</string>
+    <string name="qstile_roundedrect">Прямоугольник с закругленными углами</string>
+    <string name="qstile_square">Квадрат</string>
+    <string name="qstile_squircle">Squircle</string>
+    <string name="qstile_teardrop">Слеза</string>
+    <string name="qstile_badge">Значок</string>
+    <string name="qstile_badgetwo">Значок 2</string>
+
+    <!-- Lock Clock Fonts -->
+    <string name="lock_clock_font_title">Варианты шрифта часов</string>
+    <string name="lock_clock_font_summary">Изменить шрифт по умолчанию для виджета часов блокировки экрана</string>
+    <string name="lock_clock_font_dialog_title">Выберите шрифт часов</string>
+
+    <!-- Lockscreen fonts - Common strings -->
+    <string name="lock_fonts_stock">Нормальный (По умолчанию)</string>
+    <string name="lock_fonts_bold">Жирный</string>
+    <string name="lock_fonts_italic">Курсив</string>
+    <string name="lock_fonts_bold_italic">Жирный курсив</string>
+    <string name="lock_fonts_light_italic">Мягкий курсив</string>
+    <string name="lock_fonts_light">Мягкий</string>
+    <string name="lock_fonts_condensed_normal">Плотный</string>
+    <string name="lock_fonts_condensed_italic">Плотный курсив</string>
+    <string name="lock_fonts_condensed_bold">Плотный жирный</string>
+    <string name="lock_fonts_condensed_bold_italic">Плотный жирный курсив</string>
+    <string name="lock_fonts_medium_normal">Средний</string>
+    <string name="lock_fonts_medium_italic">Средний курсив</string>
+
+    <!-- Lockscreen fonts - other fonts, unstranslatable by default -->
+    <!-- Custom fonts -->
+    <string name="lock_clock_font_abelreg" translatable="false">Abel</string>
+    <string name="lock_clock_font_adamcg" translatable="false">Adan CG Pro</string>
+    <string name="lock_clock_font_adventpro" translatable="false">Advent Pro</string>
+    <string name="lock_clock_font_alexananeue" translatable="false">Alexana Neue</string>
+    <string name="lock_clock_font_alienleague" translatable="false">Alien League</string>
+    <string name="lock_clock_font_archivo" translatable="false">Archivo Narrow</string>
+    <string name="lock_clock_font_autour" translatable="false">Autour One</string>
+    <string name="lock_clock_font_azedo" translatable="false">Azedo Light</string>
+    <string name="lock_clock_font_badscript" translatable="false">Bad Script</string>
+    <string name="lock_clock_font_bignoodleital" translatable="false">Big Noodle Tilting Italic</string>
+    <string name="lock_clock_font_bignoodle" translatable="false">Big Noodle Tilting</string>
+    <string name="lock_clock_font_biko" translatable="false">Biko</string>
+    <string name="lock_clock_font_blern" translatable="false">Blern</string>
+    <string name="lock_clock_font_cherryswash" translatable="false">Cherry Swash</string>
+    <string name="lock_clock_font_cocobiker" translatable="false">CoCoBiker</string>
+    <string name="lock_clock_font_codystar" translatable="false">Codystar</string>
+    <string name="lock_clock_font_fester" translatable="false">Fester</string>
+    <string name="lock_clock_font_ginorasans" translatable="false">Ginora Sans</string>
+    <string name="lock_clock_font_gobold" translatable="false">GoBold Light</string>
+    <string name="lock_clock_font_googlesans" translatable="false">Google Sans</string>
+    <string name="lock_clock_font_ibmplex" translatable="false">IBMPlex Mono</string>
+    <string name="lock_clock_font_inkferno" translatable="false">Inkferno</string>
+    <string name="lock_clock_font_instruction" translatable="false">Instruction</string>
+    <string name="lock_clock_font_jacklane" translatable="false">Jack Lane</string>
+    <string name="lock_clock_font_jura" translatable="false">Jura</string>
+    <string name="lock_clock_font_kellyslab" translatable="false">Kelly Slab</string>
+    <string name="lock_clock_font_metro1920" translatable="false">Metropolis 1920</string>
+    <string name="lock_clock_font_monad" translatable="false">Monad</string>
+    <string name="lock_clock_font_neonneon" translatable="false">Neonneon</string>
+    <string name="lock_clock_font_noir" translatable="false">Noir</string>
+    <string name="lock_clock_font_north" translatable="false">North</string>
+    <string name="lock_clock_font_outrunfuture" translatable="false">Outrun Future</string>
+    <string name="lock_clock_font_pompiere" translatable="false">Pompiere</string>
+    <string name="lock_clock_font_qontra" translatable="false">Qontra</string>
+    <string name="lock_clock_font_reemkufi" translatable="false">Reem Kufi</string>
+    <string name="lock_clock_font_riviera" translatable="false">Riviera</string>
+    <string name="lock_clock_font_roadrage" translatable="false">Road Rage</string>
+    <string name="lock_clock_font_seaweedsc" translatable="false">Seaweed Script</string>
+    <string name="lock_clock_font_sedgwick" translatable="false">Sedgwick Ave Display</string>
+    <string name="lock_clock_font_sourcesanspro" translatable="false">Source Sans Pro</string>
+    <string name="lock_clock_font_snowstorm" translatable="false">Snowstorm</string>
+    <string name="lock_clock_font_theoutbox" translatable="false">The Outbox</string>
+    <string name="lock_clock_font_union" translatable="false">Union</string>
+    <string name="lock_clock_font_vibur" translatable="false">Vibur</string>
+    <string name="lock_clock_font_voltaire" translatable="false">Voltaire</string>
+    <string name="lock_clock_font_themeable">Themeable (or VCR OSD Mono)</string>
+    <string name="lock_dateown_font_themeable">Themeable (or Fox and Cat)</string>
+
+    <!-- Lock date fonts -->
+    <string name="lock_date_font_title">Параметры шрифта даты</string>
+    <string name="lock_date_font_summary">Изменить шрифт по умолчанию для виджета даты на экране блокировки</string>
+    <string name="lock_date_font_dialog_title">Выберите шрифт</string>
+
+    <!-- Lock owner test -->
+    <string name="lock_owner_font_title">Варианты шрифта владельца</string>
+    <string name="lock_owner_font_summary">Изменить шрифт по умолчанию для информации о владельце на экране блокировки</string>
+    <string name="lock_owner_font_dialog_title">Выберите шрифт</string>
+
+    <!-- Launch music player when headset is connected -->
+    <string name="headset_connect_player_title">Запустить приложение для проигрывания музыки</string>
+    <string name="headset_connect_player_summary">Запускать приложение для проигрывания музыки по умолчанию, когда гарнитура подключена</string>
+
+    <!-- USB configuration -->
+    <string name="usb_default_config_title">Конфигурация USB</string>
+    <string name="usb_default_config_summary">Выберите режим по умолчанию при подключении к устройству через USB</string>
+
+    <!-- On-The-Go -->
+    <string name="onthego_title">Режим On-The-Go</string>
+    <string name="global_actions_onthego_title">On-The-Go</string>
+    <string name="onthego_alpha_title">On-The-Go Альфа</string>
+    <string name="onthego_alpha_summary">Alpha value of the On-The-Go overlay</string>
+
+    <!-- Onehand UI mode -->
+    <string name="one_hand_mode_title">Одноручный режим</string>
+    <string name="one_hand_mode_summary">Разрешить пролистывание вправо или влево на панели навигации, чтобы включить</string>
+
+    <string name="qs_running_services_title">Значок запущенных служб</string>
+    <string name="qs_running_services_summary">Включить значок запущенных сервисов в нижнем колонтитуле</string>
+
+    <!-- SeekBar -->
+    <string name="seekbar_no_default_value">Не задано значение по умолчанию</string>
+    <string name="seekbar_default_value_set">Значение установлено по умолчанию <xliff:g id="number">%d</xliff:g></string>
+    <string name="seekbar_default_value_already_set">Значение по умолчанию уже установлено</string>
+    <string name="seekbar_default_string">По умолчанию</string>
+
+    <!-- Lock Clock & Date Size -->
+    <string name="lockdate_font_size_title">Размер шрифта даты</string>
+    <string name="lockclock_font_size_title">Размер шрифта часов</string>
+
+    <!-- Language options - Volume rocker cursor control -->
+    <string name="cursor_section_header">Курсор</string>
+    <string name="volume_key_cursor_control_title">Клавиша громкости управления курсором</string>
+    <string name="volume_key_cursor_control_off">Отключено</string>
+    <string name="volume_key_cursor_control_on">Громкость вверх / вниз перемещает курсор влево / вправо</string>
+    <string name="volume_key_cursor_control_on_reverse">Громкость вверх / вниз перемещает курсор вправо / влево</string>
 </resources>

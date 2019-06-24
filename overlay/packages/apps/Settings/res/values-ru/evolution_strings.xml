@@ -333,4 +333,19 @@
     <string name="aggressive_battery_saver_title">Автоматическое включение экономии заряда батареи</string> 
     <string name="aggressive_battery_saver_summary">Включить агрессивную батарею автоматически при использовании экономии заряда батареи</string>
 
+    <!-- Battery saving mode for Location - GPS will be disabled -->
+    <string name="location_mode_battery_saving_title">Режим экономии заряда батареи</string>
+    <string name="location_mode_battery_saving_summary">Использовать только Wi-Fi, Bluetooth или мобильную сеть для определения местоположения (менее точно)</string>
+
+    <!-- Font picker -->
+    <string name="font_picker_title">Системный шрифт</string>
+    <string name="font_picker_progress">Применить новый шрифт</string>
+    <string name="disable_fonts_installed_title">Средство выбора шрифтов недоступно, чтобы избежать конфликтов с Substratum. Удалите его, если вы хотите использовать системный инструмент выбора шрифтов.</string>
+
+    <!-- Quick unlock -->
+    <string name="unlock_quick_unlock_control_title">Быстрая разблокировка</string>
+    <string name="unlock_quick_unlock_control_summary">Автоматическая разблокировка при вводе правильного PIN / пароля</string>
+
+    <!-- Running services -->
+    <string name="background_processes_settings_title">Фоновые процессы</string>
 </resources>
