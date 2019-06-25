@@ -437,7 +437,6 @@ PRODUCT_PACKAGES += \
     libavmediaserviceextensions \
     libmediametrics \
     libregistermsext \
-    libhypv_intercept \
     mediametrics
 
 # Memory optimizations
