@@ -260,16 +260,9 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
-    copybit.sdm660 \
-    gralloc.sdm660 \
-    hwcomposer.sdm660 \
-    libdisplayconfig \
     liboverlay \
-    libqdMetaData \
-    libqdMetaData.system \
     libvulkan \
     libtinyxml \
-    memtrack.sdm660 \
     libgenlock
 
 # DRM
@@ -504,18 +497,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # OMX
 PRODUCT_PACKAGES += \
-    libstagefrighthw \
     libstagefright_soft_flacdec \
-    libc2dcolorconvert \
-    libmm-omxcore \
     libOmxAacEnc:32 \
     libOmxAmrEnc:32 \
-    libOmxCore:32 \
     libOmxEvrcEnc:32 \
     libOmxG711Enc:32 \
-    libOmxQcelp13Enc:32 \
-    libOmxVdec:32 \
-    libOmxVenc:32
+    libOmxQcelp13Enc:32 
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
