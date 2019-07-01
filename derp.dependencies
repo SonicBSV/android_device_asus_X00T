@@ -1,0 +1,14 @@
+[
+  {
+    "remote": "PixelExperience",
+    "repository": "packages_apps_FMRadio",
+    "target_path": "packages/apps/FMRadio",
+    "revision": "pie"
+  },
+  {
+    "remote": "PixelExperience",
+    "repository": "hardware_qcom_fm",
+    "target_path": "hardware/qcom/fm",
+    "revision": "pie"
+  }
+]
