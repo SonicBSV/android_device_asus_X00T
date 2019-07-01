@@ -93,27 +93,31 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 #ANT+ stack
 PRODUCT_PACKAGES += \
     AntHalService \
-    libantradio \
     antradio_app
+    
+#    libantradio \
 
 # Audio
 PRODUCT_PACKAGES += \
-    audio.a2dp.default \
-    audio.r_submix.default \
-    audio.usb.default \
+    android.hardware.audio@2.0-service \
+    android.hardware.soundtrigger@2.0-core:32 \
     libaudio-resampler \
     libaudioroute \
-    libqcompostprocbundle \
-    libqcomvisualizer \
-    libqcomvoiceprocessing \
-    libvolumelistener \
+    tinycap \
+    tinyplay \
+    tinypcminfo \
     tinymix
-    
+
+#    audio.a2dp.default \
+#    audio.r_submix.default \
+#    audio.usb.default \
+#    libqcompostprocbundle \
+#    libqcomvisualizer \
+#    libqcomvoiceprocessing \
+#    libvolumelistener \
 #    android.hardware.soundtrigger@2.1-impl \
-#    android.hardware.soundtrigger@2.0-core \
 #    android.hardware.audio@4.0-impl \
 #    android.hardware.audio.effect@4.0-impl \
-#    android.hardware.audio@2.0-service \
 #    audio.primary.sdm660 \
 
 PRODUCT_COPY_FILES += \
@@ -130,13 +134,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
     $(LOCAL_PATH)/configs/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
     $(LOCAL_PATH)/configs/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml 
-
-PRODUCT_COPY_FILES += \
-    $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
-    $(TOPDIR)frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
-    $(TOPDIR)frameworks/av/services/audiopolicy/config/default_volume_tables.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
-    $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
-    $(TOPDIR)frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
@@ -194,7 +191,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.bt.max.hs.connections=2 \
     persist.bt.max.a2dp.connections=1 \
     persist.bt.enable.multicast=0 \
-    persist.bluetooth.disableabsvol=true \
     persist.vendor.bluetooth.modem_nv_support=true \
     persist.vendor.btstack.enable.splita2dp=true \
     vendor.qcom.bluetooth.soc=cherokee \
@@ -214,7 +210,6 @@ TARGET_SCREEN_WIDTH := 1080
 PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0:32 \
     camera.device@3.2-impl \
-    SnapdragonCamera \
     GoogleCameraMod
     
 #    android.hardware.camera.provider@2.4-impl \
@@ -268,23 +263,17 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
-    copybit.sdm660 \
-    gralloc.sdm660 \
-    hwcomposer.sdm660 \
-    libdisplayconfig \
     liboverlay \
-    libqdMetaData \
-    libqdMetaData.system \
     libvulkan \
     libtinyxml \
-    memtrack.sdm660 \
     libgenlock
 
 # DRM
 PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service \
     android.hardware.drm@1.1-service.clearkey
+
+#    android.hardware.drm@1.0-impl \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
@@ -449,11 +438,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
  
 # Media Extensions
 PRODUCT_PACKAGES += \
-    libavenhancements \
     libavmediaserviceextensions \
     libmediametrics \
     libregistermsext \
-    libhypv_intercept \
     mediametrics
 
 # Memory optimizations
@@ -513,20 +500,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # OMX
 PRODUCT_PACKAGES += \
-    libc2dcolorconvert \
-    libstagefrighthw \
     libstagefright_soft_flacdec 
-
-#    libextmedia_jni \
-#    libmm-omxcore \
-#    libOmxAacEnc:32 \
-#    libOmxAmrEnc:32 \
-#    libOmxCore:32 \
-#    libOmxEvrcEnc:32 \
-#    libOmxG711Enc:32 \
-#    libOmxQcelp13Enc:32 \
-#    libOmxVdec:32 \
-#    libOmxVenc:32 \
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
@@ -559,6 +533,7 @@ PRODUCT_PACKAGES += \
     init.msm.usb.configfs.rc \
     init.qcom.factory.rc \
     init.qcom.rc \
+    init.qti.fm.rc \
     init.qcom.usb.rc \
     init.target.rc \
     ueventd.qcom.rc
@@ -577,10 +552,11 @@ PRODUCT_PACKAGES += \
     android.hardware.radio.config@1.0 \
     android.hardware.radio.deprecated@1.0 \
     android.hardware.secure_element@1.0 \
-    librmnetctl \
     libxml2 \
     libprotobuf-cpp-full \
     libprotobuf-cpp-full-rtti
+    
+#    librmnetctl \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     DEVICE_PROVISIONED=1 \
@@ -774,11 +750,10 @@ PRODUCT_PACKAGES += \
     libwifi-hal-qcom \
     libqsap_sdk \
     wificond \
-    wpa_supplicant.conf 
-    
-#    hostapd_cli \
-#    hostapd \
-#    wpa_supplicant \
+    wpa_supplicant.conf \
+    hostapd_cli \
+    hostapd \
+    wpa_supplicant 
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/fstman.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/fstman.ini \
