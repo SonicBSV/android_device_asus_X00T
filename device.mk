@@ -101,6 +101,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-service \
     android.hardware.soundtrigger@2.0-core:32 \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio.effect@2.0-impl \
+    android.hardware.audio@4.0-impl \
+    android.hardware.audio.effect@4.0-impl \
     libaudio-resampler \
     libaudioroute \
     tinycap \
@@ -116,8 +120,6 @@ PRODUCT_PACKAGES += \
 #    libqcomvoiceprocessing \
 #    libvolumelistener \
 #    android.hardware.soundtrigger@2.1-impl \
-#    android.hardware.audio@4.0-impl \
-#    android.hardware.audio.effect@4.0-impl \
 #    audio.primary.sdm660 \
 
 PRODUCT_COPY_FILES += \
@@ -529,6 +531,8 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
+    fix_baseband.sh \
+    hack_attest.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.qcom.factory.rc \
