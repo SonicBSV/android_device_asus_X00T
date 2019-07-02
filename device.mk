@@ -648,6 +648,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.qti.sensors.facing=false \
     ro.vendor.qti.sensors.cmc=false
 
+# SQL
+PRODUCT_PACKAGES += \
+    sqlite3
+
 # Skip Validate Disable
 PRODUCT_PROPERTY_OVERRIDES += \
     sdm.debug.disable_skip_validate=1 \
