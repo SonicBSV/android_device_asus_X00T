@@ -29,6 +29,9 @@ PRODUCT_AAPT_PREBUILT_DPI := xxhdpi
 # default is nosdcard, S/W button enabled in resource
 PRODUCT_CHARACTERISTICS := nosdcard
 
+# skip boot jars check
+SKIP_BOOT_JARS_CHECK := true
+
 # ARCore
 TARGET_INCLUDE_STOCK_ARCORE := true
 
@@ -202,6 +205,9 @@ PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0:32 \
     camera.device@3.2-impl \
     GoogleCameraMod
+
+PRODUCT_BOOT_JARS += \
+    com.qualcomm.qti.camera
     
 #    android.hardware.camera.provider@2.4-impl \
 #    android.hardware.camera.provider@2.4-service \  
@@ -237,6 +243,7 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
+    libgui_vendor:32 \
     liboverlay \
     libvulkan \
     libtinyxml \
