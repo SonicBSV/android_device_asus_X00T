@@ -451,7 +451,6 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
-    fix_baseband.sh \
     hack_attest.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
