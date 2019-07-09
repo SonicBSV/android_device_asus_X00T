@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Whether notify fingerprint client of successful cancelled authentication -->
     <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
 
@@ -8,9 +7,14 @@
 
     <!-- Button backlight -->
     <integer name="config_buttonBrightnessSettingDefault">0</integer>
-    <bool name="config_deviceHasVariableButtonBrightness">false</bool>
 
     <!-- Whether device supports gestures on fingerprint sensor -->
     <bool name="config_supportsGesturesOnFingerprintSensor">true</bool>
+
+    <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+    <bool name="config_cleanupUnusedFingerprints">false</bool>
+
+    <!-- Pocket Lock -->
+    <bool name="config_pocketModeSupported">false</bool>
 
 </resources>
