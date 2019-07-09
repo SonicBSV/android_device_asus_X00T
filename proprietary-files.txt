@@ -19,7 +19,7 @@ vendor/lib/hw/com.qualcomm.qti.ant@1.0-impl.so
 vendor/lib64/com.qualcomm.qti.ant@1.0.so
 vendor/lib64/hw/com.qualcomm.qti.ant@1.0-impl.so
 
-# Bluetooth - from Xiaomi Mi8 Lite platina - PKQ1.181007.001 9.3.28
+# Bluetooth
 bin/dun-server
 lib/libbt-logClient.so
 lib64/libbt-logClient.so
@@ -227,15 +227,6 @@ vendor/lib64/vendor.qti.gnss@1.2.so
 vendor/lib64/vendor.qti.gnss@2.0.so
 vendor/lib64/vendor.qti.gnss@2.1.so
 
-# GPU firmware - from Xiaomi Mi8 Lite platina - PKQ1.181007.001 9.3.28
-vendor/firmware/a512_zap.b00
-vendor/firmware/a512_zap.b01
-vendor/firmware/a512_zap.b02
-vendor/firmware/a512_zap.elf
-vendor/firmware/a512_zap.mdt
-vendor/firmware/a530_pfp.fw
-vendor/firmware/a530_pm4.fw
-
 # Graphics (Adreno) - from Xiaomi Mi8 Lite platina - PKQ1.181007.001 9.3.28
 lib/egl/libGLES_android.so
 lib64/egl/libGLES_android.so
@@ -284,7 +275,7 @@ vendor/lib64/librs_adreno.so
 vendor/lib/libhdr_tm.so
 vendor/lib64/libhdr_tm.so
 
-# Graphics (SDM) - from Xiaomi Mi8 Lite platina - PKQ1.181007.001 9.3.28
+# Graphics (SDM) - from Xiaomi Mi A2 jasmine - PKQ1.180904.001.V10.0.9.0.PDIMIXM
 vendor/lib/libqseed3.so
 vendor/lib/libsdm-color.so
 vendor/lib/libsdm-diag.so
@@ -681,7 +672,7 @@ vendor/firmware/widevine.mdt
 # Wi-Fi
 vendor/bin/cnss-daemon
 
-# Wi-Fi Display - from Xiaomi Mi8 Lite platina - PKQ1.181007.001 9.3.28
+# Wi-Fi Display - from Xiaomi Mi A2 jasmine - PKQ1.180904.001.V10.0.9.0.PDIMIXM
 bin/wfdservice
 etc/init/wfdservice.rc
 etc/wfdconfig.xml
@@ -689,6 +680,7 @@ etc/wfdconfigsink.xml
 -framework/WfdCommon.jar
 lib/com.qualcomm.qti.wifidisplayhal@1.0.so
 lib/extractors/libmmparser.so
+lib/libaacwrapper.so
 lib/libFileMux.so
 lib/libmmparser_lite.so
 lib/libmmosal.so
@@ -714,6 +706,7 @@ lib/libwfduibcsrc.so
 lib/libwfduibcsrcinterface.so
 lib64/extractors/libmmparser.so
 lib64/libFileMux.so
+lib64/libOmxMux.so
 lib64/libmmosal.so
 lib64/libmmparser_lite.so
 lib64/libwfdclient.so
