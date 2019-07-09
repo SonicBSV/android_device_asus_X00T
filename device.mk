@@ -204,6 +204,7 @@ TARGET_SCREEN_WIDTH := 1080
 PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0:32 \
     camera.device@3.2-impl \
+    Snap \
     GoogleCameraMod
 
 PRODUCT_BOOT_JARS += \
