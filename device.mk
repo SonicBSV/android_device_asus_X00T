@@ -206,9 +206,6 @@ PRODUCT_PACKAGES += \
     camera.device@3.2-impl \
     Snap \
     GoogleCameraMod
-
-PRODUCT_BOOT_JARS += \
-    com.qualcomm.qti.camera
     
 #    android.hardware.camera.provider@2.4-impl \
 #    android.hardware.camera.provider@2.4-service \  
@@ -498,9 +495,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.rlz_ap_whitelist=y0,y5,y6,y7,y9 \
     ro.com.android.dataroaming=false \
     ro.ril.ecclist=112,911  
-
-PRODUCT_BOOT_JARS += \
-    qcrilhook
 
 # QCOM
 PRODUCT_COPY_FILES += \
