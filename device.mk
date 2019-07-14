@@ -246,6 +246,10 @@ PRODUCT_PACKAGES += \
     libtinyxml \
     libgenlock
 
+# DPM
+PRODUCT_BOOT_JARS += \
+    tcmiface
+    
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-service \
@@ -494,6 +498,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.rlz_ap_whitelist=y0,y5,y6,y7,y9 \
     ro.com.android.dataroaming=false \
     ro.ril.ecclist=112,911  
+
+PRODUCT_BOOT_JARS += \
+    qcrilhook
 
 # QCOM
 PRODUCT_COPY_FILES += \
