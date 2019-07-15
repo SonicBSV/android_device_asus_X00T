@@ -379,13 +379,13 @@ on post-fs-data
     mkdir /dev/socket/location 0770 gps gps
     mkdir /dev/socket/location/ehub 0770 gps gps
 
-# Permissions for Touch dclick Mode
+# Permissions for Touch dclick node
     chown system system /sys/kernel/touchpanel/dclicknode
     chmod 0664 /sys/kernel/touchpanel/dclicknode
 
-# Permissions for Touch Gesture Mode
-    chown system system /sys/kernel/touchpanel/gesture_mode
-    chmod 0664 /sys/kernel/touchpanel/gesture_mode
+# Permissions for Touch Gesture node
+    chown system system /sys/kernel/touchpanel/gesture_node
+    chmod 0664 /sys/kernel/touchpanel/gesture_node
 
     #Create directory from IMS services
     mkdir /data/shared 0755
@@ -839,9 +839,24 @@ service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
     disabled
     oneshot
 
+service fix_baseband /vendor/bin/fix_baseband.sh
+    class late_start
+    user system
+    group shell
+    oneshot
+    disabled
+
+service hack_attest /vendor/bin/hack_attest.sh
+    class late_start
+    user root
+    group shell
+    oneshot
+    disabled
 
 on property:sys.boot_completed=1
     start qcom-post-boot
+	start fix_baseband
+	start hack_attest
 
 service vendor.atfwd /vendor/bin/ATFWD-daemon
     class late_start
@@ -915,6 +930,16 @@ service diag_mdlog_stop /system/vendor/bin/diag_mdlog -k
     group system oem_2901 sdcard_rw sdcard_r media_rw
     disabled
     oneshot
+
+service qbcharger /charger -m 1
+    disabled
+    oneshot
+
+on property:sys.qbcharger.enable=true
+    start qbcharger
+
+on property:sys.qbcharger.enable=false
+    stop qbcharger
 
 service qlogd /system/xbin/qlogd
     socket qlogd stream 0662 system system
