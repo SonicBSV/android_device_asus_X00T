@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2017 The LineageOS Project
+# Copyright (C) 2019
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,33 +22,40 @@ include $(call all-makefiles-under,$(LOCAL_PATH))
 
 include $(CLEAR_VARS)
 
-$(shell mkdir -p $(TARGET_OUT_VENDOR)/firmware; \
-    ln -sf /dev/block/bootdevice/by-name/msadp \
-        $(TARGET_OUT_VENDOR)/firmware/msadp)
-
-include $(call all-makefiles-under,$(LOCAL_PATH))
-
 FIRMWARE_MOUNT_POINT := $(TARGET_OUT_VENDOR)/firmware_mnt
 BT_FIRMWARE_MOUNT_POINT := $(TARGET_OUT_VENDOR)/bt_firmware
 DSP_MOUNT_POINT := $(TARGET_OUT_VENDOR)/dsp
 PERSIST_MOUNT_POINT := $(TARGET_ROOT_OUT)/persist
-
+ALL_DEFAULT_INSTALLED_MODULES += $(FIRMWARE_MOUNT_POINT) \
+				 $(BT_FIRMWARE_MOUNT_POINT) \
+				 $(DSP_MOUNT_POINT) \
+				 $(PERSIST_MOUNT_POINT)
 $(FIRMWARE_MOUNT_POINT):
 	@echo "Creating $(FIRMWARE_MOUNT_POINT)"
 	@mkdir -p $(TARGET_OUT_VENDOR)/firmware_mnt
+ifneq ($(TARGET_MOUNT_POINTS_SYMLINKS),false)
+	@ln -sf /vendor/firmware_mnt $(TARGET_ROOT_OUT)/firmware
+endif
 
 $(BT_FIRMWARE_MOUNT_POINT):
 	@echo "Creating $(BT_FIRMWARE_MOUNT_POINT)"
 	@mkdir -p $(TARGET_OUT_VENDOR)/bt_firmware
+ifneq ($(TARGET_MOUNT_POINTS_SYMLINKS),false)
+	@ln -sf /vendor/bt_firmware $(TARGET_ROOT_OUT)/bt_firmware
+endif
 
 $(DSP_MOUNT_POINT):
 	@echo "Creating $(DSP_MOUNT_POINT)"
 	@mkdir -p $(TARGET_OUT_VENDOR)/dsp
+ifneq ($(TARGET_MOUNT_POINTS_SYMLINKS),false)
+	@ln -sf /vendor/dsp $(TARGET_ROOT_OUT)/dsp
+endif
 
 $(PERSIST_MOUNT_POINT):
 	@echo "Creating $(PERSIST_MOUNT_POINT)"
-
-ALL_DEFAULT_INSTALLED_MODULES += $(FIRMWARE_MOUNT_POINT) $(BT_FIRMWARE_MOUNT_POINT) $(DSP_MOUNT_POINT) $(PERSIST_MOUNT_POINT)
+ifneq ($(TARGET_MOUNT_POINTS_SYMLINKS),false)
+	@ln -sf /mnt/vendor/persist $(TARGET_ROOT_OUT)/persist
+endif
 
 IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
 IMS_SYMLINKS := $(addprefix $(TARGET_OUT_APPS_PRIVILEGED)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
@@ -59,6 +66,16 @@ $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /system/lib64/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
+
+BT_LIB := libbluetooth_jni.so
+BT_SYMLINK := $(addprefix $(TARGET_OUT_APPS)/Bluetooth/lib/arm64/,$(notdir $(BT_LIB)))
+$(BT_SYMLINK): $(LOCAL_INSTALLED_MODULE)
+	@echo "BT lib link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /system/lib64/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(BT_SYMLINK)
 
 WCNSS_INI_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
 $(WCNSS_INI_SYMLINK): $(LOCAL_INSTALLED_MODULE)
