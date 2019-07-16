@@ -67,16 +67,6 @@ $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
-BT_LIB := libbluetooth_jni.so
-BT_SYMLINK := $(addprefix $(TARGET_OUT_APPS)/Bluetooth/lib/arm64/,$(notdir $(BT_LIB)))
-$(BT_SYMLINK): $(LOCAL_INSTALLED_MODULE)
-	@echo "BT lib link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /system/lib64/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(BT_SYMLINK)
-
 WCNSS_INI_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
 $(WCNSS_INI_SYMLINK): $(LOCAL_INSTALLED_MODULE)
 	@echo "WCNSS config ini link: $@"
