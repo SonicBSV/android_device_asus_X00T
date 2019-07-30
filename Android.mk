@@ -22,6 +22,12 @@ include $(call all-makefiles-under,$(LOCAL_PATH))
 
 include $(CLEAR_VARS)
 
+$(shell mkdir -p $(TARGET_OUT_VENDOR)/firmware; \
+    ln -sf /dev/block/bootdevice/by-name/msadp \
+        $(TARGET_OUT_VENDOR)/firmware/msadp)
+
+include $(call all-makefiles-under,$(LOCAL_PATH))
+
 FIRMWARE_MOUNT_POINT := $(TARGET_OUT_VENDOR)/firmware_mnt
 BT_FIRMWARE_MOUNT_POINT := $(TARGET_OUT_VENDOR)/bt_firmware
 DSP_MOUNT_POINT := $(TARGET_OUT_VENDOR)/dsp
@@ -67,6 +73,19 @@ $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
+#SDCAM_LIBS := libarcsoft_beautyshot.so libarcsoft_hdr.so libarcsoft_night_shot.so libarcsoft_panorama_burstcapture.so \
+#              libjni_hq_beautyshot.so libjni_hq_hdr_shot.so libjni_hq_night_shot.so libjni_hq_panorama.so libjni_imageutil.so \
+#              libjni_snapcammosaic.so libjni_snapcamtinyplanet.so libmpbase.so libtensorflow_inference.so
+                            
+#SDCAM_SYMLINKS := $(addprefix $(TARGET_OUT_APPS_PRIVILEGED)/SnapdragonCamera/lib/arm64/,$(notdir $(SDCAM_LIBS)))
+#$(SDCAM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+#	@echo "SDCAM lib link: $@"
+#	@mkdir -p $(dir $@)
+#	@rm -rf $@
+#	$(hide) ln -sf /system/lib64/$(notdir $@) $@
+
+#ALL_DEFAULT_INSTALLED_MODULES += $(SDCAM_SYMLINKS)
+
 WCNSS_INI_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
 $(WCNSS_INI_SYMLINK): $(LOCAL_INSTALLED_MODULE)
 	@echo "WCNSS config ini link: $@"
@@ -92,16 +111,6 @@ $(BT_FIRMWARE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /bt_firmware/image/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(BT_FIRMWARE_SYMLINKS)
-
-# Adreno symlink for camera EIS
-GLESV2_ADRENO_SYMLINK := $(TARGET_OUT_VENDOR)/lib/libGLESv2_adreno.so
-$(GLESV2_ADRENO_SYMLINK): $(LOCAL_INSTALLED_MODULE)
-	@echo "libGLESv2_adreno shared object link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf egl/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(GLESV2_ADRENO_SYMLINK)
 
 #########################################################################
 # Create Folder Structure
@@ -217,9 +226,13 @@ $(shell mkdir -p $(PRODUCT_OUT)/vendor/lib/egl && pushd $(PRODUCT_OUT)/vendor/li
 
 $(shell mkdir -p $(PRODUCT_OUT)/vendor/lib/egl && pushd $(PRODUCT_OUT)/vendor/lib > /dev/null && ln -s egl/libq3dtools_adreno.so libq3dtools_adreno.so && popd > /dev/null)
 
+$(shell mkdir -p $(PRODUCT_OUT)/vendor/lib/egl && pushd $(PRODUCT_OUT)/vendor/lib > /dev/null && ln -s egl/libGLESv2_adreno.so libGLESv2_adreno.so && popd > /dev/null)
+
 $(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/lib64 > /dev/null && ln -s egl/libEGL_adreno.so libEGL_adreno.so && popd > /dev/null)
 
 $(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/lib64 > /dev/null && ln -s egl/libq3dtools_adreno.so libq3dtools_adreno.so && popd > /dev/null)
+
+$(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/lib64 > /dev/null && ln -s egl/libGLESv2_adreno.so libGLESv2_adreno.so && popd > /dev/null)
 
 $(shell cp -rf $(LOCAL_PATH)/vendor/bin $(PRODUCT_OUT)/vendor)
 
