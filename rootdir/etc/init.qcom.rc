@@ -157,6 +157,11 @@ on boot
 
     setprop ro.telephony.call_ring.multiple false
 
+    #enable camera read sensors data
+    # Huaqin add for 1261108 by huqian at 2018/11/29 start
+    setprop persist.vendor.camera.gyro.disable 0
+    # Huaqin add for 1261108 by huqian at 2018/11/29 end
+
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
 
@@ -379,13 +384,11 @@ on post-fs-data
     mkdir /dev/socket/location 0770 gps gps
     mkdir /dev/socket/location/ehub 0770 gps gps
 
-# Permissions for Touch dclick node
-    chown system system /sys/kernel/touchpanel/dclicknode
-    chmod 0664 /sys/kernel/touchpanel/dclicknode
 
-# Permissions for Touch Gesture node
-    chown system system /sys/kernel/touchpanel/gesture_node
-    chmod 0664 /sys/kernel/touchpanel/gesture_node
+    # Permissions for Touch dclick Mode
+    # Permissions for double tap
+    chown system system /sys/kernel/touchpanel/dclicknode
+    chown system system /proc/touchpanel/double_tap_enable
 
     #Create directory from IMS services
     mkdir /data/shared 0755
