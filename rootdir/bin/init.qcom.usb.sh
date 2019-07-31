@@ -66,6 +66,16 @@ else
 	soc_id=`cat /sys/devices/system/soc/soc0/id`
 fi
 
+#ifdef VENDOR_EDIT
+boot_mode=`getprop ro.boot.ftm_mode`
+echo "boot_mode: $boot_mode" > /dev/kmsg
+case "$boot_mode" in
+    "ftm_at" | "ftm_rf" | "ftm_wlan" | "ftm_mos")
+    setprop sys.usb.config diag,adb
+    echo "AFTER boot_mode: diag,adb" > /dev/kmsg
+esac
+#endif
+
 if [ -f /sys/class/android_usb/f_mass_storage/lun/nofua ]; then
 	echo 1  > /sys/class/android_usb/f_mass_storage/lun/nofua
 fi
@@ -124,12 +134,12 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a \
 			      fi
 		      ;;
 	              "msm8998" | "sdm660" | "apq8098_latv")
-		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
+		          #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
 		      ;;
 	              "sdm845" | "sdm710")
-		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
+		          #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
 		      ;;
-	              "msmnile" | "talos")
+	              "msmnile" | "sm6150" | "trinket")
 			  setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,qdss,adb
 		      ;;
 	              *)
@@ -168,13 +178,6 @@ case "$product" in
 	*)
 	;;
 esac
-case "$product" in
-	"msmnile_gvmq")
-	echo peripheral > /sys/bus/platform/devices/a600000.ssusb/mode
-         ;;
-	*)
-	;;
-esac
 
 # check configfs is mounted or not
 if [ -d /config/usb_gadget ]; then
@@ -182,7 +185,15 @@ if [ -d /config/usb_gadget ]; then
 	msm_serial=`cat /sys/devices/soc0/serial_number`;
 	msm_serial_hex=`printf %08X $msm_serial`
 	machine_type=`cat /sys/devices/soc0/machine`
-	product_string="$machine_type-$soc_hwplatform _SN:$msm_serial_hex"
+#ifdef VENDOR_EDIT
+#Fix product name for Android Auto/Ubuntu
+	product_string=`getprop ro.product.brand`
+        if [ "$product_string" == "" ]; then
+	        product_string="ZenFone Max Pro M1"
+        fi
+#else
+#	product_string="$machine_type-$soc_hwplatform _SN:$msm_serial_hex"
+#endif
 	echo "$product_string" > /config/usb_gadget/g1/strings/0x409/product
 
 	# ADB requires valid iSerialNumber; if ro.serialno is missing, use dummy
@@ -191,92 +202,6 @@ if [ -d /config/usb_gadget ]; then
 		serialno=1234567
 		echo $serialno > /config/usb_gadget/g1/strings/0x409/serialnumber
 	fi
-
-	persist_comp=`getprop persist.sys.usb.config`
-	comp=`getprop sys.usb.config`
-	echo $persist_comp
-	echo $comp
-	if [ "$comp" != "$persist_comp" ]; then
-		echo "setting sys.usb.config"
-		setprop sys.usb.config $persist_comp
-	fi
-
-	setprop sys.usb.configfs 1
-else
-        #
-        # Do target specific things
-        #
-        case "$target" in
-             "msm8974")
-                # Select USB BAM - 2.0 or 3.0
-                echo ssusb > /sys/bus/platform/devices/usb_bam/enable
-             ;;
-             "apq8084")
-                if [ "$baseband" == "apq" ]; then
-                      echo "msm_hsic_host" > /sys/bus/platform/drivers/xhci_msm_hsic/unbind
-                fi
-             ;;
-             "msm8226")
-                if [ -e /sys/bus/platform/drivers/msm_hsic_host ]; then
-                      if [ ! -L /sys/bus/usb/devices/1-1 ]; then
-                          echo msm_hsic_host > /sys/bus/platform/drivers/msm_hsic_host/unbind
-                      fi
-                fi
-             ;;
-             "msm8994" | "msm8992" | "msm8996" | "msm8953")
-                echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
-                echo 131072 > /sys/module/g_android/parameters/mtp_tx_req_len
-                echo 131072 > /sys/module/g_android/parameters/mtp_rx_req_len
-             ;;
-             "msm8937")
-                case "$soc_id" in
-                      "313" | "320")
-                         echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
-                      ;;
-                esac
-             ;;
-        esac
-	persist_comp=`getprop persist.sys.usb.config`
-	comp=`getprop sys.usb.config`
-	echo $persist_comp
-	echo $comp
-	if [ "$comp" != "$persist_comp" ]; then
-		echo "setting sys.usb.config"
-		setprop sys.usb.config $persist_comp
-	fi
-        #
-        # Do target specific things
-        #
-        case "$target" in
-             "msm8974")
-                # Select USB BAM - 2.0 or 3.0
-                echo ssusb > /sys/bus/platform/devices/usb_bam/enable
-             ;;
-             "apq8084")
-                if [ "$baseband" == "apq" ]; then
-                      echo "msm_hsic_host" > /sys/bus/platform/drivers/xhci_msm_hsic/unbind
-                fi
-             ;;
-             "msm8226")
-                if [ -e /sys/bus/platform/drivers/msm_hsic_host ]; then
-                      if [ ! -L /sys/bus/usb/devices/1-1 ]; then
-                          echo msm_hsic_host > /sys/bus/platform/drivers/msm_hsic_host/unbind
-                      fi
-                fi
-             ;;
-             "msm8994" | "msm8992" | "msm8996" | "msm8953")
-                echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
-                echo 131072 > /sys/module/g_android/parameters/mtp_tx_req_len
-                echo 131072 > /sys/module/g_android/parameters/mtp_rx_req_len
-             ;;
-             "msm8937")
-                case "$soc_id" in
-                      "313" | "320")
-                         echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
-                      ;;
-                esac
-             ;;
-        esac
 fi
 
 #
@@ -294,6 +219,16 @@ case "$soc_id" in
 		setprop vendor.usb.rps_mask 40
 	;;
 esac
+
+#ifdef VENDOR_EDIT
+boot_mode=`getprop ro.boot.ftm_mode`
+echo "boot_mode: $boot_mode" > /dev/kmsg
+case "$boot_mode" in
+    "ftm_at" | "ftm_rf" | "ftm_wlan" | "ftm_mos")
+    setprop sys.usb.config diag,adb
+    echo "AFTER boot_mode: diag,adb" > /dev/kmsg
+esac
+#endif
 
 #
 # Initialize UVC conifguration.

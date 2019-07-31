@@ -15,10 +15,4 @@
 subdirs = [
     "light",
     "usb/1.0-basic",
-    "power/1.0",
 ]
-
-hidl_package_root {
-    name: "vendor.lineage",
-    path: "device/asus/X00T",
-}
