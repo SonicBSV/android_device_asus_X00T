@@ -228,7 +228,7 @@
             <instance>default</instance>
         </interface>
     </hal>
-    <hal format="hidl">
+    <hal format="hidl" override="true">
         <name>android.hardware.secure_element</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
@@ -513,16 +513,6 @@
         </interface>
     </hal>
     <hal format="hidl">
-        <name>vendor.qti.hardware.data.connection</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IDataConnection</name>
-            <instance>slot1</instance>
-            <instance>slot2</instance>
-        </interface>
-    </hal>
-    <hal format="hidl">
         <name>vendor.qti.hardware.data.latency</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
@@ -633,7 +623,7 @@
     <hal format="hidl">
         <name>vendor.qti.hardware.radio.qtiradio</name>
         <transport>hwbinder</transport>
-        <version>2.3</version>
+        <version>2.0</version>
         <interface>
             <name>IQtiRadio</name>
             <instance>slot1</instance>
