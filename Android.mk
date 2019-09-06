@@ -73,17 +73,17 @@ $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
-SDCAM_LIBS := libarcsoft_beautyshot.so libarcsoft_night_shot.so libjni_hq_beautyshot.so libjni_hq_night_shot.so \
-              libjni_imageutil.so libjni_snapcammosaic.so libjni_snapcamtinyplanet.so libmpbase.so
+#SDCAM_LIBS := libarcsoft_beautyshot.so libarcsoft_night_shot.so libjni_hq_beautyshot.so libjni_hq_night_shot.so \
+#              libjni_imageutil.so libjni_snapcammosaic.so libjni_snapcamtinyplanet.so libmpbase.so
                                           
-SDCAM_SYMLINKS := $(addprefix $(TARGET_OUT_APPS_PRIVILEGED)/SnapdragonCamera/lib/arm64/,$(notdir $(SDCAM_LIBS)))
-$(SDCAM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "SDCAM lib link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /system/lib64/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(SDCAM_SYMLINKS)
+#SDCAM_SYMLINKS := $(addprefix $(TARGET_OUT_APPS_PRIVILEGED)/SnapdragonCamera/lib/arm64/,$(notdir $(SDCAM_LIBS)))
+#$(SDCAM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+#	@echo "SDCAM lib link: $@"
+#	@mkdir -p $(dir $@)
+#	@rm -rf $@
+#	$(hide) ln -sf /system/lib64/$(notdir $@) $@
+#
+#ALL_DEFAULT_INSTALLED_MODULES += $(SDCAM_SYMLINKS)
 
 WCNSS_INI_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
 $(WCNSS_INI_SYMLINK): $(LOCAL_INSTALLED_MODULE)
