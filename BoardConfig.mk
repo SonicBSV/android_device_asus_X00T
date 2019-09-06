@@ -220,7 +220,7 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /mnt/vendor/persist:/persist \
     /vendor/bt_firmware:/bt_firmware \
-    /vendor/dsp:/dsp \
+    /vendor/lib/dsp:/dsp \
     /vendor/firmware_mnt:/firmware
 PRODUCT_VENDOR_MOVE_ENABLED := true
 TARGET_COPY_OUT_VENDOR := vendor
