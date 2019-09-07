@@ -27,7 +27,7 @@ DEVICE_PATH := device/asus/X00T
 BOARD_VENDOR := asus
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := sdm660
+TARGET_BOOTLOADER_BOARD_NAME := sdm636
 TARGET_NO_BOOTLOADER := true
 
 # Platform
@@ -70,7 +70,7 @@ TARGET_KERNEL_CONFIG := X00T_defconfig
 BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
 
 # API
-PRODUCT_SHIPPING_API_LEVEL := 26
+PRODUCT_SHIPPING_API_LEVEL := 27
 
 # Audio
 AUDIO_FEATURE_ENABLED_3D_AUDIO := false
@@ -221,7 +221,7 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /mnt/vendor/persist:/persist \
     /vendor/bt_firmware:/bt_firmware \
-    /vendor/dsp:/dsp \
+    /vendor/lib/dsp:/dsp \
     /vendor/firmware_mnt:/firmware
 PRODUCT_VENDOR_MOVE_ENABLED := true
 TARGET_COPY_OUT_VENDOR := vendor
@@ -234,7 +234,7 @@ TARGET_USES_MKE2FS := true
 TARGET_PER_MGR_ENABLED := true
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/sys/kernel/touchpanel/dclicknode"
+TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 TARGET_HAS_LEGACY_POWER_STATS := true
 TARGET_HAS_NO_WLAN_STATS := true
 TARGET_USES_INTERACTION_BOOST := true
@@ -262,7 +262,7 @@ PROTOBUF_SUPPORTED := true
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-SYSTEM_SECURITY_PATCH := 2019-06-05
+SYSTEM_SECURITY_PATCH := 2019-07-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
