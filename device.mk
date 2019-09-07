@@ -104,25 +104,28 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-service \
     android.hardware.soundtrigger@2.0-core:32 \
+    android.hardware.soundtrigger@2.1-impl \
     android.hardware.audio@2.0-impl \
     android.hardware.audio.effect@2.0-impl \
     android.hardware.audio@4.0-impl \
     android.hardware.audio.effect@4.0-impl \
+    audio.a2dp.default \
+    audio.r_submix.default \
+    audio.usb.default \
+    libqcompostprocbundle \
+    libqcomvisualizer \
+    libqcomvoiceprocessing \
+    libwebrtc_audio_preprocessing \
+    libvolumelistener \
     libaudio-resampler \
     libaudioroute \
+    libalsautils \
+    libavservices_minijail_vendor \
     tinycap \
     tinyplay \
     tinypcminfo \
     tinymix
 
-#    audio.a2dp.default \
-#    audio.r_submix.default \
-#    audio.usb.default \
-#    libqcompostprocbundle \
-#    libqcomvisualizer \
-#    libqcomvoiceprocessing \
-#    libvolumelistener \
-#    android.hardware.soundtrigger@2.1-impl \
 #    audio.primary.sdm660 \
 
 PRODUCT_COPY_FILES += \
@@ -138,7 +141,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
     $(LOCAL_PATH)/configs/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
-    $(LOCAL_PATH)/configs/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml 
+    $(LOCAL_PATH)/configs/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml \
+    $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
+    $(TOPDIR)frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
+    $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
+    $(TOPDIR)frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
@@ -203,11 +210,7 @@ TARGET_SCREEN_WIDTH := 1080
 # Camera
 PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0:32 \
-    camera.device@3.2-impl \
-    GoogleCameraMod
-
-PRODUCT_BOOT_JARS += \
-    com.qualcomm.qti.camera
+    camera.device@3.2-impl
     
 #    android.hardware.camera.provider@2.4-impl \
 #    android.hardware.camera.provider@2.4-service \  
@@ -243,6 +246,13 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
+    gralloc.sdm660 \
+    libdisplayconfig \
+    libgpu_tonemapper \
+    libqdMetaData \
+    libqdMetaData.system \
+    memtrack.sdm660 \
+    libhypv_intercept \
     libgui_vendor:32 \
     liboverlay \
     libvulkan \
@@ -252,9 +262,8 @@ PRODUCT_PACKAGES += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-service \
-    android.hardware.drm@1.1-service.clearkey
-
-#    android.hardware.drm@1.0-impl \
+    android.hardware.drm@1.1-service.clearkey \
+    android.hardware.drm@1.0-impl
 
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
@@ -268,11 +277,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
 
 # Fingerprint feature
-#PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.1
-    
-#    android.hardware.biometrics.fingerprint@2.1-service \
-
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
 
@@ -310,7 +314,7 @@ PRODUCT_COPY_FILES += \
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196610 \
-    ro.sf.lcd_density=440
+    ro.sf.lcd_density=420
     
 # Health
 PRODUCT_PACKAGES += \
@@ -319,8 +323,8 @@ PRODUCT_PACKAGES += \
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
-    android.hidl.base@1.0_system \
-    android.hidl.manager@1.0 \
+    android.hidl.base@1.0_vendor \
+    android.hidl.manager@1.0:32 \
     android.hidl.manager@1.0-java
 
 # IMS
@@ -430,6 +434,17 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # OMX
 PRODUCT_PACKAGES += \
+    libc2dcolorconvert \
+    libmm-omxcore \
+    libOmxAacEnc:32 \
+    libOmxAmrEnc:32 \
+    libOmxCore \
+    libOmxEvrcEnc:32 \
+    libOmxG711Enc:32 \
+    libOmxQcelp13Enc:32 \
+    libOmxVdec \
+    libOmxVenc \
+    libstagefrighthw \
     libstagefright_soft_flacdec 
 
 # Overlays
@@ -459,8 +474,8 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
-    fix_baseband.sh \
     hack_attest.sh \
+    fix_baseband.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.qcom.factory.rc \
@@ -514,11 +529,6 @@ PRODUCT_PACKAGES += \
 # QTI
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so 
-
-#QTI performance
-PRODUCT_BOOT_JARS += \
-    QPerformance \
-    UxPerformance
 
 # Seccomp
 PRODUCT_COPY_FILES += \
@@ -593,7 +603,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 PRODUCT_PACKAGES += \
-	android.hardware.usb@1.0-service.basic
+    android.hardware.usb@1.0-service.basic
     
 # Vibrator
 PRODUCT_PACKAGES += \
@@ -603,6 +613,12 @@ PRODUCT_PACKAGES += \
 # VNDK-SP:
 PRODUCT_PACKAGES += \
     vndk-sp
+
+# VR
+PRODUCT_PACKAGES += \
+    android.hardware.vr@1.0-impl \
+    android.hardware.vr@1.0-service \
+    vr.sdm660
 
 # WFD
 PRODUCT_PACKAGES += \
