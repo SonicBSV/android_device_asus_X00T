@@ -262,7 +262,7 @@ PROTOBUF_SUPPORTED := true
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-SYSTEM_SECURITY_PATCH := 2019-08-01
+SYSTEM_SECURITY_PATCH := 2019-09-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
