@@ -383,6 +383,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libavmediaserviceextensions \
     libmediametrics \
+    libmediaplayerservice \
     libregistermsext \
     mediametrics
     
@@ -622,6 +623,10 @@ PRODUCT_PACKAGES += \
     android.hardware.vr@1.0-impl \
     android.hardware.vr@1.0-service \
     vr.sdm660
+
+# Wallpapers
+PRODUCT_PACKAGES += \
+    WallpapersBReel2018
 
 # WFD
 PRODUCT_PACKAGES += \
