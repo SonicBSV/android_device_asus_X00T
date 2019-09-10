@@ -10,6 +10,19 @@ $(call inherit-product, vendor/aosip/config/common_full_phone.mk)
 # Inherit from X00T device
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 
+# GApps
+$(call inherit-product-if-exists, vendor/gapps/config.mk)
+
+# PixelStyle
+$(call inherit-product-if-exists, vendor/pixelstyle/config.mk)
+
+# Include pixel ambient sense (Now playing)
+include vendor/aosip/config/ambientsense.mk
+
+# GApps targets
+TARGET_GAPPS_ARCH := arm64
+IS_PHONE := true
+
 PRODUCT_BRAND := asus
 PRODUCT_DEVICE := X00T
 PRODUCT_MANUFACTURER := asus
@@ -22,11 +35,11 @@ TARGET_VENDOR := asus
 TARGET_VENDOR_PRODUCT_NAME := X00T
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="walleye-user 9 PQ3A.190505.001 5373320 release-keys" \
+    PRIVATE_BUILD_DESC="OnePlus5-user 9 PKQ1.180716.001 1905271736 release-keys" \
     DEVICE_MAINTAINERS="SonicBSV"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
-BUILD_FINGERPRINT := google/walleye/walleye:9/PQ3A.190505.001/5373320:user/release-keys
+BUILD_FINGERPRINT := OnePlus/OnePlus5/OnePlus5:9/PKQ1.180716.001/1905271736:user/release-keys
 
 
 
