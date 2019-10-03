@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2018 The LineageOS Open Source Project
+# Copyright (C) 2019 The LineageOS Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ DEVICE_PATH := device/asus/X00T
 BOARD_VENDOR := asus
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := sdm660
+TARGET_BOOTLOADER_BOARD_NAME := sdm636
 TARGET_NO_BOOTLOADER := true
 
 # Platform
@@ -66,10 +66,11 @@ TARGET_KERNEL_SOURCE := kernel/asus/sdm660
 TARGET_KERNEL_CONFIG := X00T_defconfig
 
 # ANT+
-BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
+#TARGET_USES_PREBUILT_ANT := true
+BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
 
 # API
-PRODUCT_SHIPPING_API_LEVEL := 26
+PRODUCT_SHIPPING_API_LEVEL := 27
 
 # Audio
 AUDIO_FEATURE_ENABLED_3D_AUDIO := false
@@ -129,7 +130,6 @@ USE_XML_AUDIO_POLICY_CONF := 1
 MM_AUDIO_ENABLED_SAFX := true
 MM_AUDIO_ENABLED_FTM := true
 
-
 # Bluetooth
 BOARD_HAVE_BLUETOOTH_QCOM := true
 QCOM_BT_USE_BTNV := true
@@ -137,17 +137,16 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 
 # Camera
 BOARD_QTI_CAMERA_32BIT_ONLY := true
-#TARGET_USES_QTI_CAMERA_DEVICE := true
+TARGET_USES_QTI_CAMERA_DEVICE := true
 USE_DEVICE_SPECIFIC_CAMERA := true
-#LIB2D_ROTATION := true
-#TARGET_TS_MAKEUP := true
 
 # Charger
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
 # CPUSets
-ENABLE_CPUSETS := true
-ENABLE_SCHEDBOOST := true
+#ENABLE_CPUSETS := true
+#ENABLE_SCHEDBOOST := true
 
 # CNE and DPM
 BOARD_USES_QCNE := true
@@ -168,7 +167,6 @@ TARGET_USES_HWC2 := true
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
 TARGET_USES_OVERLAY := true
-TARGET_USES_QCOM_DISPLAY_BSP := true
 USE_OPENGL_RENDERER := true
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 6000000
 VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
@@ -233,7 +231,7 @@ TARGET_USES_MKE2FS := true
 TARGET_PER_MGR_ENABLED := true
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/sys/kernel/touchpanel/dclicknode"
+TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 TARGET_HAS_LEGACY_POWER_STATS := true
 TARGET_HAS_NO_WLAN_STATS := true
 TARGET_USES_INTERACTION_BOOST := true
@@ -246,7 +244,7 @@ BOARD_USES_QCOM_HARDWARE := true
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/recovery.fstab
-BOARD_HAS_LARGE_FILESYSTEM := true
+#BOARD_HAS_LARGE_FILESYSTEM := true
 
 # Releasetools
 TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_X00T
@@ -254,31 +252,38 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # RIL
 TARGET_RIL_VARIANT := caf
+#TARGET_USES_OLD_MNC_FORMAT := true
+TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
+PROTOBUF_SUPPORTED := true
 
 # Seccomp
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2019-04-05
+SYSTEM_SECURITY_PATCH := 2019-09-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
+BOARD_SEPOLICY_VERS := 28.0
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
 
+# System properties
+-include $(DEVICE_PATH)/system.prop
+
+# Telephony
+#TARGET_USES_ALTERNATIVE_MANUAL_NETWORK_SELECT := true
+
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
-
-# Vendor init
-TARGET_INIT_VENDOR_LIB := libinit_X00T
-TARGET_RECOVERY_DEVICE_MODULES := libinit_X00T
 
 # VNDK
 #BOARD_VNDK_RUNTIME_DISABLE := true
 #BOARD_VNDK_VERSION := current
 
 # Wifi
+BOARD_USES_CAF_WLAN_HAL := true
 BOARD_HAS_QCOM_WLAN := true
 BOARD_HAS_QCOM_WLAN_SDK := true
 BOARD_WLAN_DEVICE := qcwcn
