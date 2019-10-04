@@ -135,7 +135,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_platform_info_extcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_extcodec.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(LOCAL_PATH)/configs/audio/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
     $(LOCAL_PATH)/configs/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
@@ -324,11 +323,9 @@ PRODUCT_PACKAGES += \
 
 # HIDL
 PRODUCT_PACKAGES += \
-    android.hidl.base@1.0_vendor \
+    android.hidl.base@1.0 \
     android.hidl.base@1.0_system \
-    android.hidl.base@1.0-java \
     android.hidl.manager@1.0_system:32 \
-    android.hidl.manager@1.0-java
 
 # IMS
 PRODUCT_PACKAGES += \
@@ -361,7 +358,7 @@ PRODUCT_COPY_FILES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.fmw-RG
+    android.hardware.light@2.0-service.asus_X00T
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -533,11 +530,6 @@ PRODUCT_COPY_FILES += \
 # QTI
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so 
-
-#QTI performance
-PRODUCT_BOOT_JARS += \
-    QPerformance \
-    UxPerformance
 
 # Seccomp
 PRODUCT_COPY_FILES += \
