@@ -75,7 +75,7 @@ ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
 #SDCAM_LIBS := libarcsoft_beautyshot.so libarcsoft_night_shot.so libjni_hq_beautyshot.so libjni_hq_night_shot.so \
 #              libjni_imageutil.so libjni_snapcammosaic.so libjni_snapcamtinyplanet.so libmpbase.so
-                                          
+#                                          
 #SDCAM_SYMLINKS := $(addprefix $(TARGET_OUT_APPS_PRIVILEGED)/SnapdragonCamera/lib/arm64/,$(notdir $(SDCAM_LIBS)))
 #$(SDCAM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 #	@echo "SDCAM lib link: $@"
