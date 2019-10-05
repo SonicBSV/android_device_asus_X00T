@@ -80,581 +80,150 @@
          backlight values for LUX levels between these control points.
 
          Must be overridden in platform specific overlays -->
-
-    <array name="config_autoBrightnessDisplayValuesNits">
-        <item>13.5</item>
-        <item>26.11</item>
-        <item>52.99</item>
-        <item>93.69</item>
-        <item>146.6</item>
-        <item>211.3</item>
-        <item>262.4</item>
-        <item>328.2</item>
-    </array>
     <integer-array name="config_autoBrightnessLevels">
-        <item>10</item>
-        <item>30</item>
-        <item>60</item>
-        <item>100</item>
-        <item>150</item>
-        <item>210</item>
-        <item>255</item>
-    </integer-array>
-    <integer-array name="config_screenBrightnessBacklight">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
         <item>3</item>
-        <item>4</item>
         <item>5</item>
-        <item>6</item>
         <item>7</item>
-        <item>8</item>
-        <item>9</item>
         <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
         <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
         <item>25</item>
-        <item>26</item>
-        <item>27</item>
-        <item>28</item>
-        <item>29</item>
-        <item>30</item>
-        <item>31</item>
-        <item>32</item>
-        <item>33</item>
-        <item>34</item>
-        <item>35</item>
-        <item>36</item>
-        <item>37</item>
-        <item>38</item>
-        <item>39</item>
         <item>40</item>
-        <item>41</item>
-        <item>42</item>
-        <item>43</item>
-        <item>44</item>
-        <item>45</item>
-        <item>46</item>
-        <item>47</item>
-        <item>48</item>
-        <item>49</item>
-        <item>50</item>
-        <item>51</item>
-        <item>52</item>
-        <item>53</item>
-        <item>54</item>
-        <item>55</item>
-        <item>56</item>
-        <item>57</item>
-        <item>58</item>
-        <item>59</item>
-        <item>60</item>
-        <item>61</item>
-        <item>62</item>
-        <item>63</item>
-        <item>64</item>
-        <item>65</item>
-        <item>66</item>
-        <item>67</item>
-        <item>68</item>
-        <item>69</item>
-        <item>70</item>
-        <item>71</item>
-        <item>72</item>
-        <item>73</item>
-        <item>74</item>
-        <item>75</item>
-        <item>76</item>
-        <item>77</item>
-        <item>78</item>
-        <item>79</item>
         <item>80</item>
-        <item>81</item>
-        <item>82</item>
-        <item>83</item>
-        <item>84</item>
-        <item>85</item>
-        <item>86</item>
-        <item>87</item>
-        <item>88</item>
-        <item>89</item>
-        <item>90</item>
-        <item>91</item>
-        <item>92</item>
-        <item>93</item>
-        <item>94</item>
-        <item>95</item>
-        <item>96</item>
-        <item>97</item>
-        <item>98</item>
-        <item>99</item>
-        <item>100</item>
-        <item>101</item>
-        <item>102</item>
-        <item>103</item>
-        <item>104</item>
-        <item>105</item>
-        <item>106</item>
-        <item>107</item>
-        <item>108</item>
-        <item>109</item>
-        <item>110</item>
-        <item>111</item>
-        <item>112</item>
-        <item>113</item>
-        <item>114</item>
-        <item>115</item>
-        <item>116</item>
-        <item>117</item>
-        <item>118</item>
-        <item>119</item>
-        <item>120</item>
-        <item>121</item>
-        <item>122</item>
-        <item>123</item>
-        <item>124</item>
-        <item>125</item>
-        <item>126</item>
-        <item>127</item>
-        <item>128</item>
-        <item>129</item>
         <item>130</item>
-        <item>131</item>
-        <item>132</item>
-        <item>133</item>
-        <item>134</item>
-        <item>135</item>
-        <item>136</item>
-        <item>137</item>
-        <item>138</item>
-        <item>139</item>
-        <item>140</item>
-        <item>141</item>
-        <item>142</item>
-        <item>143</item>
-        <item>144</item>
-        <item>145</item>
-        <item>146</item>
-        <item>147</item>
-        <item>148</item>
-        <item>149</item>
-        <item>150</item>
-        <item>151</item>
-        <item>152</item>
-        <item>153</item>
-        <item>154</item>
-        <item>155</item>
-        <item>156</item>
-        <item>157</item>
-        <item>158</item>
-        <item>159</item>
-        <item>160</item>
-        <item>161</item>
-        <item>162</item>
-        <item>163</item>
-        <item>164</item>
-        <item>165</item>
-        <item>166</item>
-        <item>167</item>
-        <item>168</item>
-        <item>169</item>
-        <item>170</item>
-        <item>171</item>
-        <item>172</item>
-        <item>173</item>
-        <item>174</item>
-        <item>175</item>
-        <item>176</item>
-        <item>177</item>
-        <item>178</item>
-        <item>179</item>
-        <item>180</item>
-        <item>181</item>
-        <item>182</item>
-        <item>183</item>
-        <item>184</item>
-        <item>185</item>
-        <item>186</item>
-        <item>187</item>
-        <item>188</item>
-        <item>189</item>
         <item>190</item>
-        <item>191</item>
-        <item>192</item>
-        <item>193</item>
-        <item>194</item>
-        <item>195</item>
-        <item>196</item>
-        <item>197</item>
-        <item>198</item>
-        <item>199</item>
-        <item>200</item>
-        <item>201</item>
-        <item>202</item>
-        <item>203</item>
-        <item>204</item>
-        <item>205</item>
-        <item>206</item>
-        <item>207</item>
-        <item>208</item>
-        <item>209</item>
-        <item>210</item>
-        <item>211</item>
-        <item>212</item>
-        <item>213</item>
-        <item>214</item>
-        <item>215</item>
-        <item>216</item>
-        <item>217</item>
-        <item>218</item>
-        <item>219</item>
-        <item>220</item>
-        <item>221</item>
-        <item>222</item>
-        <item>223</item>
-        <item>224</item>
-        <item>225</item>
-        <item>226</item>
-        <item>227</item>
-        <item>228</item>
-        <item>229</item>
-        <item>230</item>
-        <item>231</item>
-        <item>232</item>
-        <item>233</item>
-        <item>234</item>
-        <item>235</item>
-        <item>236</item>
-        <item>237</item>
-        <item>238</item>
-        <item>239</item>
-        <item>240</item>
-        <item>241</item>
-        <item>242</item>
-        <item>243</item>
-        <item>244</item>
-        <item>245</item>
-        <item>246</item>
-        <item>247</item>
-        <item>248</item>
-        <item>249</item>
-        <item>250</item>
-        <item>251</item>
-        <item>252</item>
-        <item>253</item>
-        <item>254</item>
-        <item>255</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>1600</item>
+        <item>2300</item>
+        <item>4500</item>
+        <item>6700</item>
+        <item>8000</item>
+        <item>10000</item>
     </integer-array>
+
+    <!-- Array of desired screen brightness in nits corresponding to the lux values
+         in the config_autoBrightnessLevels array. As with config_screenBrightnessMinimumNits and
+         config_screenBrightnessMaximumNits, the display brightness is defined as the measured
+         brightness of an all-white image.
+         If this is defined then:
+            - config_autoBrightnessLcdBacklightValues should not be defined
+            - config_screenBrightnessNits must be defined
+            - config_screenBrightnessBacklight must be defined
+         This array should have size one greater than the size of the config_autoBrightnessLevels
+         array. The brightness values must be non-negative and non-decreasing. This must be
+         overridden in platform specific overlays -->
+    <array name="config_autoBrightnessDisplayValuesNits">
+        <item>3.5077</item> <!-- 0-3 -->
+        <item>6.8394</item> <!-- 3-5 -->
+        <item>15.2781</item> <!-- 5-7 -->
+        <item>29.2182</item> <!-- 7-10 -->
+        <item>32.67851</item> <!-- 10-15 -->
+        <item>33.91246</item> <!-- 15-25 -->
+        <item>40.32457</item> <!-- 25-40 -->
+        <item>42.49835</item> <!-- 40-80 -->
+        <item>53.15009</item> <!-- 80-130 -->
+        <item>61.22432</item> <!-- 130-190 -->
+        <item>79.71869</item> <!-- 190-300  -->
+        <item>103.88509</item> <!-- 300-400 -->
+        <item>113.92643</item> <!-- 400-500 -->
+        <item>120.80091</item> <!-- 500-1600 -->
+        <item>129.56108</item> <!-- 1600-2300 -->
+        <item>143.40004</item> <!-- 2300-4500 -->
+        <item>160.87507</item> <!-- 4500-6700 -->
+        <item>216.21131</item> <!-- 6700-8000 -->
+        <item>300.83717</item> <!-- 8000-10000 -->
+        <item>399.02401</item> <!-- 10000+ -->
+    </array>
+
+    <!-- An array describing the screen's backlight values corresponding to the brightness
+         values in the config_screenBrightnessNits array.
+         This array should be equal in size to config_screenBrightnessBacklight. -->
+    <integer-array name="config_screenBrightnessBacklight">
+        <item>0</item> <!-- 0% -->
+        <item>10</item> <!-- 4% -->
+        <item>28</item> <!-- 11% -->
+        <item>38</item> <!-- 15% -->
+        <item>52</item> <!-- 20% -->
+        <item>62</item> <!-- 24% -->
+        <item>72</item> <!-- 28% -->
+        <item>76</item> <!-- 30% -->
+        <item>86</item> <!-- 34% -->
+        <item>97</item> <!-- 38% -->
+        <item>105</item> <!-- 41% -->
+        <item>115</item> <!-- 45% -->
+        <item>128</item> <!-- 50% -->
+        <item>140</item> <!-- 55% -->
+        <item>150</item> <!-- 59% -->
+        <item>158</item> <!-- 62% -->
+        <item>166</item> <!-- 65% -->
+        <item>173</item> <!-- 68% -->
+        <item>179</item> <!-- 70% -->
+        <item>184</item> <!-- 72% -->
+        <item>191</item> <!-- 75% -->
+        <item>199</item> <!-- 78% -->
+        <item>207</item> <!-- 81% -->
+        <item>217</item> <!-- 85% -->
+        <item>224</item> <!-- 88% -->
+        <item>237</item> <!-- 93% -->
+        <item>245</item> <!-- 96% -->
+        <item>255</item> <!-- 100% -->
+    </integer-array>
+
+    <!-- An array of floats describing the screen brightness in nits corresponding to the backlight
+         values in the config_screenBrightnessBacklight array.  On OLED displays these  values
+         should be measured with an all white image while the display is in the fully on state.
+         Note that this value should *not* reflect the maximum brightness value for any high
+         brightness modes but only the maximum brightness value obtainable in a sustainable manner.
+         This array should be equal in size to config_screenBrightnessBacklight -->
     <array name="config_screenBrightnessNits">
-        <item>0.023</item>
-        <item>1.88</item>
-        <item>2.76</item>
-        <item>3.97</item>
-        <item>5.29</item>
-        <item>6.62</item>
-        <item>7.94</item>
-        <item>9.14</item>
-        <item>10.46</item>
-        <item>11.78</item>
-        <item>13.15</item>
-        <item>14.3</item>
-        <item>15.62</item>
-        <item>16.95</item>
-        <item>18.27</item>
-        <item>19.49</item>
-        <item>20.82</item>
-        <item>22.16</item>
-        <item>23.5</item>
-        <item>24.87</item>
-        <item>26.11</item>
-        <item>27.48</item>
-        <item>28.52</item>
-        <item>29.9</item>
-        <item>31.17</item>
-        <item>32.55</item>
-        <item>33.93</item>
-        <item>35.3</item>
-        <item>36.59</item>
-        <item>37.97</item>
-        <item>39.35</item>
-        <item>40.74</item>
-        <item>42.01</item>
-        <item>43.39</item>
-        <item>44.78</item>
-        <item>46.17</item>
-        <item>47.56</item>
-        <item>48.83</item>
-        <item>50.21</item>
-        <item>51.59</item>
-        <item>52.99</item>
-        <item>54.25</item>
-        <item>55.64</item>
-        <item>57.02</item>
-        <item>58.42</item>
-        <item>59.68</item>
-        <item>61.04</item>
-        <item>62.45</item>
-        <item>63.84</item>
-        <item>65.06</item>
-        <item>66.43</item>
-        <item>67.95</item>
-        <item>69.33</item>
-        <item>70.7</item>
-        <item>71.97</item>
-        <item>73.36</item>
-        <item>74.73</item>
-        <item>76.12</item>
-        <item>77.4</item>
-        <item>78.75</item>
-        <item>80.13</item>
-        <item>81.52</item>
-        <item>82.79</item>
-        <item>84.15</item>
-        <item>85.54</item>
-        <item>86.93</item>
-        <item>88.17</item>
-        <item>89.51</item>
-        <item>90.92</item>
-        <item>92.31</item>
-        <item>93.69</item>
-        <item>94.93</item>
-        <item>96.31</item>
-        <item>97.64</item>
-        <item>99.02</item>
-        <item>100.3</item>
-        <item>101.7</item>
-        <item>103.1</item>
-        <item>104.4</item>
-        <item>105.6</item>
-        <item>107</item>
-        <item>108.4</item>
-        <item>109.7</item>
-        <item>111</item>
-        <item>112.3</item>
-        <item>113.7</item>
-        <item>115.1</item>
-        <item>116.4</item>
-        <item>117.7</item>
-        <item>119</item>
-        <item>120.4</item>
-        <item>121.7</item>
-        <item>123</item>
-        <item>124.3</item>
-        <item>125.6</item>
-        <item>127</item>
-        <item>128.3</item>
-        <item>129.7</item>
-        <item>131</item>
-        <item>132.3</item>
-        <item>133.6</item>
-        <item>134.8</item>
-        <item>136.1</item>
-        <item>137.5</item>
-        <item>138.8</item>
-        <item>140</item>
-        <item>141.4</item>
-        <item>142.7</item>
-        <item>144</item>
-        <item>145.3</item>
-        <item>146.6</item>
-        <item>147.9</item>
-        <item>149.2</item>
-        <item>150.4</item>
-        <item>151.7</item>
-        <item>153.1</item>
-        <item>154.3</item>
-        <item>155.5</item>
-        <item>156.8</item>
-        <item>158.1</item>
-        <item>159.4</item>
-        <item>160.7</item>
-        <item>161.9</item>
-        <item>163.1</item>
-        <item>164.5</item>
-        <item>165.7</item>
-        <item>166.7</item>
-        <item>168.1</item>
-        <item>169.3</item>
-        <item>170.6</item>
-        <item>171.8</item>
-        <item>173</item>
-        <item>174.2</item>
-        <item>175.5</item>
-        <item>176.8</item>
-        <item>178</item>
-        <item>179.2</item>
-        <item>180.4</item>
-        <item>181.6</item>
-        <item>183</item>
-        <item>184.4</item>
-        <item>185.8</item>
-        <item>187.2</item>
-        <item>188.6</item>
-        <item>190</item>
-        <item>191.4</item>
-        <item>192.8</item>
-        <item>194.2</item>
-        <item>195.6</item>
-        <item>197</item>
-        <item>198.3</item>
-        <item>199.6</item>
-        <item>201</item>
-        <item>202.3</item>
-        <item>203.6</item>
-        <item>204.9</item>
-        <item>206.1</item>
-        <item>207.4</item>
-        <item>208.8</item>
-        <item>210.1</item>
-        <item>211.3</item>
-        <item>212.5</item>
-        <item>213.8</item>
-        <item>215.1</item>
-        <item>216.3</item>
-        <item>217.6</item>
-        <item>218.9</item>
-        <item>220.2</item>
-        <item>221.3</item>
-        <item>222.5</item>
-        <item>223.9</item>
-        <item>225.2</item>
-        <item>226.4</item>
-        <item>227.6</item>
-        <item>228.8</item>
-        <item>230.1</item>
-        <item>231.4</item>
-        <item>232.6</item>
-        <item>233.9</item>
-        <item>235.1</item>
-        <item>236.4</item>
-        <item>237.6</item>
-        <item>238.8</item>
-        <item>240.1</item>
-        <item>241.3</item>
-        <item>242.4</item>
-        <item>243.7</item>
-        <item>245.1</item>
-        <item>246.3</item>
-        <item>247.6</item>
-        <item>248.8</item>
-        <item>250</item>
-        <item>251.4</item>
-        <item>252.8</item>
-        <item>254.2</item>
-        <item>255.6</item>
-        <item>257</item>
-        <item>258.3</item>
-        <item>259.6</item>
-        <item>261</item>
-        <item>262.4</item>
-        <item>263.8</item>
-        <item>264.8</item>
-        <item>266.1</item>
-        <item>267.4</item>
-        <item>268.6</item>
-        <item>269.8</item>
-        <item>271</item>
-        <item>272.2</item>
-        <item>273.5</item>
-        <item>274.6</item>
-        <item>275.8</item>
-        <item>277</item>
-        <item>278.1</item>
-        <item>279.3</item>
-        <item>280.6</item>
-        <item>281.9</item>
-        <item>283.1</item>
-        <item>284.1</item>
-        <item>285.4</item>
-        <item>286.7</item>
-        <item>287.9</item>
-        <item>289.1</item>
-        <item>290.3</item>
-        <item>291.5</item>
-        <item>292.8</item>
-        <item>293.9</item>
-        <item>295.1</item>
-        <item>296.2</item>
-        <item>297.5</item>
-        <item>298.6</item>
-        <item>299.8</item>
-        <item>301</item>
-        <item>302.2</item>
-        <item>303.4</item>
-        <item>304.6</item>
-        <item>305.8</item>
-        <item>307.1</item>
-        <item>308.2</item>
-        <item>309.4</item>
-        <item>310.4</item>
-        <item>311.8</item>
-        <item>312.9</item>
-        <item>314.2</item>
-        <item>315.2</item>
-        <item>316.5</item>
-        <item>317.1</item>
-        <item>318.8</item>
-        <item>319.9</item>
-        <item>321.1</item>
-        <item>322.3</item>
-        <item>323.5</item>
-        <item>324.7</item>
-        <item>325.8</item>
-        <item>327</item>
-        <item>328.2</item>
+        <item>0</item> <!-- 0% -->
+        <item>29.1</item> <!-- 4% -->
+        <item>32.7</item> <!-- 11% -->
+        <item>33.9</item> <!-- 15% -->
+        <item>36.6</item> <!-- 20% -->
+        <item>38.2</item> <!-- 24% -->
+        <item>40.3</item> <!-- 28% -->
+        <item>42.5</item> <!-- 30% -->
+        <item>48.4</item> <!-- 34% -->
+        <item>53.2</item> <!-- 38% -->
+        <item>55.5</item> <!-- 41% -->
+        <item>61.3</item> <!-- 45% -->
+        <item>70.2</item> <!-- 50% -->
+        <item>79.7</item> <!-- 55% -->
+        <item>88.7</item> <!-- 59% -->
+        <item>94.1</item> <!-- 62% -->
+        <item>103.9</item> <!-- 65% -->
+        <item>113.9</item> <!-- 68% -->
+        <item>120.8</item> <!-- 70% -->
+        <item>129.6</item> <!-- 72% -->
+        <item>143.4</item> <!-- 75% -->
+        <item>160.8</item> <!-- 78% -->
+        <item>184.3</item> <!-- 81% -->
+        <item>216.2</item> <!-- 85% -->
+        <item>242.6</item> <!-- 88% -->
+        <item>300.8</item> <!-- 93% -->
+        <item>347.3</item> <!-- 96% -->
+        <item>385.7</item> <!-- 100% -->
     </array>
-    <array name="config_minimumBrightnessCurveLux">
-        <item>0.0</item>
-        <item>2000.0</item>
-        <item>4000.0</item>
-    </array>
-    <array name="config_minimumBrightnessCurveNits">
-        <item>0.0</item>
-        <item>50.0</item>
-        <item>90.0</item>
-    </array>
-    
-    <!-- Screen brightness by Yandex Phone -->
-    <integer name="config_screenBrightnessDark">1</integer>
-    <integer name="config_screenBrightnessDim">10</integer>
-    <integer name="config_screenBrightnessDoze">17</integer>
-    <integer name="config_screenBrightnessForVrSettingDefault">86</integer>
-    <integer name="config_screenBrightnessForVrSettingMaximum">255</integer>
-    <integer name="config_screenBrightnessForVrSettingMinimum">79</integer>
-    <integer name="config_screenBrightnessSettingDefault">102</integer>
-    <integer name="config_screenBrightnessSettingMaximum">255</integer>
-    <integer name="config_screenBrightnessSettingMinimum">10</integer>
-    <integer name="config_brightness_ramp_rate_fast">180</integer>
-    <integer name="config_brightness_ramp_rate_slow">60</integer>
 
-    <!-- Stability requirements in milliseconds for accepting a new brightness level.  This is used
-         for debouncing the light sensor.  Different constants are used to debounce the light sensor
-         when adapting to brighter or darker environments.  This parameter controls how quickly
-         brightness changes occur in response to an observed change in light level that exceeds the
-         hysteresis threshold. -->
-    <integer name="config_autoBrightnessBrighteningLightDebounce">4000</integer>
-    <integer name="config_autoBrightnessDarkeningLightDebounce">8000</integer>
-    <integer name="config_autoBrightnessInitialLightSensorRate">-1</integer>
-    <integer name="config_autoBrightnessLightSensorRate">250</integer>
 
-    <!-- Fractions by Yandex Phone -->
-    <fraction name="config_autoBrightnessAdjustmentMaxGamma">300.0%</fraction>
-    <fraction name="config_dimBehindFadeDuration">100.0%</fraction>
-    <fraction name="config_maximumScreenDimRatio">20.000004%</fraction>
-    <fraction name="config_screenAutoBrightnessDozeScaleFactor">100.0%</fraction>
+    <!-- Screen brightness used to dim the screen when the user activity
+         timeout expires.  May be less than the minimum allowed brightness setting
+         that can be set by the user. -->
+    <integer name="config_screenBrightnessDim">4</integer>
+
+    <!-- Default screen brightness setting.
+         Must be in the range specified by minimum and maximum. -->
+    <integer name="config_screenBrightnessSettingDefault">71</integer>
+
+    <!-- Minimum screen brightness setting allowed by the power manager.
+         The user is forbidden from setting the brightness below this level. -->
+    <integer name="config_screenBrightnessSettingMinimum">1</integer>
+
+    <!-- The maximum range of gamma adjustment possible using the screen
+         auto-brightness adjustment setting. -->
+    <fraction name="config_autoBrightnessAdjustmentMaxGamma">300%</fraction>
 
     <!-- If this is true, the screen will come on when you unplug usb/power/whatever. -->
     <bool name="config_unplugTurnsOnScreen">true</bool>
@@ -675,9 +244,6 @@
 
     <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveNotificationLed">true</bool>
-
-    <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
-   <bool name="config_intrusiveBatteryLed">true</bool>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
          USB interfaces.  If the device doesn't want to support tething over USB this should
@@ -907,6 +473,9 @@
 
     <!-- Vibrator pattern for feedback about touching a virtual key -->
     <integer-array name="config_virtualKeyVibePattern">
+        <item>0</item>
+        <item>50</item>
+        <item>20</item>
         <item>30</item>
     </integer-array>
 
@@ -936,8 +505,6 @@
         <item>"/system/priv-app/SystemUI/oat/arm64/SystemUI.vdex"</item>
         <item>"/system/priv-app/SystemUI/oat/arm64/SystemUI.odex"</item>
         <item>"/system/lib64/libsurfaceflinger.so"</item>
-        <item>"/system/framework/arm64/boot-QPerformance.oat"</item>
-        <item>"/system/framework/arm64/boot-UxPerformance.oat"</item>
     </string-array>
 
     <!-- Keep chosen default camera app pinned in memory for faster launching -->
@@ -967,6 +534,11 @@
          Doze dreams will run whenever the power manager is in a dozing state. -->
     <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
 
+    <!-- Screen brightness used to dim the screen while dozing in a very low power state.
+         May be less than the minimum allowed brightness setting
+         that can be set by the user. -->
+    <integer name="config_screenBrightnessDoze">17</integer>
+
     <!-- If true, the doze component is not started until after the screen has been
          turned off and the screen off animation has been performed. -->
     <bool name="config_dozeAfterScreenOff">true</bool>
@@ -986,6 +558,39 @@
     <!-- Flag indicating whether we should enable smart battery. -->
     <bool name="config_smart_battery_available">true</bool>
     
+    <!-- Whether to enable network location overlay which allows network
+         location provider to be replaced by an app at run-time. When disabled,
+         only the config_networkLocationProviderPackageName package will be
+         searched for network location provider, otherwise packages whose
+         signature matches the signatures of config_locationProviderPackageNames
+         will be searched, and the service with the highest version number will
+         be picked. Anyone who wants to disable the overlay mechanism can set it
+         to false.
+         -->
+    <bool name="config_enableNetworkLocationOverlay" translatable="false">false</bool>
+    
+    <!-- Package name providing network location support. Used only when
+         config_enableNetworkLocationOverlay is false. -->
+    <string name="config_networkLocationProviderPackageName" translatable="false">com.qualcomm.location</string>
+
+    <!-- Whether to enable fused location provider overlay which allows fused
+         location provider to be replaced by an app at run-time. When disabled,
+         only the config_fusedLocationProviderPackageName package will be
+         searched for fused location provider, otherwise packages whose
+         signature matches the signatures of config_locationProviderPackageNames
+         will be searched, and the service with the highest version number will
+         be picked. Anyone who wants to disable the overlay mechanism can set it
+         to false.
+         -->
+    <bool name="config_enableFusedLocationOverlay" translatable="false">false</bool>
+    
+    <!-- Package name providing fused location support. Used only when
+         config_enableFusedLocationOverlay is false. -->
+    <string name="config_fusedLocationProviderPackageName" translatable="false">com.qualcomm.location</string>
+
+    <!-- Component name of the combo network location provider. -->
+    <string name="config_comboNetworkLocationProvider" translatable="false">com.qualcomm.location</string>
+
     <!-- Smart charge sysfs node and value for suspend/resume charging-->
     <string name="config_SmartChargingSysfsNode" translatable="false">/sys/class/power_supply/battery/charging_enabled</string>
     <string name="config_SmartChargingSupspendValue" translatable="false">0</string>
