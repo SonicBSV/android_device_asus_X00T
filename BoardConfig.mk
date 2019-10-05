@@ -139,8 +139,6 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 BOARD_QTI_CAMERA_32BIT_ONLY := true
 TARGET_USES_QTI_CAMERA_DEVICE := true
 USE_DEVICE_SPECIFIC_CAMERA := true
-#LIB2D_ROTATION := true
-#TARGET_TS_MAKEUP := true
 
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
@@ -148,8 +146,8 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.msm
 
 # CPUSets
-ENABLE_CPUSETS := true
-ENABLE_SCHEDBOOST := true
+#ENABLE_CPUSETS := true
+#ENABLE_SCHEDBOOST := true
 
 # CNE and DPM
 BOARD_USES_QCNE := true
@@ -221,7 +219,7 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /mnt/vendor/persist:/persist \
     /vendor/bt_firmware:/bt_firmware \
-    /vendor/lib/dsp:/dsp \
+    /vendor/dsp:/dsp \
     /vendor/firmware_mnt:/firmware
 PRODUCT_VENDOR_MOVE_ENABLED := true
 TARGET_COPY_OUT_VENDOR := vendor
@@ -247,7 +245,7 @@ BOARD_USES_QCOM_HARDWARE := true
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/recovery.fstab
-BOARD_HAS_LARGE_FILESYSTEM := true
+#BOARD_HAS_LARGE_FILESYSTEM := true
 
 # Releasetools
 TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_X00T
@@ -255,6 +253,7 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # RIL
 TARGET_RIL_VARIANT := caf
+#TARGET_USES_OLD_MNC_FORMAT := true
 TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 PROTOBUF_SUPPORTED := true
 
@@ -262,7 +261,7 @@ PROTOBUF_SUPPORTED := true
 BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Security patch level
-SYSTEM_SECURITY_PATCH := 2019-07-05
+SYSTEM_SECURITY_PATCH := 2019-09-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
@@ -273,6 +272,9 @@ SELINUX_IGNORE_NEVERALLOWS := true
 
 # System properties
 -include $(DEVICE_PATH)/system.prop
+
+# Telephony
+#TARGET_USES_ALTERNATIVE_MANUAL_NETWORK_SELECT := true
 
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
