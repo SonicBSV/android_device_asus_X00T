@@ -182,7 +182,15 @@ if [ -d /config/usb_gadget ]; then
 	msm_serial=`cat /sys/devices/soc0/serial_number`;
 	msm_serial_hex=`printf %08X $msm_serial`
 	machine_type=`cat /sys/devices/soc0/machine`
-	product_string="$machine_type-$soc_hwplatform _SN:$msm_serial_hex"
+#ifdef
+#Fix product name for Android Auto/Ubuntu
+	product_string=`getprop ro.product.model`
+        if [ "$product_string" == "" ]; then
+	        product_string="ZenFone Max Pro M1"
+        fi
+#else
+#	product_string="$machine_type-$soc_hwplatform _SN:$msm_serial_hex"
+#endif
 	echo "$product_string" > /config/usb_gadget/g1/strings/0x409/product
 
 	# ADB requires valid iSerialNumber; if ro.serialno is missing, use dummy
