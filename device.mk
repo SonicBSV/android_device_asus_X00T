@@ -104,23 +104,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-service \
     android.hardware.soundtrigger@2.0-core:32 \
-    android.hardware.soundtrigger@2.1-impl \
-    android.hardware.audio@2.0-impl \
-    android.hardware.audio.effect@2.0-impl \
-    android.hardware.audio@4.0-impl \
-    android.hardware.audio.effect@4.0-impl \
-    audio.a2dp.default \
-    audio.r_submix.default \
-    audio.usb.default \
-    libqcompostprocbundle \
-    libqcomvisualizer \
-    libqcomvoiceprocessing \
-    libwebrtc_audio_preprocessing \
-    libvolumelistener \
-    libaudio-resampler \
-    libaudioroute \
-    libalsautils \
-    libavservices_minijail_vendor \
     tinycap \
     tinyplay \
     tinypcminfo \
@@ -234,26 +217,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.asus.dclick=1 \
     persist.asus.gesture.type=1000000
 
+# Doze mode
+PRODUCT_PACKAGES += \
+    AsusDoze
+
 # Display
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
-    android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service \
-    android.hardware.graphics.mapper@2.0-impl \
-    android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
-    gralloc.sdm660 \
-    libdisplayconfig \
-    libgpu_tonemapper \
-    libqdMetaData \
-    libqdMetaData.system \
-    memtrack.sdm660 \
     libhypv_intercept \
-    libgui_vendor:32 \
     liboverlay \
     libvulkan \
-    libtinyxml \
     libgenlock
 
 # DPM
@@ -347,7 +322,9 @@ PRODUCT_COPY_FILES += \
 
 # Keylayout
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl
+    $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
+    $(LOCAL_PATH)/configs/keylayout/gxfp_input.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gxfp_input.kl \
+    $(LOCAL_PATH)/configs/keylayout/cdfinger_input.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/cdfinger_input.kl
     
 PRODUCT_PROPERTY_OVERRIDES += \
     qemu.hw.mainkeys=0
@@ -432,21 +409,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # NTP Server
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.backup.ntpServer="0.pool.ntp.org"
-    
-# OMX
-PRODUCT_PACKAGES += \
-    libc2dcolorconvert \
-    libmm-omxcore \
-    libOmxAacEnc:32 \
-    libOmxAmrEnc:32 \
-    libOmxCore \
-    libOmxEvrcEnc:32 \
-    libOmxG711Enc:32 \
-    libOmxQcelp13Enc:32 \
-    libOmxVdec \
-    libOmxVenc \
-    libstagefrighthw \
-    libstagefright_soft_flacdec 
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
