@@ -322,6 +322,12 @@ service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
      user root
      group system wakelock
 
+service seempd /system/bin/seempd
+    class late_start
+    user system
+    group system sdcard_rw
+    socket seempdw dgram 0666 system system
+
 service smcinvoked /system/bin/smcinvoked
     class main
     user system
