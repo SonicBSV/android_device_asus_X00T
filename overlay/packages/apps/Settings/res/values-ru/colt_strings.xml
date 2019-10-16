@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 ColtOS Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Colt Title -->
+    <string name="colt_name_title">Центр ColtOS</string>
+    <string name="colt_name_summary">Colt Enigma - Continues - 3.0</string>
+
+    <!-- Colt Center -->
+    <string name="colt_settings_title">Colt Enigma</string>
+    <string name="colt_settings_summary">Открыть Лобби Кольта :)</string>
+
+    <!-- Changelog -->
+    <string name="changelog_title">Список изменений</string>
+    <string name="changelog_summary">С момента последнего обновления</string>
+    <string name="changelog_error">Невозможно загрузить список изменений</string>
+
+    <!-- Scramble PIN Layout on Lockscreen -->
+    <string name="unlock_scramble_pin_layout_title">Перемешивать кнопки</string>
+    <string name="unlock_scramble_pin_layout_summary">Переставлять кнопки ввода PIN-кода в случайном порядке</string>
+
+    <!-- Quick unlock -->
+    <string name="unlock_quick_unlock_control_title">Быстрая разблокировка</string>
+    <string name="unlock_quick_unlock_control_summary">Автоматическая разблокировка при вводе правильного PIN / пароля</string>
+
+    <!-- Custom light color -->
+    <string name="custom_light_title">Цвет светодиода</string>
+    <string name="custom_light_on_time_title">Длительность свечения светодиода (мс)</string>
+    <string name="custom_light_off_time_title">Длительность затухания светодиода (мс)</string>
+    <string name="value_equals_default">умолч.</string>
+    <string name="show_light_on_zen_title">LED-индикация во время режима \"Не беспокоить\"</string>
+
+    <!-- Charging vibration -->
+    <string name="charging_vibro_title">Вибрация во время зарядки</string>
+
+    <!-- Screenshot sound -->
+    <string name="screenshot_sound_title">Звук скриншота</string>
+
+    <!-- Manage applications, package string displayed in app snippet -->
+    <string name="packagename_text"><xliff:g id="package_name">%1$s</xliff:g></string>
+
+    <!-- dashboards conditions -->
+    <string name="dashboard_conditions_title">Уведомления в главном меню</string>
+    <string name="summary_dashboard_conditions_enabled">Уведомления в главном меню включены</string>
+    <string name="summary_dashboard_conditions_disabled">Уведомления в главном меню выключены</string>
+
+    <!-- dashboards suggestions -->
+    <string name="dashboard_suggestions_title">Подсказки в главном меню</string>
+    <string name="summary_dashboard_suggestions_enabled">Подсказки в главном меню включены</string>
+    <string name="summary_dashboard_suggestions_disabled">Подсказки в главном меню выключены</string>
+
+    <!-- MSIM Manual provisioning -->
+    <string name="sim_enabler_summary"><xliff:g id="displayName">%1$s</xliff:g> is <xliff:g id="status" example="disabled">%2$s</xliff:g></string>
+    <string name="sim_enabled">Включить</string>
+    <string name="sim_disabled">Отключить</string>
+    <string name="sim_missing">отсутствует или неисправна</string>
+    <string name="sim_enabler_need_disable_sim">SIM-карта будет деактивирована. Вы хотите продолжить?</string>
+    <string name="sim_enabler_will_disable_sim_title">Внимание</string>
+    <string name="sim_enabler_need_switch_data_service">Эта SIM-карта будет отключена и SIM-карта <xliff:g id="slotid">%1$s</xliff:g> будет использоваться для услуг передачи данных. Вы уверены что хотите продолжить?</string>
+    <string name="sim_enabler_airplane_on">Невозможно выполнить операцию, когда включен режим полета.</string>
+    <string name="sim_enabler_in_call">Невозможно выполнить операцию во время разговора.</string>
+    <string name="sim_enabler_both_inactive">Нельзя отключить все SIM-карты</string>
+    <string name="sim_enabler_enabling">Активация\u2026</string>
+    <string name="sim_enabler_disabling">Деактивация\u2026</string>
+    <string name="sub_activate_success">SIM активирована.</string>
+    <string name="sub_activate_failed">Активация не удалось.</string>
+    <string name="sub_deactivate_success">SIM деактивирована.</string>
+    <string name="sub_deactivate_failed">Деактивация не удалась.</string>
+    <string name="available_sims_title">Доступные SIM-карты</string>    
+
+    <!-- Battery stats reset -->
+     <string name="battery_stats_reset">Сбросить статистику</string>
+     <string name="battery_stats_message">Статистика истории батареи будет сброшена</string>
+     <string name="ok_string">Ok</string>
+
+   <!-- Nav Gesture -->
+    <string name="full_gesture_mode_title">Включить режим полных жестов</string>
+    <string name="full_gesture_mode_summary">Этот режим также отключит кнопку «назад», и вы сможете запустить действие кнопки «назад», проведя пальцем влево на панели навигации. Смахивание вправо по-прежнему вызовет действие последнего приложения, а смахивание влево переместит приложения. Чтобы вернуться домой, вы сможете нажать на любом пустом месте на панели навигации, а не только кнопку «Домой».</string>
+    <string name="full_gesture_mode_dt2s_title">Включить двойное нажатие на экран для сна</string>
+    <string name="full_gesture_mode_dt2s_summary">Нажмите на пустое пространство панели навигации, но не на главную кнопку, чтобы выключить экран.</string>
+
+   <!-- Font picker -->
+    <string name="font_picker_title">Шрифты для ColtOS</string>
+    <string name="disable_fonts_installed_title">Средство выбора шрифтов недоступно, чтобы избежать конфликтов с субстратом. Удалите его, если вы хотите использовать средство выбора шрифтов.</string>
+    <string name="font_picker_progress">Настройка шрифта\u2026</string>
+
+    <!-- Selinux -->
+     <string name="selinux_status">Статус SELinux</string>
+     <string name="selinux_status_disabled">Отключено</string>
+     <string name="selinux_status_permissive">Разрешающий</string>
+     <string name="selinux_status_enforcing">Принудительный</string>   
+
+    <!-- Advanced night mode brightness -->
+    <string name="night_brightness_value_title">Снижение яркости при использовании ночного режима</string>
+    <string name="night_auto_value_disabled">Отключено</string>
+    <string name="night_auto_value_min">Минимальная яркость</string>
+    <string name="night_bright_low">Низкая яркость</string>
+    <string name="night_bright_midlow">Яркость ниже среднего</string>
+
+    <!-- Increasing ring tone volume -->
+    <string name="increasing_ring_volume_option_title">Нарастающая громкость звонка</string>
+    <string name="increasing_ring_min_volume_title">Начальная громкость</string>
+    <string name="increasing_ring_ramp_up_time_title">Время нарастания</string>
+
+    <!-- Volume link notification -->
+    <string name="volume_link_notification_title">Связать громкость рингтона и уведомлений</string>
+
+    <!-- OTA -->
+    <string name="coltupdate_settings_title">Обновление ColtOS</string>
+    <string name="coltupdate_settings_summary">Поиск обновлений для ColtOS</string>
+
+    <!-- Format string for fingerprint location message -->
+    <string name="security_settings_fingerprint_enroll_find_sensor_message_cm">Расположение датчика отпечатка пальца на <xliff:g id="sensor_location">%1$s</xliff:g> вашем телефоне.</string>
+	
+    <!-- Fingerprint sensor locations -->
+    <string name="security_settings_fingerprint_sensor_location_back">сзади</string>
+    <string name="security_settings_fingerprint_sensor_location_front">спереди</string>
+    <string name="security_settings_fingerprint_sensor_location_left">левая сторона</string>
+    <string name="security_settings_fingerprint_sensor_location_right">правая сторона</string>
+
+    <!-- Media gestures -->
+    <string name="prevent_ringing_option_mute_no_media">Без звука, без мультимедиа</string>
+    <string name="prevent_ringing_option_mute_no_media_summary">Включено (без звука, без мультимедиа)</string>
+
+    <!-- doze on charge -->
+    <string name="doze_on_charge_title">Показывать во время зарядки</string>
+    <string name="doze_on_charge_summary">Пробуждение экрана при зарядке</string>
+
+    <!-- Battery ui -->
+    <string name="battery_stats_charging">Зарядка</string>
+    <string name="battery_stats_discharging">Разрядка</string>
+
+    <!-- Battery temp -->
+    <string name="battery_temp_title">Температура батареи</string>
+    <string name="battery_temp_summary">Нажмите, чтобы переключить шкалу</string>
+
+    <!-- Switch styles -->
+    <string name="switch_style_title">Сменить внешний вид</string>
+    <string name="switch_default">По умолчанию</string>
+    <string name="switch_md2">Material Design 2</string>
+    <string name="switch_oneplus">OnePlus</string>
+    <string name="switch_narrow">Narrow</string>
+    <string name="switch_contained">Contained</string>
+    <string name="switch_retro">Ретро</string>
+    <string name="switch_stockish">Stockish</string>
+
+    <!-- Battery charge warning -->
+    <string name="notification_sound_battery_charge_title">Предупреждение о зарядке батареи</string>
+    <string name="notification_sound_battery_charge_summary">Воспроизвести звук, когда батарея полностью заряжена</string>
+    <string name="notification_battery_charge_level_title">Предупреждение о зарядке батареи</string>
+    <string name="notification_battery_charge_level_summary">Включить воспроизведение звука, когда батарея достигает указанного уровня при зарядке</string>
+    <string name="notification_battery_charge_level_seek_bar">Уровень заряда батареи</string>
+    <string name="notification_battery_charge_level_ringtone">Рингтон</string>
+    <string name="notification_battery_charge_level_silent">Бесшумно</string>
+
+     <!-- Running services -->
+    <string name="background_processes_settings_title">Фоновые процессы</string>
+
+    <!-- Volume settings - Volume adjustment sound -->
+    <string name="volume_adjust_sounds_title">Звук при регулировке громкости</string>
+    <string name="hide_notch_title">Скрыть вырез</string>
+    <string name="hide_notch_summary">Если включено, он скрывает вырез и пространство по бокам</string>
+
+    <!-- Toolbar -->
+    <string name="settings_head_title">Colt Enigma</string>
+
+    <!-- Notch: Full screen apps -->
+    <string name="display_cutout_force_fullscreen_title">Полноэкранные приложения</string>
+    <string name="display_cutout_force_fullscreen_summary">Приложения принудительно игнорируют вырез (бровь-челку)</string>
+
+    <!-- LiveDisplay -->
+    <string name="live_display_summary">Оптимизируйте экран в зависимости от времени суток и окружающих условий, чтобы улучшить читаемость и уменьшить утомляемость глаз.</string>
+    <string name="live_display_mode">Режим экрана</string>
+    <string name="live_display_color_temperature_title">Цветовая температура</string>
+    <string name="live_display_color_temperature_summary">День: <xliff:g id="day_temperature">%1$d</xliff:g>K  Ночь: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">День</string>
+    <string name="live_display_night">Ночь</string>
+    <string name="live_display_outdoor_mode_title">Автоматический режим для улицы</string>
+    <string name="live_display_outdoor_mode_summary">Автоматическое увеличение яркости и насыщенности при ярком солнечном свете</string>
+    <string name="live_display_low_power_title">Снизить энергопотребление</string>
+    <string name="live_display_low_power_summary">Подстраивать экран для низкого энергопотребления без ухудшения качества</string>
+    <string name="live_display_enhance_color_title">Улучшение цветопередачи</string>
+    <string name="live_display_enhance_color_summary">Улучшить сочность оттенков кожи, пейзажей и других изображений</string>
+    <string name="live_display_color_profile_title">Цветовой профиль</string>
+    <string name="live_display_color_profile_standard_title">Стандартный</string>
+    <string name="live_display_color_profile_standard_summary">Точная цветопередача и яркие белые тона</string>
+    <string name="live_display_color_profile_natural_title">Естественный</string>
+    <string name="live_display_color_profile_natural_summary">Натуральные цвета и оттенки кожи</string>
+    <string name="live_display_color_profile_dynamic_title">Динамический</string>
+    <string name="live_display_color_profile_dynamic_summary">Насыщенные цвета и повышенная контрастность</string>
+    <string name="live_display_color_profile_cinema_title">Кино</string>
+    <string name="live_display_color_profile_cinema_summary">Идеальная цветопередача для видео</string>
+    <string name="live_display_color_profile_astronomy_title">Астрономия</string>
+    <string name="live_display_color_profile_astronomy_summary">Темно-красный для уменьшения влияния на ваш сон</string>
+    <string name="live_display_color_profile_photography_title">Фотография</string>
+    <string name="live_display_color_profile_photography_summary">Идеальная цветопередача для фото</string>
+    <string name="live_display_color_profile_basic_title">Базовый</string>
+    <string name="live_display_color_profile_basic_summary">Использовать неоткалиброванный дисплей</string>
+    <string name="live_display_color_profile_adaptive_title">Адаптивный</string>
+    <string name="live_display_color_profile_adaptive_summary">Цвета адаптируются к условиям окружающей среды</string>
+    <string name="live_display_color_profile_reading_title">Чтение</string>
+    <string name="live_display_color_profile_reading_summary">Теплые цвета для меньшего напряжения глаз</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">Цвета, схожие с пространством sRGB</string>
+    <string name="live_display_color_profile_dci_p3_title">Цветовое пространство DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Цвета, соответствующие цветовому пространству DCI-P3</string>
+    <string name="live_display_reading_mode_title">Режим чтения</string>
+    <string name="live_display_reading_mode_summary">Режим оттенков серого для продолжительного чтения</string>
+    <string name="color_calibration_title">Калибровка цвета</string>
+    <string name="color_calibration_summary">Настройка цветопередачи экрана</string>
+    <string name="color_red_title">Красный</string>
+    <string name="color_green_title">Зеленый</string>
+    <string name="color_blue_title">Синий</string>
+
+    <!-- LiveDisplay : Picture Adjustment -->
+    <string name="picture_adjustment_title">Регулировка изображения</string>
+    <string name="picture_adjustment_summary">Отрегулируйте оттенок, насыщенность, глубину и контрастность</string>
+    <string name="adj_hue_title">Оттенок</string>
+    <string name="adj_saturation_title">Насыщенность</string>
+    <string name="adj_intensity_title">Интенсивность</string>
+    <string name="adj_contrast_title">Контраст</string>
+
+    <!-- Smart charging -->
+    <string name="smart_charging_title">Умная зарядка</string>
+    <string name="smart_charging_summary">Установить максимальный уровень зарядки</string>
+    <string name="smart_charging_switch_title">Использовать Умную зарядку</string>
+    <string name="smart_charging_level_title">Уровень остановки Умной зарядки</string>
+    <string name="smart_charging_resume_level_title">Уровень начала работы Умной зарядки</string>
+    <string name="smart_charging_reset_stats_title">Сбросить статистику батареи</string>
+    <string name="smart_charging_reset_stats_summary">Сбросить статистику батареи после достижения определенного уровня зарядки</string>
+    <string name="smart_charging_footer">Умная зарядка позволяет установить максимальный уровень зарядки для продления срока службы батареи</string>
+
+    <string name="switch_brand_toolbar">Брендовые настройки</string>
+    <string name="switch_brand_toolbar_summary_on">Отобразить Colt-Enigma и имя пользователя в панели настроек</string>
+    <string name="switch_brand_toolbar_summary_off">Отключить Colt-Enigma и имя пользователя в панели настроек</string>
+
+    <!-- About phone, uptime. Deep sleep ratio since last reboot. -->
+    <string name="status_deep_sleep">(Режим сна: %1$d%2$s)</string>
+
+    <!-- Battery saving mode for Location - GPS will be disabled -->
+    <string name="location_mode_battery_saving_title">Режим энергосбережения</string>
+    <string name="location_mode_battery_saving_summary">Используйте только Wi-Fi, Bluetooth или мобильные сети для определения местоположения (менее точно)</string>
+
+    <!-- App Ops Categories -->
+    <string name="app_ops_settings">Операции в приложениях</string>
+    <string name="app_ops_cat_location">Местоположение</string>
+    <string name="app_ops_cat_personal">Личные данные</string>
+    <string name="app_ops_cat_messaging">SMS/MMS</string>
+    <string name="app_ops_cat_media">Мультимедиа</string>
+    <string name="app_ops_cat_device">Устройство</string>
+    <string name="app_ops_cat_bootup">Автозагрузка</string>
+     <!-- App ops labels -->
+    <string name="app_ops_access_camera">камера</string>
+    <string name="app_ops_coarse_location">приблизительное местоположение</string>
+    <string name="app_ops_fine_location">точное местоположение</string>
+    <string name="app_ops_gps_location">GPS-модуль</string>
+    <string name="app_ops_access_notifications">уведомления</string>
+    <string name="app_ops_activate_vpn">VPN</string>
+    <string name="app_ops_auto_start">автозапуск</string>
+    <string name="app_ops_delete_call_log">удалить журнал звонков</string>
+    <string name="app_ops_delete_contacts">удалить контакты</string>
+    <string name="app_ops_delete_mms">удалить MMS</string>
+    <string name="app_ops_delete_sms">удалить SMS</string>
+    <string name="app_ops_draw_on_top">отображать поверх</string>
+    <string name="app_ops_get_usage_stats">статистика использования</string>
+    <string name="app_ops_keep_device_awake">не выключать</string>
+    <string name="app_ops_monitor_location">отслеживание местоположения</string>
+    <string name="app_ops_high_power_location">отслеживание высокоточного местоположения</string>
+    <string name="app_ops_make_phone_call">звонить</string>
+    <string name="app_ops_modify_calendar">изменять календарь</string>
+    <string name="app_ops_modify_call_log">изменять журнал звонков</string>
+    <string name="app_ops_modify_clipboard">изменять буфер обмена</string>
+    <string name="app_ops_modify_contacts">изменять контакты</string>
+    <string name="app_ops_modify_settings">изменять настройки</string>
+    <string name="app_ops_mute_unmute_microphone">выкл/вкл микрофон</string>
+    <string name="app_ops_play_audio">играть аудио</string>
+    <string name="app_ops_post_notification">показывать уведомление</string>
+    <string name="app_ops_cell_scan">cканирование сотовой сети</string>
+    <string name="app_ops_project_media">выполнить трансляцию</string>
+    <string name="app_ops_read_calendar">считать календарь</string>
+    <string name="app_ops_read_call_log">считать журнал вызовов</string>
+    <string name="app_ops_read_clipboard">считать буфер обмена</string>
+    <string name="app_ops_read_contacts">считать контакты</string>
+    <string name="app_ops_read_mms">считать MMS</string>
+    <string name="app_ops_read_sms">считать SMS</string>
+    <string name="app_ops_receive_sms">получить SMS</string>
+    <string name="app_ops_record_audio">запись аудио</string>
+    <string name="app_ops_send_mms">отправить MMS</string>
+    <string name="app_ops_send_sms">отправить SMS</string>
+    <string name="app_ops_toast_window">всплывающие уведомления</string>
+    <string name="app_ops_use_alarm_volume">изменять громкость будильника</string>
+    <string name="app_ops_use_audio_focus">изменять аудиофокус</string>
+    <string name="app_ops_use_bluetooth_volume">изменять громкость Bluetooth-устройств</string>
+    <string name="app_ops_use_master_volume">изменять общую громкость</string>
+    <string name="app_ops_use_media_buttons">испол. кнопки мультимедиа</string>
+    <string name="app_ops_use_media_volume">изменять громкость мультимедиа</string>
+    <string name="app_ops_use_notification_volume">изменять громкость уведомлений</string>
+    <string name="app_ops_use_ring_volume">изменять громкость звонка</string>
+    <string name="app_ops_use_vibrate">виброотклик</string>
+    <string name="app_ops_use_voice_volume">изменять громкость разговора</string>
+    <string name="app_ops_write_mms">создать MMS</string>
+    <string name="app_ops_write_sms">создать SMS</string>
+    <string name="app_ops_use_fingerprint">использовать отпечатки</string>
+    <string name="app_ops_add_voicemail">голосовая почта</string>
+    <string name="app_ops_read_phone_state">состояние телефона</string>
+    <string name="app_ops_scan_wifi">сканирование WiFi сетей</string>
+    <string name="app_ops_change_wallpaper">изменение обоев</string>
+    <string name="app_ops_assist_structure">вспомогательный скриншот</string>
+    <string name="app_ops_assist_screenshot">делать скриншот</string>
+    <string name="app_ops_use_body_sensors">нательные сенсоры</string>
+    <string name="app_ops_read_cell_broadcasts">оповещение населения</string>
+    <string name="app_ops_mock_location">фиктивное местоположение</string>
+    <string name="app_ops_read_external_storage">считать с внеш. носителя</string>
+    <string name="app_ops_write_external_storage">записать на внеш. носитель</string>
+    <string name="app_ops_turn_on_screen">включить экран</string>
+    <string name="app_ops_get_accounts">получить аккаунт</string>
+    <string name="app_ops_run_in_background">запуск в фоновом режиме</string>
+    <string name="app_ops_accessibility_volume">доступ к громкости</string>
+    <string name="app_ops_read_phone_numbers">чтение тел. номера</string>
+    <string name="app_ops_request_install_packages">установка прил.</string>
+    <string name="app_ops_picture_in_picture">карт. в карт.</string>
+    <string name="app_ops_app_start_foreground">запуск на перед. плане</string>
+    <string name="app_ops_answer_phone_calls">ответ на звонок</string>
+    <string name="app_ops_run_any_in_background">запуск в фоне</string>
+    <string name="app_ops_change_wifi_state">изменять состояние wi-fi</string>
+    <string name="app_ops_request_delete_packages">удалять приложение</string>
+    <string name="app_ops_bind_accessibility_service">запускать сервис</string>
+    <string name="app_ops_accept_handover">вызов из другого приложения</string>
+    <string name="app_ops_manage_ipsec_tunnels">создание ipsec туннелей</string>
+    <string name="app_ops_start_foreground">запуск на перед. плане</string>
+    <string name="app_ops_bluetooth_scan">сканирование BT</string>
+    <string name="app_ops_boot_completed">автозагрузка</string>
+
+    <!-- ColtOS info -->
+    <string name="colt_title">Подробности ColtOS</string>
+    <string name="colt_info">Всё о Colt версии</string>
+    <string name="colt_maintainer">Сопровождающий</string>
+    <string name="colt_date">Дата сборки</string>
+    <string name="colt_type">Тип сборки</string>
+    <string name="colt_device">Устройство</string>
+    <string name="colt_version">Версия</string>
+
+    <!-- Less Notification sounds -->
+    <string name="less_notification_sounds_title">Менее частые звуки уведомлений</string>
+    <string name="less_notification_sounds_summary">Проигрывать звук уведомления для каждого приложения только один раз за выбранный промежуток времени</string>
+    <string name="less_notification_sounds_default">По умолчанию</string>
+    <string name="less_notification_sounds_3s">Каждые 3 секунды</string>
+    <string name="less_notification_sounds_5s">Каждые 5 секунд</string>
+    <string name="less_notification_sounds_10s">Каждые 10 секунд</string>
+    <string name="less_notification_sounds_15s">Каждые 15 секунд</string>
+    <string name="less_notification_sounds_30s">Каждые 30 секунд</string>
+    <string name="less_notification_sounds_45s">Каждые 45 секунд</string>
+    <string name="less_notification_sounds_1m">Каждую минуту</string>
+    <string name="less_notification_sounds_2m">Каждые 2 минуты</string>
+    <string name="less_notification_sounds_5m">Каждые 5 минут</string>
+
+    <!-- Sizes for pattern lockscreen -->
+    <string name="lock_pattern_size_3" translatable="false">3 \u00d7 3</string>
+    <string name="lock_pattern_size_4" translatable="false">4 \u00d7 4</string>
+    <string name="lock_pattern_size_5" translatable="false">5 \u00d7 5</string>
+    <string name="lock_pattern_size_6" translatable="false">6 \u00d7 6</string>
+
+    <!-- Sizes for pattern lockscreen -->
+    <string name="lock_settings_picker_pattern_size_message">Выберите размер графического ключа</string>
+    <!-- Whether a visible red line will be drawn after the user has drawn the unlock pattern incorrectly -->
+    <string name="lockpattern_settings_enable_error_path_title">Показывать неверный ввод</string>
+    <!-- Whether the dots will be drawn when using the lockscreen pattern -->
+    <string name="lockpattern_settings_enable_dots_title">Показывать точки</string>
+
+    <!-- Lock screen vibrate settings -->
+    <string name="lockscreen_vibrate_enabled_title">Вибрация</string>
+    <string name="lockscreen_vibrate_enabled_head">Вибрировать при разблокировке</string>
+   
+    <!-- Battery estimates -->
+    <string name="battery_estimates_title">Оценка остатка батареи в быстрых настройках</string>
+    <string name="battery_estimates_summary">Показывать оценку жизни батареи в панели быстрых настроек</string>
+
+    <!-- Display cutout options -->
+    <string name="cutout_main">Вырез на экране</string>
+    <string name="cutout_main_summary">Настроить бровь</string>
+    <string name="display_cutout_style_title">Стиль выреза</string>
+    <string name="display_cutout_style_normal">Нормальный</string>
+    <string name="display_cutout_style_immerse">Режим погружения (полного экрана)</string>
+    <string name="display_cutout_style_hide">Скрыть</string>
+    <string name="stock_statusbar_in_hide">Высота строки состояния по умолчанию</string>
+    <string name="stock_statusbar_in_hide_summary">Использовать высоту строки состояния по умолчанию в скрытом режиме</string>
+
+    <!-- Notification sound timeout -->
+    <string name="app_notification_sound_timeout_title">Минимальное время между уведомлениями</string>
+    <string name="app_notification_sound_timeout_summary_template">Разрешить звук или вибрацию не более одного раза <xliff:g id="duration">%1$s</xliff:g></string>
+    <string name="app_notification_sound_timeout_value_none">Без ограничений</string>
+    <string name="app_notification_sound_timeout_value_10_seconds">10 секунд</string>
+    <string name="app_notification_sound_timeout_value_30_seconds">30 секунд</string>
+    <string name="app_notification_sound_timeout_value_1_minute">1 минута</string>
+    <string name="app_notification_sound_timeout_value_5_minutes">5 минут</string>
+    <string name="app_notification_sound_timeout_value_15_minutes">10 минут</string>
+    <string name="app_notification_sound_timeout_value_30_minutes">30 минут</string>
+
+    <!-- Thermal control per app -->
+    <string name="thermal_control_per_app">Профиль оптимизации</string>
+    <string name="thermal_control_per_app_default">Без оптимизации</string>
+    <string name="thermal_control_per_app_benchmark">Производительность</string>
+    <string name="thermal_control_per_app_games">Игры</string>
+    <string name="thermal_control_per_app_browser">Браузер</string>
+    <string name="thermal_control_per_app_video_playback">Воспроизведение видео</string>
+    <string name="thermal_control_per_app_dialer">Номеронабиратель</string>
+    <string name="thermal_control_per_app_camera">Камера</string>
+</resources>
+
+

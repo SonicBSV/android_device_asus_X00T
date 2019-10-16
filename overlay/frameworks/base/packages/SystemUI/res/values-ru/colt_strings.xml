@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2018 ColtOS  Project
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="global_action_restart_recovery">Режим восстановления</string>
+    <string name="global_action_restart_bootloader">Загрузчик</string>
+    <string name="global_action_restart_ui">Системный интерфейс</string>
+	    <!-- Colt QS Tile -->
+    <string name="quick_settings_colt_label">Настройки Colt</string>
+
+    <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Игровой режим</string>
+    <string name="gaming_mode_tile_toast">Игровой режим включен</string>
+    <string name="gaming_mode_tile_toast_disabled">Игровой режим выключен</string>
+    <string name="gaming_mode_dialog_title">Игровой режим</string>
+    <string name="gaming_mode_dialog_message">Когда игровой режим включен, все всплывающие сообщения будут отключены, а аппаратные клавиши будут отключены. Все отключенные настройки будут сброшены к настройкам по умолчанию после выхода из игрового режима.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Игровой режим включен</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Игровой режим выключен</string>
+
+    <!-- Other QS tiles -->
+    <string name="calendar_title_tile">Добавить событие</string>
+
+    <!-- Sync QS tile -->
+    <string name="quick_settings_sync_label">Синхронизация</string>
+    <string name="accessibility_quick_settings_sync_off">Синхронизация выключена.</string>
+    <string name="accessibility_quick_settings_sync_on">Синхронизация включена.</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Синхронизация отключена.</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Синхронизация включена.</string>
+
+    <!-- Ambient display QS tile -->
+    <string name="quick_settings_ambient_display_label">Активный экран</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display turned off.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display turned on.</string>
+
+    <!-- Always on Display Tile -->
+    <string name="quick_settings_always_on_display_label">Экран всегда включен</string>
+	<string name="quick_settings_cpuinfo_label">Информация о CPU</string>
+     <!-- Font Tile -->
+    <string name="quick_settings_font_label">Шрифты Colt</string>
+    <string name="quick_settings_font_detail_label">Выберите шрифт</string>
+
+    <!-- Elmyra -->
+    <string name="elmyra_raw_sensor_string_type">com.google.sensor.elmyra.raw</string>
+    <string name="google_camera_app_package_name">com.google.android.GoogleCamera</string>
+
+        <!-- Reader mode QS tile -->
+    <string name="quick_settings_reading_mode">Режим чтения</string>
+    <string name="accessibility_quick_settings_reading_mode_on">Режим чтения включен</string>
+    <string name="accessibility_quick_settings_reading_mode_off">Режим чтения выключен</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_on">Режим чтения включен.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_off">Режим чтения выключен.</string>
+	
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">Компас</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">Инициализация\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Компас выкл</string>
+    <string name="accessibility_quick_settings_compass_on">Компас вкл</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Компас выкл</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Компас вкл</string>
+    <string name="quick_settings_compass_N">Север</string>
+    <string name="quick_settings_compass_NE">Северо-восток</string>
+    <string name="quick_settings_compass_E">Восток</string>
+    <string name="quick_settings_compass_SE">Юго-восток</string>
+    <string name="quick_settings_compass_S">Юг</string>
+    <string name="quick_settings_compass_SW">Юго-запад</string>
+    <string name="quick_settings_compass_W">Запад</string>
+    <string name="quick_settings_compass_NW">Северо-запад</string>
+
+    <!-- Smart Pixels QS Tile -->
+    <string name="quick_settings_smart_pixels">Умные пиксели</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Автовключение умных пикселей</string>
+
+    <!-- Ambient Display Pixel-Like string -->
+    <string name="ambientmusic_songinfo">%s от %s</string>
+
+	    <!-- Location Tile -->
+    <string name="quick_settings_location_battery_saving_label">Экономия батареи</string>
+    <string name="quick_settings_location_battery_saving_label_twoline">Экономия\nбатареи</string>
+    <string name="quick_settings_location_gps_only_label">Только GPS</string>
+    <string name="quick_settings_location_gps_only_label_twoline">Только GPS</string>
+    <string name="quick_settings_location_high_accuracy_label">Высокая точность</string>
+    <string name="quick_settings_location_high_accuracy_label_twoline">Высокая\nточность</string>
+    <string name="quick_settings_location_detail_title">Местоположение</string>
+    <string name="quick_settings_location_detail_menu_title">Выберите режим:</string>
+    <string name="quick_settings_location_detail_mode_high_accuracy_title">Высокая точность</string>
+    <string name="quick_settings_location_detail_mode_battery_saving_title">Экономия батареи</string>
+    <string name="quick_settings_location_detail_mode_sensors_only_title">Только устройство</string>
+    <string name="quick_settings_location_detail_mode_high_accuracy_description">Используйте GPS, Wi\u2011Fi, Bluetooth или сотовые сети, чтобы определить местоположение </string>
+    <string name="quick_settings_location_detail_mode_battery_saving_description">Используйте Wi\u2011Fi, Bluetooth или сотовые сети для определения местоположения</string>
+    <string name="quick_settings_location_detail_mode_sensors_only_description">Используйте GPS, чтобы определить ваше местоположение</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Экран записывается</string>
+    <string name="screenrecord_notif_final_ticker">Экран успешно записан</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Экран записи</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Стоп</string>
+    <string name="screenrecord_notif_completed">Экран успешно записан</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Показать указатель</string>
+    <string name="screenrecord_notif_pointer_off">Скрыть указатель</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Невозможно записать экран</string>
+    <string name="notification_channel_screenrecord">Записи с экрана</string>
+     <string name="screenrecord_hide_hint">Скрыть подсказку</string>
+    <string name="screenrecord_show_hint">Показать подсказку</string>
+    <!-- Screenrecord QS tile -->
+    <string name="quick_settings_screenrecord_label">Запись экрана</string>
+</resources>
