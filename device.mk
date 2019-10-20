@@ -192,10 +192,11 @@ PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0:32 \
     camera.device@3.2-impl \
     Snap
-       
+    
 # Charger
 PRODUCT_PACKAGES += \
-    charger_res_images
+    asus_charger \
+    asus_charger_res_images
 
 # Configstore
 PRODUCT_PACKAGES += \
@@ -223,10 +224,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
-    android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service \
-    android.hardware.graphics.mapper@2.0-impl \
-    android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     liboverlay \
     libvulkan \
@@ -534,7 +532,7 @@ PRODUCT_BOOT_JARS += \
     telephony-ext
 
 # Tetheroffload
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     ipacm \
     IPACM_cfg.xml \
     libipanat \
@@ -604,18 +602,13 @@ PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0 \
     android.hardware.wifi@1.1 \
     android.hardware.wifi@1.2 \
-    libwifi-hal-qcom \
-    libqsap_sdk \
-    wificond \
-    wpa_supplicant.conf \
-    hostapd_cli \
-    hostapd \
-    wpa_supplicant 
+    wificond
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/fstman.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/fstman.ini \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf \
     $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny \
