@@ -169,10 +169,7 @@ PRODUCT_PACKAGES += \
     android.hardware.automotive.evs@1.0:64 \
     vendor.qti.hardware.automotive.vehicle@1.0
 
-# Bluetooth
-PRODUCT_PACKAGES += \
-    libbt-vendor
- 
+# Bluetooth 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:system/etc/bluetooth/bt_profile.conf \
     $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
@@ -196,8 +193,10 @@ PRODUCT_PACKAGES += \
     camera.device@3.2-impl \
     Snap
     
-#    android.hardware.camera.provider@2.4-impl \
-#    android.hardware.camera.provider@2.4-service \  
+# Charger
+PRODUCT_PACKAGES += \
+    asus_charger \
+    asus_charger_res_images
 
 # Configstore
 PRODUCT_PACKAGES += \
@@ -223,10 +222,10 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-service \
     android.hardware.memtrack@1.0-service \
-    libhypv_intercept \
     liboverlay \
     libvulkan \
     libgenlock
@@ -238,8 +237,7 @@ PRODUCT_BOOT_JARS += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-service \
-    android.hardware.drm@1.1-service.clearkey \
-    android.hardware.drm@1.0-impl
+    android.hardware.drm@1.1-service.clearkey
 
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
@@ -300,7 +298,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
     android.hidl.base@1.0_system \
-    android.hidl.manager@1.0_system:32 \
+    android.hidl.manager@1.0_system:32
 
 # IMS
 PRODUCT_PACKAGES += \
@@ -532,7 +530,7 @@ PRODUCT_BOOT_JARS += \
     telephony-ext
 
 # Tetheroffload
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     ipacm \
     IPACM_cfg.xml \
     libipanat \
@@ -557,7 +555,6 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@1.0-impl \
     android.hardware.thermal@1.0-service 
 
 # Touchscreen
@@ -570,7 +567,6 @@ PRODUCT_PACKAGES += \
     
 # Vibrator
 PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-impl \
     android.hardware.vibrator@1.0-service
 
 # VNDK-SP:
@@ -582,6 +578,10 @@ PRODUCT_PACKAGES += \
     android.hardware.vr@1.0-impl \
     android.hardware.vr@1.0-service \
     vr.sdm660
+
+# Wallpapers
+PRODUCT_PACKAGES += \
+    WallpapersBReel2018
 
 # WFD
 PRODUCT_PACKAGES += \
@@ -600,18 +600,13 @@ PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0 \
     android.hardware.wifi@1.1 \
     android.hardware.wifi@1.2 \
-    libwifi-hal-qcom \
-    libqsap_sdk \
-    wificond \
-    wpa_supplicant.conf \
-    hostapd_cli \
-    hostapd \
-    wpa_supplicant 
+    wificond
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/fstman.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/fstman.ini \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf \
     $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny \
