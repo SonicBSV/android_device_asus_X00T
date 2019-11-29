@@ -89,11 +89,6 @@ persist.vendor.data.mode=concurrent
 #system props for time-services
 persist.timed.enable=true
 
-# system property for maximum number of HFP client connections
-bt.max.hfpclient.connections=1
-#force disable Bluetooth AAC by default
-persist.bt.a2dp.aac_disable=true
-
 # System property for cabl
 ro.qualcomm.cabl=2
 ro.vendor.display.cabl=2
@@ -108,8 +103,8 @@ telephony.lteOnCdmaDevice=1
 persist.fuse_sdcard=true
 
 #system prop for wipower support
-ro.bluetooth.emb_wp_mode=true
-ro.bluetooth.wipower=true
+ro.bluetooth.emb_wp_mode=false
+ro.bluetooth.wipower=false
 
 #
 #snapdragon value add features
@@ -197,8 +192,6 @@ persist.chg.max_volt_mv=9000
 
 #system prop for Bluetooth SOC type
 vendor.bluetooth.soc=cherokee
-persist.vendor.btstack.enable.splita2dp=true
-persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxhd-aac
 
 # Property for backup NTP Server
 persist.backup.ntpServer="0.pool.ntp.org"
@@ -215,9 +208,7 @@ persist.vendor.camera.HAL3.enabled=1
 persist.radio.VT_CAM_INTERFACE=1
 persist.vendor.qti.telephony.vt_cam_interface=1
 #Huaqin add for Video call function by wangjunkai at 20180316 for rom end
-#Huaqin add for VoWifi function by zhangbin6 at 20180319 for rom start
-persist.vendor.data.iwlan.enable=true
-#Huaqin add for VoWifi function by zhangbin6 at 20180319 for rom end
+
 #Huaqin add for ZQL1650-1008 by banxiaokun at 2018/4/27  start
 persist.asus.led.on=1
 #Huaqin add for ZQL1650-1008 by banxiaokun at 2018/4/27  end
