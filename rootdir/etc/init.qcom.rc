@@ -449,6 +449,7 @@ service nvram_country /vendor/bin/nvram_country
     oneshot
 # Huaqin add for change class core  by xudayi at 2018/05/28 end
 
+# Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
 service nvram_btwifi /system/bin/nvram_btwifi
     user root
     group system
@@ -912,7 +913,7 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
-
+    
 service vendor.audio-hal-2-0 /vendor/bin/hw/android.hardware.audio@2.0-service
     override
     class hal
@@ -928,12 +929,4 @@ service vendor.audio-hal-2-0 /vendor/bin/hw/android.hardware.audio@2.0-service
     oneshot
     interface android.hardware.audio@5.0::IDevicesFactory default
     interface android.hardware.audio@4.0::IDevicesFactory default
-    interface android.hardware.audio@2.0::IDevicesFactory default
-
-service vendor.contexthub-hal-1-0 /vendor/bin/hw/android.hardware.contexthub@1.0-service
-    override
-    class hal
-    interface android.hardware.contexthub@1.0::IContexthub default
-    user system
-    group system
-    disabled
+    interface android.hardware.audio@2.0::IDevicesFactory default    

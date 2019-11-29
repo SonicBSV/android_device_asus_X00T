@@ -229,11 +229,6 @@ service adsprpcd /vendor/bin/adsprpcd audiopd
    user media
    group media
 
-service audiod /system/vendor/bin/audiod
-   class late_start
-   user system
-   group system
-
 ## imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
 service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
     class main
