@@ -575,7 +575,8 @@ PRODUCT_COPY_FILES += \
 
 # QMI
 PRODUCT_PACKAGES += \
-    libqti_vndfwk_detect.vendor \
+    libqti_vndfwk_detect \
+    libvndfwk_detect_jni.qti \
     libjson
 
 # QTI
