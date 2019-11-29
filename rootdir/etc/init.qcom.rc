@@ -450,9 +450,9 @@ service nvram_country /vendor/bin/nvram_country
 # Huaqin add for change class core  by xudayi at 2018/05/28 end
 
 # Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
-service nvram_btwifi /system/bin/nvram_btwifi
+service nvram_btwifi /vendor/bin/nvram_btwifi
     user root
-    group system
+    group system oem_2901
     oneshot
     disabled
 
@@ -460,9 +460,15 @@ on property:sys.boot_completed=1
     start nvram_btwifi
 
 on property:sys.nvram.btmac=*
-    setprop ro.btmac ${sys.nvram.btmac}
-on property:sys.nvram.wifimac=*
-    setprop ro.wifimac ${sys.nvram.wifimac}
+    start vendor-btmac-sh
+    restart vendor.bluetooth-1-0-qti
+# Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 end
+
+service vendor-btmac-sh  /vendor/bin/init.btmac.sh
+    class core
+    user root
+    oneshot
+    disabled
 
 service iop /vendor/bin/iop
     class main
@@ -493,17 +499,17 @@ on property:ro.vendor.iocgrp.config=1
     write /dev/blkio/blkio.weight 1000
     write /dev/blkio/bg/blkio.weight 100
 
-on property:persist.sys.ssr.enable_debug=*
-    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.sys.ssr.enable_debug}
+on property:persist.vendor.sys.ssr.enable_debug=*
+    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.vendor.sys.ssr.enable_debug}
 
-on property:persist.sys.mba_boot_timeout=*
-    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.sys.mba_boot_timeout}
+on property:persist.vendor.sys.mba_boot_timeout=*
+    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.vendor.sys.mba_boot_timeout}
 
-on property:persist.sys.modem_auth_timeout=*
-    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.sys.modem_auth_timeout}
+on property:persist.vendor.sys.modem_auth_timeout=*
+    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.vendor.sys.modem_auth_timeout}
 
-on property:persist.sys.pil_proxy_timeout=*
-    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.sys.pil_proxy_timeout}
+on property:persist.vendor.sys.pil_proxy_timeout=*
+    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.vendor.sys.pil_proxy_timeout}
 
 on property:persist.vendor.ssr.restart_level=*
     start vendor.ssr_setup
@@ -570,6 +576,8 @@ service qcom-c_main-sh /vendor/bin/init.class_main.sh
 
 on property:vold.decrypt=trigger_restart_framework
     start qcom-c_main-sh
+    restart vendor.camera-provider-2-4
+    restart vendor.audio-hal-2-0
     start wcnss-service
 
 on property:persist.env.fastdorm.enabled=true
@@ -764,8 +772,8 @@ service hack_attest /vendor/bin/hack_attest.sh
 
 on property:sys.boot_completed=1
     start qcom-post-boot
-	start fix_baseband
-	start hack_attest
+    start fix_baseband
+    start hack_attest
 
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1

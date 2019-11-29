@@ -75,7 +75,7 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-service \
     android.hardware.audio@2.0-impl \
     android.hardware.audio.effect@2.0-impl \
-    android.hardware.soundtrigger@2.1-impl \
+    android.hardware.soundtrigger@2.2-impl \
     android.hardware.audio@4.0 \
     android.hardware.audio.common@4.0 \
     android.hardware.audio.common@4.0-util \
@@ -105,8 +105,6 @@ PRODUCT_PACKAGES += \
     tinyplay \
     tinypcminfo \
     tinymix
-
-#    audio.primary.sdm660 \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
@@ -522,6 +520,7 @@ PRODUCT_COPY_FILES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
+    init.btmac.sh \
     init.class_main.sh \
     init.qcom.post_boot.sh \
     init.qcom.sensors.sh \
