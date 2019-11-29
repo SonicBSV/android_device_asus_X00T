@@ -233,6 +233,7 @@ BOARD_ROOT_EXTRA_SYMLINKS := \
     /vendor/dsp:/dsp \
     /vendor/firmware_mnt:/firmware
 PRODUCT_VENDOR_MOVE_ENABLED := true
+TARGET_COPY_OUT_PRODUCT := system/product
 TARGET_COPY_OUT_VENDOR := vendor
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 TARGET_USERIMAGES_USE_F2FS := true
