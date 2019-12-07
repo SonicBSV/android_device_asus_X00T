@@ -34,11 +34,12 @@ BUILD_BROKEN_DUP_RULES :=true
 BUILD_BROKEN_PHONY_TARGETS :=true
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := sdm636
+TARGET_BOOTLOADER_BOARD_NAME := sdm660
 TARGET_NO_BOOTLOADER := true
 
 # Platform
 TARGET_BOARD_PLATFORM := sdm660
+TARGET_BOARD_SUFFIX := _64
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno509
 
 # Architecture
@@ -61,8 +62,9 @@ TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 TARGET_OTA_ASSERT_DEVICE := X00TD,X00T
 
 # Kernel
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=a800000.dwc3 loop.max_part=7
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 loop.max_part=7
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+#BOARD_KERNEL_CMDLINE += skip_initramfs rootwait ro init=/init
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x01E00000
@@ -72,6 +74,8 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-
 TARGET_KERNEL_SOURCE := kernel/asus/sdm660
 TARGET_KERNEL_CONFIG := X00T_defconfig
+TARGET_USES_UNCOMPRESSED_KERNEL := false
+TARGET_KERNEL_VERSION := 4.4
 
 # ANT+
 #TARGET_USES_PREBUILT_ANT := true
@@ -195,12 +199,17 @@ endif
 # Extended Filesystem Support
 TARGET_EXFAT_DRIVER := exfat
 
+# System as root
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+BOARD_KERNEL_CMDLINE += skip_initramfs rootwait ro init=/init
+#BOARD_KERNEL_CMDLINE += dm=\"system none ro,0 1 android-verity /dev/mmcblk0p13\"
+
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 
 # FM
-#BOARD_HAS_QCA_FM_SOC := "cherokee"
-#BOARD_HAVE_QCOM_FM := true
+BOARD_HAS_QCA_FM_SOC := "cherokee"
+BOARD_HAVE_QCOM_FM := true
 
 # GPS
 #BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := true
@@ -226,18 +235,17 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4294967296
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 55490625024
 BOARD_VENDORIMAGE_PARTITION_SIZE := 838860800
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_ROOT_EXTRA_SYMLINKS := \
+#BOARD_ROOT_EXTRA_SYMLINKS := \
     /mnt/vendor/persist:/persist \
     /vendor/bt_firmware:/bt_firmware \
     /vendor/dsp:/dsp \
     /vendor/firmware_mnt:/firmware
 PRODUCT_VENDOR_MOVE_ENABLED := true
-#TARGET_COPY_OUT_PRODUCT := system/product
 TARGET_COPY_OUT_VENDOR := vendor
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USES_MKE2FS := true
+#TARGET_USES_MKE2FS := true
 
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
@@ -252,6 +260,7 @@ BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 BOARD_USES_QCOM_HARDWARE := true
 
 # Recovery
+TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 
 # Releasetools
@@ -265,7 +274,10 @@ TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 PROTOBUF_SUPPORTED := true
 
 # Security patch level
-SYSTEM_SECURITY_PATCH := 2019-09-05
+# After June Google register fingerprints with security patch version.
+# Asus Pie 055 fingerprint registered on this patch version
+VENDOR_SECURITY_PATCH := 2019-10-05
+#PLATFORM_SECURITY_PATCH := 2019-10-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
@@ -283,7 +295,10 @@ SELINUX_IGNORE_NEVERALLOWS := true
 
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
-SDCLANG := true
+
+# Vendor init
+TARGET_INIT_VENDOR_LIB := libinit_asus_X00T
+TARGET_RECOVERY_DEVICE_MODULES := libinit_asus_X00T
 
 # VNDK
 #BOARD_VNDK_RUNTIME_DISABLE := true

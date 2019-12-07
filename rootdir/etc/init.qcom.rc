@@ -72,6 +72,7 @@ on early-boot
     write /sys/kernel/boot_cdsp/boot 1
     write /sys/devices/virtual/npu/msm_npu/boot 1
     write /sys/kernel/boot_slpi/boot 1
+    write /sys/devices/virtual/cvp/cvp/boot 1
     setprop ro.alarm_boot false
 
     # for backward compatibility
@@ -112,6 +113,7 @@ on boot
     chown system system /sys/kernel/debug/msm_core/enable
     chown system system /sys/kernel/debug/msm_core/ptable
     chown system system /sys/kernel/boot_slpi/ssr
+    chown system system /sys/kernel/boot_adsp/ssr
     chown system system /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/module/bluetooth_power/parameters/power
     chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
@@ -142,7 +144,9 @@ on boot
     mkdir /persist/misc 0770 system system
     mkdir /persist/alarm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
-    restorecon_recursive /mnt/vendor/persist
+    mkdir /mnt/vendor/persist/secnvm 0770 system system
+    mkdir /mnt/vendor/persist/iar_db 0770 system system
+    mkdir /mnt/vendor/spunvm 0770 system system
 
     # LED torch permissions
     chmod 0666 /sys/class/leds/led:torch_0/brightness
@@ -236,7 +240,7 @@ on boot
 # msm specific files that need to be created on /data
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
-    
+
     # Create directory used for dump collection
     mkdir /data/vendor/ssrdump 0770 root system
 
@@ -287,9 +291,9 @@ on post-fs-data
     chmod 0644 /persist/flag/cid.txt
     chown system system /persist/flag/colorid.txt
     chmod 0644 /persist/flag/colorid.txt
-
     chown system system /persist/flag/multisim.txt
     chmod 0644 /persist/flag/multisim.txt
+
     # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 end
 
     # Create the directories used by CnE subsystem
@@ -357,6 +361,10 @@ on post-fs-data
     #Create directory from IMS services
     mkdir /data/shared 0755
     chown system system /data/shared
+
+    #Create directory for FOTA
+    mkdir /data/fota 0771
+    chown system system /data/fota
 
     #Create directory for hostapd
     mkdir /data/hostapd 0770 system wifi
@@ -436,17 +444,17 @@ on property:persist.vendor.qcomsysd.enabled=1
     enable qcomsysd
 
 on property:persist.vendor.qcomsysd.enabled=0
-    stop qcomsysd   
+    stop qcomsysd
 
 # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 start
 # Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
 # Huaqin add for change class core  by xudayi at 2018/05/28 start
-service nvram_country /vendor/bin/nvram_country
-    class core
-    user root
-    group system
+#service nvram_country /vendor/bin/nvram_country
+#    class core
+#    user root
+#    group system
 #    chmod 0644 /vendor/bin/nvram_country
-    oneshot
+#    oneshot
 # Huaqin add for change class core  by xudayi at 2018/05/28 end
 
 # Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
@@ -470,18 +478,11 @@ service vendor-btmac-sh  /vendor/bin/init.btmac.sh
     oneshot
     disabled
 
-service iop /vendor/bin/iop
-    class main
-    user root
-    group root
-    disabled
-    socket iop seqpacket 0666 root system
-
-service vendor.ssr_setup /vendor/bin/ssr_setup
+service vendor.ssr_setup /system/vendor/bin/ssr_setup
     oneshot
     disabled
 
-service vendor.ss_ramdump /vendor/bin/subsystem_ramdump
+service vendor.ss_ramdump /system/vendor/bin/subsystem_ramdump
     class main
     user system
     group system
@@ -499,17 +500,17 @@ on property:ro.vendor.iocgrp.config=1
     write /dev/blkio/blkio.weight 1000
     write /dev/blkio/bg/blkio.weight 100
 
-on property:persist.vendor.sys.ssr.enable_debug=*
-    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.vendor.sys.ssr.enable_debug}
+on property:persist.sys.ssr.enable_debug=*
+    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.sys.ssr.enable_debug}
 
-on property:persist.vendor.sys.mba_boot_timeout=*
-    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.vendor.sys.mba_boot_timeout}
+on property:persist.sys.mba_boot_timeout=*
+    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.sys.mba_boot_timeout}
 
-on property:persist.vendor.sys.modem_auth_timeout=*
-    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.vendor.sys.modem_auth_timeout}
+on property:persist.sys.modem_auth_timeout=*
+    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.sys.modem_auth_timeout}
 
-on property:persist.vendor.sys.pil_proxy_timeout=*
-    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.vendor.sys.pil_proxy_timeout}
+on property:persist.sys.pil_proxy_timeout=*
+    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.sys.pil_proxy_timeout}
 
 on property:persist.vendor.ssr.restart_level=*
     start vendor.ssr_setup
@@ -576,8 +577,6 @@ service qcom-c_main-sh /vendor/bin/init.class_main.sh
 
 on property:vold.decrypt=trigger_restart_framework
     start qcom-c_main-sh
-    restart vendor.camera-provider-2-4
-    restart vendor.audio-hal-2-0
     start wcnss-service
 
 on property:persist.env.fastdorm.enabled=true
@@ -883,6 +882,17 @@ on charger
 on property:vendor.display.lcd_density=*
     setprop ro.sf.lcd_density ${vendor.display.lcd_density}
 
+# Logcat dump daemon, dumps logs to logdump partition
+service logdumpd /system/bin/logcat -b all -v threadtime -D -w /dev/block/bootdevice/by-name/logdump
+    class core
+    writepid /dev/cpuset/system-background/tasks
+    seclabel u:r:logdumpd:s0
+    disabled
+
+# Logdumpd is enabled only for userdebug non-perf build
+on property:ro.logdumpd.enabled=1
+    start logdumpd
+
 service time_daemon /vendor/bin/time_daemon
     class main
     user system
@@ -914,6 +924,12 @@ service vendor.move_time_data /system/bin/move_time_data.sh
     disabled
     oneshot
 
+service bugreport /system/bin/dumpstate -d -p -B -z -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
+    class main
+    disabled
+    oneshot
+    keycodes 114 115 116
+
 #Set GPU Opengles version
 on property:vendor.opengles.version=*
     setprop ro.opengles.version ${vendor.opengles.version}
@@ -921,7 +937,7 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
-    
+
 service vendor.audio-hal-2-0 /vendor/bin/hw/android.hardware.audio@2.0-service
     override
     class hal

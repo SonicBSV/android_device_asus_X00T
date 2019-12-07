@@ -130,7 +130,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/configs/audio/audio_platform_info_intcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_intcodec.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(LOCAL_PATH)/configs/audio/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
     $(LOCAL_PATH)/configs/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
@@ -148,10 +147,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
     vendor.audio_hal.period_size=192 \
-    ro.vendor.audio.sdk.fluencetype=none \
+    ro.vendor.audio.sdk.fluencetype=fluence \
     persist.vendor.audio.fluence.voicecall=true \
-    persist.vendor.audio.fluence.voicerec=false \
-    persist.vendor.audio.fluence.speaker=true \
+    persist.vendor.audio.fluence.voicerec=true \
+    persist.vendor.audio.fluence.speaker=false \
     vendor.audio.tunnel.encode=false \
     persist.vendor.audio.ras.enabled=false \
     vendor.audio.offload.buffer.size.kb=64 \
@@ -249,13 +248,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
     
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.bluetooth.a2dp_offload.disabled=false \
-    persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac \
-    ro.bluetooth.a2dp_offload.supported=true \
     vendor.qcom.bluetooth.soc=cherokee \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
-    persist.vendor.qcom.bluetooth.enable.splita2dp=true \
-    persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac-ldac \
     ro.vendor.bluetooth.wipower=false \
     persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac 
     
@@ -271,7 +265,8 @@ PRODUCT_PACKAGES += \
     android.frameworks.cameraservice.common@2.0 \
     android.frameworks.cameraservice.device@2.0 \
     android.frameworks.cameraservice.service@2.0 \
-    camera.device@3.2-impl   
+    camera.device@3.2-impl \
+    Snap   
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -346,10 +341,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
 
 # FM
-#PRODUCT_PACKAGES += \
-    FM2 \
-    qcom.fmradio \
-    libqcomfm_jni
+PRODUCT_PACKAGES += \
+    FM2
+#    qcom.fmradio \
+#    libqcomfm_jni
 
 PRODUCT_PACKAGES += \
     android.hardware.broadcastradio@1.0-impl
@@ -622,9 +617,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.qti.sdk.sensors.gestures=false \
     ro.vendor.qti.sensors.facing=false \
     ro.vendor.qti.sensors.cmc=false
-
-# Set boot SPL
-BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # SQL
 PRODUCT_PACKAGES += \
