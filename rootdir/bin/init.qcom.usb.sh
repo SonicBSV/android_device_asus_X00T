@@ -84,10 +84,10 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a \
 			    else
 			               case "$soc_id" in
 				               "313" | "320")
-				                  setprop persist.vendor.usb.config diag,serial_smd,rmnet_ipa,adb
+				                  setprop persist.vendor.usb.config mtp,mass_storage,diag,adb,serial_cdev
 				               ;;
 				               *)
-				                  setprop persist.vendor.usb.config diag,serial_smd,rmnet_qti_bam,adb
+				                  setprop persist.vendor.usb.config mtp,mass_storage,diag,adb,serial_cdev
 				               ;;
 			               esac
 			    fi

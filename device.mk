@@ -1,7 +1,10 @@
-
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE:=true
 
 TARGET_MOUNT_POINTS_SYMLINKS := false
+
+#PRODUCT_SYSTEM_VERITY_PARTITION=/dev/block/bootdevice/by-name/system
+#PRODUCT_VENDOR_VERITY_PARTITION=/dev/block/bootdevice/by-name/vendor
+#$(call inherit-product, build/target/product/verity.mk)
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
@@ -83,7 +86,7 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.common@2.0-util \
     android.hardware.audio.effect@2.0 \
     android.hardware.audio@2.0 \
-    android.hardware.soundtrigger@2.2-impl \
+    android.hardware.soundtrigger@2.1-impl \
     android.hardware.audio@4.0 \
     android.hardware.audio.common@4.0 \
     android.hardware.audio.common@4.0-util \
@@ -129,6 +132,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_configs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_configs.xml \
     $(LOCAL_PATH)/configs/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/configs/audio/audio_platform_info_intcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_intcodec.xml \
+    $(LOCAL_PATH)/configs/audio/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
     $(LOCAL_PATH)/configs/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
@@ -146,57 +150,41 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
-    vendor.audio_hal.period_size=192 \
-    ro.vendor.audio.sdk.fluencetype=fluence \
-    persist.vendor.audio.fluence.voicecall=true \
-    persist.vendor.audio.fluence.voicerec=true \
-    persist.vendor.audio.fluence.speaker=false \
-    vendor.audio.tunnel.encode=false \
-    persist.vendor.audio.ras.enabled=false \
-    vendor.audio.offload.buffer.size.kb=64 \
-    vendor.audio.offload.track.enable=true \
-    vendor.voice.path.for.pcm.voip=false \
-    vendor.audio.offload.multiaac.enable=true \
-    vendor.audio.dolby.ds2.enabled=false \
-    vendor.audio.dolby.ds2.hardbypass=false \
-    vendor.audio.offload.multiple.enabled=false \
-    vendor.audio.offload.passthrough=false \
-    ro.vendor.audio.sdk.ssr=false \
-    vendor.audio.offload.gapless.enabled=true \
-    vendor.audio.safx.pbe.enabled=true \
-    vendor.audio.parser.ip.buffer.size=262144 \
-    vendor.audio.flac.sw.decoder.24bit=true \
-    vendor.audio.use.sw.alac.decoder=true \
-    vendor.audio.use.sw.ape.decoder=true \
-    vendor.audio.hw.aac.encoder=true \
-    ro.af.client_heap_size_kbyte=7168 \
-    audio.sys.noisy.broadcast.delay=600 \
-    persist.vendor.audio.hifi.int_codec=true \
-    audio.sys.offload.pstimeout.secs=3 \
+    audio.deep_buffer.media=true \
     audio.offload.min.duration.secs=30 \
     audio.offload.video=true \
+    audio.sys.noisy.broadcast.delay=600 \
+    audio.sys.offload.pstimeout.secs=3 \
+    persist.vendor.audio.fluence.speaker=false \
+    persist.vendor.audio.fluence.voicecall=true \
+    persist.vendor.audio.fluence.voicerec=true \
+    persist.vendor.audio.hifi.int_codec=true \
     persist.vendor.audio.hw.binder.size_kbyte=1024 \
-    audio.deep_buffer.media=true \
-    vendor.voice.path.for.pcm.voip=true \
-    vendor.audio.spkr_prot.tx.sampling_rate=48000 \
-    vendor.audio.volume.headset.gain.depcal=true \
+    persist.vendor.audio.ras.enabled=false \
+    ro.af.client_heap_size_kbyte=7168 \
+    ro.vendor.audio.sdk.fluencetype=fluence \
+    ro.vendor.audio.sdk.ssr=false \
+    vendor.audio.dolby.ds2.enabled=false \
+    vendor.audio.dolby.ds2.hardbypass=false \
     vendor.audio.feature.a2dp_offload.enable=true \
     vendor.audio.feature.afe_proxy.enable=true \
     vendor.audio.feature.anc_headset.enable=true \
+    vendor.audio.feature.audiozoom.enable=false \
     vendor.audio.feature.battery_listener.enable=false \
     vendor.audio.feature.compr_cap.enable=false \
     vendor.audio.feature.compress_in.enable=false \
     vendor.audio.feature.compress_meta_data.enable=true \
-    vendor.audio.feature.compr_voip.enable=false \
+    vendor.audio.feature.compr_voip.enable=true \
     vendor.audio.feature.concurrent_capture.enable=false \
     vendor.audio.feature.custom_stereo.enable=true \
+    vendor.audio.feature.deepbuffer_as_primary.enable=false \
     vendor.audio.feature.display_port.enable=true \
     vendor.audio.feature.dsm_feedback.enable=false \
     vendor.audio.feature.dynamic_ecns.enable=false \
-    vendor.audio.feature.ext_hw_plugin.enable=false \
     vendor.audio.feature.external_dsp.enable=false \
     vendor.audio.feature.external_speaker.enable=false \
     vendor.audio.feature.external_speaker_tfa.enable=false \
+    vendor.audio.feature.ext_hw_plugin.enable=false \
     vendor.audio.feature.fluence.enable=true \
     vendor.audio.feature.fm.enable=true \
     vendor.audio.feature.hdmi_edid.enable=true \
@@ -208,19 +196,35 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.feature.keep_alive.enable=false \
     vendor.audio.feature.kpi_optimize.enable=true \
     vendor.audio.feature.maxx_audio.enable=false \
+    vendor.audio.feature.multi_voice_session.enable=true \
     vendor.audio.feature.ras.enable=true \
     vendor.audio.feature.record_play_concurency.enable=false \
-    vendor.audio.feature.src_trkn.enable=true \
+    vendor.audio.feature.snd_mon.enable=true \
     vendor.audio.feature.spkr_prot.enable=false \
+    vendor.audio.feature.src_trkn.enable=true \
     vendor.audio.feature.ssrec.enable=true \
+    vendor.audio.feature.usb_offload_burst_mode.enable=false \
     vendor.audio.feature.usb_offload.enable=true \
-    vendor.audio.feature.usb_offload_burst_mode.enable=true \
     vendor.audio.feature.usb_offload_sidetone_volume.enable=false \
-    vendor.audio.feature.deepbuffer_as_primary.enable=false \
     vendor.audio.feature.vbat.enable=true \
     vendor.audio.feature.wsa.enable=false \
-    vendor.audio.feature.audiozoom.enable=false \
-    vendor.audio.feature.snd_mon.enable=true
+    vendor.audio.flac.sw.decoder.24bit=true \
+    vendor.audio_hal.period_size=192 \
+    vendor.audio.hw.aac.encoder=true \
+    vendor.audio.offload.buffer.size.kb=64 \
+    vendor.audio.offload.gapless.enabled=true \
+    vendor.audio.offload.multiaac.enable=true \
+    vendor.audio.offload.multiple.enabled=false \
+    vendor.audio.offload.passthrough=false \
+    vendor.audio.offload.track.enable=true \
+    vendor.audio.parser.ip.buffer.size=262144 \
+    vendor.audio.safx.pbe.enabled=false \
+    vendor.audio.spkr_prot.tx.sampling_rate=48000 \
+    vendor.audio.tunnel.encode=false \
+    vendor.audio.use.sw.alac.decoder=true \
+    vendor.audio.use.sw.ape.decoder=true \
+    vendor.audio.volume.headset.gain.depcal=true \
+    vendor.voice.path.for.pcm.voip=true
 
 # Atrace
 PRODUCT_PACKAGES += \
@@ -251,7 +255,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.qcom.bluetooth.soc=cherokee \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
     ro.vendor.bluetooth.wipower=false \
-    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac 
+    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac
     
 # Boot animation
     TARGET_SCREEN_HEIGHT := 2160
@@ -321,6 +325,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.vulkan=adreno \
     ro.hardware.egl=adreno
+
+# DPM
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vendor.dpm.feature=11
     
 # DRM
 PRODUCT_PACKAGES += \
@@ -342,9 +350,10 @@ PRODUCT_COPY_FILES += \
 
 # FM
 PRODUCT_PACKAGES += \
-    FM2
-#    qcom.fmradio \
-#    libqcomfm_jni
+    FM2 \
+    qcom.fmradio \
+    libfm-hci \
+    libqcomfm_jni
 
 PRODUCT_PACKAGES += \
     android.hardware.broadcastradio@1.0-impl
@@ -442,6 +451,8 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
+    tunnel.audiovideo.decode=false \
+    tunnel.decode=false \
     debug.stagefright.omx_default_rank.sw-audio=1 \
     debug.stagefright.omx_default_rank=0
  
@@ -477,7 +488,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf
 
 PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.1-service \
+    android.hardware.nfc@1.2-service \
     com.android.nfc_extras \
     NfcNci \
     Tag 
@@ -563,7 +574,7 @@ PRODUCT_PACKAGES += \
 # RIL
 PRODUCT_PACKAGES += \
     android.hardware.radio@1.4 \
-    android.hardware.radio.config@1.2 \
+    android.hardware.radio.config@1.1 \
     android.hardware.radio.deprecated@1.0 \
     libxml2 \
     libprotobuf-cpp-full
@@ -716,11 +727,11 @@ PRODUCT_PACKAGES += \
     libwifi-hal-qcom \
     libqsap_sdk \
     wificond \
+    wpa_supplicant \
     wpa_supplicant.conf \
     wpa_cli \
-    hostapd_cli \
     hostapd \
-    wpa_supplicant 
+    hostapd_cli
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.iwlan.enable=true

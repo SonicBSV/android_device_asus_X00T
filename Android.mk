@@ -22,9 +22,9 @@ include $(call all-makefiles-under,$(LOCAL_PATH))
 
 include $(CLEAR_VARS)
 
-$(shell mkdir -p $(TARGET_OUT_VENDOR)/firmware; \
-    ln -sf /dev/block/bootdevice/by-name/msadp \
-        $(TARGET_OUT_VENDOR)/firmware/msadp)
+$(shell  mkdir -p $(TARGET_OUT_VENDOR)/firmware; \
+	ln -sf /dev/block/bootdevice/by-name/msadp \
+	$(TARGET_OUT_VENDOR)/firmware/msadp)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
@@ -63,6 +63,8 @@ ifneq ($(TARGET_MOUNT_POINTS_SYMLINKS),false)
 	@ln -sf /mnt/vendor/persist $(TARGET_ROOT_OUT)/persist
 endif
 
+$(shell mkdir -p $(TARGET_OUT_VENDOR)/lib/dsp)
+
 IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
 IMS_SYMLINKS := $(addprefix $(PRODUCT_OUT)/system/product/priv-app/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
 $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -72,28 +74,6 @@ $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /product/system/lib64/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
-
-QDMA_LIBS := libvndfwk_detect_jni.qti.so
-                                          
-QDMA_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR_APPS)/QDMA/lib/arm64/,$(notdir $(QDMA_LIBS)))
-$(QDMA_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "QDMA lib link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(QDMA_SYMLINKS)
-
-QDMA-UI_LIBS := libvndfwk_detect_jni.qti.so
-                                          
-QDMA-UI_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR_APPS)/QDMA-UI/lib/arm64/,$(notdir $(QDMA-UI_LIBS)))
-$(QDMA-UI_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "QDMA-UI lib link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(QDMA-UI_SYMLINKS)
 
 #SDCAM_LIBS := libarcsoft_beautyshot.so libarcsoft_night_shot.so libjni_hq_beautyshot.so libjni_hq_night_shot.so \
 #              libjni_imageutil.so libjni_snapcammosaic.so libjni_snapcamtinyplanet.so libmpbase.so
@@ -123,16 +103,6 @@ $(WCNSS_MAC_SYMLINK): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(WCNSS_INI_SYMLINK) $(WCNSS_MAC_SYMLINK)
 
-BT_FIRMWARE := apbtfw10.tlv apbtfw11.tlv apnv10.bin apnv11.bin crbtfw11.tlv crbtfw20.tlv crbtfw21.tlv crnv11.bin crnv20.bin crnv21.bin
-BT_FIRMWARE_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/firmware/,$(notdir $(BT_FIRMWARE)))
-$(BT_FIRMWARE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "Creating BT firmware symlink: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /bt_firmware/image/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(BT_FIRMWARE_SYMLINKS)
-
 #########################################################################
 # Create Folder Structure
 #########################################################################
@@ -140,16 +110,6 @@ TARGET_OUT_FIRMWARE="/vendor/firmware_mnt"
 
 $(shell rm -rf $(TARGET_OUT_VENDOR)/rfs/)
 
-#To be enabled when prepopulation support is needed for the read_write folder
-# $(shell rm -rf  $(TARGET_OUT_DATA)/rfs/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/msm/mpss/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/msm/adsp/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/msm/slpi/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/msm/cdsp/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/mdm/mpss/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/mdm/adsp/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/mdm/slpi/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/mdm/cdsp/)
 
 #########################################################################
 # MSM Folders
@@ -242,18 +202,6 @@ $(shell ln -s /mnt/vendor/persist/rfs/shared $(TARGET_OUT_VENDOR)/rfs/apq/gnss/s
 $(shell ln -s /mnt/vendor/persist/hlos_rfs/shared $(TARGET_OUT_VENDOR)/rfs/apq/gnss/hlos)
 $(shell ln -s $(TARGET_OUT_FIRMWARE) $(TARGET_OUT_VENDOR)/rfs/apq/gnss/readonly/firmware)
 $(shell ln -s /vendor/firmware $(TARGET_OUT_VENDOR)/rfs/apq/gnss/readonly/vendor/firmware)
-
-$(shell mkdir -p $(PRODUCT_OUT)/vendor/lib/egl && pushd $(PRODUCT_OUT)/vendor/lib > /dev/null && ln -s egl/libEGL_adreno.so libEGL_adreno.so && popd > /dev/null)
-
-$(shell mkdir -p $(PRODUCT_OUT)/vendor/lib/egl && pushd $(PRODUCT_OUT)/vendor/lib > /dev/null && ln -s egl/libq3dtools_adreno.so libq3dtools_adreno.so && popd > /dev/null)
-
-$(shell mkdir -p $(PRODUCT_OUT)/vendor/lib/egl && pushd $(PRODUCT_OUT)/vendor/lib > /dev/null && ln -s egl/libGLESv2_adreno.so libGLESv2_adreno.so && popd > /dev/null)
-
-$(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/lib64 > /dev/null && ln -s egl/libEGL_adreno.so libEGL_adreno.so && popd > /dev/null)
-
-$(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/lib64 > /dev/null && ln -s egl/libq3dtools_adreno.so libq3dtools_adreno.so && popd > /dev/null)
-
-$(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/lib64 > /dev/null && ln -s egl/libGLESv2_adreno.so libGLESv2_adreno.so && popd > /dev/null)
 
 $(shell cp -rf $(LOCAL_PATH)/vendor/bin $(PRODUCT_OUT)/vendor)
 

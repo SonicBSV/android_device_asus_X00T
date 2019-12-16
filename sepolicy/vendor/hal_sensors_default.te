@@ -1,2 +1,1 @@
-allow hal_sensors_default alsps_stk3x1x:dir { r_dir_perms };
-allow hal_sensors_default alsps_stk3x1x:file { rw_file_perms };
+allow hal_sensors_default sysfs_sensors:file rw_file_perms;
