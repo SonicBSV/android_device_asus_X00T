@@ -60,7 +60,7 @@ TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 TARGET_OTA_ASSERT_DEVICE := X00TD,X00T
 
 # Kernel
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=a800000.dwc3 loop.max_part=7
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 loop.max_part=7
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
@@ -71,7 +71,6 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-
 TARGET_KERNEL_SOURCE := kernel/asus/sdm660
 TARGET_KERNEL_CONFIG := X00T_defconfig
-TARGET_USES_UNCOMPRESSED_KERNEL := false
 TARGET_KERNEL_VERSION := 4.4
 
 # ANT+
@@ -158,8 +157,10 @@ TARGET_EXFAT_DRIVER := exfat
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 
 # FM
-BOARD_HAS_QCA_FM_SOC := "cherokee"
-BOARD_HAVE_QCOM_FM := true
+#BOARD_HAS_QCA_FM_SOC := "cherokee"
+#BOARD_HAVE_QCOM_FM := true
+#AUDIO_FEATURE_ENABLED_FM := true
+#AUDIO_FEATURE_ENABLED_FM_POWER_OPT := true
 
 # GPS
 #BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := true
@@ -182,6 +183,7 @@ NXP_CHIP_FW_TYPE := PN553
 BOARD_FLASH_BLOCK_SIZE := 262144
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_CACHEIMAGE_PARTITION_SIZE := 367001600
 BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4294967296
@@ -198,7 +200,6 @@ TARGET_COPY_OUT_VENDOR := vendor
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USERIMAGES_USE_EXT4 := true
-#TARGET_USES_MKE2FS := true
 
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
@@ -230,9 +231,9 @@ PROTOBUF_SUPPORTED := true
 
 # Security patch level
 # After June Google register fingerprints with security patch version.
-# Asus Pie 055 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2019-10-05
-#PLATFORM_SECURITY_PATCH := 2019-10-05
+# Asus Pie 060 fingerprint registered on this patch version
+VENDOR_SECURITY_PATCH := 2018-06-05
+#PLATFORM_SECURITY_PATCH := 2019-12-05
 
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
@@ -252,11 +253,12 @@ SELINUX_IGNORE_NEVERALLOWS := true
 TARGET_USE_SDCLANG := true
 
 # Vendor init
-TARGET_INIT_VENDOR_LIB := libinit_asus_X00T
-TARGET_RECOVERY_DEVICE_MODULES := libinit_asus_X00T
+TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_X00T
+TARGET_RECOVERY_DEVICE_MODULES := libinit_X00T
 
 # VNDK
 #BOARD_VNDK_RUNTIME_DISABLE := true
+BOARD_SYSTEMSDK_VERSIONS:=28
 BOARD_VNDK_VERSION := current
 
 # Wifi
@@ -274,6 +276,7 @@ WIFI_DRIVER_FW_PATH_P2P := "p2p"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 WIFI_DRIVER_OPERSTATE_PATH := "/sys/class/net/wlan0/operstate"
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
+QC_WIFI_HIDL_FEATURE_DUAL_AP := true
 WIFI_HIDL_FEATURE_DISABLE_AP_MAC_RANDOMIZATION := true
 
 # inherit from the proprietary version

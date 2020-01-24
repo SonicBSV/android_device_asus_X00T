@@ -84,12 +84,25 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.sigma_miracast</name>
-        <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
             <name>Isigma_miracast</name>
             <instance>sigmahal</instance>
         </interface>
-   </hal>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.wifi.keystore</name>
+        <version>1.0</version>
+        <interface>
+            <name>IKeystoreExt</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <vendor-ndk>
+        <version>29</version>
+    </vendor-ndk>
+    <system-sdk>
+        <version>28</version>
+    </system-sdk>
 </compatibility-matrix>
 

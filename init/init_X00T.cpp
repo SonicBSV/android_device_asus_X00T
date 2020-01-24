@@ -124,12 +124,12 @@ void vendor_check_variant()
     if (sys.totalram > 4096ull * 1024 * 1024) {
         // Russian model
         if (region == "RU") {
-            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_9:9/PKQ1/16.2017.1910.059-20190920:user/release-keys";
+            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_9:9/PKQ1/16.2017.1912.060-20191125:user/release-keys";
             product_device = "ASUS_X00T_9";
 
         // Global model
         } else {
-            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_3:9/PKQ1/16.2017.1910.059-20190920:user/release-keys";
+            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_3:9/PKQ1/16.2017.1912.060-20191125:user/release-keys";
             product_device = "ASUS_X00T_3";
         }
 
@@ -137,12 +137,12 @@ void vendor_check_variant()
     } else {
         // Russian model
         if (region == "RU") {
-            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_6:9/PKQ1/16.2017.1910.059-20190920:user/release-keys";
+            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_6:9/PKQ1/16.2017.1912.060-20191125:user/release-keys";
             product_device = "ASUS_X00T_6";
 
         // Global model
         } else {
-            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.1910.059-20190920:user/release-keys";
+            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.1912.060-20191125:user/release-keys";
             product_device = "ASUS_X00T_2";
         }
     }
@@ -160,12 +160,26 @@ void vendor_check_variant()
     property_override_dual("ro.product.name", "ro.vendor.product.name", product_name);
     property_override_triple("ro.build.fingerprint", "ro.vendor.build.fingerprint", "ro.bootimage.build.fingerprint", build_fingerprint);
 
-    // Set region code via ro.config.versatility prop
-    property_set("ro.config.versatility", region);
+}
+
+void userdebug_mask()
+{
+    std::string build_type;
+
+    build_type = GetProperty("ro.build.type", "");
+
+    if (build_type == "userdebug")
+    {
+        property_override_dual("ro.build.type", "ro.vendor.build.type", "user");
+        property_override_dual("ro.build.tags", "ro.vendor.build.tags", "release-keys");
+        property_override("ro.debuggable", "0");
+        property_override("ro.boot.flash.locked", "1");
+    }
 }
 
 void vendor_load_properties()
 {
     init_alarm_boot_properties();
+    userdebug_mask();
     vendor_check_variant();
 }

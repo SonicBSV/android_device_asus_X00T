@@ -1,3 +1,5 @@
-allow hal_power_default debugfs_power_stats:file r_file_perms;
-allow hal_power_default sysfs_gesture:file rw_file_perms;
-allow hal_power_default sysfs_gesture:dir r_dir_perms;
+# Allow access to double tap node
+allow hal_power_default proc_touchpanel:file { rw_file_perms };
+allow hal_power_default proc_touchpanel:dir { search };
+
+allow hal_power_default debugfs_power_stats:file { r_file_perms };

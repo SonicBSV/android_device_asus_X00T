@@ -1,10 +1,6 @@
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE:=true
 
-TARGET_MOUNT_POINTS_SYMLINKS := false
-
-#PRODUCT_SYSTEM_VERITY_PARTITION=/dev/block/bootdevice/by-name/system
-#PRODUCT_VENDOR_VERITY_PARTITION=/dev/block/bootdevice/by-name/vendor
-#$(call inherit-product, build/target/product/verity.mk)
+#TARGET_MOUNT_POINTS_SYMLINKS := false
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
@@ -19,6 +15,10 @@ PRODUCT_CHARACTERISTICS := nosdcard
 
 # skip boot jars check
 SKIP_BOOT_JARS_CHECK := true
+
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH)
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -164,6 +164,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.af.client_heap_size_kbyte=7168 \
     ro.vendor.audio.sdk.fluencetype=fluence \
     ro.vendor.audio.sdk.ssr=false \
+    ro.vendor.audio.sos=true \
     vendor.audio.dolby.ds2.enabled=false \
     vendor.audio.dolby.ds2.hardbypass=false \
     vendor.audio.feature.a2dp_offload.enable=true \
@@ -243,9 +244,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
 
 # Bluetooth
-PRODUCT_PACKAGES += \
-    libldacBT_dec
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:system/etc/bluetooth/bt_profile.conf \
     $(LOCAL_PATH)/configs/bluetooth/bt_configstore.conf:system/etc/bluetooth/bt_configstore.conf \
@@ -327,14 +325,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.egl=adreno
 
 # DPM
-PRODUCT_PROPERTY_OVERRIDES += \
+#PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.dpm.feature=11
     
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-service \
     android.hardware.drm@1.2-service.clearkey \
-    android.hardware.drm@1.2-service.widevine \
     android.hardware.drm@1.0-impl
     
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -352,11 +349,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     FM2 \
     qcom.fmradio \
-    libfm-hci \
     libqcomfm_jni
-
-PRODUCT_PACKAGES += \
-    android.hardware.broadcastradio@1.0-impl
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.hw.fm.init=0
@@ -397,7 +390,9 @@ PRODUCT_PACKAGES += \
 
 # IMS
 PRODUCT_PACKAGES += \
-    ims-ext-common
+    ims-ext-common \
+    qti-telephony-hidl-wrapper \
+    qti-telephony-utils
 
 # IPv6
 PRODUCT_PACKAGES += \
@@ -453,6 +448,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     tunnel.audiovideo.decode=false \
     tunnel.decode=false \
+    media.stagefright.thumbnail.prefer_hw_codecs=true \
     debug.stagefright.omx_default_rank.sw-audio=1 \
     debug.stagefright.omx_default_rank=0
  
@@ -519,10 +515,13 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libstagefright_soft_flacdec 
 
+# ONS
+PRODUCT_PACKAGES += \
+    ONS
+
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
+    $(LOCAL_PATH)/overlay
 
 # Perf configuration
 PRODUCT_COPY_FILES += \
@@ -560,7 +559,7 @@ PRODUCT_PACKAGES += \
     fix_baseband.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
-    init.qcom.factory.rc \
+    init.recovery.qcom.rc \
     init.qcom.rc \
     init.qti.fm.rc \
     init.qcom.usb.rc \
@@ -587,8 +586,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.rat_on=combine \
     persist.vendor.radio.procedure_bytes=SKIP \
     ro.telephony.iwlan_operation_mode=legacy \
-    rild.libpath=/system/vendor/lib64/libril-qc-qmi-1.so \
-    ro.com.android.dataroaming=true \
+    rild.libpath=/system/vendor/lib64/libril-qc-hal-qmi.so \
     ro.com.google.clientidbase=android-asus \
     ro.com.google.clientidbase.ms=android-asus-tpin \
     ro.com.google.rlzbrandcode=ASUP \
@@ -719,17 +717,9 @@ PRODUCT_COPY_FILES += \
 
 # WiFi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service \
-    android.hardware.wifi@1.0 \
-    android.hardware.wifi@1.1 \
-    android.hardware.wifi@1.2 \
-    android.hardware.wifi@1.3 \
     libwifi-hal-qcom \
-    libqsap_sdk \
     wificond \
-    wpa_supplicant \
     wpa_supplicant.conf \
-    wpa_cli \
     hostapd \
     hostapd_cli
 
