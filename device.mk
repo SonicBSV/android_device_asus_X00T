@@ -470,6 +470,14 @@ PRODUCT_PACKAGES += \
     mediametrics
 
 # Misc
+PRODUCT_PACKAGES += \
+    libbinderwrapper \
+    libbrillo-binder \
+    libbrillo-stream \
+    libbrillo \
+    libbrotli \
+    libyuv
+
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     persist.vendor.qcomsysd.enabled=1
