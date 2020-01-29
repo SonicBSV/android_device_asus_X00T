@@ -67,7 +67,6 @@ on early-boot
     write /sys/devices/virtual/npu/msm_npu/boot 1
     write /sys/kernel/boot_slpi/boot 1
     write /sys/devices/virtual/cvp/cvp/boot 1
-    setprop ro.alarm_boot false
 
     # for backward compatibility
     chown system system /persist/sensors
@@ -132,15 +131,9 @@ on boot
     # modules
     mkdir /dev/socket/qmux_radio 0770 radio radio
     chmod 2770 /dev/socket/qmux_radio
-    mkdir /dev/socket/qmux_audio 0770 media audio
-    chmod 2770 /dev/socket/qmux_audio
-    mkdir /dev/socket/qmux_bluetooth 0770 bluetooth bluetooth
-    chmod 2770 /dev/socket/qmux_bluetooth
-    mkdir /dev/socket/qmux_gps 0770 gps gps
-    chmod 2770 /dev/socket/qmux_gps
 
     mkdir /persist/drm 0770 system system
-    mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
+    mkdir /persist/bluetooth 0770 bluetooth bluetooth
     mkdir /persist/misc 0770 system system
     mkdir /persist/alarm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
@@ -184,10 +177,6 @@ on boot
     # Set the console loglevel to < KERN_INFO
     # Set the default message loglevel to KERN_INFO
     write /proc/sys/kernel/printk "6 6 1 7"
-
-    #Huaqin modify for 1650P 1285483 by guanyebin on 2019/2/25 start
-    write /proc/sys/net/ipv4/tcp_mtu_probing 2
-    #Huaqin modify for 1650P 1285483 by guanyebin on 2019/2/25 end
 
     # Allow access for CCID command/response timeout configuration
     chown system system /sys/module/ccid_bridge/parameters/bulk_msg_timeout
@@ -284,14 +273,15 @@ on post-fs-data
     mkdir /persist/flag 0771 system system
     chown system system /persist/flag
 
-    chown system system /persist/flag/countrycode.txt
-    chmod 0644 /persist/flag/countrycode.txt
-    chown system system /persist/flag/cid.txt
-    chmod 0644 /persist/flag/cid.txt
-    chown system system /persist/flag/colorid.txt
-    chmod 0644 /persist/flag/colorid.txt
-    chown system system /persist/flag/multisim.txt
-    chmod 0644 /persist/flag/multisim.txt
+    mkdir /mnt/vendor/persist/flag 0771 system system
+    chown system system /mnt/vendor/persist/flag
+
+    chown system system /mnt/vendor/persist/flag/countrycode.txt
+    chmod 0644 /mnt/vendor/persist/flag/countrycode.txt
+    chown system system /mnt/vendor/persist/flag/cid.txt
+    chmod 0644 /mnt/vendor/persist/flag/cid.txt
+    chown system system /mnt/vendor/persist/flag/colorid.txt
+    chmod 0644 /mnt/vendor/persist/flag/colorid.txt
 
     # Create the directories used by CnE subsystem
     mkdir /data/vendor/connectivity 0771 radio radio
@@ -345,11 +335,6 @@ on post-fs-data
     mkdir /dev/socket/location 0770 gps gps
     mkdir /dev/socket/location/mq 0770 gps gps
     mkdir /dev/socket/location/xtra 0770 gps gps
-    mkdir /data/vendor/location-partner 0770 gps gps
-    mkdir /data/vendor/location-partner/dre 0770 gps gps
-    mkdir /data/vendor/location-partner/ppe 0770 gps gps
-    mkdir /dev/socket/location 0770 gps gps
-    mkdir /dev/socket/location/ehub 0770 gps gps
 
     #Create directories for wifihal services
     mkdir /dev/socket/wifihal 0770 wifi wifi
@@ -427,21 +412,17 @@ on post-fs-data
     mkdir /data/vendor/vpp 0770 media media
 
     #Create dir for TUI
-    mkdir /data/vendor/tui 0700 system system
+    mkdir /data/vendor/tui 0700 system drmrpc
 
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
-
-# Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 start
-# Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
-# Huaqin add for change class core  by xudayi at 2018/05/28 start
-#service nvram_country /vendor/bin/nvram_country
-#    class core
-#    user root
-#    group system
-#    chmod 0644 /vendor/bin/nvram_country
-#    oneshot
-# Huaqin add for change class core  by xudayi at 2018/05/28 end
+    
+service nvram_country /vendor/bin/nvram_country
+    class core
+    user root
+    group system
+    chmod 0644 /vendor/bin/nvram_country
+    oneshot
 
 service nvram_btwifi /system/bin/nvram_btwifi
     user root
@@ -461,6 +442,18 @@ service vendor-btmac-sh  /vendor/bin/init.btmac.sh
     user root
     oneshot
     disabled
+
+service qcomsysd /system/vendor/bin/qcom-system-daemon
+    class main
+    user root
+    group root diag oem_2901
+    disabled
+
+on property:persist.vendor.qcomsysd.enabled=1
+    enable qcomsysd
+
+on property:persist.vendor.qcomsysd.enabled=0
+    stop qcomsysd
 
 service vendor.ssr_setup /system/vendor/bin/ssr_setup
     oneshot
@@ -779,20 +772,6 @@ on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
     write /proc/sys/net/ipv4/tcp_adv_win_scale  2
 
-service vendor.ril-daemon2 /vendor/bin/hw/rild -c 2
-    class main
-    user radio
-    disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
-    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
-
-service vendor.ril-daemon3 /vendor/bin/hw/rild -c 3
-    class main
-    user radio
-    disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
-    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
-
 service charger /sbin/asus_charger
     class charger
     group system graphics
@@ -865,6 +844,11 @@ on property:vendor.rild.libpath=*
 
 on property:ro.vendor.radio.noril=*
     setprop ro.radio.noril ${ro.vendor.radio.noril}
+
+service seemp_healthd /vendor/bin/seemp_healthd
+    class late_start
+    user system
+    group system
 
 service vendor.power_off_alarm /vendor/bin/power_off_alarm
     class core

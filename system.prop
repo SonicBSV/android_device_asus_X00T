@@ -221,3 +221,8 @@ persist.asus.led.on=1
 vendor.audio.adm.buffering.ms=3
 #Huaqin add for TT1283232 optimize game background music pop by xudayi at 2019.02.20 end
 
+#iwlan vowifi corresponding
+persist.vendor.data.iwlan.enable=true
+
+#connect wifi, set 3G pre,observe Mobile network type should display UMTS but IWLAN.
+persist.vendor.radio.data_con_rprt=1
