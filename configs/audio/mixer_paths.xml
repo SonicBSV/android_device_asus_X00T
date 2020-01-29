@@ -194,6 +194,8 @@
     <ctl name="SLIMBUS_8 LOOPBACK Volume" value="0" />
     <ctl name="INT4_MI2S_RX Port Mixer SLIM_8_TX" value="0" />
     <ctl name="INT4_MI2S_RX_DL_HL Switch" value="0" />
+    <ctl name="TERT_MI2S_RX Port Mixer SLIM_8_TX" value="0" />
+    <ctl name="TERT_MI2S_RX_DL_HL Switch" value="0" />
     <ctl name="INT0_MI2S_RX Port Mixer SLIM_8_TX" value="0" />
     <ctl name="INT0_MI2S_RX_DL_HL Switch" value="0" />
     <ctl name="MultiMedia1 Mixer SLIM_8_TX" value="0" />
@@ -535,7 +537,17 @@
         <path name="low-latency-playback bt-sco" />
     </path>
 
-    <!-- Huaqin add for TT bug id 1165336 by xudayi at 2018/03/15 start -->
+    <!-- lct add for whatsapp call ring -->    
+    <path name="low-latency-playback speaker-and-bt-sco-wb"> 
+	 <path name="low-latency-playback bt-sco-wb" /> 
+	 <path name="low-latency-playback speaker" /> 
+    </path>
+
+    <path name="low-latency-playback speaker-and-bt-sco">
+         <path name="low-latency-playback bt-sco" />
+         <path name="low-latency-playback speaker" />
+    </path>
+    
     <path name="low-latency-playback speaker-and-hdmi">
         <path name="low-latency-playback hdmi" />
         <path name="low-latency-playback speaker" />
@@ -545,7 +557,6 @@
         <path name="low-latency-playback display-port" />
         <path name="low-latency-playback speaker" />
     </path>
-    <!-- Huaqin add for TT bug id 1165336 by xudayi at 2018/03/15 end -->
 
     <path name="low-latency-playback afe-proxy">
         <ctl name="AFE_PCM_RX Audio Mixer MultiMedia5" value="1" />
@@ -1735,10 +1746,6 @@
         <ctl name="VoiceMMode1_Tx Mixer INT3_MI2S_TX_MMode1" value="1" />
     </path>
 
-    <path name="voicemmode1-call speaker-and-headphones">
-    	<path name="voicemmode1-call" />
-    </path>
-
     <path name="voicemmode1-call usb-headset">
         <ctl name="USB_AUDIO_RX_Voice Mixer VoiceMMode1" value="1" />
         <ctl name="VoiceMMode1_Tx Mixer USB_AUDIO_TX_MMode1" value="1" />
@@ -1767,11 +1774,6 @@
         <ctl name="VoiceMMode2_Tx Mixer INT3_MI2S_TX_MMode2" value="1" />
     </path>
     <!-- Huaqin add for config new audioboard xml by xudayi at 2018/03/05 end -->
-
-    <path name="voicemmode2-call speaker-and-headphones">
-       <path name="voicemmode2-call" />
-    </path>
-
     <path name="voicemmode2-call headphones">
         <ctl name="INT0_MI2S_RX_Voice Mixer VoiceMMode2" value="1" />
         <ctl name="VoiceMMode2_Tx Mixer INT3_MI2S_TX_MMode2" value="1" />
@@ -2042,20 +2044,16 @@
         <path name="headphones" />
     </path>
 
-    <path name="headphones-hifi-filter">
-        <path name="headphones" />
-    </path>
-
     <path name="headphones-ce">
         <path name="headphones" />
-        <ctl name="RX1 Digital Volume" value="74" />
-        <ctl name="RX2 Digital Volume" value="74" />
+        <ctl name="RX1 Digital Volume" value="72" />
+        <ctl name="RX2 Digital Volume" value="72" />
     </path>
 
     <path name="headphones-no-ce">
         <path name="headphones" />
-        <ctl name="RX1 Digital Volume" value="84" />
-        <ctl name="RX2 Digital Volume" value="84" />
+        <ctl name="RX1 Digital Volume" value="81" />
+        <ctl name="RX2 Digital Volume" value="81" />
     </path>
 
     <path name="headphones-karaoke">
@@ -2131,11 +2129,6 @@
         <path name="speaker" />
     </path>
 
-    <path name="speaker-and-headphones-hifi-filter">
-        <path name="headphones" />
-        <path name="speaker" />
-    </path>
-    
     <path name="speaker-and-headphones-ce">
         <path name="headphones-ce" />
         <path name="speaker" />
@@ -2421,18 +2414,6 @@
         <path name="unprocessed-handset-mic" />
     </path>
 
-    <path name="unprocessed-stereo-mic">
-        <path name="voice-rec-dmic-ef" />
-    </path>
-
-    <path name="unprocessed-quad-mic">
-        <path name="quad-mic" />
-    </path>
-
-    <path name="unprocessed-headset-mic">
-        <path name="headset-mic" />
-    </path>
-
     <!-- Added for ADSP testfwk -->
     <path name="ADSP testfwk">
         <ctl name="INT4_MI2S_RX_DL_HL Switch" value="1" />
@@ -2495,7 +2476,6 @@
         <ctl name="SLIMBUS_7_RX Audio Mixer MultiMedia8" value="1" />
     </path>
 
-    <!-- Huaqin add for TT bug id 1165336 by xudayi at 2018/03/15 start -->
     <path name="deep-buffer-playback speaker-and-bt-a2dp">
         <path name="deep-buffer-playback bt-a2dp" />
         <path name="deep-buffer-playback speaker" />
@@ -2555,19 +2535,6 @@
         <path name="audio-ull-playback bt-a2dp" />
         <path name="audio-ull-playback speaker" />
     </path>
-    <!-- Huaqin add for TT bug id 1165336 by xudayi at 2018/03/15 end -->
-
-    <!-- Huaqin add for TT bug id 1235288(ZB601KL)  by zhaojunhai1 at 2018/09/29 start -->
-    <path name="low-latency-playback speaker-and-bt-sco">
-        <path name="low-latency-playback bt-sco" />
-        <path name="low-latency-playback speaker" />
-    </path>
-
-    <path name="low-latency-playback speaker-and-bt-sco-wb">
-        <path name="low-latency-playback bt-sco-wb" />
-        <path name="low-latency-playback speaker" />
-    </path>
-    <!-- Huaqin add for TT bug id 1235288(ZB601KL) by zhaojunhai1 at 2018/09/29 end -->
 
     <path name="mmap-playback">
         <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia16" value="1" />
