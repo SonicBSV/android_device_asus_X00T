@@ -421,7 +421,7 @@ service nvram_country /vendor/bin/nvram_country
     class core
     user root
     group system
-    chmod 0644 /vendor/bin/nvram_country
+#    chmod 0644 /vendor/bin/nvram_country
     oneshot
 
 service nvram_btwifi /system/bin/nvram_btwifi
