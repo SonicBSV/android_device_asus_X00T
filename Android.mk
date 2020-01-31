@@ -97,6 +97,17 @@ $(QDMA-UI_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(QDMA-UI_SYMLINKS)
 
+CAM_CALI_LIBS := libarcsoft_single_chart_calibration.so libhqmpbase.so libjni_hq_dualcam_calibration.so
+                                          
+CAM_CALI_SYMLINKS := $(addprefix $(TARGET_OUT_APPS)/CameraCalibration/lib/arm64/,$(notdir $(CAM_CALI_LIBS)))
+$(CAM_CALI_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "CAM_CALI lib link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /system/lib64/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(CAM_CALI_SYMLINKS)
+
 #SDCAM_LIBS := libarcsoft_beautyshot.so libarcsoft_night_shot.so libjni_hq_beautyshot.so libjni_hq_night_shot.so \
 #              libjni_imageutil.so libjni_snapcammosaic.so libjni_snapcamtinyplanet.so libmpbase.so
                                           

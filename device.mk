@@ -227,6 +227,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.volume.headset.gain.depcal=true \
     vendor.voice.path.for.pcm.voip=true
 
+# ASUS
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.asus.project.name=ZB601KL
+
 # Atrace
 PRODUCT_PACKAGES += \
     android.hardware.atrace@1.0-service
@@ -255,6 +259,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.qcom.bluetooth.soc=cherokee \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
+    persist.bluetooth.a2dp_offload.disabled=false \
+    persist.vendor.qcom.bluetooth.enable.splita2dp=true \
     ro.vendor.bluetooth.wipower=false \
     persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac
     
@@ -272,6 +278,14 @@ PRODUCT_PACKAGES += \
     android.frameworks.cameraservice.service@2.0 \
     camera.device@3.2-impl \
     Snap
+   
+PRODUCT_PROPERTY_OVERRIDES += \
+   vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
+   vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
+   persist.vendor.camera.expose.aux=1 \
+   persist.vendor.camera.mpo.disabled=1 \
+   vendor.vidc.enc.disable.pq=true \
+   vendor.vidc.dec.enable.downscalar=0
    
 # Charger
 PRODUCT_PACKAGES += \
@@ -457,9 +471,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
-    tunnel.audiovideo.decode=false \
-    tunnel.decode=false \
-    media.stagefright.thumbnail.prefer_hw_codecs=true \
     debug.stagefright.omx_default_rank.sw-audio=1 \
     debug.stagefright.omx_default_rank=0
  
@@ -606,7 +617,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.rat_on=combine \
     persist.vendor.radio.procedure_bytes=SKIP \
     ro.telephony.iwlan_operation_mode=legacy \
-    rild.libpath=/system/vendor/lib64/libril-qc-hal-qmi.so \
+    rild.libpath=/system/vendor/lib64/libril-qc-qmi-1.so \
     ro.com.google.clientidbase=android-asus \
     ro.com.google.clientidbase.ms=android-asus-tpin \
     ro.com.google.rlzbrandcode=ASUP \
@@ -692,8 +703,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@1.0-impl \
-    android.hardware.thermal@1.0-service 
+    android.hardware.thermal@2.0-service.mock 
 
 # Touchscreen
 PRODUCT_PACKAGES += \
