@@ -37,7 +37,6 @@ TARGET_NO_BOOTLOADER := true
 
 # Platform
 TARGET_BOARD_PLATFORM := sdm660
-TARGET_BOARD_SUFFIX := _64
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno509
 
 # Architecture
@@ -109,8 +108,8 @@ BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
 # CPUSets
-ENABLE_CPUSETS := true
-ENABLE_SCHEDBOOST := true
+#ENABLE_CPUSETS := true
+#ENABLE_SCHEDBOOST := true
 
 # CNE and DPM
 BOARD_USES_QCNE := true
@@ -177,9 +176,6 @@ DEVICE_FRAMEWORK_MANIFEST_FILE := $(DEVICE_PATH)/framework_manifest.xml
 # Media
 TARGET_USES_MEDIA_EXTENSIONS := true
 
-# NFC
-NXP_CHIP_FW_TYPE := PN553
-
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
@@ -191,16 +187,16 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4294967296
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 55490625024
 BOARD_VENDORIMAGE_PARTITION_SIZE := 838860800
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_ROOT_EXTRA_SYMLINKS := \
-    /mnt/vendor/persist:/persist \
-    /vendor/bt_firmware:/bt_firmware \
-    /vendor/dsp:/dsp \
-    /vendor/firmware_mnt:/firmware
 TARGET_COPY_OUT_VENDOR := vendor
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 PRODUCT_VENDOR_MOVE_ENABLED := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_ROOT_EXTRA_SYMLINKS := \
+    /mnt/vendor/persist:/persist \
+    /vendor/bt_firmware:/bt_firmware \
+    /vendor/dsp:/dsp \
+    /vendor/firmware_mnt:/firmware
 
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
@@ -228,13 +224,12 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 TARGET_RIL_VARIANT := caf
 TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 PROTOBUF_SUPPORTED := true
-TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD := true
 
 # Security patch level
 # After June Google register fingerprints with security patch version.
-# Asus Pie 060 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2018-06-05
-#PLATFORM_SECURITY_PATCH := 2019-12-05
+# Asus Android 10 407 fingerprint registered on this patch version
+VENDOR_SECURITY_PATCH := 2019-11-05
+#PLATFORM_SECURITY_PATCH := 2019-11-05
 
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
@@ -263,7 +258,7 @@ BOARD_SYSTEMSDK_VERSIONS:=28
 BOARD_VNDK_VERSION := current
 
 # Wifi
-#BOARD_USES_CAF_WLAN_HAL := true
+BOARD_USES_CAF_WLAN_HAL := true
 BOARD_HAS_QCOM_WLAN := true
 BOARD_HAS_QCOM_WLAN_SDK := true
 BOARD_WLAN_DEVICE := qcwcn

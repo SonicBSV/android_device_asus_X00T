@@ -1,7 +1,5 @@
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE:=true
 
-#TARGET_MOUNT_POINTS_SYMLINKS := false
-
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
@@ -227,6 +225,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.volume.headset.gain.depcal=true \
     vendor.voice.path.for.pcm.voip=true
 
+# ASUS
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.asus.project.name=ZB601KL
+
 # Atrace
 PRODUCT_PACKAGES += \
     android.hardware.atrace@1.0-service
@@ -240,6 +242,9 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.automotive.vehicle@1.0
 
 # Biometrics
+#PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.1-service.asus_X00T
+    
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
 
@@ -252,8 +257,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.qcom.bluetooth.soc=cherokee \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
+    persist.bluetooth.a2dp_offload.disabled=false \
+    persist.vendor.qcom.bluetooth.enable.splita2dp=true \
     ro.vendor.bluetooth.wipower=false \
-    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac
+    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
+    persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac-ldac
+    
     
 # Boot animation
     TARGET_SCREEN_HEIGHT := 2160
@@ -269,6 +278,14 @@ PRODUCT_PACKAGES += \
     android.frameworks.cameraservice.service@2.0 \
     camera.device@3.2-impl \
     Snap
+   
+PRODUCT_PROPERTY_OVERRIDES += \
+   vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
+   vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
+   persist.vendor.camera.expose.aux=1 \
+   persist.vendor.camera.mpo.disabled=1 \
+   vendor.vidc.enc.disable.pq=true \
+   vendor.vidc.dec.enable.downscalar=0
    
 # Charger
 PRODUCT_PACKAGES += \
@@ -304,6 +321,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.asus.dclick=1 \
     persist.asus.gesture.type=1000000
+
+# Doze mode
+PRODUCT_PACKAGES += \
+    AsusDoze
 
 # Display
 PRODUCT_PACKAGES += \
@@ -446,9 +467,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
-    tunnel.audiovideo.decode=false \
-    tunnel.decode=false \
-    media.stagefright.thumbnail.prefer_hw_codecs=true \
     debug.stagefright.omx_default_rank.sw-audio=1 \
     debug.stagefright.omx_default_rank=0
  
@@ -462,6 +480,14 @@ PRODUCT_PACKAGES += \
     mediametrics
 
 # Misc
+PRODUCT_PACKAGES += \
+    libbinderwrapper \
+    libbrillo-binder \
+    libbrillo-stream \
+    libbrillo \
+    libbrotli \
+    libyuv
+
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     persist.vendor.qcomsysd.enabled=1
@@ -673,8 +699,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@1.0-impl \
-    android.hardware.thermal@1.0-service 
+    android.hardware.thermal@2.0-service.mock 
 
 # Touchscreen
 PRODUCT_PACKAGES += \

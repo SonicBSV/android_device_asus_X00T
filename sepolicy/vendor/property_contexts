@@ -3,6 +3,3 @@ persist.cdfinger.ready                  u:object_r:cdfinger_prop:s0
 property.cdfinger.enablesave            u:object_r:cdfinger_prop:s0
 persist.vendor.runin.fp                 u:object_r:fingerprint_prop:s0
 #persist.vendor.camera.                  u:object_r:vendor_camera_prop:s0
-
-# Wifi
-wifi.active.interface                         u:object_r:wifi_prop:s0
