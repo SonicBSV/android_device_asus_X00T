@@ -1,7 +1,5 @@
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE:=true
 
-TARGET_MOUNT_POINTS_SYMLINKS := false
-
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
