@@ -184,7 +184,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.feature.external_speaker_tfa.enable=false \
     vendor.audio.feature.ext_hw_plugin.enable=false \
     vendor.audio.feature.fluence.enable=true \
-    vendor.audio.feature.fm.enable=true \
+    vendor.audio.feature.fm.enable=false \
     vendor.audio.feature.hdmi_edid.enable=true \
     vendor.audio.feature.hdmi_passthrough.enable=true \
     vendor.audio.feature.hfp.enable=true \
@@ -362,7 +362,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
 
 # FM
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     FM2 \
     libqcomfm_jni \
     qcom.fmradio
@@ -442,7 +442,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.asus_X00T
+    android.hardware.light@2.0-service \
+    android.hardware.light@2.0-impl
+
+#   android.hardware.light@2.0-service.asus_X00T
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -564,7 +567,6 @@ PRODUCT_PACKAGES += \
     init.qcom.sensors.sh \
     init.qcom.sh \
     init.qcom.usb.sh \
-    init.qti.fm.sh \
     init.qti.ims.sh \
     hack_attest.sh \
     fix_baseband.sh \
@@ -573,10 +575,12 @@ PRODUCT_PACKAGES += \
     init.recovery.qcom.rc \
     init.qcom.factory.rc \
     init.qcom.rc \
-    init.qti.fm.rc \
     init.qcom.usb.rc \
     init.target.rc \
     ueventd.qcom.rc
+
+#    init.qti.fm.sh \
+#    init.qti.fm.rc \
 
 # Recovery
 PRODUCT_PACKAGES += \
