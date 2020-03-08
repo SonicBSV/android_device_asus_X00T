@@ -101,6 +101,7 @@ PRODUCT_PACKAGES += \
     audio.bluetooth.default \
     audio.r_submix.default \
     audio.usb.default \
+    audio.primary.sdm660 \
     libsndmonitor \
     libcomprcapture \
     libssrec \
@@ -122,8 +123,6 @@ PRODUCT_PACKAGES += \
     tinyplay \
     tinypcminfo \
     tinymix
-
-#    audio.primary.sdm660 \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
