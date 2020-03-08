@@ -578,8 +578,6 @@ PRODUCT_PACKAGES += \
     init.qcom.sh \
     init.qcom.usb.sh \
     init.qti.ims.sh \
-    init.qti.fm.sh \
-    init.qti.fm.rc \
     hack_attest.sh \
     fix_baseband.sh \
     fstab.qcom \
@@ -590,6 +588,9 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     init.target.rc \
     ueventd.qcom.rc
+
+#    init.qti.fm.sh \
+#    init.qti.fm.rc \
 
 # Recovery
 PRODUCT_PACKAGES += \
