@@ -261,8 +261,8 @@ on post-fs-data
     mkdir /data/vendor/camera 0770 camera camera
     
     #leds
-	chown system system /sys/class/leds/red/blink
-	chown system system /sys/class/leds/green/blink
+	#chown system system /sys/class/leds/red/blink
+	#chown system system /sys/class/leds/green/blink
 
     #Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system

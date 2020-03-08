@@ -32,29 +32,29 @@
     <integer name="config_nightDisplayColorTemperatureDefault">2850</integer>
 
     <!-- Minimum-Maximum color temperature, in Kelvin, supported by Night display. -->
-    <integer name="config_nightDisplayColorTemperatureMin">2596</integer>
     <integer name="config_nightDisplayColorTemperatureMax">4082</integer>
+    <integer name="config_nightDisplayColorTemperatureMin">2596</integer>
 
     <!-- Default LED on time for notification LED in milliseconds. -->
-    <integer name="config_defaultNotificationLedOn">4000</integer>
+    <integer name="config_defaultNotificationLedOn">500</integer>
 
     <!-- Default LED off time for notification LED in milliseconds. -->
-    <integer name="config_defaultNotificationLedOff">4000</integer>
+    <integer name="config_defaultNotificationLedOff">2000</integer>
 
     <!-- Enable video pause workaround when enabling/disabling the camera. -->
     <bool name="config_useVideoPauseWorkaround">true</bool>
 
     <!-- Default color for notification LED. -->
-    <!-- <color name="config_defaultNotificationColor">#ff00ff00</color> -->
+    <color name="config_defaultNotificationColor">#ff00ff00</color>
 
     <!-- Default value for led color when battery is low on charge -->
-    <!--<integer name="config_notificationsBatteryLowARGB">0xFFFF0000</integer> -->
+    <integer name="config_notificationsBatteryLowARGB">0xFFFF0000</integer>
 
     <!-- Default value for led color when battery is medium charged -->
-    <!-- <integer name="config_notificationsBatteryMediumARGB">0xFF50FF00</integer> -->
+    <integer name="config_notificationsBatteryMediumARGB">0xFF50FF00</integer>
 
     <!-- Default value for led color when battery is fully charged -->
-    <!-- <integer name="config_notificationsBatteryFullARGB">0xFF00FF00</integer> -->
+    <integer name="config_notificationsBatteryFullARGB">0xFF00FF00</integer>
 
     <!-- Flag indicating whether the we should enable the automatic brightness in Settings.
          Software implementation will be used if config_hardware_auto_brightness_available is not set -->
@@ -98,6 +98,7 @@
         <item>4500</item>
         <item>6700</item>
         <item>8000</item>
+        <item>10000</item>
     </integer-array>
 
     <!-- Array of desired screen brightness in nits corresponding to the lux values
@@ -130,6 +131,7 @@
         <item>160.87507</item> <!-- 4500-6700 -->
         <item>216.21131</item> <!-- 6700-8000 -->
         <item>300.83717</item> <!-- 8000-10000 -->
+        <item>399.02401</item> <!-- 10000+ -->
     </array>
 
     <!-- An array describing the screen's backlight values corresponding to the brightness
@@ -207,14 +209,13 @@
         <item>385.7</item> <!-- 100% -->
     </array>
 
-
     <!-- Stability requirements in milliseconds for accepting a new brightness level.  This is used	
          for debouncing the light sensor.  Different constants are used to debounce the light sensor	
          when adapting to brighter or darker environments.  This parameter controls how quickly	
          brightness changes occur in response to an observed change in light level that exceeds the	
          hysteresis threshold. -->	
-    <integer name="config_autoBrightnessBrighteningLightDebounce">3000</integer>	
-    <integer name="config_autoBrightnessDarkeningLightDebounce">6000</integer>
+    <integer name="config_autoBrightnessBrighteningLightDebounce">2000</integer>	
+    <integer name="config_autoBrightnessDarkeningLightDebounce">4000</integer>
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. -->
@@ -255,7 +256,7 @@
          Wifi interfaces.  If the device doesn't want to support tethering over Wifi this
          should be empty.  An example would be "softap.*" -->
     <string-array translatable="false" name="config_tether_wifi_regexs">
-        <item>softap.*</item>
+        <item>"softap0"</item>
     </string-array>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
