@@ -1,7 +1,5 @@
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE:=true
 
-#TARGET_MOUNT_POINTS_SYMLINKS := false
-
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
@@ -101,9 +99,9 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.effect@5.0-impl \
     audio.a2dp.default \
     audio.bluetooth.default \
-    audio.primary.sdm660 \
     audio.r_submix.default \
     audio.usb.default \
+    audio.primary.sdm660 \
     libsndmonitor \
     libcomprcapture \
     libssrec \
@@ -187,7 +185,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.feature.external_speaker_tfa.enable=false \
     vendor.audio.feature.ext_hw_plugin.enable=false \
     vendor.audio.feature.fluence.enable=true \
-    vendor.audio.feature.fm.enable=true \
+    vendor.audio.feature.fm.enable=false \
     vendor.audio.feature.hdmi_edid.enable=true \
     vendor.audio.feature.hdmi_passthrough.enable=true \
     vendor.audio.feature.hfp.enable=true \
@@ -227,6 +225,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.volume.headset.gain.depcal=true \
     vendor.voice.path.for.pcm.voip=true
 
+# ASUS
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.asus.project.name=ZB601KL
+
 # Atrace
 PRODUCT_PACKAGES += \
     android.hardware.atrace@1.0-service
@@ -252,8 +254,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.qcom.bluetooth.soc=cherokee \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
+    persist.bluetooth.a2dp_offload.disabled=false \
+    persist.vendor.qcom.bluetooth.enable.splita2dp=true \
     ro.vendor.bluetooth.wipower=false \
-    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac
+    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
+    persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac-ldac
+    
     
 # Boot animation
     TARGET_SCREEN_HEIGHT := 2160
@@ -268,8 +274,16 @@ PRODUCT_PACKAGES += \
     android.frameworks.cameraservice.device@2.0 \
     android.frameworks.cameraservice.service@2.0 \
     camera.device@3.2-impl \
-    Snap   
-
+    GoogleCameraMod
+   
+PRODUCT_PROPERTY_OVERRIDES += \
+   vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
+   vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
+   persist.vendor.camera.expose.aux=1 \
+   persist.vendor.camera.mpo.disabled=1 \
+   vendor.vidc.enc.disable.pq=true \
+   vendor.vidc.dec.enable.downscalar=0
+   
 # Charger
 PRODUCT_PACKAGES += \
     asus_charger \
@@ -277,12 +291,8 @@ PRODUCT_PACKAGES += \
 
 # Codec2 modules
 PRODUCT_PACKAGES += \
-    com.android.media.swcodec \
     libsfplugin_ccodec \
-    libcodec2_vndk \
-    libcodec2_hidl@1.0 \
-    libcodec2_vndk.vendor \
-    libcodec2_hidl@1.0.vendor
+    libcodec2_vndk
 
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.media.codec2=2
@@ -305,6 +315,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.asus.dclick=1 \
     persist.asus.gesture.type=1000000
 
+# Doze
+PRODUCT_PACKAGES += \
+    AsusDoze
+
 # Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
@@ -325,7 +339,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.egl=adreno
 
 # DPM
-#PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.dpm.feature=11
     
 # DRM
@@ -346,7 +360,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
 
 # FM
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     FM2 \
     qcom.fmradio \
     libqcomfm_jni
@@ -391,8 +405,11 @@ PRODUCT_PACKAGES += \
 # IMS
 PRODUCT_PACKAGES += \
     ims-ext-common \
+    ims_ext_common.xml \
     qti-telephony-hidl-wrapper \
-    qti-telephony-utils
+    qti_telephony_hidl_wrapper.xml \
+    qti-telephony-utils \
+    qti_telephony_utils.xml
 
 # IPv6
 PRODUCT_PACKAGES += \
@@ -446,9 +463,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
-    tunnel.audiovideo.decode=false \
-    tunnel.decode=false \
-    media.stagefright.thumbnail.prefer_hw_codecs=true \
     debug.stagefright.omx_default_rank.sw-audio=1 \
     debug.stagefright.omx_default_rank=0
  
@@ -462,6 +476,13 @@ PRODUCT_PACKAGES += \
     mediametrics
 
 # Misc
+PRODUCT_PACKAGES += \
+    libbrillo-binder:64 \
+    libbrillo-stream:64 \
+    libbrillo:64 \
+    libbrotli:64 \
+    libyuv
+
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     persist.vendor.qcomsysd.enabled=1
@@ -500,20 +521,6 @@ PRODUCT_PACKAGES += \
 # NTP Server
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.backup.ntpServer="0.pool.ntp.org"
-    
-# OMX
-PRODUCT_PACKAGES += \
-    libmm-omxcore \
-    libOmxAacEnc:32 \
-    libOmxAmrEnc:32 \
-    libOmxCore \
-    libOmxEvrcEnc:32 \
-    libOmxG711Enc:32 \
-    libOmxQcelp13Enc:32 \
-    libOmxVdec \
-    libOmxVenc \
-    libstagefrighthw \
-    libstagefright_soft_flacdec 
 
 # ONS
 PRODUCT_PACKAGES += \
@@ -553,7 +560,6 @@ PRODUCT_PACKAGES += \
     init.qcom.sensors.sh \
     init.qcom.sh \
     init.qcom.usb.sh \
-    init.qti.fm.sh \
     init.qti.ims.sh \
     hack_attest.sh \
     fix_baseband.sh \
@@ -561,10 +567,12 @@ PRODUCT_PACKAGES += \
     init.msm.usb.configfs.rc \
     init.recovery.qcom.rc \
     init.qcom.rc \
-    init.qti.fm.rc \
     init.qcom.usb.rc \
     init.target.rc \
     ueventd.qcom.rc
+
+#    init.qti.fm.sh \
+#    init.qti.fm.rc \
 
 # Recovery
 PRODUCT_PACKAGES += \
@@ -672,8 +680,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@1.0-impl \
-    android.hardware.thermal@1.0-service 
+    android.hardware.thermal@2.0-service.mock 
 
 # Touchscreen
 PRODUCT_PACKAGES += \
@@ -715,13 +722,26 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml 
 
+# Wallpapers
+PRODUCT_PACKAGES += \
+    PixelLiveWallpaperPrebuilt \
+    WallpapersBReel2019 \
+    libgdx \
+    NexusWallpapersStubPrebuilt2019 \
+    MicropaperPrebuilt
+
 # WiFi
 PRODUCT_PACKAGES += \
     libwifi-hal-qcom \
+    libqsap_sdk \
     wificond \
+    wpa_supplicant \
     wpa_supplicant.conf \
+    wpa_cli \
     hostapd \
     hostapd_cli
+
+#    android.hardware.wifi@1.0-service \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.iwlan.enable=true

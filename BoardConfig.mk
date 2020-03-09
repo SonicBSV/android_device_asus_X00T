@@ -37,7 +37,6 @@ TARGET_NO_BOOTLOADER := true
 
 # Platform
 TARGET_BOARD_PLATFORM := sdm660
-TARGET_BOARD_SUFFIX := _64
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno509
 
 # Architecture
@@ -225,15 +224,14 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # RIL
 TARGET_RIL_VARIANT := caf
-#TARGET_USES_OLD_MNC_FORMAT := true
 TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 PROTOBUF_SUPPORTED := true
 
 # Security patch level
 # After June Google register fingerprints with security patch version.
-# Asus Pie 060 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2018-06-05
-#PLATFORM_SECURITY_PATCH := 2019-12-05
+# Asus Android 10 407 fingerprint registered on this patch version
+VENDOR_SECURITY_PATCH := 2019-11-05
+#PLATFORM_SECURITY_PATCH := 2019-11-05
 
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
@@ -241,7 +239,6 @@ BOARD_SEPOLICY_VERS := 29.0
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
-#BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy-minimal
 
 # System properties
 -include $(DEVICE_PATH)/system.prop
@@ -257,8 +254,9 @@ TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_X00T
 TARGET_RECOVERY_DEVICE_MODULES := libinit_X00T
 
 # VNDK
+PRODUCT_TREBLE_LINKER_NAMESPACES := true
 #BOARD_VNDK_RUNTIME_DISABLE := true
-BOARD_SYSTEMSDK_VERSIONS:=28
+#BOARD_SYSTEMSDK_VERSIONS:=28
 BOARD_VNDK_VERSION := current
 
 # Wifi

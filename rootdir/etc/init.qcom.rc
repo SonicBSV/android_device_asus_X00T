@@ -47,6 +47,11 @@ on early-init
     chown root system /dev/kmsg
     chmod 0620 /dev/kmsg
 
+on fs
+    # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 begin
+    setprop persist.sys.camera.camera2 true
+    # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 end
+
 on init
     # Create cgroup mount point for memory
     mkdir /sys/fs/cgroup/memory/bg 0750 root system
@@ -67,7 +72,11 @@ on early-boot
     write /sys/devices/virtual/npu/msm_npu/boot 1
     write /sys/kernel/boot_slpi/boot 1
     write /sys/devices/virtual/cvp/cvp/boot 1
-    setprop ro.alarm_boot false
+
+    # add by wildbook at 20190828 +++
+     chown system system /dev/input/event3  # stk3x3x-light
+     chown system system /dev/input/event4  # stk3x3x-proximity
+    # add by wildbook at 20190828 ---
 
     # for backward compatibility
     chown system system /persist/sensors
@@ -126,6 +135,11 @@ on boot
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
 
+    chown system system /sys/class/power_supply/battery/charging_enabled
+    chmod 0660 /sys/class/power_supply/battery/charging_enabled
+    chown system system /sys/class/power_supply/battery/device/smartchg_stop_charging
+    chmod 0660 /sys/class/power_supply/battery/device/smartchg_stop_charging
+
     # This location is used by QCRIL to host UNIX domain
     # socket files used for internal IPC within QCRIL
     # modules
@@ -140,7 +154,6 @@ on boot
     mkdir /mnt/vendor/persist/secnvm 0770 system system
     mkdir /mnt/vendor/persist/iar_db 0770 system system
     mkdir /mnt/vendor/spunvm 0770 system system
-    restorecon_recursive /mnt/vendor/persist
 
     # LED torch permissions
     chmod 0666 /sys/class/leds/led:torch_0/brightness
@@ -153,9 +166,7 @@ on boot
     setprop ro.telephony.call_ring.multiple false
 
     #enable camera read sensors data
-    # Huaqin add for 1261108 by huqian at 2018/11/29 start
-    setprop persist.vendor.camera.gyro.disable 0
-    # Huaqin add for 1261108 by huqian at 2018/11/29 end
+    setprop persist.camera.gyro.disable 0
 
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
@@ -248,7 +259,10 @@ on post-fs-data
 
     #Create folder of camera
     mkdir /data/vendor/camera 0770 camera camera
-
+    
+    #leds
+	#chown system system /sys/class/leds/red/blink
+	#chown system system /sys/class/leds/green/blink
 
     #Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system
@@ -271,14 +285,15 @@ on post-fs-data
     mkdir /persist/flag 0771 system system
     chown system system /persist/flag
 
-    chown system system /persist/flag/countrycode.txt
-    chmod 0644 /persist/flag/countrycode.txt
-    chown system system /persist/flag/cid.txt
-    chmod 0644 /persist/flag/cid.txt
-    chown system system /persist/flag/colorid.txt
-    chmod 0644 /persist/flag/colorid.txt
-    chown system system /persist/flag/multisim.txt
-    chmod 0644 /persist/flag/multisim.txt
+    mkdir /mnt/vendor/persist/flag 0771 system system
+    chown system system /mnt/vendor/persist/flag
+
+    chown system system /mnt/vendor/persist/flag/countrycode.txt
+    chmod 0644 /mnt/vendor/persist/flag/countrycode.txt
+    chown system system /mnt/vendor/persist/flag/cid.txt
+    chmod 0644 /mnt/vendor/persist/flag/cid.txt
+    chown system system /mnt/vendor/persist/flag/colorid.txt
+    chmod 0644 /mnt/vendor/persist/flag/colorid.txt
 
     # Create the directories used by CnE subsystem
     mkdir /data/vendor/connectivity 0771 radio radio
@@ -313,13 +328,6 @@ on post-fs-data
     chown system system /sys/devices/platform/msm_sdcc.2/polling
     chown system system /sys/devices/platform/msm_sdcc.3/polling
     chown system system /sys/devices/platform/msm_sdcc.4/polling
-
-#Hua Qin <zhengwu.lu><2018-01-24> modify for ito test function node permission 1650-181 begin
-
-    chown system system /sys/devices/platform/tp_wake_switch/factory_check
-    chmod 0444 /sys/devices/platform/tp_wake_switch/factory_check
-
-#Hua Qin <zhengwu.lu><2018-01-24> modify for ito test function node permission 1650-181 end
 
     #Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
     mkdir /data/system 0775 system system
@@ -414,34 +422,20 @@ on post-fs-data
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
     
-service qcomsysd /system/vendor/bin/qcom-system-daemon
-    class main
-    user root
-    group root diag oem_2901
+service nvram_country system/vendor/bin/nvram_country
+    user system
+    group system
+    oneshot
     disabled
-
-on property:persist.vendor.qcomsysd.enabled=1
-    enable qcomsysd
-
-on property:persist.vendor.qcomsysd.enabled=0
-    stop qcomsysd
-
-# Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 start
-# Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
-# Huaqin add for change class core  by xudayi at 2018/05/28 start
-#service nvram_country /vendor/bin/nvram_country
-#    class core
-#    user root
-#    group system
-#    chmod 0644 /vendor/bin/nvram_country
-#    oneshot
-# Huaqin add for change class core  by xudayi at 2018/05/28 end
 
 service nvram_btwifi /system/bin/nvram_btwifi
     user root
     group system oem_2901
     oneshot
     disabled
+
+on property:persist.sys.nvinit=Ready
+    start nvram_country
 
 on property:sys.boot_completed=1
     start nvram_btwifi
@@ -560,11 +554,11 @@ on property:vold.decrypt=trigger_restart_framework
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
-#service vendor.qrtr-ns /vendor/bin/qrtr-ns -f
-#    class core
-#    user vendor_qrtr
-#    group vendor_qrtr
-#    capabilities NET_BIND_SERVICE
+service vendor.qrtr-ns /vendor/bin/qrtr-ns -f
+    class core
+    user vendor_qrtr
+    group vendor_qrtr
+    capabilities NET_BIND_SERVICE
 
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
@@ -638,6 +632,35 @@ service vendor.move_wifi_data /system/bin/move_wifi_data.sh
     disabled
     oneshot
 
+# FST Manager with hostapd (softap) - all settings inside ini file
+service fstman /vendor/bin/fstman -B -ddd -c /data/vendor/wifi/fstman.ini -a 1
+    user wifi
+    group wifi
+    capabilities NET_ADMIN NET_RAW
+    class main
+    disabled
+    oneshot
+
+# FST Manager with supplicant - connect to supplicant socket
+service fstman_wlan0 /vendor/bin/fstman -B -ddd -c /data/vendor/wifi/fstman.ini \
+    -a 0 @android:vendor_wpa_wlan0
+    user wifi
+    group wifi
+    capabilities NET_ADMIN NET_RAW
+    class main
+    disabled
+    oneshot
+
+service vendor.cnss_diag /system/vendor/bin/cnss_diag -q -f
+    class late_start
+    user system
+    group system wifi inet net_admin sdcard_rw media_rw diag
+    disabled
+    oneshot
+
+on property:sys.user.0.ce_available=true
+    start vendor.cnss_diag
+
 service cnss-daemon /system/vendor/bin/cnss-daemon -n -l
     class late_start
     user system
@@ -647,16 +670,6 @@ service cnss-daemon /system/vendor/bin/cnss-daemon -n -l
 on property:sys.shutdown.requested=*
     write /sys/kernel/shutdown_wlan/shutdown 1
     stop cnss-daemon
-
-service dhcpcd_bt-pan /system/bin/dhcpcd -BKLG
-    class late_start
-    disabled
-    oneshot
-
-service iprenew_bt-pan /system/bin/dhcpcd -n
-    class late_start
-    disabled
-    oneshot
 
 service ssgqmigd /vendor/bin/ssgqmigd
     class late_start
@@ -754,20 +767,6 @@ on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
     write /proc/sys/net/ipv4/tcp_adv_win_scale  2
 
-service vendor.ril-daemon2 /vendor/bin/hw/rild -c 2
-    class main
-    user radio
-    disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
-    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
-
-service vendor.ril-daemon3 /vendor/bin/hw/rild -c 3
-    class main
-    user radio
-    disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
-    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
-
 service charger /sbin/asus_charger
     class charger
     group system graphics
@@ -840,11 +839,6 @@ on property:vendor.rild.libpath=*
 
 on property:ro.vendor.radio.noril=*
     setprop ro.radio.noril ${ro.vendor.radio.noril}
-
-service seemp_healthd /vendor/bin/seemp_healthd
-    class late_start
-    user system
-    group system
 
 service vendor.power_off_alarm /vendor/bin/power_off_alarm
     class core

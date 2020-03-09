@@ -90,19 +90,5 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>sigmahal</instance>
         </interface>
     </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.qti.hardware.wifi.keystore</name>
-        <version>1.0</version>
-        <interface>
-            <name>IKeystoreExt</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <vendor-ndk>
-        <version>29</version>
-    </vendor-ndk>
-    <system-sdk>
-        <version>28</version>
-    </system-sdk>
 </compatibility-matrix>
 

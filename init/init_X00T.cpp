@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright (c) 2015, The Linux Foundation. All rights reserved.
    Copyright (C) 2016 The CyanogenMod Project.
    Copyright (C) 2018-2019 The LineageOS Project
@@ -35,6 +35,7 @@
 #include <android-base/file.h>
 #include <android-base/properties.h>
 #include <android-base/strings.h>
+#include <android-base/logging.h>
 
 #include <sys/sysinfo.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
@@ -47,30 +48,6 @@ using android::base::GetProperty;
 using android::base::ReadFileToString;
 using android::base::Trim;
 using android::init::property_set;
-
-void property_override(char const prop[], char const value[])
-{
-    prop_info *pi;
-
-    pi = (prop_info*) __system_property_find(prop);
-    if (pi)
-        __system_property_update(pi, value, strlen(value));
-    else
-        __system_property_add(prop, strlen(prop), value, strlen(value));
-}
-
-void property_override_dual(char const system_prop[], char const vendor_prop[], char const value[])
-{
-    property_override(system_prop, value);
-    property_override(vendor_prop, value);
-}
-
-void property_override_triple(char const system_prop[], char const vendor_prop[], char const bootimg_prop[], char const value[])
-{
-    property_override(system_prop, value);
-    property_override(vendor_prop, value);
-    property_override(bootimg_prop, value);
-}
 
 static void init_alarm_boot_properties()
 {
@@ -101,85 +78,7 @@ static void init_alarm_boot_properties()
     }
 }
 
-void vendor_check_variant()
-{
-    struct sysinfo sys;
-    char const *region_file = "/persist/flag/countrycode.txt";
-    char const *build_fingerprint, *product_device, *product_model, *product_name;
-    std::string region;
-
-    sysinfo(&sys);
-
-    // Make sure the region value is trimmed first
-    if (ReadFileToString(region_file, &region))
-        region = Trim(region);
-
-    // Russian model has a slightly different product name
-    if (region == "RU")
-        product_name = "RU_X00TD";
-    else
-        product_name = "WW_X00TD";
-
-    // 6 GB variant
-    if (sys.totalram > 4096ull * 1024 * 1024) {
-        // Russian model
-        if (region == "RU") {
-            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_9:9/PKQ1/16.2017.1912.060-20191125:user/release-keys";
-            product_device = "ASUS_X00T_9";
-
-        // Global model
-        } else {
-            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_3:9/PKQ1/16.2017.1912.060-20191125:user/release-keys";
-            product_device = "ASUS_X00T_3";
-        }
-
-    // 3/4 GB variants
-    } else {
-        // Russian model
-        if (region == "RU") {
-            build_fingerprint = "asus/RU_X00TD/ASUS_X00T_6:9/PKQ1/16.2017.1912.060-20191125:user/release-keys";
-            product_device = "ASUS_X00T_6";
-
-        // Global model
-        } else {
-            build_fingerprint = "asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.1912.060-20191125:user/release-keys";
-            product_device = "ASUS_X00T_2";
-        }
-    }
-
-    // Product model overrides
-    if (region == "RU" || region == "TW" ||
-        (region == "PH" && sys.totalram > 3072ull * 1024 * 1024))
-        product_model = "ZB602KL";
-    else
-        product_model = "ZB601KL";
-
-    // Override props based on values set
-    property_override_dual("ro.product.device", "ro.vendor.product.device", product_device);
-    property_override_dual("ro.product.model", "ro.vendor.product.model", product_model);
-    property_override_dual("ro.product.name", "ro.vendor.product.name", product_name);
-    property_override_triple("ro.build.fingerprint", "ro.vendor.build.fingerprint", "ro.bootimage.build.fingerprint", build_fingerprint);
-
-}
-
-void userdebug_mask()
-{
-    std::string build_type;
-
-    build_type = GetProperty("ro.build.type", "");
-
-    if (build_type == "userdebug")
-    {
-        property_override_dual("ro.build.type", "ro.vendor.build.type", "user");
-        property_override_dual("ro.build.tags", "ro.vendor.build.tags", "release-keys");
-        property_override("ro.debuggable", "0");
-        property_override("ro.boot.flash.locked", "1");
-    }
-}
-
 void vendor_load_properties()
 {
     init_alarm_boot_properties();
-    userdebug_mask();
-    vendor_check_variant();
 }
