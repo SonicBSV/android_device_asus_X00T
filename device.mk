@@ -757,4 +757,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.deny \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd_default.conf 
 
+# ZenParts
+PRODUCT_PACKAGES += \
+    ZenParts
+
 $(call inherit-product, vendor/asus/X00T/X00T-vendor.mk)
