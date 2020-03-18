@@ -278,7 +278,7 @@ PRODUCT_PACKAGES += \
     android.frameworks.cameraservice.device@2.0 \
     android.frameworks.cameraservice.service@2.0 \
     camera.device@3.2-impl \
-    Snap
+    GoogleCameraMod
    
 PRODUCT_PROPERTY_OVERRIDES += \
    vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
@@ -288,10 +288,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
    vendor.vidc.enc.disable.pq=true \
    vendor.vidc.dec.enable.downscalar=0
    
-# Charger
+# Offline charger
 PRODUCT_PACKAGES += \
-    asus_charger \
-    asus_charger_res_images
+    charger_res_images \
+    product_charger_res_images
 
 # Codec2 modules
 PRODUCT_PACKAGES += \
@@ -447,7 +447,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.asus_X00T
+    android.hardware.light@2.0-service.X00T
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -722,6 +722,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     vndk_package
 
+# Wallpapers
+PRODUCT_PACKAGES += \
+    PixelLiveWallpaperPrebuilt \
+    WallpapersBReel2019 \
+    libgdx \
+    NexusWallpapersStubPrebuilt2019 \
+    MicropaperPrebuilt
+
 # WFD
 PRODUCT_PACKAGES += \
     libnl
@@ -735,14 +743,8 @@ PRODUCT_COPY_FILES += \
 
 # WiFi
 PRODUCT_PACKAGES += \
-    libwifi-hal-qcom \
-    libqsap_sdk \
     wificond \
-    wpa_supplicant \
-    wpa_supplicant.conf \
-    wpa_cli \
-    hostapd \
-    hostapd_cli
+    wpa_supplicant.conf
 
 #    android.hardware.wifi@1.0-service \
 
