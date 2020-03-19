@@ -9,7 +9,7 @@ PRODUCT_AAPT_PREBUILT_DPI := xxhdpi
 PRODUCT_CHARACTERISTICS := nosdcard
 
 # Enable updating of APEXes
-#$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # skip boot jars check
 SKIP_BOOT_JARS_CHECK := true
@@ -252,13 +252,12 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
     
 PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.bluetooth.soc=cherokee \
     vendor.qcom.bluetooth.soc=cherokee \
-    persist.vendor.bt.aac_frm_ctl.enabled=true \
-    persist.bluetooth.a2dp_offload.disabled=false \
-    persist.vendor.qcom.bluetooth.enable.splita2dp=true \
-    ro.vendor.bluetooth.wipower=false \
+    persist.bluetooth.a2dp_offload.cap=sbc-aptx-aptxhd-aac \
     persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
-    persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac-ldac
+    persist.vendor.bt.aac_frm_ctl.enabled=true \
+    ro.vendor.bluetooth.wipower=false
     
     
 # Boot animation
@@ -654,13 +653,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
-# Tetheroffload
-PRODUCT_PACKAGES += \
-    ipacm \
-    IPACM_cfg.xml \
-    libipanat \
-    liboffloadhal
-
 # TextClassifier smart selection model files
 PRODUCT_PACKAGES += \
     textclassifier.bundle1 \
@@ -703,7 +695,7 @@ PRODUCT_COPY_FILES += \
 
 # VNDK-SP:
 PRODUCT_PACKAGES += \
-    vndk_package
+    vndk_packageQ-new
 
 # VR
 PRODUCT_PACKAGES += \
@@ -732,14 +724,8 @@ PRODUCT_PACKAGES += \
 
 # WiFi
 PRODUCT_PACKAGES += \
-    libwifi-hal-qcom \
-    libqsap_sdk \
     wificond \
-    wpa_supplicant \
-    wpa_supplicant.conf \
-    wpa_cli \
-    hostapd \
-    hostapd_cli
+    wpa_supplicant.conf
 
 #    android.hardware.wifi@1.0-service \
 
