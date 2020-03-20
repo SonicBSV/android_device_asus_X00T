@@ -102,16 +102,6 @@ PRODUCT_PACKAGES += \
     audio.r_submix.default \
     audio.usb.default \
     audio.primary.sdm660 \
-    libsndmonitor \
-    libcomprcapture \
-    libssrec \
-    libhdmiedid \
-    libspkrprot \
-    libcirrusspkrprot \
-    liba2dpoffload \
-    libbatterylistener \
-    libhfp \
-    libexthwplugin \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
@@ -165,7 +155,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.audio.sos=true \
     vendor.audio.dolby.ds2.enabled=false \
     vendor.audio.dolby.ds2.hardbypass=false \
-    vendor.audio.feature.a2dp_offload.enable=true \
+    vendor.audio.feature.a2dp_offload.enable=false \
     vendor.audio.feature.afe_proxy.enable=true \
     vendor.audio.feature.anc_headset.enable=true \
     vendor.audio.feature.audiozoom.enable=false \
@@ -246,6 +236,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
 
 # Bluetooth
+PRODUCT_PACKAGES += \
+    android.hardware.bluetooth.audio@2.0-impl \
+    vendor.qti.hardware.bluetooth_audio@2.0.vendor
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:system/etc/bluetooth/bt_profile.conf \
     $(LOCAL_PATH)/configs/bluetooth/bt_configstore.conf:system/etc/bluetooth/bt_configstore.conf \
@@ -254,9 +248,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.bluetooth.soc=cherokee \
     vendor.qcom.bluetooth.soc=cherokee \
+    ro.bluetooth.a2dp_offload.supported=false \
+    persist.bluetooth.a2dp_offload.disabled=true \
     persist.bluetooth.a2dp_offload.cap=sbc-aptx-aptxhd-aac \
-    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
+    persist.vendor.qcom.bluetooth.enable.splita2dp=false \
+    persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
+    persist.bluetooth.bluetooth_audio_hal.disabled=true \
     ro.vendor.bluetooth.wipower=false
     
     
@@ -361,8 +359,9 @@ PRODUCT_COPY_FILES += \
 # FM
 #PRODUCT_PACKAGES += \
     FM2 \
+    libqcomfm_jni \
     qcom.fmradio \
-    libqcomfm_jni
+    android.hardware.broadcastradio@1.0-impl
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.hw.fm.init=0
@@ -695,7 +694,7 @@ PRODUCT_COPY_FILES += \
 
 # VNDK-SP:
 PRODUCT_PACKAGES += \
-    vndk_packageQ-new
+    vndk_package
 
 # VR
 PRODUCT_PACKAGES += \
