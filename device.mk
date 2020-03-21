@@ -9,7 +9,7 @@ PRODUCT_AAPT_PREBUILT_DPI := xxhdpi
 PRODUCT_CHARACTERISTICS := nosdcard
 
 # Enable updating of APEXes
-$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # skip boot jars check
 SKIP_BOOT_JARS_CHECK := true
