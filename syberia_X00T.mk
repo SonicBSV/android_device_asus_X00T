@@ -6,7 +6,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk
 
 # Inherit some common Syberia stuff.
 export SKIP_ABI_CHECKS=true
-#TARGET_INCLUDE_WIFI_EXT := true
+TARGET_INCLUDE_WIFI_EXT := true
 TARGET_BOOT_ANIMATION_RES := 2160
 $(call inherit-product, vendor/syberia/common.mk)
 
