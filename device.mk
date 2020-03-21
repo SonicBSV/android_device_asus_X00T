@@ -9,7 +9,7 @@ PRODUCT_AAPT_PREBUILT_DPI := xxhdpi
 PRODUCT_CHARACTERISTICS := nosdcard
 
 # Enable updating of APEXes
-#$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # skip boot jars check
 SKIP_BOOT_JARS_CHECK := true
@@ -102,16 +102,6 @@ PRODUCT_PACKAGES += \
     audio.primary.sdm660 \
     audio.r_submix.default \
     audio.usb.default \
-    libsndmonitor \
-    libcomprcapture \
-    libssrec \
-    libhdmiedid \
-    libspkrprot \
-    libcirrusspkrprot \
-    liba2dpoffload \
-    libbatterylistener \
-    libhfp \
-    libexthwplugin \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
@@ -119,6 +109,7 @@ PRODUCT_PACKAGES += \
     libvolumelistener \
     libaudio-resampler \
     libalsautils \
+    libavservices_minijail_vendor \
     tinycap \
     tinyplay \
     tinypcminfo \
@@ -164,7 +155,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.audio.sos=true \
     vendor.audio.dolby.ds2.enabled=false \
     vendor.audio.dolby.ds2.hardbypass=false \
-    vendor.audio.feature.a2dp_offload.enable=true \
+    vendor.audio.feature.a2dp_offload.enable=false \
     vendor.audio.feature.afe_proxy.enable=true \
     vendor.audio.feature.anc_headset.enable=true \
     vendor.audio.feature.audiozoom.enable=false \
@@ -248,19 +239,26 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
 
 # Bluetooth
+PRODUCT_PACKAGES += \
+    android.hardware.bluetooth.audio@2.0-impl \
+    vendor.qti.hardware.bluetooth_audio@2.0.vendor
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:system/etc/bluetooth/bt_profile.conf \
     $(LOCAL_PATH)/configs/bluetooth/bt_configstore.conf:system/etc/bluetooth/bt_configstore.conf \
     $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
     
 PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.bluetooth.soc=cherokee \
     vendor.qcom.bluetooth.soc=cherokee \
+    ro.bluetooth.a2dp_offload.supported=false \
+    persist.bluetooth.a2dp_offload.disabled=true \
+    persist.bluetooth.a2dp_offload.cap=sbc-aptx-aptxhd-aac \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
-    persist.bluetooth.a2dp_offload.disabled=false \
     persist.vendor.qcom.bluetooth.enable.splita2dp=true \
-    ro.vendor.bluetooth.wipower=false \
-    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
-    persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac-ldac
+    persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
+    persist.bluetooth.bluetooth_audio_hal.disabled=false \
+    ro.vendor.bluetooth.wipower=false
     
     
 # Boot animation
@@ -276,15 +274,15 @@ PRODUCT_PACKAGES += \
     android.frameworks.cameraservice.device@2.0 \
     android.frameworks.cameraservice.service@2.0 \
     camera.device@3.2-impl \
-    Snap
+    GoogleCameraMod
    
 PRODUCT_PROPERTY_OVERRIDES += \
-   vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
-   vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
-   persist.vendor.camera.expose.aux=1 \
-   persist.vendor.camera.mpo.disabled=1 \
-   vendor.vidc.enc.disable.pq=true \
-   vendor.vidc.dec.enable.downscalar=0
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
+    vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
+    persist.vendor.camera.expose.aux=1 \
+    persist.vendor.camera.mpo.disabled=1 \
+    vendor.vidc.enc.disable.pq=true \
+    vendor.vidc.dec.enable.downscalar=0
    
 # Charger
 PRODUCT_PACKAGES += \
@@ -365,7 +363,8 @@ PRODUCT_COPY_FILES += \
 #PRODUCT_PACKAGES += \
     FM2 \
     libqcomfm_jni \
-    qcom.fmradio
+    qcom.fmradio \
+    android.hardware.broadcastradio@1.0-impl
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.hw.fm.init=0
@@ -407,8 +406,11 @@ PRODUCT_PACKAGES += \
 # IMS
 PRODUCT_PACKAGES += \
     ims-ext-common \
+    ims_ext_common.xml \
     qti-telephony-hidl-wrapper \
-    qti-telephony-utils
+    qti_telephony_hidl_wrapper.xml \
+    qti-telephony-utils \
+    qti_telephony_utils.xml
 
 # IPv6
 PRODUCT_PACKAGES += \
@@ -442,10 +444,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service \
-    android.hardware.light@2.0-impl
-
-#   android.hardware.light@2.0-service.asus_X00T
+    android.hardware.light@2.0-service.X00T
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -483,11 +482,10 @@ PRODUCT_PACKAGES += \
 
 # Misc
 PRODUCT_PACKAGES += \
-    libbinderwrapper \
-    libbrillo-binder \
-    libbrillo-stream \
-    libbrillo \
-    libbrotli \
+    libbrillo-binder:64 \
+    libbrillo-stream:64 \
+    libbrillo:64 \
+    libbrotli:64 \
     libyuv
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -573,7 +571,6 @@ PRODUCT_PACKAGES += \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.recovery.qcom.rc \
-    init.qcom.factory.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
     init.target.rc \
@@ -662,13 +659,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
-# Tetheroffload
-PRODUCT_PACKAGES += \
-    ipacm \
-    IPACM_cfg.xml \
-    libipanat \
-    liboffloadhal
-
 # TextClassifier smart selection model files
 PRODUCT_PACKAGES += \
     textclassifier.bundle1 \
@@ -732,15 +722,10 @@ PRODUCT_COPY_FILES += \
 
 # WiFi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service \
-    libwifi-hal-qcom \
-    libqsap_sdk \
     wificond \
-    wpa_supplicant \
-    wpa_supplicant.conf \
-    wpa_cli \
-    hostapd \
-    hostapd_cli
+    wpa_supplicant.conf
+
+#    android.hardware.wifi@1.0-service \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.iwlan.enable=true
