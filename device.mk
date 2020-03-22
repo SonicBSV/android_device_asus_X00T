@@ -328,6 +328,15 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
+    hwcomposer.sdm660 \
+    gralloc.sdm660 \
+    memtrack.sdm660 \
+    libqdMetaData \
+    libqdMetaData.system \
+    libdisplayconfig \
+    libgpu_tonemapper \
+    libhwc2on1adapter \
+    libhwc2onfbadapter \
     libgui_vendor:32 \
     liboverlay \
     libvulkan \
@@ -475,6 +484,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     libavmediaserviceextensions \
     libmediametrics \
+    libhypv_intercept \
+    libI420colorconvert \
     libopus \
     libmediaplayerservice \
     libregistermsext \
@@ -526,6 +537,20 @@ PRODUCT_PACKAGES += \
 # NTP Server
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.backup.ntpServer="0.pool.ntp.org"
+
+# OMX
+PRODUCT_PACKAGES += \
+    libmm-omxcore \
+    libOmxAacEnc:32 \
+    libOmxAmrEnc:32 \
+    libOmxCore \
+    libOmxEvrcEnc:32 \
+    libOmxG711Enc:32 \
+    libOmxQcelp13Enc:32 \
+    libOmxVdec \
+    libOmxVenc \
+    libstagefrighthw \
+    libstagefright_soft_flacdec 
 
 # ONS
 PRODUCT_PACKAGES += \
@@ -582,6 +607,10 @@ PRODUCT_PACKAGES += \
 # Recovery
 PRODUCT_PACKAGES += \
     librecovery_updater_X00T
+
+# RenderScript HAL
+PRODUCT_PACKAGES += \
+    android.hardware.renderscript@1.0-impl
 
 # RIL
 PRODUCT_PACKAGES += \
@@ -740,5 +769,5 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.accept \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.deny \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd_default.conf 
-
+    
 $(call inherit-product, vendor/asus/X00T/X00T-vendor.mk)
