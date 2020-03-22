@@ -485,7 +485,6 @@ PRODUCT_PACKAGES += \
     libavmediaserviceextensions \
     libmediametrics \
     libhypv_intercept \
-    libI420colorconvert \
     libopus \
     libmediaplayerservice \
     libregistermsext \
