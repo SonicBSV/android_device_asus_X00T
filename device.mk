@@ -265,7 +265,8 @@ PRODUCT_PACKAGES += \
     android.frameworks.cameraservice.common@2.0 \
     android.frameworks.cameraservice.device@2.0 \
     android.frameworks.cameraservice.service@2.0 \
-    camera.device@3.2-impl
+    camera.device@3.2-impl \
+    SnapdragonCamera
    
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
