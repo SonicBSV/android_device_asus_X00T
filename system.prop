@@ -79,9 +79,6 @@ vidc.enc.dcvs.extra-buff-count=2
 #Netflix custom property
 ro.netflix.bsp_rev=Q660-13149-1
 
-#Property to enable WorkloadClassifier
-vendor.perf.workloadclassifier.enable=true
-
 #
 # system props for the data modules
 #

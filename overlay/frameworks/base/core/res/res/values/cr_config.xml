@@ -18,10 +18,6 @@
 
     <!-- Whether device ignores the RSSNR signal implementation -->
     <bool name="config_ignoreRssnrSignalLevel">true</bool>
-
-    <!-- Defines the sysfs attribute path used by pocket bridge
-         to communicate pocket state to the pocket judge kernel driver. -->
-    <string name="config_pocketBridgeSysfsInpocket">/sys/kernel/pocket_judge/inpocket</string>
      
     <!-- Does the battery LED support multiple colors?
          Used to decide if the user can change the colors -->

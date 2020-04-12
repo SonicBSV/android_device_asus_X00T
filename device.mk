@@ -562,9 +562,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/perfconfigstore.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfconfigstore.xml \
     $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.perf.workloadclassifier.enable=true
-
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power@1.2-service-qti
