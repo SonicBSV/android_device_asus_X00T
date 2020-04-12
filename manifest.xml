@@ -515,7 +515,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <name>IBTConfigStore</name>
             <instance>default</instance>
         </interface>
-        <fqname>@1.0::IBTConfigStore/default</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.qti.hardware.cacert</name>

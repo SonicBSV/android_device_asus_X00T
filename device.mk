@@ -301,6 +301,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapminfree=512k \
     dalvik.vm.heapmaxfree=8m
 
+# DeviceSettings
+PRODUCT_PACKAGES += \
+    DeviceSettings
+
 # Double tap (D2TW)
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.asus.dclick=1 \
@@ -557,6 +561,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/targetconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetconfig.xml \
     $(LOCAL_PATH)/configs/perfconfigstore.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfconfigstore.xml \
     $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.perf.workloadclassifier.enable=true
 
 # Power
 PRODUCT_PACKAGES += \
