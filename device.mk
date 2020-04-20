@@ -272,7 +272,8 @@ PRODUCT_PACKAGES += \
    
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
-    vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile,com.facebook.katana,com.instagram.android,com.snapchat.android \
+    vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
+    vendor.camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android \
     persist.vendor.camera.privapp.list=org.codeaurora.snapcam \
     persist.camera.privapp.list=org.codeaurora.snapcam \
     persist.vendor.camera.rtb.enable=1 \
