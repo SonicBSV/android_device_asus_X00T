@@ -631,6 +631,12 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/perfconfigstore.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfconfigstore.xml \
     $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
 
+# Play store
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.com.google.clientidbase.ms=android-asus-tpin \
+    ro.com.google.rlzbrandcode=ASUP \
+    ro.com.google.rlz_ap_whitelist=y0,y5,y6,y7,y9
+
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power@1.2-service-qti
@@ -673,7 +679,7 @@ PRODUCT_PACKAGES += \
 
 # RenderScript HAL
 PRODUCT_PACKAGES += \
-    android.hardware.renderscript@1.0-impl
+    android.hardware.renderscript@1.0-impl    
 
 # RIL
 PRODUCT_PACKAGES += \
@@ -684,21 +690,34 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.radio.VT_CAM_INTERFACE=2 \
-    persist.vendor.radio.atfwd.start=true \
+	persist.dbg.volte_avail_ovr=1 \
+    persist.dbg.vt_avail_ovr=1 \
+    persist.dbg.wfc_avail_ovr=1 \
+    DEVICE_PROVISIONED=1 \
+    persist.data.iwlan.enable=true \
     persist.radio.multisim.config=dsds \
+    persist.radio.VT_CAM_INTERFACE=1 \
+    persist.radio.VT_CAM_INTERFACE=2 \
     persist.vendor.radio.apm_sim_not_pwdn=1 \
+    persist.vendor.radio.atfwd.start=true \
     persist.vendor.radio.sib16_support=1 \
     persist.vendor.radio.custom_ecc=1 \
     persist.vendor.radio.rat_on=combine \
-    persist.vendor.radio.procedure_bytes=SKIP \
-    ro.telephony.iwlan_operation_mode=legacy \
-    ro.com.google.clientidbase=android-asus \
-    ro.com.google.clientidbase.ms=android-asus-tpin \
-    ro.com.google.rlzbrandcode=ASUP \
-    ro.com.google.rlz_ap_whitelist=y0,y5,y6,y7,y9 \
+    persist.vendor.qti.telephony.vt_cam_interface=1 \
+    persist.sys.fflag.override.settings_network_and_internet_v2=true \
+    ril.subscription.types=NV,RUIM \
+    vendor.rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
+    ro.carrier=unknown \
     ro.com.android.dataroaming=false \
-    ro.ril.ecclist=112,911  
+    ro.config.vc_call_vol_steps=11 \
+    ro.ril.ecclist=112,911 \
+    ro.telephony.default_network=22,20 \
+    ro.telephony.use_old_mnc_mcc_format=true \
+    ro.telephony.iwlan_operation_mode=legacy \
+    persist.vendor.radio.procedure_bytes=SKIP \
+    persist.vendor.radio.aosp_usr_pref_sel=true \
+    persist.vendor.radio.flexmap_type=none \
+    telephony.lteOnCdmaDevice=1  
 
 # QCOM
 PRODUCT_COPY_FILES += \
