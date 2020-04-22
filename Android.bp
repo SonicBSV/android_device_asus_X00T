@@ -18,6 +18,8 @@ soong_namespace {
 subdirs = [
     "usb/1.0-basic",
     "light",
+    "power-libperfmgr",
+    "health",
 ]
 
 hidl_package_root {

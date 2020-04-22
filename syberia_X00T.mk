@@ -11,7 +11,7 @@ TARGET_BOOT_ANIMATION_RES := 2160
 $(call inherit-product, vendor/syberia/common.mk)
 
 # Customization
-include vendor/google/customization/config.mk
+#include vendor/google/customization/config.mk
 
 # Inherit from X00T device
 $(call inherit-product, $(LOCAL_PATH)/device.mk)

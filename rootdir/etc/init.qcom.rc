@@ -53,6 +53,11 @@ on fs
     # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 end
 
 on init
+
+    # Support legacy paths
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
+
     # Create cgroup mount point for memory
     mkdir /sys/fs/cgroup/memory/bg 0750 root system
     write /sys/fs/cgroup/memory/bg/memory.swappiness 140
@@ -135,8 +140,15 @@ on boot
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
 
-    chown system system /sys/class/power_supply/battery/charging_enabled
+    chmod 0660 /sys/class/power_supply/battery/input_suspend
     chmod 0660 /sys/class/power_supply/battery/charging_enabled
+    chown system system /sys/class/power_supply/battery/input_suspend
+    chown system system /sys/class/power_supply/battery/charging_enabled
+
+    chmod 0660 /sys/class/power_supply/battery/device/thermalcall
+    chmod 0660 /sys/class/power_supply/battery/device/thermalvideo
+    chown system system /sys/class/power_supply/battery/device/thermalcall
+    chown system system /sys/class/power_supply/battery/device/thermalvideo
     chown system system /sys/class/power_supply/battery/device/smartchg_stop_charging
     chmod 0660 /sys/class/power_supply/battery/device/smartchg_stop_charging
 
@@ -165,6 +177,9 @@ on boot
 
     setprop ro.telephony.call_ring.multiple false
 
+    #enable fingerprint
+    setprop ro.hq.project ZQL1650
+    
     #enable camera read sensors data
     setprop persist.camera.gyro.disable 0
 
@@ -261,8 +276,8 @@ on post-fs-data
     mkdir /data/vendor/camera 0770 camera camera
     
     #leds
-	#chown system system /sys/class/leds/red/blink
-	#chown system system /sys/class/leds/green/blink
+    #chown system system /sys/class/leds/red/blink
+    #chown system system /sys/class/leds/green/blink
 
     #Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system
@@ -280,6 +295,7 @@ on post-fs-data
     mkdir /data/vendor/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/vendor/wifi/wigig_hostapd 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa 0770 wifi wifi
+    mkdir /data/vendor/wlan_logs 0770 system wifi
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
 
     mkdir /persist/flag 0771 system system
@@ -345,10 +361,13 @@ on post-fs-data
     mkdir /dev/socket/wifihal 0770 wifi wifi
     chmod 2770 /dev/socket/wifihal
 
-    # Permissions for Touch dclick Mode
     # Permissions for double tap
-    chown system system /sys/kernel/touchpanel/dclicknode
     chown system system /proc/touchpanel/double_tap_enable
+    chown system system /sys/kernel/touchpanel/dclicknode
+
+	# Permissions for Touch Gesture Mode
+    chown system system /sys/kernel/touchpanel/gesture_node
+    chmod 0664 /sys/kernel/touchpanel/gesture_node
 
     #Create directory for FOTA
     mkdir /data/fota 0771
@@ -833,12 +852,22 @@ service time_daemon /vendor/bin/time_daemon
     group system
     capabilities SYS_TIME
 
-# Set vendor-ril lib path based on Meta version
-on property:vendor.rild.libpath=*
-    setprop rild.libpath ${vendor.rild.libpath}
-
 on property:ro.vendor.radio.noril=*
     setprop ro.radio.noril ${ro.vendor.radio.noril}
+
+#lct add phone call status
+on property:sys.thermal.isincall=1
+    write /sys/class/power_supply/battery/device/thermalcall 1
+
+on property:sys.thermal.isincall=0
+    write /sys/class/power_supply/battery/device/thermalcall 0
+
+#lct add video status
+on property:sys.thermal.isinvideo=1
+    write /sys/class/power_supply/battery/device/thermalvideo 1
+
+on property:sys.thermal.isinvideo=0
+    write /sys/class/power_supply/battery/device/thermalvideo 0
 
 service vendor.power_off_alarm /vendor/bin/power_off_alarm
     class core
