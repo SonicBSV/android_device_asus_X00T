@@ -280,7 +280,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.camera.privapp.list=org.codeaurora.snapcam \
     persist.vendor.camera.rtb.enable=1 \
     persist.vendor.camera.eis.enable=1 \
-    persist.vendor.camera.ois.disable=1 \
     persist.vendor.camera.is_type=5 \
     vendor.debug.camera.prop_dis=1 \
     persist.vendor.camera.aec.sync=1 \
@@ -640,6 +639,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/perfconfigstore.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfconfigstore.xml \
     $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
 
+# Powerhint
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/power-libperfmgr/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
+
 # Play store
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.clientidbase.ms=android-asus-tpin \
@@ -716,7 +719,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.qti.telephony.vt_cam_interface=1 \
     persist.sys.fflag.override.settings_network_and_internet_v2=true \
     ril.subscription.types=NV,RUIM \
-    vendor.rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
     ro.carrier=unknown \
     ro.com.android.dataroaming=false \
     ro.config.vc_call_vol_steps=11 \
