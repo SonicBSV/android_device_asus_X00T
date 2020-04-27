@@ -1,0 +1,4 @@
+allow vendor_per_mgr self:capability { dac_override dac_read_search };
+allow vendor_per_mgr vfat:file { open };
+allow vendor_per_mgr vfat:file { read };
+allow vendor_per_mgr vfat:dir search;

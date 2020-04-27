@@ -1,10 +1,11 @@
-typeattribute tee data_between_core_and_vendor_violators;
-
-type_transition tee system_data_file:{ dir file } cdfinger_data_file;
-
 allow tee system_data_file:dir create_dir_perms;
-
 allow tee cdfinger_data_file:dir create_dir_perms;
 allow tee cdfinger_data_file:file create_file_perms;
-
-set_prop(tee, system_prop)
+typeattribute tee data_between_core_and_vendor_violators;
+type_transition tee system_data_file:{ dir file } cdfinger_data_file;
+allow tee fingerprintd_data_file:dir { read open search write add_name };
+allow tee fingerprintd_data_file:file { read create open write };
+allow tee system_prop:property_service set;
+allow tee tmpfs:dir { read open search };
+allow tee unlabeled:file unlink;
+set_prop(tee, system_prop);

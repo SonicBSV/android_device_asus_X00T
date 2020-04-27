@@ -1,0 +1,6 @@
+allow fsck block_device:blk_file { read write };
+allow fsck block_device:blk_file open;
+allow fsck block_device:blk_file ioctl;
+allow fsck tmpfs:blk_file getattr;
+allow fsck self:capability dac_read_search;
+allow fsck mnt_vendor_file:dir { read search getattr open };

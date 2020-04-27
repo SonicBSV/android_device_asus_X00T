@@ -176,9 +176,6 @@ on boot
     setprop wifi.interface wlan0
 
     setprop ro.telephony.call_ring.multiple false
-
-    #enable fingerprint
-    setprop ro.hq.project ZQL1650
     
     #enable camera read sensors data
     setprop persist.camera.gyro.disable 0

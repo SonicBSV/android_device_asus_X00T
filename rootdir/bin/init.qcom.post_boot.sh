@@ -2567,6 +2567,10 @@ case "$target" in
             echo 1 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/ignore_hispeed_on_notif
             echo 1 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/fast_ramp_down
 
+            # sound control
+            #echo '17 17 4294967261' > /sys/kernel/sound_control/headphone_gain
+            #echo '20 20 4294967255' > /sys/kernel/sound_control/headphone_gain
+
             # bring all cores online
             echo 1 > /sys/devices/system/cpu/cpu0/online
             echo 1 > /sys/devices/system/cpu/cpu1/online
