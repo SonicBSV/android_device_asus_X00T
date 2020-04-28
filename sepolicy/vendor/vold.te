@@ -1,0 +1,7 @@
+allow vold sdcardd:process noatsecure;
+allow vold vold_prepare_subdirs:process noatsecure;
+allow vold fsck_untrusted:process { noatsecure };
+allow vold blkid_untrusted:process { noatsecure } ;
+allow vold sgdisk:process { noatsecure } ;
+allow vold vendor_file:file read;
+allow vold vendor_cfg_prop:file { read getattr open };

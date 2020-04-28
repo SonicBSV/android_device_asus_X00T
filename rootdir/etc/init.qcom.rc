@@ -53,6 +53,11 @@ on fs
     # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 end
 
 on init
+
+    # Support legacy paths
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
+
     # Create cgroup mount point for memory
     mkdir /sys/fs/cgroup/memory/bg 0750 root system
     write /sys/fs/cgroup/memory/bg/memory.swappiness 140
@@ -135,8 +140,15 @@ on boot
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
 
-    chown system system /sys/class/power_supply/battery/charging_enabled
+    chmod 0660 /sys/class/power_supply/battery/input_suspend
     chmod 0660 /sys/class/power_supply/battery/charging_enabled
+    chown system system /sys/class/power_supply/battery/input_suspend
+    chown system system /sys/class/power_supply/battery/charging_enabled
+
+    chmod 0660 /sys/class/power_supply/battery/device/thermalcall
+    chmod 0660 /sys/class/power_supply/battery/device/thermalvideo
+    chown system system /sys/class/power_supply/battery/device/thermalcall
+    chown system system /sys/class/power_supply/battery/device/thermalvideo
     chown system system /sys/class/power_supply/battery/device/smartchg_stop_charging
     chmod 0660 /sys/class/power_supply/battery/device/smartchg_stop_charging
 
@@ -150,7 +162,7 @@ on boot
     mkdir /persist/bluetooth 0770 bluetooth bluetooth
     mkdir /persist/misc 0770 system system
     mkdir /persist/alarm 0770 system system
-    mkdir /mnt/vendor/persist/time 0770 system system
+    mkdir /persist/time 0770 system system
     mkdir /mnt/vendor/persist/secnvm 0770 system system
     mkdir /mnt/vendor/persist/iar_db 0770 system system
     mkdir /mnt/vendor/spunvm 0770 system system
@@ -164,7 +176,7 @@ on boot
     setprop wifi.interface wlan0
 
     setprop ro.telephony.call_ring.multiple false
-
+    
     #enable camera read sensors data
     setprop persist.camera.gyro.disable 0
 
@@ -259,10 +271,6 @@ on post-fs-data
 
     #Create folder of camera
     mkdir /data/vendor/camera 0770 camera camera
-    
-    #leds
-	#chown system system /sys/class/leds/red/blink
-	#chown system system /sys/class/leds/green/blink
 
     #Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system
@@ -280,6 +288,7 @@ on post-fs-data
     mkdir /data/vendor/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/vendor/wifi/wigig_hostapd 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa 0770 wifi wifi
+    mkdir /data/vendor/wlan_logs 0770 system wifi
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
 
     mkdir /persist/flag 0771 system system
@@ -287,6 +296,21 @@ on post-fs-data
 
     mkdir /mnt/vendor/persist/flag 0771 system system
     chown system system /mnt/vendor/persist/flag
+
+	chown system system /sys/kernel/wlan/power_stats
+	chmod 0660 /sys/kernel/wlan/power_stats
+    chown system system /dev/stune/top-app/schedtune.boost
+    chown system system /dev/cpu_dma_latency
+    chown system system /sys/class/kgsl/kgsl-3d0/force_rail_on
+    chown system system /sys/class/kgsl/kgsl-3d0/force_clk_on
+    chown system system /sys/class/kgsl/kgsl-3d0/idle_timer
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
+    chown system system /sys/class/devfreq/soc:qcom,gpubw/min_freq
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_trigger_count
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hist_memory
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_length
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/min_freq
 
     chown system system /mnt/vendor/persist/flag/countrycode.txt
     chmod 0644 /mnt/vendor/persist/flag/countrycode.txt
@@ -345,10 +369,13 @@ on post-fs-data
     mkdir /dev/socket/wifihal 0770 wifi wifi
     chmod 2770 /dev/socket/wifihal
 
-    # Permissions for Touch dclick Mode
     # Permissions for double tap
-    chown system system /sys/kernel/touchpanel/dclicknode
     chown system system /proc/touchpanel/double_tap_enable
+    chown system system /sys/kernel/touchpanel/dclicknode
+
+    # Permissions for Touch Gesture Mode
+    chown system system /sys/kernel/touchpanel/gesture_node
+    chmod 0664 /sys/kernel/touchpanel/gesture_node
 
     #Create directory for FOTA
     mkdir /data/fota 0771
@@ -433,6 +460,10 @@ service nvram_btwifi /system/bin/nvram_btwifi
     group system oem_2901
     oneshot
     disabled
+
+on property:sys.post_boot.parsed=1
+    # Enable PowerHAL hint processing
+    setprop vendor.powerhal.init 1
 
 on property:persist.sys.nvinit=Ready
     start nvram_country
@@ -827,18 +858,22 @@ service logdumpd /system/bin/logcat -b all -v threadtime -D -w /dev/block/bootde
 on property:ro.logdumpd.enabled=1
     start logdumpd
 
-service time_daemon /vendor/bin/time_daemon
-    class main
-    user system
-    group system
-    capabilities SYS_TIME
-
-# Set vendor-ril lib path based on Meta version
-on property:vendor.rild.libpath=*
-    setprop rild.libpath ${vendor.rild.libpath}
-
 on property:ro.vendor.radio.noril=*
     setprop ro.radio.noril ${ro.vendor.radio.noril}
+
+#lct add phone call status
+on property:sys.thermal.isincall=1
+    write /sys/class/power_supply/battery/device/thermalcall 1
+
+on property:sys.thermal.isincall=0
+    write /sys/class/power_supply/battery/device/thermalcall 0
+
+#lct add video status
+on property:sys.thermal.isinvideo=1
+    write /sys/class/power_supply/battery/device/thermalvideo 1
+
+on property:sys.thermal.isinvideo=0
+    write /sys/class/power_supply/battery/device/thermalvideo 0
 
 service vendor.power_off_alarm /vendor/bin/power_off_alarm
     class core
@@ -866,20 +901,3 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
-
-service vendor.audio-hal-2-0 /vendor/bin/hw/android.hardware.audio@2.0-service
-    override
-    class hal
-    user audioserver
-    # media gid needed for /dev/fm (radio) and for /data/misc/media (tee)
-    group audio camera drmrpc inet media mediadrm net_bt net_bt_admin net_bw_acct oem_2901 wakelock
-    capabilities BLOCK_SUSPEND
-    ioprio rt 4
-    writepid /dev/cpuset/foreground/tasks /dev/stune/foreground/tasks
-    # audioflinger restarts itself when it loses connection with the hal
-    # and its .rc file has an "onrestart restart audio-hal" rule, thus
-    # an additional auto-restart from the init process isn't needed.
-    oneshot
-    interface android.hardware.audio@5.0::IDevicesFactory default
-    interface android.hardware.audio@4.0::IDevicesFactory default
-    interface android.hardware.audio@2.0::IDevicesFactory default
