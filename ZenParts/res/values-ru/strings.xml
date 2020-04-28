@@ -14,10 +14,6 @@
     <string name="headphone_gain">Усиление звука в наушниках</string>
     <string name="microphone_gain">Усиление звука микрофона</string>
 
-    <!-- FPS Info -->
-    <string name="fps_info_title">Датчик FPS</string>
-    <string name="fps_info_summary">Отобразить информацию с текущими кадрами в секунду</string>
-
     <!-- Vibrator -->
     <string name="vibration_strength_title">Сила вибрации</string>
 
