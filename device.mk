@@ -63,6 +63,9 @@ PRODUCT_COPY_FILES += \
 
 # ADB Debug
 PRODUCT_PROPERTY_OVERRIDES += \
+    persist.logd.logpersistd=logcatd \
+    persist.service.adb.enable=1 \
+    persist.sys.usb.config=adb \
     ro.adb.secure=0 \
     ro.secure=0 \
     ro.debuggable=1 
@@ -127,6 +130,7 @@ PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_in_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_in_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration.xml \
+    $(TOPDIR)frameworks/av/services/audiopolicy/config/hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/hearing_aid_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
@@ -145,6 +149,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.audio.hifi.int_codec=true \
     persist.vendor.audio.hw.binder.size_kbyte=1024 \
     persist.vendor.audio.ras.enabled=false \
+    persist.vendor.audio.fluence.voicecomm=true \
     ro.af.client_heap_size_kbyte=7168 \
     ro.vendor.audio.sdk.fluencetype=fluence \
     ro.vendor.audio.sdk.ssr=false \
@@ -251,9 +256,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.qcom.bluetooth.enable.splita2dp=true \
     persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
     ro.bluetooth.emb_wp_mode=true \
-    ro.bluetooth.wipower=true \
-    ro.vendor.bluetooth.wipower=true
-        
+    ro.bluetooth.wipower=false \
+    ro.vendor.bluetooth.wipower=false
+
 # Boot animation
     TARGET_SCREEN_HEIGHT := 2160
     TARGET_SCREEN_WIDTH := 1080
@@ -659,9 +664,11 @@ PRODUCT_PACKAGES += \
     init.btmac.sh \
     init.class_main.sh \
     init.qcom.post_boot.sh \
+    init.qcom.power.sh \
     init.qcom.sensors.sh \
     init.qcom.sh \
     init.qcom.usb.sh \
+    emmc_prop_init.sh \
     init.qti.ims.sh \
     init.qti.fm.sh \
     init.qti.fm.rc \
@@ -672,7 +679,6 @@ PRODUCT_PACKAGES += \
     init.recovery.qcom.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
-    init.target.rc \
     ueventd.qcom.rc
 
 # Recovery
