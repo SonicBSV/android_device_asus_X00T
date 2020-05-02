@@ -72,45 +72,11 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a \
 		    ;;
 		    *)
 	            case "$target" in
-	              "msm8996")
-	                  setprop persist.vendor.usb.config diag,serial_cdev,serial_tty,rmnet_ipa,mass_storage,adb
-		      ;;
-	              "msm8909")
-		          setprop persist.vendor.usb.config diag,serial_smd,rmnet_qti_bam,adb
-		      ;;
-	              "msm8937")
-			    if [ -d /config/usb_gadget ]; then
-				       setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
-			    else
-			               case "$soc_id" in
-				               "313" | "320")
-				                  setprop persist.vendor.usb.config diag,serial_smd,rmnet_ipa,adb
-				               ;;
-				               *)
-				                  setprop persist.vendor.usb.config diag,serial_smd,rmnet_qti_bam,adb
-				               ;;
-			               esac
-			    fi
-		      ;;
-	              "msm8953")
-			      if [ -d /config/usb_gadget ]; then
-				      setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
-			      else
-				      setprop persist.vendor.usb.config diag,serial_smd,rmnet_ipa,adb
-			      fi
-		      ;;
 	              "msm8998" | "sdm660" | "apq8098_latv")
                           build_type=`getprop ro.build.type`
                           if [ "$build_type" == "userdebug" ]; then
                               setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
                           fi
-		          #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
-		      ;;
-	              "sdm845" | "sdm710")
-		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
-		      ;;
-	              "msmnile" | "sm6150" | "trinket" | "lito" | "atoll")
-			  setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,qdss,adb
 		      ;;
 	              *)
 		          setprop persist.vendor.usb.config diag,adb
@@ -138,19 +104,6 @@ case "$soc_machine" in
 	fi
     ;;
 esac
-
-# set rndis transport to BAM2BAM_IPA for 8920 and 8940
-if [ "$target" == "msm8937" ]; then
-	if [ ! -d /config/usb_gadget ]; then
-	   case "$soc_id" in
-		"313" | "320")
-		   echo BAM2BAM_IPA > /sys/class/android_usb/android0/f_rndis_qc/rndis_transports
-		;;
-		*)
-		;;
-	   esac
-	fi
-fi
 
 # check configfs is mounted or not
 if [ -d /config/usb_gadget ]; then
@@ -185,14 +138,6 @@ diag_extra=`getprop persist.vendor.usb.config.extra`
 if [ "$diag_extra" == "" ]; then
 	setprop persist.vendor.usb.config.extra none
 fi
-
-# enable rps cpus on msm8937 target
-setprop vendor.usb.rps_mask 0
-case "$soc_id" in
-	"294" | "295" | "353" | "354")
-		setprop vendor.usb.rps_mask 40
-	;;
-esac
 
 #
 # Initialize UVC conifguration.

@@ -17,4 +17,7 @@ soong_namespace {
 
 subdirs = [
     "light",
+    "power-libperfmgr",
+    "health",
+    "wifi_offload",
 ]

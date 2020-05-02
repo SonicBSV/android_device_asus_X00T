@@ -1,0 +1,4 @@
+allow zygote vendor_cfg_prop:file { read getattr open };
+allow zygote vendor_file:file { execute read getattr open };
+allow zygote theme_prop:file { getattr open read };
+allow zygote vendor_default_prop:file { getattr open read };
