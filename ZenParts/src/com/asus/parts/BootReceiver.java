@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 import android.provider.Settings;
 
+import com.asus.parts.kcal.Utils;
 import com.asus.parts.ambient.SensorsDozeService;
 
 public class BootReceiver extends BroadcastReceiver implements Utils {
