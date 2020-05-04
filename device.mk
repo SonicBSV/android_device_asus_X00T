@@ -344,6 +344,7 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
+    vendor.display.config@1.3 \
     hwcomposer.sdm660 \
     gralloc.sdm660 \
     memtrack.sdm660 \
