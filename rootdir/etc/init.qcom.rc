@@ -403,11 +403,11 @@ on post-fs-data
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
     
-service nvram_country system/vendor/bin/nvram_country
-    user system
-    group system
-    oneshot
-    disabled
+#service nvram_country system/vendor/bin/nvram_country
+#    user system
+#    group system
+#    oneshot
+#    disabled
 
 service nvram_btwifi /system/bin/nvram_btwifi
     user root
@@ -415,8 +415,8 @@ service nvram_btwifi /system/bin/nvram_btwifi
     oneshot
     disabled
 
-on property:persist.sys.nvinit=Ready
-    start nvram_country
+#on property:persist.sys.nvinit=Ready
+#    start nvram_country
 
 on property:sys.boot_completed=1
     start nvram_btwifi
@@ -1107,7 +1107,7 @@ on fs
     chown system system /sys/devices/soc/800f000.qcom,spmi/spmi-0/spmi0-00/800f000.qcom,spmi:qcom,pm660@0:qcom,qpnp-smb2/demo_app_property
 
     # Add by AMT.meng.lv, 08/29/2019, Optimize the nvram_country and set_dynamic_prop sequence begin
-    start nvram_country
+    #start nvram_country
     # Add by AMT.meng.lv, 08/29/2019, Optimize the nvram_country and set_dynamic_prop sequence end
 
     # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 begin
@@ -1287,6 +1287,27 @@ service emmc_prop_init /vendor/bin/sh /vendor/bin/emmc_prop_init.sh
     oneshot
     disabled
 #add by yukai@AMT 20190819 end
+#add by yukai@AMT 20200229 start
+service VerifyVouchers /vendor/bin/VerifyVouchers
+ 	class core
+ 	user root
+ 	oneshot
+ 	disabled
+on property:sys.boot_completed=1
+ 	start VerifyVouchers
+#add by yukai@AMT 20200229 end
+
+service battery_fac_cls /system/bin/battery-oem-cls.sh
+   class late_start
+   user root
+   group root
+   oneshot
+   disabled
+   seclabel u:r:logoem:s0
+
+#add for battery health 20200214
+on property:dbg.battery.changed=1
+    start battery_fac_cls
 
 on property:aaa.bbb.ccc=0
     setprop ccc.bbb.aaa 0
@@ -1320,6 +1341,7 @@ on post-fs-data
     chown system system /priv/*
     chmod 0775 /priv
     chmod 0775 /priv/*
+    chown root system /asusfw
 
 on boot
     #add for als/ps permission by wildbook at 2019/09/03 start

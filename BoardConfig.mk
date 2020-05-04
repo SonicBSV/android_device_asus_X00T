@@ -225,8 +225,8 @@ PROTOBUF_SUPPORTED := true
 # Security patch level
 # After June Google register fingerprints with security patch version.
 # Asus Android 10 407 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2019-11-05
-#PLATFORM_SECURITY_PATCH := 2019-11-05
+VENDOR_SECURITY_PATCH := 2020-04-05
+#PLATFORM_SECURITY_PATCH := 2020-04-05
 
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
