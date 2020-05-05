@@ -176,9 +176,6 @@ JAVA_SOURCE_OVERLAYS := org.lineageos.hardware|$(DEVICE_PATH)/lineagehw|**/*.jav
 # Media
 TARGET_USES_MEDIA_EXTENSIONS := true
 
-# NFC
-NXP_CHIP_FW_TYPE := PN553
-
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
@@ -190,22 +187,21 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4294967296
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 55490625024
 BOARD_VENDORIMAGE_PARTITION_SIZE := 838860800
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+PRODUCT_FULL_TREBLE_OVERRIDE := true
+PRODUCT_VENDOR_MOVE_ENABLED := true
+TARGET_USERIMAGES_USE_F2FS := true
+TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /mnt/vendor/persist:/persist \
     /vendor/bt_firmware:/bt_firmware \
     /vendor/dsp:/dsp \
     /vendor/firmware_mnt:/firmware
-PRODUCT_VENDOR_MOVE_ENABLED := true
-TARGET_COPY_OUT_VENDOR := vendor
-PRODUCT_FULL_TREBLE_OVERRIDE := true
-TARGET_USERIMAGES_USE_F2FS := true
-TARGET_USERIMAGES_USE_EXT4 := true
 
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 TARGET_USES_INTERACTION_BOOST := true
 TARGET_USES_NON_LEGACY_POWERHAL := true
 
@@ -232,14 +228,15 @@ PROTOBUF_SUPPORTED := true
 # Security patch level
 # After June Google register fingerprints with security patch version.
 # Asus Android 10 407 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2019-11-05
-#PLATFORM_SECURITY_PATCH := 2019-11-05
+VENDOR_SECURITY_PATCH := 2020-04-05
+#PLATFORM_SECURITY_PATCH := 2020-04-05
 
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
 BOARD_SEPOLICY_VERS := 29.0
+BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/temp
+BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
-BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
 
 # System properties

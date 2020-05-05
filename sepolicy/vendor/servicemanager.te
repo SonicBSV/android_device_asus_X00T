@@ -1,0 +1,4 @@
+allow servicemanager init:dir search;
+allow servicemanager init:file { getattr open read };
+allow servicemanager init:binder transfer;
+allow servicemanager init:process getattr;

@@ -63,7 +63,9 @@ PRODUCT_COPY_FILES += \
 
 # ADB Debug
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb \
+    persist.logd.logpersistd=logcatd \
+    persist.service.adb.enable=1 \
+    persist.sys.usb.config=adb \
     ro.adb.secure=0 \
     ro.secure=0 \
     ro.debuggable=1 
@@ -128,6 +130,7 @@ PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_in_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_in_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration.xml \
+    $(TOPDIR)frameworks/av/services/audiopolicy/config/hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/hearing_aid_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
@@ -146,6 +149,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.audio.hifi.int_codec=true \
     persist.vendor.audio.hw.binder.size_kbyte=1024 \
     persist.vendor.audio.ras.enabled=false \
+    persist.vendor.audio.fluence.voicecomm=true \
     ro.af.client_heap_size_kbyte=7168 \
     ro.vendor.audio.sdk.fluencetype=fluence \
     ro.vendor.audio.sdk.ssr=false \
@@ -252,9 +256,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.qcom.bluetooth.enable.splita2dp=true \
     persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
     ro.bluetooth.emb_wp_mode=true \
-    ro.bluetooth.wipower=true \
-    ro.vendor.bluetooth.wipower=true
-        
+    ro.bluetooth.wipower=false \
+    ro.vendor.bluetooth.wipower=false
+
 # Boot animation
     TARGET_SCREEN_HEIGHT := 2160
     TARGET_SCREEN_WIDTH := 1080
@@ -323,10 +327,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapminfree=512k \
     dalvik.vm.heapmaxfree=8m
 
-# DeviceSettings
-PRODUCT_PACKAGES += \
-    DeviceSettings
-
 # Double tap (D2TW)
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.asus.dclick=1 \
@@ -345,6 +345,7 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
+    vendor.display.config@1.3 \
     hwcomposer.sdm660 \
     gralloc.sdm660 \
     memtrack.sdm660 \
@@ -370,9 +371,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # DRM
 PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-service \
-    android.hardware.drm@1.2-service.clearkey \
-    android.hardware.drm@1.0-impl
+    android.hardware.drm@1.0-service
     
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
@@ -387,7 +386,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Exclude TOF sensor from InputManager
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
+    $(LOCAL_PATH)/configs/excluded-input-devices.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/excluded-input-devices.xml
 
 # FM
 PRODUCT_PACKAGES += \
@@ -410,6 +409,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/apdr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/apdr.conf \
+    $(LOCAL_PATH)/configs/gps/flp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/flp.conf \
     $(LOCAL_PATH)/configs/gps/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf \
     $(LOCAL_PATH)/configs/gps/izat.conf:$(TARGET_COPY_OUT_VENDOR)/etc/izat.conf \
     $(LOCAL_PATH)/configs/gps/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
@@ -436,7 +436,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.0-service
+    android.hardware.health@2.0-service.X00T
 
 # HIDL
 PRODUCT_PACKAGES += \
@@ -503,8 +503,11 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -624,12 +627,9 @@ DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
     $(LOCAL_PATH)/overlay-lineage
 
-# Perf configuration
+# Powerhint
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/commonresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/commonresourceconfigs.xml \
-    $(LOCAL_PATH)/configs/targetconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetconfig.xml \
-    $(LOCAL_PATH)/configs/perfconfigstore.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfconfigstore.xml \
-    $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
+    $(LOCAL_PATH)/power-libperfmgr/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
 # Play store
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -639,7 +639,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service-qti
+    android.hardware.power@1.3-service.X00T \
+    android.hardware.power.stats@1.0-service.mock
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.power.pasr.enabled=true
@@ -657,20 +658,21 @@ PRODUCT_PACKAGES += \
     init.btmac.sh \
     init.class_main.sh \
     init.qcom.post_boot.sh \
+    init.qcom.power.sh \
     init.qcom.sensors.sh \
     init.qcom.sh \
     init.qcom.usb.sh \
+    emmc_prop_init.sh \
     init.qti.ims.sh \
     init.qti.fm.sh \
     init.qti.fm.rc \
-    hack_attest.sh \
-    fix_baseband.sh \
+    init.baseband.sh \
+    init.fixgpay.sh \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.recovery.qcom.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
-    init.target.rc \
     ueventd.qcom.rc
 
 # Recovery
@@ -690,7 +692,7 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full
 
 PRODUCT_PROPERTY_OVERRIDES += \
-	persist.dbg.volte_avail_ovr=1 \
+    persist.dbg.volte_avail_ovr=1 \
     persist.dbg.vt_avail_ovr=1 \
     persist.dbg.wfc_avail_ovr=1 \
     DEVICE_PROVISIONED=1 \
@@ -706,7 +708,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.qti.telephony.vt_cam_interface=1 \
     persist.sys.fflag.override.settings_network_and_internet_v2=true \
     ril.subscription.types=NV,RUIM \
-    vendor.rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
     ro.carrier=unknown \
     ro.com.android.dataroaming=false \
     ro.config.vc_call_vol_steps=11 \
@@ -721,7 +722,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # QCOM
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml
 
 # QCOM cabl
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -838,8 +839,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@1.0-service \
-    android.hardware.thermal@1.0-impl
+    android.hardware.thermal@2.0-service.mock 
 
 # Time
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -896,11 +896,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # whitelisted app
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml 
+    $(LOCAL_PATH)/configs/qti_whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/qti_whitelist.xml 
 
 # WiFi
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
+    android.hardware.wifi.offload@1.0-service \
     libwifi-hal-qcom \
     libqsap_sdk \
     wificond \
@@ -911,7 +912,8 @@ PRODUCT_PACKAGES += \
     hostapd_cli
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.data.iwlan.enable=true
+    persist.data.iwlan.enable=true \
+    persist.wifi.offload.enable=true
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/aoa_cldb_falcon.bin:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/aoa_cldb_falcon.bin \
@@ -923,6 +925,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.accept \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.deny \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd_default.conf 
+
+# ZenParts
+PRODUCT_PACKAGES += \
+    ZenParts
 
 # ZRAM disk
 PRODUCT_PROPERTY_OVERRIDES += \
