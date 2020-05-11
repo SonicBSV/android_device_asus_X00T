@@ -227,4 +227,13 @@ $(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/
 
 $(shell cp -rf $(LOCAL_PATH)/vendor/bin $(PRODUCT_OUT)/vendor)
 
+#########################################################################
+# ASUS Folders
+#########################################################################
+$(shell mkdir -p $(TARGET_ROOT_OUT)/asusfw 0775 system system)
+$(shell mkdir -p $(TARGET_ROOT_OUT)/ADF 0775 system system)
+$(shell mkdir -p $(TARGET_ROOT_OUT)/APD 0775 system system)
+$(shell mkdir -p $(TARGET_ROOT_OUT)/asdf 0775 system system)
+$(shell mkdir -p $(TARGET_ROOT_OUT)/factory 0775 system system)
+
 endif

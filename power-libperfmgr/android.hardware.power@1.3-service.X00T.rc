@@ -1,30 +1,12 @@
 service vendor.power-hal-1-3 /vendor/bin/hw/android.hardware.power@1.3-service.X00T
     class hal
-    user system
+    user root
     group system
     priority -20
     interface android.hardware.power@1.0::IPower default
     interface android.hardware.power@1.1::IPower default
     interface android.hardware.power@1.2::IPower default
     interface android.hardware.power@1.3::IPower default
-
-#on property:sys.post_boot.parsed=1
-#    # Enable PowerHAL hint processing
-#    setprop vendor.powerhal.init 1
-#	chown system system /sys/kernel/wlan/power_stats
-#	chmod 0660 /sys/kernel/wlan/power_stats
-#    chown system system /dev/stune/top-app/schedtune.boost
-#    chown system system /dev/cpu_dma_latency
-#    chown system system /sys/class/kgsl/kgsl-3d0/force_rail_on
-#    chown system system /sys/class/kgsl/kgsl-3d0/force_clk_on
-#    chown system system /sys/class/kgsl/kgsl-3d0/idle_timer
-#    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
-#    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
-#    chown system system /sys/class/devfreq/soc:qcom,gpubw/min_freq
-#    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_trigger_count
-#    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hist_memory
-#    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_length
-#    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/min_freq
 
 # restart powerHAL when framework died
 on property:init.svc.zygote=restarting && property:vendor.powerhal.state=*

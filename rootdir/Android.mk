@@ -28,6 +28,14 @@ LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE       := init.qcom.power.sh
+LOCAL_MODULE_TAGS  := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_SRC_FILES    := bin/init.qcom.power.sh
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE       := init.qcom.sensors.sh
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
@@ -60,6 +68,14 @@ LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE       := emmc_prop_init.sh
+LOCAL_MODULE_TAGS  := optional
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES    := bin/emmc_prop_init.sh
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE       := init.youtube.sh
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
@@ -76,18 +92,18 @@ LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE       := hack_attest.sh
+LOCAL_MODULE       := init.baseband.sh
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := bin/hack_attest.sh
+LOCAL_SRC_FILES    := bin/init.baseband.sh
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE       := fix_baseband.sh
+LOCAL_MODULE       := init.fixgpay.sh
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := bin/fix_baseband.sh
+LOCAL_SRC_FILES    := bin/init.fixgpay.sh
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
@@ -122,14 +138,6 @@ LOCAL_MODULE       := init.qcom.usb.rc
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := etc/init.qcom.usb.rc
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.target.rc
-LOCAL_MODULE_TAGS  := optional
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/init.target.rc
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
 include $(BUILD_PREBUILT)
 

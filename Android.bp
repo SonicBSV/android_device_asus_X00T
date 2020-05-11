@@ -20,6 +20,7 @@ subdirs = [
     "light",
     "power-libperfmgr",
     "health",
+    "wifi_offload",
 ]
 
 hidl_package_root {

@@ -27,7 +27,6 @@
 
 import /vendor/etc/init/hw/init.qcom.usb.rc
 import /vendor/etc/init/hw/init.msm.usb.configfs.rc
-import /vendor/etc/init/hw/init.target.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -46,11 +45,6 @@ on early-init
 
     chown root system /dev/kmsg
     chmod 0620 /dev/kmsg
-
-on fs
-    # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 begin
-    setprop persist.sys.camera.camera2 true
-    # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 end
 
 on init
 
@@ -77,11 +71,6 @@ on early-boot
     write /sys/devices/virtual/npu/msm_npu/boot 1
     write /sys/kernel/boot_slpi/boot 1
     write /sys/devices/virtual/cvp/cvp/boot 1
-
-    # add by wildbook at 20190828 +++
-     chown system system /dev/input/event3  # stk3x3x-light
-     chown system system /dev/input/event4  # stk3x3x-proximity
-    # add by wildbook at 20190828 ---
 
     # for backward compatibility
     chown system system /persist/sensors
@@ -162,21 +151,18 @@ on boot
     mkdir /persist/bluetooth 0770 bluetooth bluetooth
     mkdir /persist/misc 0770 system system
     mkdir /persist/alarm 0770 system system
-    mkdir /persist/time 0770 system system
+    mkdir /mnt/vendor/persist/time 0770 system system
     mkdir /mnt/vendor/persist/secnvm 0770 system system
     mkdir /mnt/vendor/persist/iar_db 0770 system system
     mkdir /mnt/vendor/spunvm 0770 system system
 
-    # LED torch permissions
-    chmod 0666 /sys/class/leds/led:torch_0/brightness
-    chmod 0666 /sys/class/leds/led:torch_1/brightness
-    chmod 0666 /sys/class/leds/led:switch_0/brightness
-    chmod 0666 /sys/class/leds/led:switch_1/brightness
+    #Create WIGIG socket area
+    mkdir /dev/socket/wigig 0770 wifi wifi
 
     setprop wifi.interface wlan0
 
     setprop ro.telephony.call_ring.multiple false
-    
+
     #enable camera read sensors data
     setprop persist.camera.gyro.disable 0
 
@@ -271,10 +257,6 @@ on post-fs-data
 
     #Create folder of camera
     mkdir /data/vendor/camera 0770 camera camera
-    
-    #leds
-    #chown system system /sys/class/leds/red/blink
-    #chown system system /sys/class/leds/green/blink
 
     #Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system
@@ -290,23 +272,9 @@ on post-fs-data
     mkdir /data/vendor/wifi/hostapd 0770 wifi wifi
     mkdir /data/vendor/wifi/hostapd/ctrl 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa_supplicant 0770 wifi wifi
-    mkdir /data/vendor/wifi/wigig_hostapd 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa 0770 wifi wifi
     mkdir /data/vendor/wlan_logs 0770 system wifi
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
-
-    mkdir /persist/flag 0771 system system
-    chown system system /persist/flag
-
-    mkdir /mnt/vendor/persist/flag 0771 system system
-    chown system system /mnt/vendor/persist/flag
-
-    chown system system /mnt/vendor/persist/flag/countrycode.txt
-    chmod 0644 /mnt/vendor/persist/flag/countrycode.txt
-    chown system system /mnt/vendor/persist/flag/cid.txt
-    chmod 0644 /mnt/vendor/persist/flag/cid.txt
-    chown system system /mnt/vendor/persist/flag/colorid.txt
-    chmod 0644 /mnt/vendor/persist/flag/colorid.txt
 
     # Create the directories used by CnE subsystem
     mkdir /data/vendor/connectivity 0771 radio radio
@@ -362,7 +330,7 @@ on post-fs-data
     chown system system /proc/touchpanel/double_tap_enable
     chown system system /sys/kernel/touchpanel/dclicknode
 
-	# Permissions for Touch Gesture Mode
+    # Permissions for Touch Gesture Mode
     chown system system /sys/kernel/touchpanel/gesture_node
     chmod 0664 /sys/kernel/touchpanel/gesture_node
 
@@ -377,9 +345,6 @@ on post-fs-data
     mkdir /data/vendor/time/ 0700 system system
 
     setprop vold.post_fs_data_done 1
-
-    #Create a folder for SRS to be able to create a usercfg file
-    #mkdir /data/data/media 0770 media media
 
     #Create FM dir for patchdownloader
     mkdir /data/vendor/fm 0770 system system
@@ -438,11 +403,11 @@ on post-fs-data
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
     
-service nvram_country system/vendor/bin/nvram_country
-    user system
-    group system
-    oneshot
-    disabled
+#service nvram_country system/vendor/bin/nvram_country
+#    user system
+#    group system
+#    oneshot
+#    disabled
 
 service nvram_btwifi /system/bin/nvram_btwifi
     user root
@@ -450,8 +415,8 @@ service nvram_btwifi /system/bin/nvram_btwifi
     oneshot
     disabled
 
-on property:persist.sys.nvinit=Ready
-    start nvram_country
+#on property:persist.sys.nvinit=Ready
+#    start nvram_country
 
 on property:sys.boot_completed=1
     start nvram_btwifi
@@ -488,17 +453,17 @@ on property:ro.vendor.iocgrp.config=1
     write /dev/blkio/blkio.weight 1000
     write /dev/blkio/bg/blkio.weight 100
 
-on property:persist.vendor.sys.ssr.enable_debug=*
-    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.vendor.sys.ssr.enable_debug}
+on property:persist.sys.ssr.enable_debug=*
+    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.sys.ssr.enable_debug}
 
-on property:persist.vendor.sys.mba_boot_timeout=*
-    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.vendor.sys.mba_boot_timeout}
+on property:persist.sys.mba_boot_timeout=*
+    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.sys.mba_boot_timeout}
 
-on property:persist.vendor.sys.modem_auth_timeout=*
-    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.vendor.sys.modem_auth_timeout}
+on property:persist.sys.modem_auth_timeout=*
+    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.sys.modem_auth_timeout}
 
-on property:persist.vendor.sys.pil_proxy_timeout=*
-    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.vendor.sys.pil_proxy_timeout}
+on property:persist.sys.pil_proxy_timeout=*
+    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.sys.pil_proxy_timeout}
 
 on property:persist.vendor.ssr.restart_level=*
     start vendor.ssr_setup
@@ -565,7 +530,8 @@ service qcom-c_main-sh /vendor/bin/init.class_main.sh
 
 on property:vold.decrypt=trigger_restart_framework
     start qcom-c_main-sh
-    start wcnss-service
+    restart vendor.camera-provider-2-4
+    restart vendor.audio-hal-2-0
 
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
@@ -590,6 +556,7 @@ service vendor.rmt_storage /vendor/bin/rmt_storage
 service vendor.tftp_server /vendor/bin/tftp_server
    class core
    user root
+   group root system
 
 service vendor.bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
     class late_start
@@ -721,6 +688,13 @@ service vendor-sensor-sh /vendor/bin/init.qcom.sensors.sh
     user root
     oneshot
 
+service vendor.qcom-power /vendor/bin/init.qcom.power.sh
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+
 service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
     class late_start
     user root
@@ -728,24 +702,35 @@ service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
     disabled
     oneshot
 
-service fix_baseband /vendor/bin/fix_baseband.sh
+service fix-baseband /vendor/bin/init.baseband.sh
     class late_start
     user system
     group shell
     oneshot
     disabled
 
-service hack_attest /vendor/bin/hack_attest.sh
+service fix-gpay /vendor/bin/init.fixgpay.sh
     class late_start
     user root
-    group shell
-    oneshot
+    group root system
     disabled
+    oneshot
+
+service clean-youtube /vendor/bin/init.youtube.sh
+    class late_start
+    user root
+    group root system
+    disabled
+    oneshot
 
 on property:sys.boot_completed=1
     start qcom-post-boot
-    start fix_baseband
-    start hack_attest
+    start fix-baseband
+    start fix-gpay
+    start clean-youtube
+
+on property:vendor.post_boot.parsed=*
+    setprop sys.post_boot.parsed ${vendor.post_boot.parsed}
 
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1
@@ -763,14 +748,6 @@ service hostapd_fst /vendor/bin/hw/hostapd -dd -g /data/vendor/wifi/hostapd/glob
     group wifi
     disabled
     oneshot
-
-service vendor.wigig_hostapd /vendor/bin/hw/hostapd -dd  -j wigighostapd /data/vendor/wifi/hostapd/wigig_hostapd.conf
-    class late_start
-    capabilities NET_ADMIN NET_RAW
-    user wifi
-    group wifi inet keystore
-    oneshot
-    disabled
 
 #Huaqin modify for ZQL1650-6 by chengming at 2018/01/30 start
 #ASUS_BSP++ Write IMEI to device ID
@@ -804,18 +781,13 @@ on property:sys.qbcharger.enable=true
 on property:sys.qbcharger.enable=false
     stop qbcharger
 
-on property:persist.vendor.mdlog.enable=true
-    start diag_mdlog_start
-on property:persist.vendor.mdlog.enable=false
-    start diag_mdlog_stop
-
 service qlogd /system/xbin/qlogd
     socket qlogd stream 0662 system system
     class main
     disabled
-on property:persist.vendor.qlogd=1
+on property:persist.sys.qlogd=1
     start qlogd
-on property:persist.vendor.qlogd=0
+on property:persist.sys.qlogd=0
     stop qlogd
 
 service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
@@ -886,3 +858,532 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
+
+on early-init
+    mkdir /firmware 0771 system system
+    mkdir /bt_firmware 0771 system system
+    mkdir /dsp 0771 media media
+
+on init
+    start vendor.qcom-power
+
+    chmod 0664 /sys/devices/virtual/graphics/fb0/idle_time
+    chown system graphics /sys/devices/virtual/graphics/fb0/idle_time
+    write /sys/devices/virtual/graphics/fb0/idle_time 100
+
+on fs
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+on post-fs
+    start vendor.qseecomd
+    wait_for_prop vendor.sys.listeners.registered true
+    write /dev/ipa 1
+
+on init
+    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
+
+on post-fs-data
+    mkdir /data/tombstones/modem 0771 system system
+    mkdir /data/tombstones/lpass 0771 system system
+    mkdir /data/tombstones/wcnss 0771 system system
+    mkdir /data/tombstones/dsps 0771 system system
+    mkdir /data/misc/seemp 0700 system system
+    mkdir /data/vendor/tloc 0700 system drmrpc
+
+on boot
+    start rmt_storage
+    start rfs_access
+    write /dev/cpuset/top-app/cpus 0-7
+    write /dev/cpuset/foreground/cpus 0-7
+    write /dev/cpuset/foreground/boost/cpus 0-7
+    write /dev/cpuset/background/cpus 0-7
+    write /dev/cpuset/system-background/cpus 0-7
+    ####Regionalization config and prop files####
+    chmod 0644 /persist/speccfg/spec
+    chmod 0644 /persist/speccfg/devicetype
+    chmod 0644 /persist/speccfg/mbnversion
+    chmod 0644 /persist/speccfg/.not_triggered
+    chmod 0644 /persist/speccfg/vendor_ro.prop
+    chmod 0644 /persist/speccfg/vendor_persist.prop
+    chmod 0644 /persist/speccfg/submask
+    chmod 0644 /persist/speccfg/partition
+    chown system system /persist/speccfg/spec
+    chown system system /persist/speccfg/devicetype
+    chown system system /persist/speccfg/mbnversion
+    chown system system /persist/speccfg/.not_triggered
+    chown system system /persist/speccfg/vendor_ro.prop
+    chown system system /persist/speccfg/vendor_persist.prop
+    chown system system /persist/speccfg/submask
+    chown system system /persist/speccfg/partition
+# Huaqin modify for ZQL1650-143 by wangxiang at 2018/01/23 start 
+    chmod 0666 /dev/fpsdev0
+    chown system system /dev/fpsdev0
+# Huaqin modify for ZQL1650-143 by wangxiang at 2018/01/23 end 
+# Huaqin add for ZQL1650-143 by wangxiang at 2018/02/09 end 
+    chmod 0666 /dev/goodix_fp
+    chown system system /dev/goodix_fp
+# Huaqin add for ZQL1650-143 by wangxiang at 2018/02/09 end 
+
+#Create folder dump yuv images while debugging
+    mkdir /data/vendor/camera 0770 camera camera
+    
+    # KCAL permissions
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_enable
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_cont
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_sat
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_hue
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_min
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_val
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_enable
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_cont
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_sat
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_hue
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_min
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_val
+    
+    # Vibrator permissions
+    chown root system /sys/class/timed_output/vibrator/vtg_level
+    chmod 0660 /sys/class/timed_output/vibrator/vtg_level
+
+    # Audio gain permissions
+    chown system system /sys/kernel/sound_control/headphone_gain
+    chown system system /sys/kernel/sound_control/mic_gain
+    chmod 0660 /sys/kernel/sound_control/headphone_gain
+    chmod 0660 /sys/kernel/sound_control/mic_gain
+
+#Load WLAN driver
+   setprop wlan.driver.status "ok"
+   chown wifi wifi /sys/module/wlan/parameters/fwpath
+
+#USB controller configuration
+    setprop vendor.usb.rndis.func.name "rndis_bam"
+    setprop vendor.usb.rmnet.func.name "rmnet_bam"
+    setprop vendor.usb.rmnet.inst.name "rmnet"
+    setprop vendor.usb.dpl.inst.name "dpl"
+    setprop vendor.usb.qdss.inst.name "qdss"
+    write /sys/module/usb_f_qcrndis/parameters/rndis_dl_max_xfer_size 15916
+    setprop sys.usb.configfs 1
+
+#Peripheral manager
+service vendor.per_mgr /system/vendor/bin/pm-service
+    class core
+    user system
+    group system
+    ioprio rt 4
+
+service vendor.per_proxy /system/vendor/bin/pm-proxy
+    class core
+    user system
+    group system
+    disabled
+
+on property:init.svc.vendor.per_mgr=running
+    start vendor.per_proxy
+
+on property:sys.shutdown.requested=*
+    stop vendor.per_proxy
+
+on property:sys.post_boot.parsed=1
+    setprop vendor.powerhal.init 1
+
+service vendor.qseecomd /vendor/bin/qseecomd
+   class core
+   user root
+   group root
+
+service thermal-engine /system/vendor/bin/thermal-engine
+   class main
+   user root
+   socket thermal-send-client stream 0666 system system
+   socket thermal-recv-client stream 0660 system system
+   socket thermal-recv-passive-client stream 0666 system system
+   socket thermal-send-rule stream 0660 system system
+   group root
+
+service adsprpcd_root /vendor/bin/adsprpcd
+   class main
+   user media
+   group media
+
+service adsprpcd /vendor/bin/adsprpcd audiopd
+   class main
+   user media
+   group media
+
+service vendor.pd_mapper /system/vendor/bin/pd-mapper
+     class core
+
+on property:vold.decrypt=trigger_restart_framework
+   start cnss_diag
+
+service cnss_diag /system/vendor/bin/cnss_diag -q -f -t HELIUM
+   class main
+   user system
+   group system wifi inet sdcard_rw media_rw diag
+   oneshot
+
+service ppd /system/vendor/bin/mm-pp-dpps
+    class late_start
+    user system
+    group system graphics
+    socket pps stream 0660 system system
+    disabled
+
+on property:init.svc.surfaceflinger=stopped
+    stop ppd
+
+on property:init.svc.surfaceflinger=running
+    start ppd
+
+on property:init.svc.surfaceflinger=restarting
+    stop ppd
+
+on property:init.svc.zygote=stopped
+    stop ppd
+
+on property:init.svc.zygote=running
+    start ppd
+
+on property:init.svc.zygote=restarting
+    stop ppd
+
+on charger
+    load_system_props
+    start qcom-post-boot
+    start vendor.hvdcp_opti
+    setprop sys.usb.configfs 1
+    start power_off_alarm
+
+service qfp-daemon /vendor/bin/qfp-daemon
+    class late_start
+    user system
+    group system drmrpc diag input
+
+service vendor.hvdcp_opti /system/vendor/bin/hvdcp_opti
+     class main
+     user root
+     group system wakelock
+
+#Huaqin modify for disable sar in Indonesia by chenyijun5 at 2018/03/20 start
+on property:ro.config.versatility=ID
+    write /sys/module/sx9310/parameters/sar_switcher 1
+#Huaqin modify for disable sar in Indonesia by chenyijun5 at 2018/03/20 end
+#Huaqin porting nfc for ZQL1650-1157 by daiweiwei at 2018/4/17 start
+   
+on early-init
+    mkdir /mnt/vendor/factory 0755 system system
+on fs
+    wait /dev/block/bootdevice/by-name/asusfw
+    mount ext4 /dev/block/bootdevice/by-name/asusfw /asusfw nosuid nodev noatime barrier=1
+    restorecon_recursive /asusfw
+    wait /dev/block/bootdevice/by-name/ADF
+    mount ext4 /dev/block/bootdevice/by-name/ADF /ADF nosuid nodev noatime barrier=1
+    restorecon_recursive /ADF
+    wait /dev/block/bootdevice/by-name/APD
+    mount ext4 /dev/block/bootdevice/by-name/APD /APD nosuid nodev noatime barrier=1
+    restorecon_recursive /APD
+    wait /dev/block/bootdevice/by-name/asdf
+    mount ext4 /dev/block/bootdevice/by-name/asdf /asdf nosuid nodev noatime barrier=1
+    restorecon_recursive /asdf
+    wait /dev/block/bootdevice/by-name/factory
+    mount ext4 /dev/block/bootdevice/by-name/factory /mnt/vendor/factory nosuid nodev noatime barrier=1
+    restorecon_recursive /mnt/vendor/factory
+
+    # move from device/qcom/sdm660_64/init.target.rc
+    mount_all /vendor/etc/fstab.qcom 
+    swapon_all /vendor/etc/fstab.qcom
+    chown root system /mnt/vendor/persist
+    chmod 0771 /mnt/vendor/persist
+    mkdir /mnt/vendor/persist/data 0700 system system
+    mkdir /mnt/vendor/persist/bms 0700 root system
+    restorecon_recursive /mnt/vendor/persist
+    write /sys/kernel/boot_adsp/boot 1
+    # move from device/qcom/sdm660_64/init.target.rc
+
+    chmod 777 /sys/devices/soc/800f000.qcom,spmi/spmi-0/spmi0-00/800f000.qcom,spmi:qcom,pm660@0:qcom,qpnp-smb2/demo_app_property
+    chown system system /sys/devices/soc/800f000.qcom,spmi/spmi-0/spmi0-00/800f000.qcom,spmi:qcom,pm660@0:qcom,qpnp-smb2/demo_app_property
+
+    # Add by AMT.meng.lv, 08/29/2019, Optimize the nvram_country and set_dynamic_prop sequence begin
+    #start nvram_country
+    # Add by AMT.meng.lv, 08/29/2019, Optimize the nvram_country and set_dynamic_prop sequence end
+
+    # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 begin
+    setprop persist.sys.camera.camera2 true
+    # Add by AMT.meng.lv, 08/30/2019, Set camera api to camera2 end
+
+on post-fs
+    start emmc_prop_init
+    # Add by AMT.meng.lv, 08/29/2019, Optimize the nvram_country and set_dynamic_prop sequence begin
+    #start set_dynamic_prop
+    # Add by AMT.meng.lv, 08/29/2019, Optimize the nvram_country and set_dynamic_prop sequence end
+
+on post-fs-data
+    chmod 0666 /mnt/vendor/factory/proinfo
+    symlink /mnt/vendor/factory/proinfo /factory/proinfo
+
+#add by suyumei begin
+    chown system system /asusfw
+    chown system system /asusfw/*
+    chmod 0775 /asusfw
+    chmod 0775 /asusfw/*
+
+    chown system system /asusfw/asusfw_version
+    chmod 0775 /asusfw/asusfw_version
+
+    chown system system /ADF
+    chown system system /ADF/*
+    chmod 0775 /ADF
+    chmod 0775 /ADF/*
+
+    chown system system /APD
+    chown system system /APD/*
+
+    chown system system /APD/DemoVersion.txt
+    chown system system /APD/DemoContent.txt
+    chown system system /APD/config.xml
+    chown system system /APD/Media
+    chown system system /APD/Media/m_01.jpg
+    chown system system /APD/Media/m_02.jpg
+    chown system system /APD/Media/m_03.jpg
+    chown system system /APD/Media/m_04.jpg
+    chown system system /APD/Media/m_05.jpg
+    chown system system /APD/Media/m_06.jpg
+    chown system system /APD/Media/m_07.jpg
+    chown system system /APD/Media/m_08.jpg
+    chown system system /APD/Media/m_09.jpg
+    chown system system /APD/Media/m_10.jpg
+    chown system system /APD/Media/m_11.jpg
+    chown system system /APD/Media/m_12.jpg
+    chown system system /APD/Media/m_13.jpg
+    chown system system /APD/Media/m_14.jpg
+    chown system system /APD/Media/m_15.jpg
+
+    chown system system /APD/Media/m_1.jpg
+    chown system system /APD/Media/m_2.jpg
+    chown system system /APD/Media/m_3.jpg
+    chown system system /APD/Media/m_4.jpg
+    chown system system /APD/Media/m_5.jpg
+    chown system system /APD/Media/m_6.jpg
+    chown system system /APD/Media/m_7.jpg
+    chown system system /APD/Media/m_8.jpg
+    chown system system /APD/Media/m_9.jpg
+    chown system system /APD/Media/m_JonasBlue-ByYourSide-feat-RAYE.mp3
+
+    chown system system /APD/Movies
+    chown system system /APD/Movies/demo-video-screensaver.mp4
+    chown system system /APD/Movies/demo-video-screensaver_fr_FR.srt
+    chown system system /APD/Movies/demo-video-screensaver_hu_HU.srt
+    chown system system /APD/Movies/demo-video-screensaver_in_ID.srt
+    chown system system /APD/Movies/demo-video-screensaver_it_IT.srt
+    chown system system /APD/Movies/demo-video-screensaver_ja_JP.srt
+    chown system system /APD/Movies/demo-video-screensaver_pt_PT.srt
+    chown system system /APD/Movies/demo-video-screensaver_vi_VN.srt
+    chown system system /APD/md5CheckValue.md5
+    chown system system /APD/Movies/demo-video-screensaver_cs_CZ.srt
+    chown system system /APD/Movies/demo-video-screensaver_es_ES.srt
+    chown system system /APD/Movies/demo-video-screensaver_pt_BR.srt
+    chown system system /APD/Movies/demo-video-screensaver_ru_RU.srt
+    chown system system /APD/Movies/demo-video-screensaver_th_TH.srt
+    chown system system /APD/Movies/demo-video-screensaver_zh_TW.srt
+    chown system system /APD/Movies/ZB630KL_ZB631KL_Romanian.srt
+    chmod 0775 /APD/md5CheckValue.md5
+    chmod 0775 /APD/DemoVersion.txt
+    chmod 0775 /APD/DemoContent.txt
+    chmod 0775 /APD/config.xml
+    chmod 0775 /APD/Media
+    chmod 0775 /APD/Media/m_01.jpg
+    chmod 0775 /APD/Media/m_02.jpg
+    chmod 0775 /APD/Media/m_03.jpg
+    chmod 0775 /APD/Media/m_04.jpg
+    chmod 0775 /APD/Media/m_05.jpg
+    chmod 0775 /APD/Media/m_06.jpg
+    chmod 0775 /APD/Media/m_07.jpg
+    chmod 0775 /APD/Media/m_08.jpg
+    chmod 0775 /APD/Media/m_09.jpg
+    chmod 0775 /APD/Media/m_10.jpg
+    chmod 0775 /APD/Media/m_11.jpg
+    chmod 0775 /APD/Media/m_12.jpg
+    chmod 0775 /APD/Media/m_13.jpg
+    chmod 0775 /APD/Media/m_14.jpg
+    chmod 0775 /APD/Media/m_15.jpg
+
+    chmod 0775 /APD/Media/m_1.jpg
+    chmod 0775 /APD/Media/m_2.jpg
+    chmod 0775 /APD/Media/m_3.jpg
+    chmod 0775 /APD/Media/m_4.jpg
+    chmod 0775 /APD/Media/m_5.jpg
+    chmod 0775 /APD/Media/m_6.jpg
+    chmod 0775 /APD/Media/m_7.jpg
+    chmod 0775 /APD/Media/m_8.jpg
+    chmod 0775 /APD/Media/m_9.jpg
+    chmod 0775 /APD/Media/m_JonasBlue-ByYourSide-feat-RAYE.mp3
+
+    chmod 0775 /APD/Movies
+    chmod 0775 /APD/Movies/demo-video-screensaver.mp4
+    chmod 0775 /APD/Movies/demo-video-screensaver_fr_FR.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_hu_HU.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_in_ID.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_it_IT.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_ja_JP.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_pt_PT.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_vi_VN.srt
+
+    chmod 0775 /APD/Movies/demo-video-screensaver_cs_CZ.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_es_ES.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_pt_BR.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_ru_RU.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_th_TH.srt
+    chmod 0775 /APD/Movies/demo-video-screensaver_zh_TW.srt
+    chmod 0775 /APD/Movies/ZB630KL_ZB631KL_Romanian.srt
+    chmod 0775 /APD
+    chmod 0775 /APD/*
+
+    chown system system /asdf
+    chown system system /asdf/*
+    chmod 0775 /asdf
+    chmod 0775 /asdf/*
+
+    chown system system /factory
+    chown system system /factory/*
+    chmod 0775 /factory
+    chmod 0775 /factory/*
+
+#add by suyumei end
+	chown system system /sys/class/leds/red/blink
+	chown system system /sys/class/leds/green/blink
+
+
+on early-boot
+    # add by wildbook at 20190828 +++
+     chown system system /dev/input/event4  # stk3x3x-light
+     chown system system /dev/input/event5  # stk3x3x-proximity
+    # add by wildbook at 20190828 ---
+
+on boot
+#    start savelogsyd
+#    setprop qqq.eee.www 1
+#    start getpersistlog
+#    setprop persist.sys.debug.getaplog 1
+    chown system system /sys/class/power_supply/battery/charging_enabled
+    chmod 0660 /sys/class/power_supply/battery/charging_enabled
+    chown system system /sys/class/power_supply/battery/device/smartchg_stop_charging
+    chmod 0660 /sys/class/power_supply/battery/device/smartchg_stop_charging
+
+# Modify by AMT.meng.lv,09/09/2019, for set_dynamic_prop check nfc node issue begin
+#service set_dynamic_prop /system/vendor/bin/set_dynamic_prop
+#    user system
+#    group system
+#    oneshot
+#    disabled
+# Modify by AMT.meng.lv,09/09/2019, for set_dynamic_prop check nfc node issue end
+
+#add by yukai@AMT 20190819 start
+service emmc_prop_init /vendor/bin/sh /vendor/bin/emmc_prop_init.sh
+    class core
+    user root
+    oneshot
+    disabled
+#add by yukai@AMT 20190819 end
+#add by yukai@AMT 20200229 start
+service VerifyVouchers /vendor/bin/VerifyVouchers
+ 	class core
+ 	user root
+ 	oneshot
+ 	disabled
+on property:sys.boot_completed=1
+ 	start VerifyVouchers
+#add by yukai@AMT 20200229 end
+
+service battery_fac_cls /system/bin/battery-oem-cls.sh
+   class late_start
+   user root
+   group root
+   oneshot
+   disabled
+   seclabel u:r:logoem:s0
+
+#add for battery health 20200214
+on property:dbg.battery.changed=1
+    start battery_fac_cls
+
+on property:aaa.bbb.ccc=0
+    setprop ccc.bbb.aaa 0
+on property:aaa.bbb.ccc=1
+    setprop ccc.bbb.aaa 1
+
+on property:ro.boot.fuse_status=1
+    setprop atd.fuse.ready TRUE
+on property:ro.boot.fuse_status=0
+    setprop atd.fuse.ready FALSE
+
+on fs
+    wait /dev/block/bootdevice/by-name/asdf
+    mount ext4 /dev/block/bootdevice/by-name/asdf /oem nosuid nodev noatime barrier=1
+    restorecon_recursive /oem
+    wait /oem
+    mkdir /oem/etc 0755 system system
+    mkdir /oem/etc/xml 0755 system system
+    mkdir /oem/etc/vintf 0755 system system
+    chmod 0644 /oem/etc/fingerprint_for_gsi
+    start link_manifest
+    wait /dev/block/bootdevice/by-name/priv
+    mount ext4 /dev/block/bootdevice/by-name/priv /priv nosuid nodev noatime barrier=1
+    restorecon_recursive /priv
+
+on post-fs
+    chmod 0644 /asdf/etc/vintf/vendor_manifest.xml
+
+on post-fs-data
+    chown system system /priv
+    chown system system /priv/*
+    chmod 0775 /priv
+    chmod 0775 /priv/*
+    chown root system /asusfw
+
+on boot
+    #add for als/ps permission by wildbook at 2019/09/03 start
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_enable
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_delay
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_calibrate
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_enable_wakeup
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_flush
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_name
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_enable
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_delay
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_calibrate
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_enable_wakeup
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_flush
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_name
+
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_enable
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_delay
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_calibrate
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_enable_wakeup
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_flush
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_name
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_enable
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_delay
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_calibrate
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_enable_wakeup
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_flush
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_name
+
+    chown radio radio sys/module/stk3x1x/parameters/call_status_flag
+    #add for als/ps permission by wildbook at 2019/09/03 end
+
+on property:ro.config.versatility=*
+    write /proc/countrycode ${ro.config.versatility}
+
+on property:ro.vendor.build.fingerprint=*
+    write /asdf/etc/fingerprint_for_gsi ${ro.vendor.build.fingerprint}
+    mount ext4 /dev/block/bootdevice/by-name/asdf /oem remount ro nosuid nodev noatime barrier=1
+
+service link_manifest /system/vendor/bin/link_manifest
+    user system
+    group system
+    oneshot
+    disabled
+    seclabel u:r:set_dynamic_prop:s0
