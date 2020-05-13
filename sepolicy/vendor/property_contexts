@@ -30,3 +30,5 @@ vendor.debug.camera.prop_hdr           u:object_r:vendor_camera_prop:s0
 vendor.debug.camera.prop_dis           u:object_r:vendor_camera_prop:s0
 #wifi.active.interface              u:object_r:wifi_prop:s0
 
+# Dolby
+persist.vendor.dolby.loglevel                 u:object_r:vendor_dolby_loglevel_prop:s0

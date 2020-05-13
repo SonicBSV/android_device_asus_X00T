@@ -189,3 +189,6 @@ allow init proc_touchpanel:file write;
 allow init qdisplay_service:service_manager find;
 allow init ion_device:chr_file { ioctl open read write };
 allow init qdsp_device:chr_file { ioctl open read write };
+allow init vendor_data_file:file lock;
+allow init hal_audio_default:binder call;
+allow init platform_app:binder call;
