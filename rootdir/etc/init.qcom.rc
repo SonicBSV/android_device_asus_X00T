@@ -688,13 +688,6 @@ service vendor-sensor-sh /vendor/bin/init.qcom.sensors.sh
     user root
     oneshot
 
-service vendor.qcom-power /vendor/bin/init.qcom.power.sh
-    class main
-    user root
-    group root system
-    disabled
-    oneshot
-
 service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
     class late_start
     user root
@@ -865,8 +858,6 @@ on early-init
     mkdir /dsp 0771 media media
 
 on init
-    start vendor.qcom-power
-
     chmod 0664 /sys/devices/virtual/graphics/fb0/idle_time
     chown system graphics /sys/devices/virtual/graphics/fb0/idle_time
     write /sys/devices/virtual/graphics/fb0/idle_time 100
@@ -1381,9 +1372,9 @@ on property:ro.vendor.build.fingerprint=*
     write /asdf/etc/fingerprint_for_gsi ${ro.vendor.build.fingerprint}
     mount ext4 /dev/block/bootdevice/by-name/asdf /oem remount ro nosuid nodev noatime barrier=1
 
-service link_manifest /system/vendor/bin/link_manifest
-    user system
-    group system
-    oneshot
-    disabled
-    seclabel u:r:set_dynamic_prop:s0
+#service link_manifest /system/vendor/bin/link_manifest
+#    user system
+#    group system
+#    oneshot
+#    disabled
+#    seclabel u:r:set_dynamic_prop:s0

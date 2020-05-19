@@ -20,5 +20,4 @@ subdirs = [
     "touch",
     "power-libperfmgr",
     "health",
-    "wifi_offload",
 ]
