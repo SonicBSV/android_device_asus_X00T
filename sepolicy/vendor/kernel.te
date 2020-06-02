@@ -1,0 +1,16 @@
+allow kernel init:process noatsecure;
+allow kernel self:capability dac_override;
+allow kernel self:security setenforce;
+allow kernel debugfs_wlan:dir search;
+allow kernel kcal_dev:dir relabelto;
+allow kernel kcal_dev:file relabelto;
+allow kernel kcal_dev:lnk_file relabelto;
+allow kernel mnt_vendor_file:dir search;
+allow kernel mnt_vendor_file:file open;
+allow kernel mnt_vendor_file:file read;
+allow kernel vfat:file open;
+allow kernel vfat:dir { search };
+allow kernel kernel:system { module_request };
+allow kernel kernel:security { setenforce };
+allow kernel adsprpcd_file:dir search;
+dontaudit kernel self:capability { dac_override dac_read_search };

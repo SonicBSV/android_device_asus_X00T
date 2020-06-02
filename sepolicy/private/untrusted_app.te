@@ -1,0 +1,17 @@
+allow untrusted_app bpfloader_exec:file { getattr open read };
+allow untrusted_app hal_allocator_default_exec:file { getattr open read };
+allow untrusted_app dun-server_exec:file { getattr open read };
+allow untrusted_app incident_helper_exec:file { getattr open read };
+allow untrusted_app mkfs_exec:file { getattr open read };
+allow untrusted_app proc_misc:file { getattr open read };
+allow untrusted_app proc_tty_drivers:file { getattr open read };
+allow untrusted_app blank_screen_exec:file { getattr open read };
+allow untrusted_app dexoptanalyzer_exec:file { getattr open read };
+allow untrusted_app dpmd_exec:file { getattr open read };
+allow untrusted_app perfprofd_exec:file { getattr open read };
+allow untrusted_app wait_for_keymaster_exec:file { getattr open read };
+allow untrusted_app statsd_exec:file { getattr open read };
+allow untrusted_app surfaceflinger_exec:file { getattr open read };
+allow untrusted_app audioserver_exec:file read;
+allow untrusted_app mdnsd_exec:file read;
+allow untrusted_app mediaserver_exec:file read;

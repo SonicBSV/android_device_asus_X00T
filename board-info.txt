@@ -1,0 +1,2 @@
+require version-modem=2019-12-23 20:17:59
+require version-firmware=17.2017.1911.407
