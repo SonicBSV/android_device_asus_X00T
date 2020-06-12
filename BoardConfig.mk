@@ -121,7 +121,7 @@ TARGET_HW_DISK_ENCRYPTION := true
 TARGET_CRYPTFS_HW_PATH ?= vendor/qcom/opensource/cryptfs_hw
 
 # APEX image
-# DEXPREOPT_GENERATE_APEX_IMAGE := true
+#DEXPREOPT_GENERATE_APEX_IMAGE := true
 
 # Display
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
@@ -220,7 +220,6 @@ TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_X00T
 TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # RIL
-TARGET_RIL_VARIANT := caf
 ENABLE_VENDOR_RIL_SERVICE := true
 TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 PROTOBUF_SUPPORTED := true
@@ -228,8 +227,8 @@ PROTOBUF_SUPPORTED := true
 # Security patch level
 # After June Google register fingerprints with security patch version.
 # Asus Android 10 407 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2019-11-05
-#PLATFORM_SECURITY_PATCH := 2019-11-05
+VENDOR_SECURITY_PATCH := 2020-04-05
+#PLATFORM_SECURITY_PATCH := 2020-04-05
 
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
@@ -259,7 +258,6 @@ PRODUCT_TREBLE_LINKER_NAMESPACES := true
 BOARD_VNDK_VERSION := current
 
 # Wifi
-#BOARD_USES_CAF_WLAN_HAL := true
 BOARD_HAS_QCOM_WLAN := true
 BOARD_HAS_QCOM_WLAN_SDK := true
 BOARD_WLAN_DEVICE := qcwcn

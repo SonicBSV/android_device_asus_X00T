@@ -30,5 +30,9 @@ public class BootReceiver extends BroadcastReceiver {
 	//Ambient
         context.startService(new Intent(context, SensorsDozeService.class));
 
+        boolean enabled = sharedPrefs.getBoolean(DeviceSettings.PREF_KEY_FPS_INFO, false);
+        if (enabled) {
+            context.startService(new Intent(context, FPSInfoService.class));
+        }
     }
 }

@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2009-2012 Broadcom Corporation
+<!--
+     Copyright (C) 2012-2015 The CyanogenMod Project
+     Copyright (C) 2017-2019 The LineageOS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,9 +14,12 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
 <resources>
-    <bool name="profile_supported_avrcp_controller">true</bool>
-    <bool name="profile_supported_sap">true</bool>
-    <bool name="profile_supported_hid_device">false</bool>
+    <!-- Button backlight -->
+    <integer name="config_buttonBrightnessSettingDefault">0</integer>
+    <bool name="config_deviceHasVariableButtonBrightness">false</bool>
+
+    <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+    <bool name="config_cleanupUnusedFingerprints">false</bool>
+
 </resources>
