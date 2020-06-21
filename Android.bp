@@ -18,9 +18,7 @@ soong_namespace {
 subdirs = [
     "usb/1.0-basic",
     "light",
-    "power-libperfmgr",
     "health",
-    "wifi_offload",
 ]
 
 hidl_package_root {

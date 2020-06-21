@@ -34,7 +34,7 @@ sdm.debug.disable_skip_validate=1
 persist.sys.factory.bcontrol=2
 
 #Property to enable display default color mode
-vendor.display.enable_default_color_mode=0
+vendor.display.enable_default_color_mode=1
 
 # Display Properties as per treble compliance
 vendor.gralloc.enable_fb_ubwc=1
@@ -89,8 +89,8 @@ bt.max.hfpclient.connections=1
 persist.bt.a2dp.aac_disable=true
 
 # System property for cabl
-ro.qualcomm.cabl=0
-ro.vendor.display.cabl=0
+ro.qualcomm.cabl=2
+ro.vendor.display.cabl=2
 
 #
 # System props for telephony
@@ -160,16 +160,6 @@ persist.vendor.radio.atfwd.start=true
 #property to enable VDS WFD solution
 persist.hwc.enable_vds=1
 
-#Settings to enable sensors
-#Device Orientation sensor
-ro.vendor.sensors.dev_ori=true
-#Persistent Motion Detector
-ro.vendor.sensors.pmd=true
-#Stationary Detector
-ro.vendor.sensors.sta_detect=true
-#Motion Detector
-ro.vendor.sensors.mot_detect=true
-
 #Expose aux camera for below packages
 vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap
 
@@ -185,6 +175,7 @@ persist.chg.max_volt_mv=9000
 
 #system prop for Bluetooth SOC type
 vendor.bluetooth.soc=cherokee
+ro.bluetooth.library_name=libbluetooth_qti.so
 persist.vendor.btstack.enable.splita2dp=true
 persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxhd-aac
 
