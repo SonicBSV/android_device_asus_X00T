@@ -39,6 +39,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <hal format="hidl" optional="true">
         <name>android.hardware.gnss</name>
         <version>1.0-1</version>
+        <version>2.0</version>
         <interface>
             <name>IGnss</name>
             <instance>default</instance>
@@ -46,7 +47,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </hal>
     <hal format="hidl" optional="true">
         <name>android.hardware.gnss</name>
-        <version>1.0</version>
+        <version>1.0-1</version>
+        <version>2.0</version>
         <interface>
             <name>IGnss</name>
             <instance>gnss_vendor</instance>
@@ -63,7 +65,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </hal>
     <hal format="hidl" optional="true">
         <name>android.hardware.nfc</name>
-        <version>1.0</version>
         <version>1.2</version>
         <interface>
             <name>INfc</name>
@@ -117,39 +118,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </interface>
     </hal>
     <hal format="hidl" optional="true">
-        <name>vendor.goodix.hardware.fingerprint</name>
-        <version>1.0</version>
-        <interface>
-            <name>IGoodixBiometricsFingerprint</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
         <name>com.qualcomm.qti.dpm.api</name>
         <version>1.0</version>
         <interface>
             <name>IdpmQmi</name>
             <instance>dpmQmiService</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.lineage.livedisplay</name>
-        <version>2.0</version>
-        <interface>
-            <name>IDisplayModes</name>
-            <instance>default</instance>
-        </interface>
-        <interface>
-            <name>IPictureAdjustment</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.lineage.power</name>
-        <version>1.0</version>
-        <interface>
-            <name>ILineagePower</name>
-            <instance>default</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">
@@ -166,15 +139,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <interface>
             <name>IUceService</name>
             <instance>com.qualcomm.qti.uceservice</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.qti.gnss</name>
-        <version>1.0-2</version>
-        <version>2.0</version>
-        <interface>
-            <name>ILocHidlGnss</name>
-            <instance>gnss_vendor</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">
@@ -215,7 +179,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.display.config</name>
-        <version>1.0-10</version>
+        <version>1.0-16</version>
+        <version>2.0</version>
         <interface>
             <name>IDisplayConfig</name>
             <instance>default</instance>
@@ -268,6 +233,16 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <interface>
             <name>IEsePowerManager</name>
             <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.gnss</name>
+        <version>1.0-2</version>
+        <version>2.0-1</version>
+        <version>3.0</version>
+        <interface>
+            <name>ILocHidlGnss</name>
+            <instance>gnss_vendor</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">
@@ -352,15 +327,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </interface>
     </hal>
     <hal format="hidl" optional="true">
-        <name>android.hardware.biometrics.fingerprint</name>
-        <transport>hwbinder</transport>
-        <version>2.1</version>
-        <interface>
-            <name>IBiometricsFingerprint</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.data.iwlan</name>
         <version>1.0</version>
         <interface>
@@ -371,7 +337,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.data.latency</name>
-        <impl level="generic"></impl>
         <version>1.0</version>
         <interface>
             <name>ILinkLatency</name>
@@ -383,6 +348,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <version>1.0-1</version>
         <interface>
             <name>IFactory</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.fingerprint</name>
+        <version>1.0</version>
+        <interface>
+            <name>IQtiExtendedFingerprint</name>
             <instance>default</instance>
         </interface>
     </hal>
@@ -446,6 +419,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <name>IImsRadio</name>
             <instance>imsradio0</instance>
             <instance>imsradio1</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.radio.internal.deviceinfo</name>
+        <version>1.0</version>
+        <interface>
+            <name>IDeviceInfo</name>
+            <instance>deviceinfo</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">
@@ -564,11 +545,27 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </interface>
     </hal>
     <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.vpp</name>
+        <version>1.1-3</version>
+        <interface>
+            <name>IHidlVppService</name>
+            <instance>vppService</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.wifi.supplicant</name>
         <version>2.0</version>
         <interface>
             <name>ISupplicantVendor</name>
             <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.wifi.wifilearner</name>
+        <version>1.0</version>
+        <interface>
+            <name>IWifiStats</name>
+            <instance>wifiStats</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">
@@ -600,6 +597,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <version>1.0</version>
         <interface>
             <name>IQtiVoicePrintService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.dolby.hardware.dms</name>
+        <version>1.0</version>
+        <interface>
+            <name>IDms</name>
             <instance>default</instance>
         </interface>
     </hal>

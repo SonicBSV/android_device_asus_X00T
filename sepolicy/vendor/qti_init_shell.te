@@ -1,1 +1,44 @@
 dontaudit qti_init_shell self:capability { dac_override dac_read_search};
+set_prop(qti_init_shell, vendor_cfg_prop)
+set_prop(qti_init_shell, ctl_default_prop)
+set_prop(qti_init_shell, debug_prop);
+set_prop(qti_init_shell, radio_prop);
+set_prop(qti_init_shell, system_radio_prop);
+allow qti_init_shell vendor_radio_data_file:file create_file_perms;
+allow qti_init_shell vendor_radio_data_file:dir { getattr search };
+allow qti_init_shell ctl_default_prop:property_service set;
+allow qti_init_shell sysfs_cpu_boost:file write;
+allow qti_init_shell sysfs_lowmemorykiller:dir write;
+allow qti_init_shell ctl_start_prop:property_service set;
+allow qti_init_shell default_prop:file { getattr open read };
+allow qti_init_shell debug_prop:property_service set;
+allow qti_init_shell default_prop:property_service set;
+allow qti_init_shell radio_prop:property_service set;
+allow qti_init_shell system_prop:property_service set;
+allow qti_init_shell system_radio_prop:property_service set;
+allow qti_init_shell sysfs:file write;
+allow qti_init_shell system_prop:file { getattr open read };
+allow qti_init_shell sysfs_devices_system_cpu:file setattr;
+allow qti_init_shell vfat:dir read;
+allow qti_init_shell vfat:dir open;
+allow qti_init_shell vfat:file getattr;
+allow qti_init_shell vfat:file read;
+allow qti_init_shell vfat:file open;
+allow qti_init_shell vfat:dir search;
+allow qti_init_shell app_data_file:dir { search create_dir_perms };
+allow qti_init_shell app_data_file:file { create_file_perms };
+allow qti_init_shell selinuxfs:file { read write open ioctl create unlink getattr setattr };
+allow qti_init_shell system_app_data_file:dir { search create_dir_perms };
+allow qti_init_shell system_app_data_file:file { create_file_perms };
+allow qti_init_shell self:capability { fowner fsetid };
+allow qti_init_shell vendor_cfg_prop:property_service set;
+allow qti_init_shell vendor_cfg_prop:file {read getattr open };
+allow qti_init_shell sysfs_usb_rndis:file write;
+allow qti_init_shell proc_swappiness:file { open rw_file_perms };
+#allow qti_init_shell sysfs_devfreq:file { read open write setattr };
+#allow qti_init_shell sysfs_io_sched_tuneable:file { read open write setattr };
+allow qti_init_shell system_data_file:dir { remove_name rmdir setattr write getattr read search open };
+allow qti_init_shell system_data_file:file { getattr unlink create_file_perms };
+set_prop(qti_init_shell, debug_prop)
+set_prop(qti_init_shell, radio_prop)
+set_prop(qti_init_shell, system_radio_prop)

@@ -44,6 +44,7 @@
     <allow-in-power-save package="com.qualcomm.qti.gsma.services.nfc" />
     <allow-in-power-save package="com.quicinc.voice.activation" />
     <allow-in-power-save package="com.android.mms" />
+    <allow-in-power-save package="com.android.exchange" />
     <allow-in-power-save package="com.qualcomm.qti.callenhancement" />
     <allow-in-power-save package="com.qualcomm.qti.smartassistant" />
     <allow-in-power-save package="com.skyhook.blp" />
@@ -84,6 +85,8 @@
     <hidden-api-whitelisted-app package="com.qualcomm.qti.uim" />
 
     <hidden-api-whitelisted-app package="org.codeaurora.snapcam" />
+    <hidden-api-whitelisted-app package="com.google.android.GoogleCamera" />
+    <hidden-api-whitelisted-app package="com.google.android.apps.camera" />
     <hidden-api-whitelisted-app package="com.android.mms" />
     <hidden-api-whitelisted-app package="com.qualcomm.qti.carrierswitch" />
     <hidden-api-whitelisted-app package="com.qualcomm.qti.carrierconfigure" />
