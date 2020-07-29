@@ -1,0 +1,4 @@
+allow hal_wifi_default proc_net:file { read write setattr getattr open };
+allow hal_wifi_default default_prop:file { getattr open read };
+allow hal_wifi_default default_android_hwservice:hwservice_manager add;
+set_prop(hal_wifi_default, default_prop)
