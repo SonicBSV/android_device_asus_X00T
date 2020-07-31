@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Head Title -->
+    <string name="asusparts_title">ZenParts</string>
+    <string name="asusparts_settings_summary">Индивидуальные настройки устройства</string>
+
+    <!-- Category Title -->
+    <string name="display_title">Дисплей</string>
+    <string name="vibration_title">Настройка вибрации</string>
+    <string name="audio_title">Аудио</string>
+
+    <!-- Audio amplification -->
+    <string name="headphone_gain">Усиление звука в наушниках</string>
+    <string name="microphone_gain">Усиление звука микрофона</string>
+
+    <!-- FPS Info -->
+    <string name="fps_info_title">Датчик FPS</string>
+    <string name="fps_info_summary">Отобразить информацию с текущими кадрами в секунду</string>
+
+    <!-- Vibrator -->
+    <string name="vibration_strength_title">Сила вибрации</string>
+
+    <!-- Label for feature switch  -->
+    <string name="switch_bar_on">Вкл</string>
+
+    <!-- Label for feature switch -->
+    <string name="switch_bar_off">Выкл</string>
+
+    <!-- Custom seekbar -->
+    <string name="custom_seekbar_value">Значение: <xliff:g id="v">%s</xliff:g></string>
+    <string name="custom_seekbar_default_value">По умолчанию</string>
+    <string name="custom_seekbar_default_value_to_set">Значение по умолчанию: <xliff:g id="v">%s</xliff:g>Длительное нажатие, чтобы установить</string>
+    <string name="custom_seekbar_default_value_is_set">Значение по умолчанию установлено</string>
+</resources>

@@ -1,0 +1,5 @@
+type cdfinger_device, dev_type;
+type goodix_fp_device, dev_type;
+type adb_device, dev_type;
+type qemu_device, dev_type;
+type log_device, dev_type, mlstrustedobject;
