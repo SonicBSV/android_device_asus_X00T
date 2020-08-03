@@ -193,6 +193,7 @@ persist.sys.fingerauto=1
 persist.vendor.camera.rtb.enable=1
 #EIS Enable
 persist.vendor.camera.eis.enable=1
+persist.vendor.camera.ois.disable=1
 persist.vendor.camera.is_type=5
 vendor.debug.camera.prop_dis=1
 persist.vendor.camera.aec.sync=1

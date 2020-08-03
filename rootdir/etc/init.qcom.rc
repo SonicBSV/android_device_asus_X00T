@@ -1238,8 +1238,8 @@ on post-fs-data
     chmod 0775 /factory/*
 
 #add by suyumei end
-	chown system system /sys/class/leds/red/blink
-	chown system system /sys/class/leds/green/blink
+#	chown system system /sys/class/leds/red/blink
+#	chown system system /sys/class/leds/green/blink
 
 
 on early-boot

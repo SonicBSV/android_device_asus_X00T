@@ -22,8 +22,6 @@
 # definition file).
 #
 
-#ALLOW_MISSING_DEPENDENCIES=true
-
 DEVICE_PATH := device/asus/X00T
 
 BOARD_VENDOR := asus
@@ -70,10 +68,12 @@ BOARD_RAMDISK_OFFSET     := 0x02000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 #TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-
+#TARGET_KERNEL_CLANG_PATH := $(PWD)/vendor/qcom/sdclang/8.0/prebuilt/linux-x86_64/bin
 TARGET_KERNEL_SOURCE := kernel/asus/sdm660
 TARGET_KERNEL_CONFIG := X00T_defconfig
 TARGET_KERNEL_VERSION := 4.4
 #TARGET_KERNEL_CLANG_COMPILE := true
+#TARGET_KERNEL_CLANG_VERSION := sdclang
 
 # ANT+
 #TARGET_USES_PREBUILT_ANT := true
@@ -124,7 +124,7 @@ HWUI_COMPILE_FOR_PERF := true
 #TARGET_CRYPTFS_HW_PATH ?= $(DEVICE_PATH)/cryptfs_hw
 
 # APEX image
-DEXPREOPT_GENERATE_APEX_IMAGE := true
+#DEXPREOPT_GENERATE_APEX_IMAGE := true
 
 # Display
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
@@ -202,7 +202,6 @@ BOARD_ROOT_EXTRA_SYMLINKS := \
 TARGET_PER_MGR_ENABLED := true
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 TARGET_USES_INTERACTION_BOOST := true
 TARGET_USES_NON_LEGACY_POWERHAL := true
 
@@ -228,9 +227,8 @@ PROTOBUF_SUPPORTED := true
 
 # Security patch level
 # After June Google register fingerprints with security patch version.
-# Asus Android 10 407 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2020-06-05
-#PLATFORM_SECURITY_PATCH := 2020-06-05
+# Asus Android 9 084 fingerprint registered on this patch version
+VENDOR_SECURITY_PATCH := 2018-06-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk

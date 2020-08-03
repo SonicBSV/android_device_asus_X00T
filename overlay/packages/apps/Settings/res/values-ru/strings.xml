@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2009 The Android Open Source Project
+<!-- Copyright (C) 2007 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,14 +13,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
-    <!-- Default radius of the software rounded corners. -->
-    <dimen name="rounded_corner_radius">14dp</dimen>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Height of area above QQS where battery/time go -->
-    <!-- 48dp -->
-    <dimen name="quick_qs_offset_height">40dp</dimen>
-    <!-- Total height of QQS (quick_qs_offset_height + 128) -->
-    <dimen name="quick_qs_total_height">168dp</dimen>
-
+    <!-- [CHAR LIMIT=30] Title of the preference that opens the Ambient display settings screen. -->
+    <string name="ambient_display_screen_title">«Ambient» дисплей</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the always-on ambient display feature is enabled. -->
+    <string name="doze_always_on_title">Всегда включён</string>
+    
 </resources>

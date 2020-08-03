@@ -9,7 +9,7 @@ PRODUCT_AAPT_PREBUILT_DPI := xxhdpi
 PRODUCT_CHARACTERISTICS := nosdcard
 
 # Enable updating of APEXes
-$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # skip boot jars check
 SKIP_BOOT_JARS_CHECK := true
@@ -484,11 +484,8 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -496,6 +493,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
  
 # Media Extensions
 PRODUCT_PACKAGES += \
+    libstagefright_softomx.vendor \
     libavmediaserviceextensions \
     libmediametrics \
     libc2dcolorconvert \
@@ -766,7 +764,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.basic
+    android.hardware.usb@1.0-service.X00T
     
 # Vibrator
 PRODUCT_PACKAGES += \
@@ -782,6 +780,12 @@ PRODUCT_COPY_FILES += \
 # VNDK-SP:
 PRODUCT_PACKAGES += \
     vndk_package
+
+# VR
+PRODUCT_PACKAGES += \
+    android.hardware.vr@1.0-impl \
+    android.hardware.vr@1.0-service \
+    vr.sdm660
 
 # WFD
 PRODUCT_PACKAGES += \
