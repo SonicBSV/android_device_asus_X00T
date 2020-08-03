@@ -584,7 +584,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service \
+    android.hardware.power@1.2-service.X00T \
     android.hardware.power.stats@1.0-service.mock
 
 PRODUCT_PROPERTY_OVERRIDES += \
