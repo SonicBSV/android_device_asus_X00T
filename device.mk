@@ -329,6 +329,7 @@ PRODUCT_PACKAGES += \
     memtrack.sdm660 \
     libqdMetaData \
     libqdMetaData.system \
+    libgpu_tonemapper \
     libdisplayconfig \
     libhwc2on1adapter \
     libhwc2onfbadapter \
@@ -344,7 +345,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.egl=adreno
 
 # DPM
-PRODUCT_PROPERTY_OVERRIDES += \
+#PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.dpm.feature=1 \
     persist.vendor.dpm.nsrm.bkg.evt=3955
     
@@ -356,7 +357,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
 
 # Enable all system restart_level to relative
-PRODUCT_PROPERTY_OVERRIDES += \
+#PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.ssr.restart_level=ALL_ENABLE
 
 # Exclude TOF sensor from InputManager
@@ -426,6 +427,12 @@ PRODUCT_PACKAGES += \
     qti_telephony_hidl_wrapper.xml \
     qti-telephony-utils \
     qti_telephony_utils.xml
+    
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.ims.disableADBLogs=1 \
+    persist.ims.disableDebugLogs=1 \
+    persist.ims.disableQXDMLogs=1 \
+    persist.ims.disableIMSLogs=1
 
 # IPv6
 PRODUCT_PACKAGES += \
@@ -516,6 +523,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
+    ro.control_privapp_permissions=enforce \
     persist.vendor.qcomsysd.enabled=1
 
 # Netutils
@@ -787,7 +795,7 @@ PRODUCT_PACKAGES += \
     vr.sdm660
 
 # Wallpapers Live
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     PixelLiveWallpaperPrebuilt \
     WallpapersBReel2019 \
     libgdx \
