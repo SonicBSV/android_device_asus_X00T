@@ -1,0 +1,5 @@
+allow surfaceflinger mediacodec:binder call;
+allow surfaceflinger vendor_file:file { execute open read getattr };
+allow surfaceflinger sysfs_kgsl:lnk_file read;
+allow surfaceflinger vfat:dir { search create_dir_perms };
+allow surfaceflinger firmware_file:dir { search create_dir_perms };

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2017 CarbonROM
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+    <string name="system_error_vendorprint">Ваш образ поставщика не соответствует системе. Пожалуйста, прошейте <xliff:g id="string">%s</xliff:g> образ поставщика для вашего устройства</string>
+
+    <string name="reboot_to_recovery_title">Режим восстановения</string>
+    <string name="reboot_to_recovery_message">Перезагрузка в Recovery</string>
+    <string name="reboot_to_bootloader_title">Загрузчик</string>
+    <string name="reboot_to_bootloader_message">Перезагрузка в FastBoot</string>
+    <string name="reboot_title">Перезагрузка</string>
+    <string name="reboot_message">Перезагрузка системы</string>
+
+    <!-- On-The-Go -->
+    <string name="global_action_onthego">На ходу</string>
+
+    <!-- AOKP custom system animations -->
+    <string name="animation_slide_left">Слайд влево</string>
+    <string name="animation_slide_left_no_fade">Слайд влево (не исчезает)</string>
+    <string name="animation_slide_right">Слайд вправо</string>
+    <string name="animation_slide_right_no_fade">Слайд вправо (не исчезает)</string>
+    <string name="animation_slide_up">Слайд вниз</string>
+    <string name="animation_slide_down">Слайд сверху</string>
+    <string name="animation_translucent">Полупрозрачность</string>
+    <string name="animation_default">По умолчанию</string>
+    <string name="animation_fade">Исчезновение</string>
+    <string name="animation_grow_shrink">Расти сверху</string>
+    <string name="animation_grow_shrink_bottom">Расти снизу</string>
+    <string name="animation_grow_shrink_center">Расти из центра</string>
+    <string name="animation_grow_shrink_left">Расти слева</string>
+    <string name="animation_grow_shrink_right">Расти справа</string>
+    <string name="animation_random">Хаотичность</string>
+    <string name="action_null">Пусто</string>
+    <string name="animation_ethans">Анимация Ethans</string>
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_fakePackageSignature">Поддельный пакет подписи</string>
+
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_fakePackageSignature">Приложение сможет притворяться другим приложением. Вредоносные программы могут использовать это для доступа к частным данным приложений. Предоставляйте это разрешение только с осторожностью!</string>
+
+    <!-- ADB over network -->
+    <string name="adb_net_active_notification_title">ADB по сети включена</string>
+    <string name="adb_both_active_notification_title">ADB через USB и сеть включена</string>
+    <string name="adb_active_generic_notification_message">Нажмите, чтобы отключить отладку.</string>
+
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Длительное нажатие кнопки питания для взаимодействия</string>
+
+    <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
+    <string name="config_pocketBridgeSysfsInpocket"></string>
+
+    <!-- SystemUI Restart -->
+    <string name="systemui_restart_title">Требуется перезагрузка SystemUI</string>
+    <string name="systemui_restart_message">Чтобы все изменения вступили в силу, требуется перезагрузка SystemUI. Перезапустить SystemUI сейчас?</string>
+
+    <!-- App ops requests -->
+    <string name="app_ops_access_camera">доступ к камере</string>
+    <string name="app_ops_access_location">доступ к местоположению</string>
+    <string name="app_ops_access_notifications">чтение уведомлений</string>
+    <string name="app_ops_activate_vpn">активировать VPN</string>
+    <string name="app_ops_add_voicemail">добавить голосовое сообщение</string>
+    <string name="app_ops_app_start_foreground">запустить мгновенное приложение на переднем плане</string>
+    <string name="app_ops_assist_screenshot">сделать скриншот</string>
+    <string name="app_ops_assist_structure">использовать вспомогательную структуру</string>
+    <string name="app_ops_audio_accessibility_volume">громкость звука</string>
+    <string name="app_ops_auto_start">запустить при включении</string>
+    <string name="app_ops_bind_accessibility_service">Служба доступности</string>
+    <string name="app_ops_bluetooth_scan">Bluetooth-сканирование</string>
+    <string name="app_ops_change_wallpaper">изменить обои</string>
+    <string name="app_ops_delete_call_log">удалять журнал звонков</string>
+    <string name="app_ops_delete_contacts">удалять контакты</string>
+    <string name="app_ops_delete_mms">удалять MMS-сообщения</string>
+    <string name="app_ops_delete_sms">удалять SMS-сообщения</string>
+    <string name="app_ops_draw_on_top">окна сверху</string>
+    <string name="app_ops_get_accounts">получить УЗ устройства</string>
+    <string name="app_ops_get_usage_stats">получить статистику использования приложений</string>
+    <string name="app_ops_accept_handover">передача вызова из другого приложения</string>
+    <string name="app_ops_install_packages">устанавливать пакеты</string>
+    <string name="app_ops_keep_device_awake">запретить спящий режим</string>
+    <string name="app_ops_manage_ipsec_tunnels">управлять туннелями ipsec</string>
+    <string name="app_ops_make_phone_call">позвонить</string>
+    <string name="app_ops_mock_location">макет местоположения</string>
+    <string name="app_ops_modify_calendar">изменять календарь</string>
+    <string name="app_ops_modify_call_log">изменять журнал звонков</string>
+    <string name="app_ops_modify_clipboard">изменять буфер обмена</string>
+    <string name="app_ops_modify_contacts">изменять контакты</string>
+    <string name="app_ops_modify_settings">изменять сисемные настройки</string>
+    <string name="app_ops_mute_unmute_microphone">отключить/включить микрофон</string>
+    <string name="app_ops_phone_calls">отвечать на телефонные звонки</string>
+    <string name="app_ops_picture_in_picture">использовать Картинка в Картинке</string>
+    <string name="app_ops_play_audio">воспроизводить аудио</string>
+    <string name="app_ops_post_notification">послать уведомление</string>
+    <string name="app_ops_project_media">медиа-проект</string>
+    <string name="app_ops_read_calendar">читать календарь</string>
+    <string name="app_ops_read_call_log">читать журнал звонков</string>
+    <string name="app_ops_read_cell_broadcasts">читать широковещательные сообщения</string>
+    <string name="app_ops_read_clipboard">читать буфер обмена</string>
+    <string name="app_ops_read_contacts">читать контакты</string>
+    <string name="app_ops_read_external_storage">читать внешнее хранилище</string>
+    <string name="app_ops_read_mms">читать MMS-сообщения</string>
+    <string name="app_ops_read_phone_numbers">читать телефонные номера</string>
+    <string name="app_ops_read_phone_state">доступ к состоянию телефона</string>
+    <string name="app_ops_read_sms">читать SMS-сообщения</string>
+    <string name="app_ops_receive_sms">получать SMS-сообщение</string>
+    <string name="app_ops_receive_emergency_broadcast">получать экстренное широковещательное сообщение</string>
+    <string name="app_ops_record_audio">записывать аудио</string>
+    <string name="app_ops_request_delete_packages">запрос на удаление пакетов</string>
+    <string name="app_ops_run_in_background">запустить приложение в фоне</string>
+    <string name="app_ops_run_any_in_background">запуск любых приложений в фоне</string>
+    <string name="app_ops_scan_wifi">сканировать Wi-Fi сети</string>
+    <string name="app_ops_send_mms">посать MMS-сообщение</string>
+    <string name="app_ops_send_sms">посать SMS-сообщение</string>
+    <string name="app_ops_start_at_bootup">запустить при вкючении</string>
+    <string name="app_ops_start_foreground">запустить поверх других</string>
+    <string name="app_ops_toast_window">отображать Toast-сообщения</string>
+    <string name="app_ops_toggle_bluetooth">переключить Bluetooth</string>
+    <string name="app_ops_toggle_mobile_data">переключать мобильные данные</string>
+    <string name="app_ops_toggle_nfc">переключать NFC</string>
+    <string name="app_ops_toggle_wifi">переключать Wi-Fi</string>
+    <string name="app_ops_turn_on_screen">включить экран</string>
+    <string name="app_ops_use_alarm_volume">регулировать громкость будильника</string>
+    <string name="app_ops_use_audio_focus">управлять фокусировкой звука</string>
+    <string name="app_ops_use_bluetooth_volume">управлять громкостю Bluetooth</string>
+    <string name="app_ops_use_body_sensors">использовать датчики тела</string>
+    <string name="app_ops_use_fingerprint">использовать датчик отпечатка</string>
+    <string name="app_ops_use_master_volume">управлять громкостью</string>
+    <string name="app_ops_use_media_buttons">использовать мультимедийные кнопки</string>
+    <string name="app_ops_use_media_volume">управлять громкостю медиа</string>
+    <string name="app_ops_use_notification_volume">управлять громкостью уведомлений</string>
+    <string name="app_ops_use_ring_volume">управлять громкостью звонка</string>
+    <string name="app_ops_use_vibrate">использовать вибро-отклик</string>
+    <string name="app_ops_use_voice_volume">управлять громкостью голосового вызова</string>
+    <string name="app_ops_wifi_change">изменять состояние Wi-Fi</string>
+    <string name="app_ops_write_external_storage">запись на внешнее хранилище</string>
+    <string name="app_ops_write_mms">записывать MMS-сообщение</string>
+    <string name="app_ops_write_sms">записывать SMS-сообщение</string>
+
+    <!-- Privacy Guard -->
+    <string name="permlab_changePrivacyGuardState">Включить или отключить Защищенный режим</string>
+    <string name="permdesc_changePrivacyGuardState">Приложение сможет видеть, работает ли другое приложение в Защищенном режиме. Когда приложение работает в Защищенном режиме, оно не будет иметь доступа к личным данным, таким как контакты, журналы вызовов или сообщения.</string>
+    <string name="privacy_guard_notification">Защищенный режим активен</string>
+    <string name="privacy_guard_notification_detail"><xliff:g id="app">%1$s</xliff:g> не сможет получить доступ к личным данным</string>
+    <string name="privacy_guard_dialog_title">Privacy Guard (Защищенный режим)</string>
+    <string name="privacy_guard_dialog_summary"><xliff:g id="app">%1$s</xliff:g> хотело бы <xliff:g id="op">%2$s</xliff:g>.</string>
+
+    <!-- Text of the checkbox for the permission confirmation dialog to remember the user's choice. [CHAR LIMIT=40] -->
+    <string name="permission_remember_choice">Запомнить мой выбор</string>
+
+    <string name="default_string">По умочанию</string>
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_accessFontManager">Доступ к диспетчеру шрифтов</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_accessFontManager">Разрешает приложению доступ к диспетчеру шрифтов.</string>
+    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+    <string name="fontservice_incompatible_font">Установленный вами пакет шрифтов не совместим из-за отсутствия файла fonts.xml</string>
+
+    <!-- Path to the library that contains a alternative device specific key handler -->
+    <string name="config_alternativeDeviceKeyHandlerLib" translatable="false"></string>
+    <!-- Name of that alternative key handler class -->
+    <string name="config_alternativeDeviceKeyHandlerClass" translatable="false"></string>
+
+    <!-- App error dialog -->
+    <string name="aerr_copy">Скопировать URL журнала сбоев</string>
+    <string name="url_copy_success">URL успешно скопирован</string>
+    <string name="url_copy_failed">Произошла ошибка при загрузке журнала в dogbin</string>
+
+
+</resources>

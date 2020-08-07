@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 MSM-Xtended Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Auto keyboard rotation -->
+    <string-array name="keyboard_rotation_timeout_entries" translatable="false">
+        <item>2с</item>
+        <item>5с</item>
+        <item>10с</item>
+        <item>20с</item>
+        <item>30с</item>
+        <item>60с</item>
+    </string-array>
+
+    <string-array name="slimsizer_profile_array">
+        <item >Загрузить профиль</item>
+        <item >Сохранить профиль</item>
+    </string-array>
+
+
+    <string-array name="status_bar_logo_style_entries">
+        <item>Xtended основной</item>
+        <item>Xtended старый</item>
+        <item>Xtended маленький</item>
+        <item>GZR череп</item>
+        <item>GZR круг</item>
+        <item>Бэтмен</item>
+        <item>Дэдпул</item>
+        <item>Супермен</item>
+        <item>Железный человек</item>
+        <item>Человек-паук</item>
+        <item>Десептикон</item>
+        <item>Миньон</item>
+        <item>Android</item>
+        <item>Apple</item>
+        <item>iOS</item>
+        <item>Blackberry</item>
+        <item>Торт</item>
+        <item>Блоггер</item>
+        <item>Биологическая опасность</item>
+        <item>Linux</item>
+        <item>Инь-Янь</item>
+        <item>Windows</item>
+        <item>Робот</item>
+        <item>Нинзя</item>
+        <item>Сердце</item>
+        <item>Приведение</item>
+        <item>Google</item>
+        <item>Мужчина</item>
+        <item>Женщина</item>
+        <item>Мужчина и Женщина</item>
+        <item>Мужское начало</item>
+        <item>Женское начало</item>
+        <item>Мужское и Женское начало</item>
+        <item>Электрическая гитара</item>
+    </string-array>
+
+
+    <string-array name="edge_gestures_feedback_time_labels">
+        <item>0 мс</item>
+        <item>50 мс</item>
+        <item>100 мс</item>
+        <item>150 мс</item>
+        <item>200 мс</item>
+        <item>250 мс</item>
+    </string-array>
+
+    <string-array name="edge_gestures_long_press_time_labels">
+        <item>250 мс</item>
+        <item>500 мс</item>
+        <item>750 мс</item>
+        <item>1000 мс</item>
+        <item>1500 мс</item>
+        <item>2000 мс</item>
+    </string-array>
+
+    <string-array name="edge_gestures_back_edges_labels">
+        <item>Левой стороны</item>
+        <item>Правой стороны</item>
+        <item>Обеих сторон</item>
+    </string-array>
+
+
+</resources>
