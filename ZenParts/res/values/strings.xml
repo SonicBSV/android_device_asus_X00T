@@ -6,17 +6,12 @@
     <string name="asusparts_settings_summary">Device Specific Customizations</string>
 
     <!-- Category Title -->
-    <string name="display_title">Display</string>
     <string name="vibration_title">Vibration Controller</string>
     <string name="audio_title">Audio</string>
 
     <!-- Audio amplification -->
     <string name="headphone_gain">Headphone gain</string>
     <string name="microphone_gain">Microphone gain</string>
-
-    <!-- FPS Info -->
-    <string name="fps_info_title">FPS Info Overlay</string>
-    <string name="fps_info_summary">Show overlay with current frames per second</string>
 
     <!-- Vibrator -->
     <string name="vibration_strength_title">Strength</string>

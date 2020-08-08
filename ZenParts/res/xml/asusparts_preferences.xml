@@ -25,19 +25,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="display"
-        android:title="@string/display_title">
-
-        <SwitchPreference
-            android:key="fps_info"
-            android:icon="@drawable/ic_fps_info"
-            android:title="@string/fps_info_title"
-            android:summary="@string/fps_info_summary"
-            android:persistent="true" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="vibration"
         android:title="@string/vibration_title">
 
