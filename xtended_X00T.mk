@@ -27,6 +27,12 @@ $(call inherit-product, vendor/xtended/config/common_full_phone.mk)
 # Inherit from X00T device
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 
+# Xtended Stuffs
+XTENDED_BUILD_TYPE := UNOFFICIAL
+# Maintainer
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.xtended.maintainer=SonicBSV
+    
 PRODUCT_BRAND := asus
 PRODUCT_DEVICE := X00T
 PRODUCT_MANUFACTURER := asus
