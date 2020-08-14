@@ -663,6 +663,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.aosp_usr_pref_sel=true \
     persist.vendor.radio.flexmap_type=none 
 
+# SD Card
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.sdcardfs=1
+
 # QCOM
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml
@@ -795,7 +799,7 @@ PRODUCT_PACKAGES += \
     vr.sdm660
 
 # Wallpapers Live
-#PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     PixelLiveWallpaperPrebuilt \
     WallpapersBReel2019 \
     libgdx \
