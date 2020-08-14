@@ -1,0 +1,4 @@
+allow mediacodec default_prop:file { read getattr open };
+allow mediacodec init:binder transfer;
+allow mediacodec hal_power_default:unix_stream_socket connectto;
+allow mediacodec socket_device:sock_file write;

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2006, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="clock_title_type" translatable="false">Пропись</string>
+    <plurals name="type_clock_header">
+        <item quantity="other"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+        <item quantity="one"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+        <item quantity="few"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+    </plurals>
+    <string-array name="type_clock_hours">
+        <item>Двенадцать</item>
+        <item>Один</item>
+        <item>Два</item>
+        <item>Три</item>
+        <item>Четыре</item>
+        <item>Пять</item>
+        <item>Шесть</item>
+        <item>Семь</item>
+        <item>Восемь</item>
+        <item>Девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+    </string-array>
+    <string-array name="type_clock_minutes">
+        <item>Ноль\u2019Часов</item>
+        <item>Ноль Одна</item>
+        <item>Ноль Две</item>
+        <item>Ноль Три</item>
+        <item>Ноль Четыре</item>
+        <item>Ноль Пять</item>
+        <item>Ноль Шесть</item>
+        <item>Ноль Семь</item>
+        <item>Ноль Восемь</item>
+        <item>Ноль Девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+        <item>Двенадцать</item>
+        <item>Тринадцать</item>
+        <item>Четырнадцать</item>
+        <item>Пятнадцать</item>
+        <item>Шестнадцать</item>
+        <item>Семьнадцать</item>
+        <item>Восемьнадцать</item>
+        <item>Девятнадцать</item>
+        <item>Двадцать</item>
+        <item>Двадцать\nОдна</item>
+        <item>Двадцать\nДве</item>
+        <item>Двадцать\nТри</item>
+        <item>Двадцать\nЧетыре</item>
+        <item>Двадцать\nПять</item>
+        <item>Двадцать\n Шесть</item>
+        <item>Двадцать\nСемь</item>
+        <item>Двадцать\nВосемь</item>
+        <item>Двадцать\nДевять</item>
+        <item>Тридцать</item>
+        <item>Тридцать\nОдна</item>
+        <item>Тридцать\nДве</item>
+        <item>Тридцать\nТри</item>
+        <item>Тридцать\nЧетыре</item>
+        <item>Тридцать\nПять</item>
+        <item>Тридцать\nШесть</item>
+        <item>Тридцать\nСемь</item>
+        <item>Тридцать\nВосемь</item>
+        <item>Тридцать\nДевять</item>
+        <item>Сорок</item>
+        <item>Сорок\nОдна</item>
+        <item>Сорок\nДве</item>
+        <item>Сорок\nТри</item>
+        <item>Сорок\nЧетыре</item>
+        <item>Сорок\nПять</item>
+        <item>Сорок\nШесть</item>
+        <item>Сорок\nСемь</item>
+        <item>Сорок\nВосемь</item>
+        <item>Сорок\nДевять</item>
+        <item>Пятьдесят</item>
+        <item>Пятьдесят\nОдна</item>
+        <item>Пятьдесят\nДве</item>
+        <item>Пятьдесят\nТри</item>
+        <item>Пятьдесят\nЧетыре</item>
+        <item>Пятьдесят\nПять</item>
+        <item>Пятьдесят\nШесть</item>
+        <item>Пятьдесят\nСемь</item>
+        <item>Пятьдесят\nВосемь</item>
+        <item>Пятьдесят\nДевять</item>
+    </string-array>
+</resources>
