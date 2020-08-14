@@ -791,20 +791,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     vndk_package
 
-# VR
-PRODUCT_PACKAGES += \
-    android.hardware.vr@1.0-impl \
-    android.hardware.vr@1.0-service \
-    vr.sdm660
-
-# Wallpapers Live
-PRODUCT_PACKAGES += \
-    PixelLiveWallpaperPrebuilt \
-    WallpapersBReel2019 \
-    libgdx \
-    NexusWallpapersStubPrebuilt2019 \
-    MicropaperPrebuilt
-
 # WFD
 PRODUCT_PACKAGES += \
     libnl
