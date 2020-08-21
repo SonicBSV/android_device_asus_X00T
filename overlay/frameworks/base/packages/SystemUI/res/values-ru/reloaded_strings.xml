@@ -31,8 +31,8 @@
     <string name="status_bar_quick_qs_pulldown_always">Всегда</string>
     <string name="show_fourg_icon_title">Значок 4G</string>
     <string name="show_fourg_icon_summary">Показывать значок 4G вместо LTE</string>
-    <string name="volte_icon_title">Значок VoLTE</string>
-    <string name="volte_icon_summary">Показывать значок VoLTE</string>
+    <string name="show_volte_icon_title">Показывать значок VoLTE</string>
+    <string name="show_vowifi_icon_title">Показывать значок VoWiFi</string>
     <string name="status_bar_show_battery_percent_title">Процент батареи</string>
     <string name="status_bar_show_battery_percent_summary">Показывать процент заряда батареи в строке состояния</string>
 
