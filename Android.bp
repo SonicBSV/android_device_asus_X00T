@@ -16,12 +16,8 @@ soong_namespace {
 }
 
 subdirs = [
-    "usb/1.0-basic",
     "light",
+    "usb",
+    "power",
     "health",
 ]
-
-hidl_package_root {
-    name: "vendor.lineage",
-    path: "device/asus/X00T",
-}

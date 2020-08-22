@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2019, The Linux Foundation. All rights reserved.
- * Copyright (C) 2017-2019 The LineageOS Project
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,38 +27,31 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define LOG_TAG "android.hardware.power@1.2-service-qti"
+#define LOG_TAG "android.hardware.power@1.2-service.X00T"
 
-// #define LOG_NDEBUG 0
-
-#include <hardware/power.h>
+#include <android/log.h>
 #include <hidl/HidlTransportSupport.h>
-#ifdef ARCH_ARM_32
-#include <hwbinder/ProcessState.h>
-#endif
-#include <log/log.h>
+#include <hardware/power.h>
 #include "Power.h"
 
-using android::OK;
 using android::sp;
 using android::status_t;
+using android::OK;
 
 // libhwbinder:
 using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
 
 // Generated HIDL files
+using android::hardware::power::V1_2::IPower;
 using android::hardware::power::V1_2::implementation::Power;
 
 int main() {
-#ifdef ARCH_ARM_32
-    android::hardware::ProcessState::initWithMmapSize((size_t)16384);
-#endif
 
     status_t status;
-    android::sp<Power> service = nullptr;
+    android::sp<IPower> service = nullptr;
 
-    ALOGI("Power HAL Service 1.2 is starting.");
+    ALOGI("Power HAL Service X00T 1.2 is starting.");
 
     service = new Power();
     if (service == nullptr) {
@@ -70,7 +62,7 @@ int main() {
 
     configureRpcThreadpool(1, true /*callerWillJoin*/);
 
-    status = service->registerAsSystemService();
+    status = service->registerAsService();
     if (status != OK) {
         ALOGE("Could not register service for Power HAL(%d).", status);
         goto shutdown;
@@ -78,7 +70,7 @@ int main() {
 
     ALOGI("Power Service is ready");
     joinRpcThreadpool();
-    // Should not pass this line
+    //Should not pass this line
 
 shutdown:
     // In normal operation, we don't expect the thread pool to exit
@@ -86,3 +78,4 @@ shutdown:
     ALOGE("Power Service is shutting down");
     return 1;
 }
+
