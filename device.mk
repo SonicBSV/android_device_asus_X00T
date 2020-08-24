@@ -679,7 +679,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # QCOM
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-android.xml:$(TARGET_COPY_OUT_SYSTEM)/product/etc/permissions/privapp-permissions-android.xml \
+    $(LOCAL_PATH)/configs/apns-conf.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/apns-conf.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-platform2.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-platform2.xml \
+    $(LOCAL_PATH)/configs/sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/sysconfig.xml \
+    $(LOCAL_PATH)/configs/whitelist_verizon_packages.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/whitelist_verizon_packages.xml
 
 # QMI
 PRODUCT_PACKAGES += \
