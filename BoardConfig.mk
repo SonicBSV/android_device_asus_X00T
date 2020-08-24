@@ -22,8 +22,6 @@
 # definition file).
 #
 
-#ALLOW_MISSING_DEPENDENCIES=true
-
 DEVICE_PATH := device/asus/X00T
 
 BOARD_VENDOR := asus
@@ -100,6 +98,7 @@ USE_XML_AUDIO_POLICY_CONF := 1
 # Bluetooth
 BOARD_HAVE_BLUETOOTH_QCOM := true
 TARGET_USE_QTI_BT_STACK := true
+TARGET_FWK_SUPPORTS_FULL_VALUEADDS := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 
 # Camera
@@ -230,9 +229,8 @@ PROTOBUF_SUPPORTED := true
 
 # Security patch level
 # After June Google register fingerprints with security patch version.
-# Asus Android 10 407 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2020-06-05
-#PLATFORM_SECURITY_PATCH := 2020-06-05
+# Asus Android 9 084 fingerprint registered on this patch version
+VENDOR_SECURITY_PATCH := 2018-06-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk

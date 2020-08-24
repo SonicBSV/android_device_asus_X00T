@@ -57,17 +57,14 @@
                 android:resource="@string/asusparts_settings_summary" />
         </activity>
 
-        <service android:name="com.asus.parts.ambient.SensorsDozeService"
-                 android:permission="SensorsDozeService">
-        </service>
-
         <activity
-            android:name="com.asus.parts.ambient.AmbientGesturePreferenceActivity"
-            android:icon="@drawable/ic_doze"
+            android:name=".kcal.KCalSettingsActivity"
+            android:exported="false"
             android:theme="@style/CustomOptionsTheme"
-            android:label="@string/ambient_display_gestures_title">
+            android:label="@string/advanced_settings_kcal">
             <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

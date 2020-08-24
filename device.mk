@@ -122,7 +122,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
-    $(LOCAL_PATH)/configs/audio/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf \
     $(LOCAL_PATH)/configs/audio/audio_configs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_configs.xml \
     $(LOCAL_PATH)/configs/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/configs/audio/audio_platform_info_intcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_intcodec.xml \
@@ -138,7 +137,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
-    $(TOPDIR)frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
@@ -245,11 +243,22 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    liba2dpoffload
+    liba2dpoffload \
+    libbtconfigstore \
+    libbthost_if \
+    libbt-hidlclient \
+    libbt-logClient \
+    vendor.qti.hardware.btconfigstore@1.0 \
+    android.hardware.bluetooth@1.0 \
+    android.hardware.bluetooth.audio@2.0-impl \
+    vendor.qti.hardware.bluetooth_audio@2.0 \
+    vendor.qti.hardware.bluetooth_dun-V1.0-java \
+    vendor.qti.hardware.bluetooth_dun@1.0 \
+    vendor.qti.hardware.bluetooth_audio@2.0.vendor \
+    vendor.qti.hardware.btconfigstore@1.0.vendor
     
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/bluetooth/bt_profile.conf \
-    $(LOCAL_PATH)/configs/bluetooth/bt_configstore.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/bluetooth/bt_configstore.conf \
     $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/bluetooth/interop_database.conf 
     
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -336,6 +345,7 @@ PRODUCT_PACKAGES += \
     memtrack.sdm660 \
     libqdMetaData \
     libqdMetaData.system \
+    libgpu_tonemapper \
     libdisplayconfig \
     libhwc2on1adapter \
     libhwc2onfbadapter \
@@ -351,7 +361,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.egl=adreno
 
 # DPM
-PRODUCT_PROPERTY_OVERRIDES += \
+#PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.dpm.feature=1 \
     persist.vendor.dpm.nsrm.bkg.evt=3955
     
@@ -363,7 +373,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
 
 # Enable all system restart_level to relative
-PRODUCT_PROPERTY_OVERRIDES += \
+#PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.ssr.restart_level=ALL_ENABLE
 
 # Exclude TOF sensor from InputManager
@@ -433,6 +443,12 @@ PRODUCT_PACKAGES += \
     qti_telephony_hidl_wrapper.xml \
     qti-telephony-utils \
     qti_telephony_utils.xml
+    
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.ims.disableADBLogs=1 \
+    persist.ims.disableDebugLogs=1 \
+    persist.ims.disableQXDMLogs=1 \
+    persist.ims.disableIMSLogs=1
 
 # IPv6
 PRODUCT_PACKAGES += \
@@ -490,11 +506,8 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -526,6 +539,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
+    ro.control_privapp_permissions=enforce \
     persist.vendor.qcomsysd.enabled=1
 
 # Netutils
@@ -665,15 +679,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.aosp_usr_pref_sel=true \
     persist.vendor.radio.flexmap_type=none 
 
-# Snapdragon features
-PRODUCT_PACKAGES += \
-    SnapdragonMusic
-    
-#    Mms
+# SD Card
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.sdcardfs=1
 
 # QCOM
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-android.xml:$(TARGET_COPY_OUT_SYSTEM)/product/etc/permissions/privapp-permissions-android.xml \
+    $(LOCAL_PATH)/configs/apns-conf.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/apns-conf.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-platform2.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-platform2.xml \
+    $(LOCAL_PATH)/configs/sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/sysconfig.xml \
+    $(LOCAL_PATH)/configs/whitelist_verizon_packages.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/whitelist_verizon_packages.xml
 
 # QMI
 PRODUCT_PACKAGES += \
@@ -779,7 +796,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.basic
+    android.hardware.usb@1.0-service.X00T
     
 # Vibrator
 PRODUCT_PACKAGES += \
