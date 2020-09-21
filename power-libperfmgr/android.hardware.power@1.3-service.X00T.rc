@@ -1,7 +1,7 @@
 service vendor.power-hal-1-3 /vendor/bin/hw/android.hardware.power@1.3-service.X00T
     class hal
     user root
-    group system
+    group system audio
     priority -20
     interface android.hardware.power@1.0::IPower default
     interface android.hardware.power@1.1::IPower default
@@ -30,6 +30,6 @@ on property:init.svc.vendor.camera-provider-2-4=restarting && property:vendor.po
    restart vendor.power-hal-1-3
 
 # restart powerHAL when audioHAL died
-on property:init.svc.vendor.audio-hal-2-0=restarting && property:vendor.powerhal.audio=LOW_LATENCY
+on property:init.svc.vendor.audio-hal-2-0=restarting && property:vendor.powerhal.audio=AUDIO_LOW_LATENCY
    setprop vendor.powerhal.audio ""
    restart vendor.power-hal-1-3

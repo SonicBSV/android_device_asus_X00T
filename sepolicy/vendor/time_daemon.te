@@ -1,2 +1,0 @@
-allow time_daemon self:capability { setuid setgid sys_time dac_override dac_read_search };
-allow time_daemon time_data_file:file { open read write };

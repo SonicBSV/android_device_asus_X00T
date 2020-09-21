@@ -1,3 +1,0 @@
-allow hal_bluetooth_qti vfat:dir { search };
-allow hal_bluetooth_qti tmp_root_mount_file:lnk_file read;
-allow hal_bluetooth_qti vfat:file { getattr open read };

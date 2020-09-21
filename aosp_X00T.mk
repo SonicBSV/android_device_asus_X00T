@@ -40,10 +40,10 @@ TARGET_VENDOR := asus
 TARGET_VENDOR_PRODUCT_NAME := X00T
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="sdm660_64-user 10 QKQ1 32 release-keys" \
+    PRIVATE_BUILD_DESC="sdm660_64-user 9 PKQ1 43 release-keys" \
     DEVICE_MAINTAINERS="SonicBSV"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
-BUILD_FINGERPRINT := asus/WW_X00TD/ASUS_X00T_2:10/QKQ1/17.2017.2004.424-20200414:user/release-keys
+BUILD_FINGERPRINT := asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.2009.087-20200826:user/release-keys
 
 

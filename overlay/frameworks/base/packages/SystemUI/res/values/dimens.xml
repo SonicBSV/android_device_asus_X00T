@@ -26,7 +26,7 @@
     <!-- The height of the quick settings footer that holds the user switcher, settings icon,
     etc. -->
     <!-- 56dp -->
-    <dimen name="qs_footer_height">48dp</dimen>
+    <dimen name="qs_footer_height">52dp</dimen>
 
     <!-- extra height to add on qs status bar heigth if header enabled -->
     <dimen name="qs_header_image_offset">25dp</dimen>
