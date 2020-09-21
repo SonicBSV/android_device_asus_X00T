@@ -26,7 +26,7 @@
         <value>4</value>
         <value>4</value>
     </array>
-    <array name="cpu.cpu_speeds.cluster0">
+    <array name="cpu.core_speeds.cluster0">
         <value>633600</value>
         <value>902400</value>
         <value>1113600</value>
