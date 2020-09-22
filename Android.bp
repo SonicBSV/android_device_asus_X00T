@@ -18,6 +18,7 @@ soong_namespace {
 subdirs = [
     "light",
     "touch",
+    "usb",
     "power-libperfmgr",
     "health",
 ]

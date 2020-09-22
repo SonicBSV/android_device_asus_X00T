@@ -2,7 +2,7 @@ allow untrusted_app bpfloader_exec:file { getattr open read };
 allow untrusted_app hal_allocator_default_exec:file { getattr open read };
 allow untrusted_app dun-server_exec:file { getattr open read };
 allow untrusted_app incident_helper_exec:file { getattr open read };
-allow untrusted_app mkfs_exec:file { getattr open read };
+#allow untrusted_app mkfs_exec:file { getattr open read };
 allow untrusted_app proc_misc:file { getattr open read };
 allow untrusted_app proc_tty_drivers:file { getattr open read };
 allow untrusted_app blank_screen_exec:file { getattr open read };
