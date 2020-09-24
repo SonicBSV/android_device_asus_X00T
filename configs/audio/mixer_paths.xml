@@ -315,7 +315,7 @@
     <ctl name="RX1 MIX2 INP1" value="ZERO" />
     <ctl name="RX2 MIX2 INP1" value="ZERO" />
     <ctl name="RX3 MIX1 INP1" value="ZERO" />
-    <ctl name="RX HPH Mode" value="HD2" />
+    <ctl name="RX HPH Mode" value="NORMAL" />
     <ctl name="COMP0 RX1" value="0" />
     <ctl name="COMP0 RX2" value="0" />
 
@@ -481,17 +481,6 @@
         <path name="low-latency-playback bt-sco" />
     </path>
 
-    <!-- lct add for whatsapp call ring -->    
-    <path name="low-latency-playback speaker-and-bt-sco-wb"> 
-	 <path name="low-latency-playback bt-sco-wb" /> 
-	 <path name="low-latency-playback speaker" /> 
-    </path>
-
-    <path name="low-latency-playback speaker-and-bt-sco">
-         <path name="low-latency-playback bt-sco" />
-         <path name="low-latency-playback speaker" />
-    </path>
-    
     <path name="low-latency-playback speaker-and-hdmi">
         <path name="low-latency-playback hdmi" />
         <path name="low-latency-playback speaker" />
@@ -1790,7 +1779,9 @@
         <ctl name="INT0_MI2S_RX Channels" value="Two" />
         <ctl name="RX1 MIX1 INP1" value="RX1" />
         <ctl name="RDAC2 MUX" value="RX1" />
+        <ctl name="RX1 Digital Volume" value="84" />
         <ctl name="EAR PA Gain" value="POS_6_DB" />
+        <ctl name="RX HPH Mode" value="HD2" />
         <ctl name="EAR_S" value="Switch" />
     </path>
 

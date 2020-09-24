@@ -100,3 +100,6 @@
 
 # FPS Info
 /sys/devices/virtual/graphics/fb0/measured_fps                              u:object_r:sysfs_fps:s0
+
+# mount points
+/dsp                             u:object_r:adsprpcd_file:s0

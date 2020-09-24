@@ -22,11 +22,10 @@ sys.nvram.wifimac                  u:object_r:nvram_btwifi_prop:s0
 vendor.powerhal.lpm                u:object_r:power_prop:s0
 gpu.stats.debug.level              u:object_r:vendor_default_prop:s0
 sys.post_boot.parsed               u:object_r:vendor_mpctl_prop:s0
-persist.vendor.camera.bokeh.dumpimg    u:object_r:vendor_camera_prop:s0
-persist.vendor.camera.HAL3.enabled     u:object_r:vendor_camera_prop:s0
-vendor.debug.camera.prop_picselfie     u:object_r:vendor_camera_prop:s0
-vendor.debug.camera.prop_bokeh         u:object_r:vendor_camera_prop:s0
-vendor.debug.camera.prop_hdr           u:object_r:vendor_camera_prop:s0
-vendor.debug.camera.prop_dis           u:object_r:vendor_camera_prop:s0
+#persist.vendor.camera.bokeh.dumpimg    u:object_r:vendor_camera_prop:s0
+#persist.vendor.camera.HAL3.enabled     u:object_r:vendor_camera_prop:s0
+#vendor.debug.camera.prop_picselfie     u:object_r:vendor_camera_prop:s0
+#vendor.debug.camera.prop_bokeh         u:object_r:vendor_camera_prop:s0
+#vendor.debug.camera.prop_hdr           u:object_r:vendor_camera_prop:s0
+#vendor.debug.camera.prop_dis           u:object_r:vendor_camera_prop:s0
 wifi.active.interface              u:object_r:wifi_prop:s0
-

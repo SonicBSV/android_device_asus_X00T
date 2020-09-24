@@ -808,6 +808,11 @@ service logdumpd /system/bin/logcat -b all -v threadtime -D -w /dev/block/bootde
 on property:ro.logdumpd.enabled=1
     start logdumpd
 
+service time_daemon /system/vendor/bin/time_daemon
+   class late_start
+   user root
+   group root
+
 on property:ro.vendor.radio.noril=*
     setprop ro.radio.noril ${ro.vendor.radio.noril}
 
@@ -1003,6 +1008,12 @@ service adsprpcd /vendor/bin/adsprpcd audiopd
    class main
    user media
    group media
+
+service vendor.cdsprpcd /vendor/bin/cdsprpcd
+   class main
+   user system
+   group system
+   disabled
 
 service vendor.pd_mapper /system/vendor/bin/pd-mapper
      class core
@@ -1235,8 +1246,8 @@ on post-fs-data
     chmod 0775 /factory/*
 
 #add by suyumei end
-	chown system system /sys/class/leds/red/blink
-	chown system system /sys/class/leds/green/blink
+#	chown system system /sys/class/leds/red/blink
+#	chown system system /sys/class/leds/green/blink
 
 
 on early-boot
