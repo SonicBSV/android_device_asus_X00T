@@ -8,7 +8,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk
 TARGET_DISABLES_GAPPS := false
 IS_PHONE := true
 TARGET_GAPPS_ARCH := arm64
-TARGET_BOOT_ANIMATION_RES := 2160
+TARGET_BOOT_ANIMATION_RES := 1080
 $(call inherit-product, vendor/pa/config/common_full_phone.mk)
 
 # Inherit from X00T device
@@ -26,11 +26,11 @@ TARGET_VENDOR := asus
 TARGET_VENDOR_PRODUCT_NAME := X00T
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="sdm660_64-user 9 PKQ1 22 release-keys" \
+    PRIVATE_BUILD_DESC="sdm660_64-user 9 PKQ1 43 release-keys" \
     DEVICE_MAINTAINERS="SonicBSV"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
-BUILD_FINGERPRINT := asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.2007.084-20200706:user/release-keys
+BUILD_FINGERPRINT := asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.2009.087-20200826:user/release-keys
 
 
 

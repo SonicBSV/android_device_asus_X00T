@@ -31,3 +31,4 @@ allow hal_camera_default hal_power_default:unix_stream_socket connectto;
 allow hal_camera_default socket_device:sock_file write;
 get_prop(hal_camera_default, vendor_system_prop)
 #set_prop(hal_camera_default, vendor_camera_prop)
+type sysfs_sensors, fs_type, sysfs_type;
