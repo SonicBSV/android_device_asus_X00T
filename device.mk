@@ -241,10 +241,10 @@ PRODUCT_PACKAGES += \
     liba2dpoffload \
     libbtconfigstore \
     libbthost_if \
-    libbt-hidlclient \
-    libbt-logClient \
     vendor.qti.hardware.btconfigstore@1.0 \
     android.hardware.bluetooth@1.0 \
+    android.hardware.bluetooth.a2dp@1.0 \
+    android.hardware.bluetooth.audio@2.0 \
     android.hardware.bluetooth.audio@2.0-impl \
     vendor.qti.hardware.bluetooth_audio@2.0 \
     vendor.qti.hardware.bluetooth_dun-V1.0-java \
@@ -820,6 +820,14 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.accept \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.deny \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd_default.conf 
+
+# Wallpapers
+PRODUCT_PACKAGES += \
+    PixelLiveWallpaperPrebuilt \
+    WallpapersBReel2019 \
+    libgdx \
+    NexusWallpapersStubPrebuilt2019 \
+    MicropaperPrebuilt
 
 # ZenParts
 PRODUCT_PACKAGES += \

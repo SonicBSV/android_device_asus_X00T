@@ -8,7 +8,6 @@ import androidx.preference.PreferenceManager;
 import android.provider.Settings;
 
 import com.asus.parts.kcal.Utils;
-import com.asus.parts.ambient.SensorsDozeService;
 
 public class BootReceiver extends BroadcastReceiver implements Utils {
 
@@ -53,13 +52,5 @@ public class BootReceiver extends BroadcastReceiver implements Utils {
 
         FileUtils.setValue(DeviceSettings.VIBRATION_STRENGTH_PATH, Settings.Secure.getInt(
                 context.getContentResolver(), DeviceSettings.PREF_VIBRATION_STRENGTH, 80) / 100.0 * (DeviceSettings.MAX_VIBRATION - DeviceSettings.MIN_VIBRATION) + DeviceSettings.MIN_VIBRATION);
-
-	//Ambient
-        context.startService(new Intent(context, SensorsDozeService.class));
-
-        boolean enabled = sharedPrefs.getBoolean(DeviceSettings.PREF_KEY_FPS_INFO, false);
-        if (enabled) {
-            context.startService(new Intent(context, FPSInfoService.class));
-        }
     }
 }
