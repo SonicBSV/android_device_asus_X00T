@@ -1,0 +1,56 @@
+allow adbd adb_device:chr_file rw_file_perms;
+allow adbd qemu_device:chr_file rw_file_perms;
+allow adbd self:capability { net_raw setgid setuid dac_override sys_boot sys_admin };
+allow adbd rootfs:file { read entrypoint };
+allow adbd init:process sigchld;
+allow adbd self:tcp_socket *;
+allow adbd self:unix_stream_socket *;
+allow adbd node:tcp_socket node_bind;
+allow adbd port:tcp_socket name_bind;
+allow adbd devpts:chr_file rw_file_perms;
+allow adbd cgroup:dir { write add_name create };
+allow adbd labeledfs:filesystem remount;
+allow adbd shell_data_file:dir rw_dir_perms;
+allow adbd shell_data_file:file create_file_perms;
+allow adbd graphics_device:dir search;
+allow adbd graphics_device:chr_file r_file_perms;
+allow adbd log_device:chr_file r_file_perms;
+allow adbd adsprpcd_file:dir getattr;
+allow adbd cache_file:dir getattr;
+allow adbd init_exec:file getattr;
+allow adbd qfp-daemon_exec:file getattr;
+allow adbd rootfs:file getattr;
+allow adbd tee_exec:file getattr;
+allow adbd unlabeled:dir getattr;
+allow adbd vendor_app_file:dir getattr;
+allow adbd vendor_file:dir { getattr open read };
+allow adbd vendor_file:file { getattr read open };
+allow adbd wifidisplayhalservice_qti_exec:file { getattr read open };
+#allow adbd btnvtool_exec:file getattr;
+#allow adbd diag_exec:file getattr;
+#allow adbd fm_qsoc_patches_exec:file getattr;
+allow adbd location_exec:file getattr;
+allow adbd qrtr_exec:file getattr;
+allow adbd vendor_toolbox_exec:file getattr;
+allow adbd hbtp_cfg_file:dir getattr;
+allow adbd oemfs:dir { getattr open read search };
+allow adbd bt_firmware_file:dir getattr;
+allow adbd firmware_file:dir getattr;
+allow adbd init_exec:lnk_file getattr;
+allow adbd mnt_vendor_file:lnk_file { getattr read open };
+allow adbd rs_exec:file getattr;
+allow adbd tmp_root_mount_file:lnk_file getattr;
+allow adbd vendor_firmware_file:dir getattr;
+# XXX Run /system/bin/vdc to connect to vold.  Run in a separate domain?
+allow adbd system_file:file rx_file_perms;
+unix_socket_connect(adbd, vold, vold)
+# Talk to init via the property socket.
+unix_socket_connect(adbd, property, init)
+# Run sh in its own domain.
+domain_auto_trans(adbd, shell_exec, shell)
+# Do not sanitize the environment of the shell.
+allow adbd shell:process noatsecure;
+# Perform binder IPC to surfaceflinger (screencap)
+# XXX Run screencap in a separate domain?
+binder_use(adbd)
+binder_call(adbd, surfaceflinger)
