@@ -56,43 +56,6 @@
     <string name="preset_hybrid_mamba">Hybrid Mamba</string>
     <string name="preset_burn_in">Burn in Shit</string>
 
-    <!-- Ambient gesture haptic feedback -->
-    <string name="ambient_gesture_haptic_feedback">Виброотдача</string>
-    <string name="ambient_gesture_haptic_feedback_summary">Вибрировать при задействовании определённого жеста</string>
-
-    <!-- Ambient Display -->
-    <string name="ambient_display_enable_title">Ambient дисплей</string>
-    <string name="ambient_display_enable_summary">Пробуждение экрана при получении уведомлений</string>
-    <string name="ambient_display_gestures_title">Жесты Ambient дисплея</string>
-    <string name="ambient_display_gestures_summary">Дополнительные жесты, чтобы разбудить экран</string>
-    <string name="ambient_display_summary">Пробуждение экрана при получении уведомлений</string>
-    <string name="ambient_display_summary_on">Экран будет просыпаться при получении уведомлений</string>
-    <string name="ambient_display_summary_off">Экран не будет просыпаться при получении уведомлений</string>
-
-    <!-- Doze sensor -->
-    <string name="tilt_sensor_title">Датчик наклона</string>
-    <string name="pickup_sensor_title">Датчик срабатывания</string>
-    <string name="proximity_sensor_title">Датчик приближения</string>
-
-    <!-- Hand wave gesture -->
-    <string name="hand_wave_gesture_title">Взмах руки</string>
-    <string name="hand_wave_gesture_summary">Показать уведомления при взмахе рукой</string>
-    <string name="hand_wave_gesture_flat_title">Определить положение устройства</string>
-    <string name="hand_wave_gesture_flat_summary">Отображать только если телефон лежит на ровной поверхности</string>
-
-    <!-- Pick-up gesture -->
-    <string name="pick_up_gesture_title">Срабатывание</string>
-    <string name="pick_up_gesture_summary">Показать уведомления при поднятии</string>
-
-    <!-- Pocket gesture -->
-    <string name="pocket_gesture_title">Карман</string>
-    <string name="pocket_gesture_summary">Отображать уведомления при извлечении из кармана</string>
-
-    <!-- Proximity wake -->
-    <string name="proximity_wake_title">Пробуждение экрана датчиком приближения</string>
-    <string name="proximity_wake_enable_title">Пробуждение экрана датчиком приближения</string>
-    <string name="proximity_wake_enable_summary">Пробуждение экрана при взмахе рукой</string>
-
     <!-- menu -->
     <string name="kcal_presets">@string/presets_dialog_title</string>
     <string name="kcal_reset">Сброс</string>

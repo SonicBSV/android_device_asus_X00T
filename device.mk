@@ -1,4 +1,8 @@
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE:=true
+PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
+SHIPPING_API_LEVEL :=28
+BOARD_DYNAMIC_PARTITION_ENABLE := false
+TARGET_DISABLE_DASH := true
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
@@ -7,6 +11,17 @@ PRODUCT_AAPT_PREBUILT_DPI := xxhdpi
 
 # default is nosdcard, S/W button enabled in resource
 PRODUCT_CHARACTERISTICS := nosdcard
+
+# Enable RRO for Android R
+ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.19)
+    TARGET_USES_RRO := true
+endif
+
+# Enable product partition
+PRODUCT_BUILD_PRODUCT_IMAGE := false
+
+# Enable System_ext
+PRODUCT_BUILD_SYSTEM_EXT_IMAGE := false
 
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
@@ -96,6 +111,12 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@5.0-impl \
     android.hardware.audio.effect@5.0 \
     android.hardware.audio.effect@5.0-impl \
+    android.hardware.audio@6.0 \
+    android.hardware.audio.common@6.0 \
+    android.hardware.audio.common@6.0-util \
+    android.hardware.audio@6.0-impl \
+    android.hardware.audio.effect@6.0 \
+    android.hardware.audio.effect@6.0-impl \
     audio.a2dp.default \
     audio.bluetooth.default \
     audio.r_submix.default \
@@ -225,11 +246,7 @@ PRODUCT_PACKAGES += \
 
 # Automotive
 PRODUCT_PACKAGES += \
-    android.hardware.automotive.vehicle@2.0 \
-    android.hardware.automotive.vehicle@2.0-manager-lib \
-    android.hardware.automotive.audiocontrol@1.0:64 \
-    android.hardware.automotive.evs@1.0:64 \
-    vendor.qti.hardware.automotive.vehicle@1.0
+    android.hardware.automotive.vehicle@2.0-manager-lib
 
 # Biometrics
 PRODUCT_COPY_FILES += \
@@ -247,8 +264,6 @@ PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0 \
     android.hardware.bluetooth.audio@2.0-impl \
     vendor.qti.hardware.bluetooth_audio@2.0 \
-    vendor.qti.hardware.bluetooth_dun-V1.0-java \
-    vendor.qti.hardware.bluetooth_dun@1.0 \
     vendor.qti.hardware.bluetooth_audio@2.0.vendor \
     vendor.qti.hardware.btconfigstore@1.0.vendor
     
@@ -334,12 +349,11 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
-    vendor.display.config@1.3 \
+    vendor.display.config@1.9 \
     hwcomposer.sdm660 \
     gralloc.sdm660 \
     memtrack.sdm660 \
     libqdMetaData \
-    libqdMetaData.system \
     libdisplayconfig \
     libhwc2on1adapter \
     libhwc2onfbadapter \
@@ -603,15 +617,12 @@ PRODUCT_PACKAGES += \
     init.qcom.post_boot.sh \
     init.qcom.sensors.sh \
     init.qcom.sh \
-    init.qcom.usb.sh \
-    emmc_prop_init.sh \
-    init.qti.ims.sh \
     init.qti.fm.sh \
     init.qti.fm.rc \
     init.baseband.sh \
     init.fixgpay.sh \
+    init.qti.dcvs.sh \
     fstab.qcom \
-    init.msm.usb.configfs.rc \
     init.recovery.qcom.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
@@ -762,11 +773,11 @@ PRODUCT_PACKAGES += \
     libtinyxml2
 
 # USB
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.X00T
     
 # Vibrator
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl \
     android.hardware.vibrator@1.0-service
 
@@ -781,7 +792,7 @@ PRODUCT_PACKAGES += \
     vndk_package
 
 # VR
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     android.hardware.vr@1.0-impl \
     android.hardware.vr@1.0-service \
     vr.sdm660

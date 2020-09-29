@@ -26,10 +26,18 @@ DEVICE_PATH := device/asus/X00T
 
 BOARD_VENDOR := asus
 
-BUILD_BROKEN_ANDROIDMK_EXPORTS :=true
-BUILD_BROKEN_DUP_COPY_HEADERS :=true
-BUILD_BROKEN_DUP_RULES :=true
-BUILD_BROKEN_PHONY_TARGETS :=true
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_PREBUILT_ELF_FILES := true
+BUILD_BROKEN_NINJA_USES_ENV_VARS := SDCLANG_AE_CONFIG SDCLANG_CONFIG SDCLANG_SA_ENABLED SDCLANG_CONFIG_AOSP
+BUILD_BROKEN_NINJA_USES_ENV_VARS += TEMPORARY_DISABLE_PATH_RESTRICTIONS
+BUILD_BROKEN_USES_BUILD_HOST_SHARED_LIBRARY := true
+BUILD_BROKEN_USES_BUILD_HOST_STATIC_LIBRARY := true
+BUILD_BROKEN_USES_BUILD_HOST_EXECUTABLE := true
+BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
+
+# depmod_vendor_intermidiates remove
+# signed ko file is not copied to correct path
+BOARD_DO_NOT_STRIP_VENDOR_MODULES := true
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := sdm636
@@ -59,13 +67,15 @@ TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 TARGET_OTA_ASSERT_DEVICE := X00TD,X00T
 
 # Kernel
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 loop.max_part=7
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000
+BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 loop.max_part=7 androidboot.selinux=permissive
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x01E00000
 BOARD_RAMDISK_OFFSET     := 0x02000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
 #TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-
 #TARGET_KERNEL_CLANG_PATH := $(PWD)/vendor/qcom/sdclang/8.0/prebuilt/linux-x86_64/bin
@@ -74,6 +84,12 @@ TARGET_KERNEL_CONFIG := X00T_defconfig
 TARGET_KERNEL_VERSION := 4.4
 #TARGET_KERNEL_CLANG_COMPILE := true
 #TARGET_KERNEL_CLANG_VERSION := sdclang
+
+#Enable llvm support for kernel
+KERNEL_LLVM_SUPPORT := true
+
+#Enable sd-llvm suppport for kernel
+KERNEL_SD_LLVM_SUPPORT := true
 
 # ANT+
 #TARGET_USES_PREBUILT_ANT := true
@@ -202,12 +218,21 @@ BOARD_ROOT_EXTRA_SYMLINKS := \
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
 
+# Product partition support
+TARGET_COPY_OUT_PRODUCT := product
+BOARD_USES_PRODUCTIMAGE := false
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+
 # Power
 TARGET_USES_INTERACTION_BOOST := true
 TARGET_USES_NON_LEGACY_POWERHAL := true
 
 # Properties
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
+
+# System_ext support
+TARGET_COPY_OUT_SYSTEM_EXT := system_ext
+BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
@@ -232,7 +257,7 @@ PROTOBUF_SUPPORTED := true
 VENDOR_SECURITY_PATCH := 2018-06-05
 
 # SELinux
-include device/qcom/sepolicy/sepolicy.mk
+include device/qcom/sepolicy/SEPolicy.mk
 BOARD_SEPOLICY_VERS := 29.0
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/temp
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
@@ -255,7 +280,7 @@ TARGET_RECOVERY_DEVICE_MODULES := libinit_X00T
 # VNDK
 PRODUCT_TREBLE_LINKER_NAMESPACES := true
 #BOARD_VNDK_RUNTIME_DISABLE := true
-#BOARD_SYSTEMSDK_VERSIONS:=28
+BOARD_SYSTEMSDK_VERSIONS:=$(SHIPPING_API_LEVEL)
 BOARD_VNDK_VERSION := current
 
 # Wifi

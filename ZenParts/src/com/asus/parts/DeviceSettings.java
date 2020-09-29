@@ -13,7 +13,6 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.asus.parts.kcal.KCalSettingsActivity;
-import com.asus.parts.ambient.AmbientGesturePreferenceActivity;
 import com.asus.parts.preferences.SecureSettingListPreference;
 import com.asus.parts.preferences.SecureSettingSwitchPreference;
 import com.asus.parts.preferences.VibrationSeekBarPreference;
@@ -26,8 +25,6 @@ public class DeviceSettings extends PreferenceFragment implements
 
     private static final String CATEGORY_DISPLAY = "display";
     private static final String PREF_DEVICE_KCAL = "device_kcal";
-
-    private static final String AMBIENT_DISPLAY = "ambient_display_gestures";
 
     public static final String PREF_VIBRATION_STRENGTH = "vibration_strength";
     public static final String VIBRATION_STRENGTH_PATH = "/sys/class/timed_output/vibrator/vtg_level";
@@ -71,12 +68,6 @@ public class DeviceSettings extends PreferenceFragment implements
             return true;
         });
 
-        Preference ambientDisplay = findPreference(AMBIENT_DISPLAY);
-        ambientDisplay.setOnPreferenceClickListener(preference -> {
-            Intent intent = new Intent(getContext(), AmbientGesturePreferenceActivity.class);
-            startActivity(intent);
-            return true;
-        });
     }
 
     @Override
