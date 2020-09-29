@@ -241,10 +241,10 @@ PRODUCT_PACKAGES += \
     liba2dpoffload \
     libbtconfigstore \
     libbthost_if \
-    libbt-hidlclient \
-    libbt-logClient \
     vendor.qti.hardware.btconfigstore@1.0 \
     android.hardware.bluetooth@1.0 \
+    android.hardware.bluetooth.a2dp@1.0 \
+    android.hardware.bluetooth.audio@2.0 \
     android.hardware.bluetooth.audio@2.0-impl \
     vendor.qti.hardware.bluetooth_audio@2.0 \
     vendor.qti.hardware.bluetooth_dun-V1.0-java \
