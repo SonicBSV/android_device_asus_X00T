@@ -1,0 +1,6 @@
+allow vendor_pd_mapper vfat:dir { open } ;
+allow vendor_pd_mapper vfat:dir { read } ;
+allow vendor_pd_mapper vfat:file { open } ;
+allow vendor_pd_mapper vfat:file { read } ;
+allow vendor_pd_mapper vfat:dir search;
+allow vendor_pd_mapper kernel:system module_request;
