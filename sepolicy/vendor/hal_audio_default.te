@@ -1,0 +1,14 @@
+allow hal_audio_default default_prop:file read;
+allow hal_audio_default sysfs_net:dir open;
+allow hal_audio_default audio_prop:property_service { set };
+allow hal_audio_default vendor_cfg_prop:file { read getattr open };
+allow hal_audio_default property_socket:sock_file write;
+allow hal_audio_default init:unix_stream_socket connectto;
+allow hal_audio_default hal_audio_prop:property_service set;
+allow hal_audio_default audio_prop:file { getattr open read };
+allow hal_audio_default default_prop:file { getattr open };
+allow hal_audio_default sysfs:dir r_dir_perms;
+allow hal_audio_default init:binder call;
+allow hal_audio_default self:process execmem;
+allow hal_audio_default hal_power_default:unix_stream_socket connectto;
+allow hal_audio_default socket_device:sock_file write;
