@@ -4,6 +4,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk)
 
 # Inherit some common Reloaded stuff.
+IS_PHONE := true
 TARGET_BOOT_ANIMATION_RES := 2160
 $(call inherit-product, vendor/reloaded/common.mk)
 
