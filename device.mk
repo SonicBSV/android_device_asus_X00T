@@ -212,7 +212,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.use.sw.alac.decoder=true \
     vendor.audio.use.sw.ape.decoder=true \
     vendor.audio.volume.headset.gain.depcal=true \
-    vendor.voice.path.for.pcm.voip=true
+    vendor.voice.path.for.pcm.voip=true \
+    persist.dirac.acs.controller=qem \
+    persist.dirac.acs.storeSettings=1 \
+    persist.dirac.acs.ignore_error=1 \
+    ro.audio.soundfx.dirac=true \
+    persist.audio.dirac.speaker=true
 
 # ASUS
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -241,10 +246,10 @@ PRODUCT_PACKAGES += \
     liba2dpoffload \
     libbtconfigstore \
     libbthost_if \
-    libbt-hidlclient \
-    libbt-logClient \
     vendor.qti.hardware.btconfigstore@1.0 \
     android.hardware.bluetooth@1.0 \
+    android.hardware.bluetooth.a2dp@1.0 \
+    android.hardware.bluetooth.audio@2.0 \
     android.hardware.bluetooth.audio@2.0-impl \
     vendor.qti.hardware.bluetooth_audio@2.0 \
     vendor.qti.hardware.bluetooth_dun-V1.0-java \
@@ -264,7 +269,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
     persist.vendor.qcom.bluetooth.enable.splita2dp=true \
     persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
-    ro.vendor.bluetooth.wipower=true
+    ro.vendor.bluetooth.wipower=false
         
 # Boot animation
     TARGET_SCREEN_HEIGHT := 2160
