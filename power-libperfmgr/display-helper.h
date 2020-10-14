@@ -13,20 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __DISPLAY_HELPER_H__
-#define __DISPLAY_HELPER_H__
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <cutils/sockets.h>
-#define DAEMON_SOCKET "pps"
+
+#ifndef POWER_LIBPERFMGR_DISPLAY_HELPER_H_
+#define POWER_LIBPERFMGR_DISPLAY_HELPER_H_
+
 enum display_lpm_state {
     DISPLAY_LPM_OFF = 0,
     DISPLAY_LPM_ON,
     DISPLAY_LPM_UNKNOWN,
 };
+
 void set_display_lpm(int enable);
-#ifdef __cplusplus
-}
-#endif
-#endif //__DISPLAY_HELPER_H__
+
+#endif  // POWER_LIBPERFMGR_DISPLAY_HELPER_H_

@@ -44,12 +44,17 @@
 
 #include "power-helper.h"
 
+#ifndef RPM_SYSTEM_STAT
 #define RPM_SYSTEM_STAT "/d/system_stats"
+#endif
 
+#ifndef WLAN_POWER_STAT
 #define WLAN_POWER_STAT "/sys/kernel/wlan/power_stats"
+#endif
 
-#define TAP_TO_WAKE_NODE "/proc/touchpanel/double_tap_enable"
-#define TAP_TO_WAKE_NODE_OLD "/sys/kernel/touchpanel/dclicknode"
+#ifndef SYSTEM_STATS_STAT
+#define SYSTEM_STATS_STAT "/sys/power/system_sleep/stats"
+#endif
 
 #define ARRAY_SIZE(x) (sizeof((x))/sizeof((x)[0]))
 #define LINE_SIZE 128
@@ -85,44 +90,16 @@ struct stat_pair wlan_stat_map[] = {
 };
 
 
-static int sysfs_write(char *path, char *s)
-{
-    char buf[80];
-    int len;
-    int ret = 0;
-    int fd = open(path, O_WRONLY);
+/* Common */
+const char *system_stats_labels[SYSTEM_STATE_STATS_COUNT] = {
+    "count",
+    "actual last sleep(msec)"
+};
 
-    if (fd < 0) {
-        strerror_r(errno, buf, sizeof(buf));
-        ALOGE("Error opening %s: %s\n", path, buf);
-        return -1 ;
-    }
-
-    len = write(fd, s, strlen(s));
-    if (len < 0) {
-        strerror_r(errno, buf, sizeof(buf));
-        ALOGE("Error writing to %s: %s\n", path, buf);
-
-        ret = -1;
-    }
-
-    close(fd);
-
-    return ret;
-}
-
-void set_feature(feature_t feature, int state) {
-    switch (feature) {
-        case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
-            sysfs_write(TAP_TO_WAKE_NODE, state ? "1" : "0");
-            if (sysfs_write < 0) {
-	     sysfs_write(TAP_TO_WAKE_NODE_OLD, state ? "1" : "0");
-            }
-            break;
-        default:
-            break;
-    }
-}
+struct stat_pair rpm_system_sections[] = {
+    { SYSTEM_STATES, "RPM Mode:vlow", system_stats_labels, ARRAY_SIZE(system_stats_labels) },
+    { SYSTEM_STATES, "RPM Mode:vmin", system_stats_labels, ARRAY_SIZE(system_stats_labels) },
+};
 
 static int parse_stats(const char **params, size_t params_size,
                        uint64_t *list, FILE *fp) {
@@ -212,4 +189,9 @@ int extract_platform_stats(uint64_t *list) {
 
 int extract_wlan_stats(uint64_t *list) {
     return extract_stats(list, WLAN_POWER_STAT, wlan_stat_map, ARRAY_SIZE(wlan_stat_map));
+}
+
+int extract_rpm_system_stats(uint64_t *list) {
+    return extract_stats(list, SYSTEM_STATS_STAT,
+            rpm_system_sections, ARRAY_SIZE(rpm_system_sections));
 }
