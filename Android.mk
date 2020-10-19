@@ -49,7 +49,8 @@ $(DSP_MOUNT_POINT):
 $(shell mkdir -p $(TARGET_OUT_VENDOR)/lib/dsp)
 
 IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
-IMS_SYMLINKS := $(addprefix $(PRODUCT_OUT)/system/product/priv-app/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
+
+IMS_SYMLINKS := $(addprefix $(TARGET_OUT_PRODUCT_APPS_PRIVILEGED)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
 $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	@echo "IMS lib link: $@"
 	@mkdir -p $(dir $@)
@@ -57,28 +58,6 @@ $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /system/product/lib64/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
-
-QDMA_LIBS := libvndfwk_detect_jni.qti.so
-                                          
-QDMA_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR_APPS)/QDMA/lib/arm64/,$(notdir $(QDMA_LIBS)))
-$(QDMA_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "QDMA lib link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(QDMA_SYMLINKS)
-
-QDMA-UI_LIBS := libvndfwk_detect_jni.qti.so
-                                          
-QDMA-UI_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR_APPS)/QDMA-UI/lib/arm64/,$(notdir $(QDMA-UI_LIBS)))
-$(QDMA-UI_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "QDMA-UI lib link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(QDMA-UI_SYMLINKS)
 
 CAM_CALI_LIBS := libarcsoft_single_chart_calibration.so libhqmpbase.so libjni_hq_dualcam_calibration.so
                                           
@@ -114,6 +93,11 @@ TARGET_OUT_FIRMWARE="/vendor/firmware_mnt"
 
 $(shell rm -rf $(TARGET_OUT_VENDOR)/rfs/)
 
+#########################################################################
+# capabilityconfigstore
+#########################################################################
+
+$(shell mkdir -p $(TARGET_OUT_VENDOR)/etc/configstore)
 
 #########################################################################
 # MSM Folders
@@ -220,5 +204,13 @@ $(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/
 $(shell mkdir -p $(PRODUCT_OUT)/vendor/lib64/egl && pushd $(PRODUCT_OUT)/vendor/lib64 > /dev/null && ln -s egl/libGLESv2_adreno.so libGLESv2_adreno.so && popd > /dev/null)
 
 $(shell cp -rf $(LOCAL_PATH)/vendor/bin $(PRODUCT_OUT)/vendor)
+
+#########################################################################
+# ASUS Folders
+#########################################################################
+$(shell mkdir -p $(TARGET_ROOT_OUT)/asusfw 0775 system system)
+$(shell mkdir -p $(TARGET_ROOT_OUT)/ADF 0775 system system)
+$(shell mkdir -p $(TARGET_ROOT_OUT)/APD 0775 system system)
+$(shell mkdir -p $(TARGET_ROOT_OUT)/factory 0775 system system)
 
 endif
