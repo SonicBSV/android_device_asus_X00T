@@ -769,9 +769,8 @@ PRODUCT_PACKAGES += \
 
 # Touchscreen
 PRODUCT_PACKAGES += \
+    vendor.lineage.touch@1.0-service.asus_X00T \
     libtinyxml2
-
-#    vendor.lineage.touch@1.0-service.asus_X00T \
 
 # Trust HAL
 PRODUCT_PACKAGES += \
