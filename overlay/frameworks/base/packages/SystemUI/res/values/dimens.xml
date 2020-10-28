@@ -18,47 +18,4 @@
 <resources>
     <dimen name="nav_content_padding">2dp</dimen>
     <dimen name="rounded_corner_content_padding">8dp</dimen>
-
-    <dimen name="global_actions_panel_width">240dp</dimen>
-    <dimen name="global_actions_padding">6dp</dimen>
-    <dimen name="global_actions_translate">4dp</dimen>
-
-    <!-- The height of the quick settings footer that holds the user switcher, settings icon,
-    etc. -->
-    <!-- 56dp -->
-    <dimen name="qs_footer_height">48dp</dimen>
-
-    <!-- extra height to add on qs status bar heigth if header enabled -->
-    <dimen name="qs_header_image_offset">25dp</dimen>
-
-    <!-- End padding for left-aligned status bar clock -->
-    <!-- 7dp -->
-    <dimen name="status_bar_left_clock_end_padding">0dp</dimen>
-
-    <!-- 18dp -->
-    <dimen name="qs_tile_margin_top">10dp</dimen>
-
-    <!-- 30dp -->
-    <dimen name="qs_panel_padding_top">20dp</dimen>
-
-    <!-- 106dp -->
-    <dimen name="qs_tile_height">96dp</dimen>
-
-    <!-- 24dp -->
-    <dimen name="qs_tile_margin_vertical">16dp</dimen>
-
-    <!-- 24dp -->
-    <dimen name="qs_paged_tile_layout_padding_bottom">14dp</dimen>
-
-    <!-- 48dp -->
-    <dimen name="qs_brightness_slider_height">40dp</dimen>
-
-    <!-- 0dp -->
-    <dimen name="qs_header_tile_margin_horizontal">13dp</dimen>
-
-    <!-- ALWAYS set to same as config_dialogCornerRadius -->
-    <dimen name="corner_size">10dp</dimen>
-    <dimen name="edge_margin">10dp</dimen>
-
-    <dimen name="qs_status_separator">28dp</dimen>
 </resources>
