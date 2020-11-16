@@ -44,7 +44,7 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     DEVICE_MAINTAINERS="SonicBSV"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
-BUILD_FINGERPRINT := asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.2009.087-20200826:user/release-keys
+BUILD_FINGERPRINT := asus/RU_X00TD/ASUS_X00T_6:9/PKQ1/16.2017.2009.087-20200826:user/release-keys
 
 
 
