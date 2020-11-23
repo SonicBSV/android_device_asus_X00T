@@ -7,6 +7,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk
 # Inherit some common Syberia stuff.
 #export SKIP_ABI_CHECKS=true
 TARGET_INCLUDE_WIFI_EXT := true
+TARGET_FACE_UNLOCK_SUPPORTED := true
 TARGET_BOOT_ANIMATION_RES := 2160
 $(call inherit-product, vendor/syberia/common.mk)
 
@@ -32,7 +33,10 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     DEVICE_MAINTAINERS="SonicBSV"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
-BUILD_FINGERPRINT := asus/WW_X00TD/ASUS_X00T_2:9/PKQ1/16.2017.2009.087-20200826:user/release-keys
+BUILD_FINGERPRINT := asus/RU_X00TD/ASUS_X00T_6:9/PKQ1/16.2017.2009.087-20200826:user/release-keys
+
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.build.fingerprint=$(BUILD_FINGERPRINT)
 
 
 
