@@ -4,6 +4,14 @@ include $(CLEAR_VARS)
 # bin
 
 include $(CLEAR_VARS)
+LOCAL_MODULE       := init.btmac.sh
+LOCAL_MODULE_TAGS  := optional eng
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES    := bin/init.btmac.sh
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE       := init.class_main.sh
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
@@ -51,13 +59,13 @@ LOCAL_SRC_FILES    := bin/init.qti.ims.sh
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.qti.fm.sh
-LOCAL_MODULE_TAGS  := optional eng
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := bin/init.qti.fm.sh
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
-include $(BUILD_PREBUILT)
+#include $(CLEAR_VARS)
+#LOCAL_MODULE       := init.qti.fm.sh
+#LOCAL_MODULE_TAGS  := optional eng
+#LOCAL_MODULE_CLASS := ETC
+#LOCAL_SRC_FILES    := bin/init.qti.fm.sh
+#LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
+#include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := hack_attest.sh
@@ -83,6 +91,14 @@ LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := etc/fstab.qcom
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE       := vold.fstab
+LOCAL_MODULE_TAGS  := optional eng
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES    := etc/vold.fstab
+LOCAL_MODULE_PATH  := $(TARGET_OUT_SYSTEM_ETC)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)

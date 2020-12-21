@@ -216,7 +216,7 @@ persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxhd-aac
 # Property for backup NTP Server
 persist.backup.ntpServer="0.pool.ntp.org"
 # enable IZat OptInApp overlay
-#persist.vendor.overlay.izat.optin=rro
+persist.vendor.overlay.izat.optin=rro
 
 #Disable Skip Validate
 sdm.debug.disable_skip_validate=1
@@ -239,8 +239,8 @@ persist.asus.led.on=1
 
 #Huaqin add for 1232277 by chenqiang at 2018/9/29 start
 #avoid crash enter into recovery WB20185402 20181102 start
-#persist.sys.enable_rescue=false
-#persist.sys.disable_rescue=true
+persist.sys.enable_rescue=false
+persist.sys.disable_rescue=true
 #avoid crash enter into recovery WB20185402 20181102 end
 persist.bt.hfp.playbackforvr=false
 persist.bt.hfp.playbackforvoip=false

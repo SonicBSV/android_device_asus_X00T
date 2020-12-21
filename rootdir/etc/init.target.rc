@@ -49,7 +49,7 @@ on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
     mount_all /vendor/etc/fstab.qcom
-
+    swapon_all /vendor/etc/fstab.qcom
 #Huaqin modify for ZQL1650-96 by lanshiming at 2018/1/29 start
     setprop persist.alreadly_boot_resize true
 #Huaqin modify for ZQL1650-96 by lanshiming at 2018/1/29 end
@@ -104,25 +104,57 @@ on boot
     chown system system /mnt/vendor/persist/speccfg/submask
     chown system system /mnt/vendor/persist/speccfg/partition
 
-    # KCAL permissions
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_enable
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_cont
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_sat
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_hue
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_min
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_val
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_enable
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_cont
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_sat
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_hue
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_min
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_val
+# KCAL permissions
+  chown system system /sys/devices/platform/kcal_ctrl.0/kcal
+  chown system system /sys/devices/platform/kcal_ctrl.0/kcal_enable
+  chown system system /sys/devices/platform/kcal_ctrl.0/kcal_cont
+  chown system system /sys/devices/platform/kcal_ctrl.0/kcal_sat
+  chown system system /sys/devices/platform/kcal_ctrl.0/kcal_hue
+  chown system system /sys/devices/platform/kcal_ctrl.0/kcal_min
+  chown system system /sys/devices/platform/kcal_ctrl.0/kcal_val
+  chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal
+  chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_enable
+  chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_cont
+  chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_sat
+  chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_hue
+  chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_min
+  chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_val
 
-    # Vibrator permissions
-    chown root system /sys/class/timed_output/vibrator/vtg_level
-    chmod 0660 /sys/class/timed_output/vibrator/vtg_level
+# Vibrator permissions
+  chown root system /sys/class/timed_output/vibrator/vtg_level
+  chmod 0660 /sys/class/timed_output/vibrator/vtg_level
+
+# Audio gain permissions
+  chown system system /sys/kernel/sound_control/headphone_gain
+  chown system system /sys/kernel/sound_control/mic_gain
+  chown system system /sys/kernel/sound_control/earpiece_gain
+  chown system system /sys/kernel/sound_control/speaker_gain
+  chmod 0660 /sys/kernel/sound_control/headphone_gain
+  chmod 0660 /sys/kernel/sound_control/mic_gain 
+  chmod 0660 /sys/kernel/sound_control/earpiece_gain
+  chmod 0660 /sys/kernel/sound_control/speaker_gain
+
+# Torch permissions
+  chown system system /sys/devices/soc/800f000.qcom,spmi/spmi-0/spmi0-03/800f000.qcom,spmi:qcom,pm660l@3:qcom,leds@d300/leds/led:torch_0/max_brightness
+  chown system system /sys/devices/soc/800f000.qcom,spmi/spmi-0/spmi0-03/800f000.qcom,spmi:qcom,pm660l@3:qcom,leds@d300/leds/led:torch_1/max_brightness
+  chmod 0660 /sys/devices/soc/800f000.qcom,spmi/spmi-0/spmi0-03/800f000.qcom,spmi:qcom,pm660l@3:qcom,leds@d300/leds/led:torch_0/max_brightness
+  chmod 0660 /sys/devices/soc/800f000.qcom,spmi/spmi-0/spmi0-03/800f000.qcom,spmi:qcom,pm660l@3:qcom,leds@d300/leds/led:torch_1/max_brightness
+
+# USB Fastcharge
+  chown system system /sys/kernel/fast_charge/force_fast_charge
+  chmod 0660 /sys/kernel/fast_charge/force_fast_charge
+
+# Backlight Dimmer
+  chown system system /sys/module/mdss_fb/parameters/backlight_dimmer
+  chmod 0660 /sys/module/mdss_fb/parameters/backlight_dimmer
+
+# FPS Info
+  chown system graphics /sys/class/graphics/fb0/measured_fps
+  chmod 0666 /sys/class/graphics/fb0/measured_fps
+
+# Touchboost
+  chown system system /sys/module/msm_performance/parameters/touchboost
+  chmod 0660 /sys/module/msm_performance/parameters/touchboost
 
 #Huaqin add for als/ps permission by zhuqiang at 2018/8/03 start
     chmod 0644 /sys/class/sensors/stk3x3x-proximity/sensors_enable
@@ -192,13 +224,13 @@ on boot
     setprop sys.usb.configfs 1
 
 #Peripheral manager
-service vendor.per_mgr /vendor/bin/pm-service
+service vendor.per_mgr /system/vendor/bin/pm-service
     class core
     user system
     group system
     ioprio rt 4
 
-service vendor.per_proxy /vendor/bin/pm-proxy
+service vendor.per_proxy /system/vendor/bin/pm-proxy
     class core
     user system
     group system
@@ -215,7 +247,7 @@ service vendor.qseecomd /vendor/bin/qseecomd
    user root
    group root
 
-service thermal-engine /vendor/bin/thermal-engine
+service thermal-engine /system/vendor/bin/thermal-engine
    class main
    user root
    socket thermal-send-client stream 0666 system system
@@ -224,43 +256,63 @@ service thermal-engine /vendor/bin/thermal-engine
    socket thermal-send-rule stream 0660 system system
    group root
 
+service time_daemon /system/vendor/bin/time_daemon
+   class late_start
+   user root
+   group root
+
+service adsprpcd_root /vendor/bin/adsprpcd
+   class main
+   user media
+   group media
+
 service adsprpcd /vendor/bin/adsprpcd audiopd
    class main
    user media
    group media
 
-service audiod /vendor/bin/audiod
-   class late_start
-   user system
-   group system
-
 ## imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
-service vendor.imsqmidaemon /vendor/bin/imsqmidaemon
+service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
     class main
     user system
     socket ims_qmid stream 0660 system radio
     group radio log diag
 
 # imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
-service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
+service vendor.imsdatadaemon /system/vendor/bin/imsdatadaemon
     class main
     user system
     socket ims_datad stream 0660 system radio
     group system wifi radio inet log diag
     disabled
 
-service vendor.pd_mapper /vendor/bin/pd-mapper
+service energy-awareness /system/vendor/bin/energy-awareness
+    class main
+    user system
+    group system
+    oneshot
+
+service vendor.pd_mapper /system/vendor/bin/pd-mapper
      class core
 
 on property:vendor.ims.QMI_DAEMON_STATUS=1
     start vendor.imsdatadaemon
 
-service vendor.ims_rtp_daemon /vendor/bin/ims_rtp_daemon
+on property:vold.decrypt=trigger_restart_framework
+   start cnss_diag
+
+service cnss_diag /system/vendor/bin/cnss_diag -q -f -t HELIUM
+   class main
+   user system
+   group system wifi inet sdcard_rw media_rw diag
+   oneshot
+
+service vendor.ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
    class main
    user system
    group radio diag inet log
 
-service vendor.imsrcsservice /vendor/bin/imsrcsd
+service vendor.imsrcsservice /system/vendor/bin/imsrcsd
    class main
    user system
    group radio diag inet log wakelock
@@ -268,19 +320,8 @@ service vendor.imsrcsservice /vendor/bin/imsrcsd
 on property:vendor.ims.DATA_DAEMON_STATUS=1
     restart vendor.ims_rtp_daemon
 
-service cnss_diag /vendor/bin/cnss_diag -q -f -t HELIUM
-   class main
-   user system
-   group system wifi inet sdcard_rw media_rw diag
-   oneshot
 
-service energy-awareness /vendor/bin/energy-awareness
-    class main
-    user system
-    group system
-    oneshot
-
-service ppd /vendor/bin/mm-pp-dpps
+service ppd /system/vendor/bin/mm-pp-dpps
     class late_start
     user system
     group system graphics

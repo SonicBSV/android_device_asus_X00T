@@ -1,25 +1,5 @@
-# 
-# Copyright (C) 2018-2019 The LineageOS Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
-#
-# This file sets variables that control the way modules are built
-# thorughout the system. It should not be used to conditionally
-# disable makefiles (the proper mechanism to control what gets
-# included in a build is to use PRODUCT_PACKAGES in a product
-# definition file).
-#
+TARGET_MOUNT_POINTS_SYMLINKS := false
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
@@ -32,6 +12,10 @@ PRODUCT_CHARACTERISTICS := nosdcard
 # skip boot jars check
 SKIP_BOOT_JARS_CHECK := true
 
+# Disable EAP Proxy because it depends on proprietary headers
+# and breaks WPA Supplicant compilation.
+DISABLE_EAP_PROXY := true
+
 # ARCore
 TARGET_INCLUDE_STOCK_ARCORE := true
 
@@ -41,7 +25,7 @@ PRODUCT_COPY_FILES += \
 # AR Stickers
 PRODUCT_PACKAGES += \
     Playground
-
+    
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
@@ -107,11 +91,20 @@ PRODUCT_PACKAGES += \
     android.hardware.soundtrigger@2.1-impl \
     android.hardware.audio@2.0-impl \
     android.hardware.audio.effect@2.0-impl \
+    android.hardware.audio.common@2.0-util \
+    android.hardware.audio.effect@2.0 \
+    android.hardware.audio@2.0 \
+    android.hardware.soundtrigger@2.1-impl \
+    android.hardware.audio@4.0 \
+    android.hardware.audio.common@4.0 \
+    android.hardware.audio.common@4.0-util \
     android.hardware.audio@4.0-impl \
+    android.hardware.audio.effect@4.0 \
     android.hardware.audio.effect@4.0-impl \
     audio.a2dp.default \
     audio.r_submix.default \
     audio.usb.default \
+    audio.primary.sdm660 \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
@@ -126,15 +119,14 @@ PRODUCT_PACKAGES += \
     tinypcminfo \
     tinymix
 
-#    audio.primary.sdm660 \
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
+    $(LOCAL_PATH)/configs/audio/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf \
     $(LOCAL_PATH)/configs/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/configs/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/audio_platform_info_extcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_extcodec.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/configs/audio/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio/audio_policy_configuration.xml \
+    $(LOCAL_PATH)/configs/audio/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
     $(LOCAL_PATH)/configs/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
@@ -187,19 +179,13 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.automotive.vehicle@1.0
 
 # Bluetooth
-#PRODUCT_PACKAGES += \
-    libbt-vendor
- 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:system/etc/bluetooth/bt_profile.conf \
-    $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
+    $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/bluetooth/bt_profile.conf \
+    $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/bluetooth/interop_database.conf 
     
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.bt.max.hs.connections=2 \
-    persist.bt.max.a2dp.connections=1 \
-    persist.bt.enable.multicast=0 \
     persist.vendor.bluetooth.modem_nv_support=true \
-    persist.vendor.btstack.enable.splita2dp=true \
+    persist.bluetooth.disableabsvol=true \
     vendor.qcom.bluetooth.soc=cherokee \
     persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac 
     
@@ -209,16 +195,18 @@ TARGET_SCREEN_WIDTH := 1080
 
 # Camera
 PRODUCT_PACKAGES += \
+    android.hardware.camera.provider@2.4-impl \
+    android.hardware.camera.provider@2.4-service \ 
     android.frameworks.displayservice@1.0:32 \
     camera.device@3.2-impl \
     Snap
     
-#    android.hardware.camera.provider@2.4-impl \
-#    android.hardware.camera.provider@2.4-service \  
+ 
     
 # Charger
 PRODUCT_PACKAGES += \
-    charger_res_images
+    asus_charger \
+    asus_charger_res_images
 
 # Configstore
 PRODUCT_PACKAGES += \
@@ -238,6 +226,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.asus.dclick=1 \
     persist.asus.gesture.type=1000000
 
+# Doze mode
+PRODUCT_PACKAGES += \
+    AsusDoze
+
 # Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
@@ -247,24 +239,32 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
+    hwcomposer.sdm660 \
     gralloc.sdm660 \
-    libdisplayconfig \
-    libgpu_tonemapper \
+    memtrack.sdm660 \
     libqdMetaData \
     libqdMetaData.system \
-    memtrack.sdm660 \
-    libhypv_intercept \
+    libgpu_tonemapper \
+    libdisplayconfig \
+    libhwc2on1adapter \
+    libhwc2onfbadapter \
     libgui_vendor:32 \
     liboverlay \
     libvulkan \
     libtinyxml \
     libgenlock
+
+# DPM
+PRODUCT_PACKAGES += \
+    tcmiface
+    
+PRODUCT_BOOT_JARS += \
+    tcmiface
     
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-service \
-    android.hardware.drm@1.1-service.clearkey \
-    android.hardware.drm@1.0-impl
+    android.hardware.drm@1.1-service.clearkey
 
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
@@ -275,7 +275,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Exclude TOF sensor from InputManager
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/excluded-input-devices.xml:system/etc/excluded-input-devices.xml
+    $(LOCAL_PATH)/configs/excluded-input-devices.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/excluded-input-devices.xml
 
 # Fingerprint feature
 PRODUCT_COPY_FILES += \
@@ -325,11 +325,22 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
     android.hidl.base@1.0_system \
-    android.hidl.manager@1.0_system:32 \
+    android.hidl.manager@1.0_system:32
 
+# IOP and Workload Classifier props    
+PRODUCT_BOOT_JARS += \
+    QPerformance \
+    UxPerformance
+    
 # IMS
 PRODUCT_PACKAGES += \
     ims-ext-common
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.ims.disableADBLogs=1 \
+    persist.ims.disableDebugLogs=1 \
+    persist.ims.disableQXDMLogs=1 \
+    persist.ims.disableIMSLogs=1
 
 # IPv6
 PRODUCT_PACKAGES += \
@@ -347,7 +358,9 @@ PRODUCT_COPY_FILES += \
 
 # Keylayout
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl
+    $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
+    $(LOCAL_PATH)/configs/keylayout/gxfp_input.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gxfp_input.kl \
+    $(LOCAL_PATH)/configs/keylayout/cdfinger_input.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/cdfinger_input.kl
     
 PRODUCT_PROPERTY_OVERRIDES += \
     qemu.hw.mainkeys=0
@@ -370,9 +383,17 @@ PRODUCT_COPY_FILES += \
 
 # Media
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/media/system/media_profiles.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/media/system/media_profiles_V1_0.dtd:$(TARGET_COPY_OUT_SYSTEM)/etc/media_profiles_V1_0.dtd \
     $(LOCAL_PATH)/configs/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
     $(LOCAL_PATH)/configs/media/media_codecs_vendor_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor_audio.xml \
+    $(LOCAL_PATH)/configs/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/media/media_profiles_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_vendor.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs_performance_sdm660_v1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance_sdm660_v1.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs_sdm660_v1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_sdm660_v1.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor.xml \
+    $(LOCAL_PATH)/configs/media/media_profiles_sdm660_v1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_sdm660_v1.xml \
     $(LOCAL_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
 
 PRODUCT_COPY_FILES += \
@@ -385,6 +406,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libavmediaserviceextensions \
     libmediametrics \
+    libc2dcolorconvert \
+    libhypv_intercept \
     libmediaplayerservice \
     libregistermsext \
     mediametrics
@@ -393,6 +416,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.config.media_vol_default=9
 
 # Misc
+PRODUCT_PACKAGES += \
+    libbrillo-binder:64 \
+    libbrillo-stream:64 \
+    libbrillo:64 \
+    libbrotli:64 \
+    libyuv
+
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     persist.vendor.qcomsysd.enabled=1 \
@@ -417,7 +447,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-nci.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nci.conf \
-    $(LOCAL_PATH)/configs/nfc/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf \
+    $(LOCAL_PATH)/configs/nfc/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf
 
 PRODUCT_PACKAGES += \
     android.hardware.nfc@1.1-service \
@@ -431,11 +461,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # NTP Server
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.backup.ntpServer="0.pool.ntp.org"
-    
+    persist.backup.ntpServer="0.pool.ntp.org" 
+
 # OMX
 PRODUCT_PACKAGES += \
-    libc2dcolorconvert \
     libmm-omxcore \
     libOmxAacEnc:32 \
     libOmxAmrEnc:32 \
@@ -450,7 +479,7 @@ PRODUCT_PACKAGES += \
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay 
+    $(LOCAL_PATH)/overlay
 
 # Perf configuration
 PRODUCT_COPY_FILES += \
@@ -462,12 +491,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.power@1.1-service-qti
 
+# Pre-opt SystemUI
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    SystemUI
+
 # Public Libraries
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
 # Ramdisk
 PRODUCT_PACKAGES += \
+    init.btmac.sh \
     init.class_main.sh \
     init.qcom.post_boot.sh \
     init.qcom.sensors.sh \
@@ -478,6 +512,7 @@ PRODUCT_PACKAGES += \
     hack_attest.sh \
     fix_baseband.sh \
     fstab.qcom \
+    vold.fstab \
     init.msm.usb.configfs.rc \
     init.qcom.factory.rc \
     init.qcom.rc \
@@ -503,8 +538,6 @@ PRODUCT_PACKAGES += \
     libxml2 \
     libprotobuf-cpp-full \
     libprotobuf-cpp-full-rtti
-    
-#    librmnetctl \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.multisim.config=dsds \
@@ -521,11 +554,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # QCOM
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml
 
 # QMI
-#PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     libjson
+
+# QNS
+PRODUCT_PACKAGES += \
+    libstdc++.vendor
 
 # QTI
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -569,13 +606,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
-# Tetheroffload
-PRODUCT_PACKAGES += \
-    ipacm \
-    IPACM_cfg.xml \
-    libipanat \
-    liboffloadhal
-
 # TextClassifier smart selection model files
 PRODUCT_PACKAGES += \
     textclassifier.bundle1 \
@@ -613,7 +643,7 @@ PRODUCT_PACKAGES += \
 
 # VNDK-SP:
 PRODUCT_PACKAGES += \
-    vndk-sp
+    vndk_package
 
 # VR
 PRODUCT_PACKAGES += \
@@ -630,29 +660,26 @@ PRODUCT_BOOT_JARS += \
 
 # whitelisted app
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml 
+    $(LOCAL_PATH)/configs/qti_whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/qti_whitelist.xml 
 
 # WiFi
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
-    android.hardware.wifi@1.0 \
-    android.hardware.wifi@1.1 \
-    android.hardware.wifi@1.2 \
     libwifi-hal-qcom \
     libqsap_sdk \
     wificond \
     wpa_supplicant.conf \
     hostapd_cli \
     hostapd \
-    wpa_supplicant 
+    wpa_supplicant
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/fstman.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/fstman.ini \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
-    $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
-    $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny \
-    $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf 
+    $(LOCAL_PATH)/configs/hostapd/hostapd.accept:$(TARGET_COPY_OUT_SYSTEM)/etc/hostapd/hostapd.accept \
+    $(LOCAL_PATH)/configs/hostapd/hostapd.deny:$(TARGET_COPY_OUT_SYSTEM)/etc/hostapd/hostapd.deny \
+    $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/hostapd/hostapd_default.conf 
 
 $(call inherit-product, vendor/asus/X00T/X00T-vendor.mk)

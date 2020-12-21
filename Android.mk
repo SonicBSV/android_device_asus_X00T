@@ -63,6 +63,8 @@ ifneq ($(TARGET_MOUNT_POINTS_SYMLINKS),false)
 	@ln -sf /mnt/vendor/persist $(TARGET_ROOT_OUT)/persist
 endif
 
+$(shell mkdir -p $(TARGET_OUT_VENDOR)/lib/dsp)
+
 IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
 IMS_SYMLINKS := $(addprefix $(TARGET_OUT_APPS_PRIVILEGED)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
 $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -118,16 +120,6 @@ TARGET_OUT_FIRMWARE="/vendor/firmware_mnt"
 
 $(shell rm -rf $(TARGET_OUT_VENDOR)/rfs/)
 
-#To be enabled when prepopulation support is needed for the read_write folder
-# $(shell rm -rf  $(TARGET_OUT_DATA)/rfs/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/msm/mpss/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/msm/adsp/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/msm/slpi/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/msm/cdsp/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/mdm/mpss/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/mdm/adsp/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/mdm/slpi/)
-# $(shell mkdir -p $(TARGET_OUT_DATA)/rfs/mdm/cdsp/)
 
 #########################################################################
 # MSM Folders

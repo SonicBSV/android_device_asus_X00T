@@ -34,15 +34,16 @@ on early-init
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
 
+  # create symlink for vendor mount points
+    symlink /vendor/firmware_mnt /firmware
+    symlink /vendor/bt_firmware /bt_firmware
+    symlink /vendor/dsp /dsp
+
   # Change ownership of hw_recovery related nodes
     chown system graphics /sys/kernel/debug/dri/0/debug/dump
     chown system graphics /sys/kernel/debug/dri/0/debug/recovery_reg
     chown system graphics /sys/kernel/debug/dri/0/debug/recovery_dbgbus
     chown system graphics /sys/kernel/debug/dri/0/debug/recovery_vbif_dbgbus
-
-    # Change ownership of sw_sync node
-    chown system graphics /sys/kernel/debug/sync/sw_sync
-    chmod 0666 /sys/kernel/debug/sync/sw_sync
 
     chown root system /dev/kmsg
     chmod 0620 /dev/kmsg
@@ -84,7 +85,6 @@ on early-boot
     chown system system /mnt/vendor/persist/sensors/registry/registry/sensors_registry
     chown system system /mnt/vendor/persist/sensors/sensors_settings
     chown system system /mnt/vendor/persist/sensors/registry/sns_reg_config
-    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_version
     chown system system /mnt/vendor/persist/sensors/registry/config
     chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
 
@@ -122,6 +122,18 @@ on boot
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
 
+    chmod 0660 /sys/class/power_supply/battery/input_suspend
+    chmod 0660 /sys/class/power_supply/battery/charging_enabled
+    chown system system /sys/class/power_supply/battery/input_suspend
+    chown system system /sys/class/power_supply/battery/charging_enabled
+
+    chmod 0660 /sys/class/power_supply/battery/device/thermalcall
+    chmod 0660 /sys/class/power_supply/battery/device/thermalvideo
+    chown system system /sys/class/power_supply/battery/device/thermalcall
+    chown system system /sys/class/power_supply/battery/device/thermalvideo
+    chown system system /sys/class/power_supply/battery/device/smartchg_stop_charging
+    chmod 0660 /sys/class/power_supply/battery/device/smartchg_stop_charging
+
     #Create QMUX deamon socket area
     mkdir /dev/socket/qmux_radio 0770 radio radio
     chmod 2770 /dev/socket/qmux_radio
@@ -135,9 +147,9 @@ on boot
     mkdir /persist/drm 0770 system system
     mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
     mkdir /persist/misc 0770 system system
-    mkdir /mnt/vendor/persist/alarm 0770 system system
+    mkdir /persist/alarm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
-    restorecon_recursive /mnt/vendor/persist
+    mkdir /mnt/vendor/persist/secnvm 0770 system system
 
     #Create NETMGR daemon socket area
     mkdir /dev/socket/netmgr 0750 radio radio
@@ -158,9 +170,8 @@ on boot
     setprop ro.telephony.call_ring.multiple false
 
     #enable camera read sensors data
-    # Huaqin add for 1261108 by huqian at 2018/11/29 start
     setprop persist.vendor.camera.gyro.disable 0
-    # Huaqin add for 1261108 by huqian at 2018/11/29 end
+
 
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
@@ -185,7 +196,7 @@ on boot
 
 #   Assign TCP buffer thresholds to be ceiling value of technology maximums
 #   Increased technology maximums should be reflected here.
-    write /proc/sys/net/core/rmem_max  16777216
+    write /proc/sys/net/core/rmem_max  8388608
     write /proc/sys/net/core/wmem_max  8388608
 
     # To prevent out of order acknowledgements from making
@@ -267,8 +278,8 @@ on post-fs-data
     # create QDMA dropbox
     mkdir /data/vendor/qdmastats 0700 system system
     mkdir /data/vendor/qdma 0770 system system
-    mkdir /dev/socket/qdma 0777 system system
-    chmod 2777 /dev/socket/qdma
+    mkdir /dev/socket/qdma 0770 system system
+    chmod 2770 /dev/socket/qdma
 
     # Create /data/vendor/tzstorage directory for SFS listener
     mkdir /data/vendor/tzstorage 0770 system system
@@ -279,8 +290,9 @@ on post-fs-data
     #Create folder of camera
     mkdir /data/vendor/camera 0770 camera camera
 
-    #Change ownership to system
-    chown system system /data/vendor/tombstones
+
+    #Create directory for tftp
+    mkdir /data/vendor/tombstones 0771 system system
 
     mkdir /data/vendor/ramdump 0771 root system
     mkdir /data/vendor/bluetooth 0770 bluetooth bluetooth
@@ -296,7 +308,6 @@ on post-fs-data
     mkdir /data/vendor/wifi/wpa 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
 
-    # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 start
     mkdir /persist/flag 0771 system system
     chown system system /persist/flag
 
@@ -306,11 +317,8 @@ on post-fs-data
     chmod 0644 /persist/flag/cid.txt
     chown system system /persist/flag/colorid.txt
     chmod 0644 /persist/flag/colorid.txt
-    /* Huaqin add for MULTI SIM by jindaolun at 2018/3/1 start*/
     chown system system /persist/flag/multisim.txt
     chmod 0644 /persist/flag/multisim.txt
-    /* Huaqin add for MULTI SIM by jindaolun at 2018/3/1 end*/
-    # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/23 end
 
     #create port-bridge log dir
     mkdir /data/vendor/port_bridge 0770 radio radio
@@ -394,6 +402,9 @@ on post-fs-data
     mkdir /data/shared 0755
     chown system system /data/shared
 
+    #Create directory for FOTA
+    mkdir /data/fota 0771
+    chown system system /data/fota
 
     # Create /data/time folder for time-services
     mkdir /data/vendor/time/ 0700 system system
@@ -449,7 +460,6 @@ on post-fs-data
     # set aggressive read ahead for dm-0 and dm-1 during boot up
     write /sys/block/dm-0/queue/read_ahead_kb 2048
     write /sys/block/dm-1/queue/read_ahead_kb 2048
-    write /sys/block/dm-2/queue/read_ahead_kb 2048
 
     # Create vpp directory
     mkdir /data/vendor/vpp 0770 media media
@@ -463,17 +473,17 @@ on post-fs-data
 # Huaqin add for ZQL1650-126 CountryCode by yangzhiyuan at 2018/01/24 start
 # Huaqin add for bt/wifi prop by zhouyingchen at 2018/03/23 start
 # Huaqin add for change class core  by xudayi at 2018/05/28 start
-service nvram_country /vendor/bin/nvram_country
-    class core
-    user root
-    group system
-    chmod 0644 /vendor/bin/nvram_country
-    oneshot
+#service nvram_country /vendor/bin/nvram_country
+#    class core
+#    user root
+#    group system
+#    chmod 0644 /vendor/bin/nvram_country
+#    oneshot
 # Huaqin add for change class core  by xudayi at 2018/05/28 end
 
 service nvram_btwifi /system/bin/nvram_btwifi
     user root
-    group system
+    group system oem_2901
     oneshot
     disabled
 
@@ -481,22 +491,20 @@ on property:sys.boot_completed=1
     start nvram_btwifi
 
 on property:sys.nvram.btmac=*
-    setprop ro.btmac ${sys.nvram.btmac}
-on property:sys.nvram.wifimac=*
-    setprop ro.wifimac ${sys.nvram.wifimac}
+    start vendor-btmac-sh
+    restart vendor.bluetooth-1-0-qti
 
-service iop /vendor/bin/iop
-    class main
+service vendor-btmac-sh  /vendor/bin/init.btmac.sh
+    class core
     user root
-    group root
-    disabled
-    socket iop seqpacket 0666 root system
-
-service vendor.ssr_setup /vendor/bin/ssr_setup
     oneshot
     disabled
 
-service vendor.ss_ramdump /vendor/bin/subsystem_ramdump
+service vendor.ssr_setup /system/vendor/bin/ssr_setup
+    oneshot
+    disabled
+
+service vendor.ss_ramdump /system/vendor/bin/subsystem_ramdump
     class main
     user system
     group system
@@ -596,12 +604,12 @@ on property:vold.decrypt=trigger_restart_framework
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
-service vendor.cnd /vendor/bin/cnd
+service vendor.cnd /system/vendor/bin/cnd
     class main
     user system
     group system wifi inet radio wakelock net_admin
 
-service dpmQmiMgr /vendor/bin/dpmQmiMgr
+service dpmQmiMgr /system/vendor/bin/dpmQmiMgr
     class main
     user system
     group system
@@ -633,7 +641,7 @@ on property:vendor.wc_transport.start_hci=true
 on property:vendor.wc_transport.start_hci=false
     stop vendor.start_hci_filter
 
-service vendor.start_hci_filter /vendor/bin/wcnss_filter
+service vendor.start_hci_filter /system/vendor/bin/wcnss_filter
     class late_start
     user bluetooth
     group bluetooth diag system wakelock
@@ -668,31 +676,31 @@ service ftmd /system/bin/logwrapper /vendor/bin/ftmdaemon
     disabled
     oneshot
 
-service vendor.port-bridge /vendor/bin/port-bridge
+service vendor.port-bridge /system/vendor/bin/port-bridge
     class main
     user radio
     group radio system inet
     disabled
     oneshot
 
-service vendor.netmgrd /vendor/bin/netmgrd
+service vendor.netmgrd /system/vendor/bin/netmgrd
     class main
     disabled
 
-service vendor.ipacm-diag /vendor/bin/ipacm-diag
+service vendor.ipacm-diag /system/vendor/bin/ipacm-diag
     class main
     user radio
     socket ipacm_log_file dgram 660 radio radio
     group radio diag oem_2901
     disabled
 
-service vendor.ipacm /vendor/bin/ipacm
+service vendor.ipacm /system/vendor/bin/ipacm
     class main
     user radio
     group radio inet
     disabled
 
-service vendor.dataqti /vendor/bin/qti
+service vendor.dataqti /system/vendor/bin/qti
     class main
     user radio
     group radio oem_2901 diag usb net_admin
@@ -778,14 +786,13 @@ service fstman_wlan0 /vendor/bin/fstman -B -ddd -c /data/vendor/wifi/fstman.ini 
     disabled
     oneshot
 
-service cnss-daemon /vendor/bin/cnss-daemon -n -l
+service cnss-daemon /system/vendor/bin/cnss-daemon -n -l
     class late_start
     user system
     group system inet net_admin wifi
     capabilities NET_ADMIN
 
 on property:sys.shutdown.requested=*
-    write /sys/kernel/shutdown_wlan/shutdown 1
     stop cnss-daemon
     #  shengzhong add for pcmark  2018/11/26 start
     write /sys/devices/virtual/block/dm-2/queue/write_cache "write back"
@@ -819,7 +826,7 @@ service mlid /vendor/bin/mlid
     group gps
     socket mlid stream 0666 gps gps
 
-service loc_launcher /vendor/bin/loc_launcher
+service loc_launcher /system/vendor/bin/loc_launcher
     class late_start
     user gps
     group gps
@@ -861,11 +868,13 @@ on property:sys.boot_completed=1
 	start fix_baseband
 	start hack_attest
 
+on property:ro.vendor.ril.mbn_copy_completed=1
+    write /data/vendor/radio/copy_complete 1
+
 service vendor.atfwd /vendor/bin/ATFWD-daemon
     class late_start
     user system
     group system radio
-    disabled
 
 service hostapd_fst /vendor/bin/hw/hostapd -dd -g /data/vendor/wifi/hostapd/global
     interface android.hardware.wifi.hostapd@1.0::IHostapd default
@@ -909,12 +918,12 @@ service vendor.ril-daemon3 /vendor/bin/hw/rild -c 3
     group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
-service charger /charger
+service charger /sbin/asus_charger
     class charger
     group system graphics
     seclabel u:r:healthd:s0
 
-service vendor.ssr_diag /vendor/bin/ssr_diag
+service vendor.ssr_diag /system/vendor/bin/ssr_diag
     class late_start
     user system
     group system
@@ -953,7 +962,7 @@ on property:persist.sys.qlogd=1
 on property:persist.sys.qlogd=0
     stop qlogd
 
-service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
+service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
     class core
     user root
     group root
@@ -964,10 +973,14 @@ on charger
     load_system_props
     start qcom-post-boot
 
+on property:init.svc.surfaceflinger=restarting
+    stop  vendor.hwcomposer-2-1
+    start vendor.hwcomposer-2-1
+
 on property:vendor.display.lcd_density=*
     setprop ro.sf.lcd_density ${vendor.display.lcd_density}
 
-service time_daemon /vendor/bin/time_daemon
+service time_daemon /system/vendor/bin/time_daemon
     class main
     user root
     group root
@@ -984,7 +997,7 @@ service seemp_healthd /vendor/bin/seemp_healthd
     user system
     group system
 
-service vendor.power_off_alarm /vendor/bin/power_off_alarm
+service power_off_alarm /vendor/bin/power_off_alarm
     class core
     group system
     disabled
@@ -996,6 +1009,13 @@ service vendor.move_time_data /system/bin/move_time_data.sh
     group system
     disabled
     oneshot
+
+# Huaqin modify for ZQL1820-1190 by yangzhiyuan at 2018/11/19 start
+on property:persist.asus.ramdump=1
+    write /sys/module/msm_poweroff/parameters/download_mode 1
+on property:persist.asus.ramdump=0
+    write /sys/module/msm_poweroff/parameters/download_mode 0
+# Huaqin modify for ZQL1820-1190 by yangzhiyuan at 2018/11/19 end
 
 #Set GPU Opengles version
 on property:vendor.opengles.version=*
