@@ -65,7 +65,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </hal>
     <hal format="hidl" optional="true">
         <name>android.hardware.nfc</name>
-        <version>1.2</version>
+        <version>1.0</version>
         <interface>
             <name>INfc</name>
             <instance>default</instance>
@@ -521,6 +521,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </interface>
     </hal>
     <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.servicetracker</name>
+        <version>1.0-1</version>
+        <interface>
+            <name>IServicetracker</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.soter</name>
         <version>1.0</version>
         <interface>
@@ -550,6 +558,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <interface>
             <name>IHidlVppService</name>
             <instance>vppService</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.wifi.hostapd</name>
+        <version>1.0-1</version>
+        <interface>
+            <name>IHostapdVendor</name>
+            <instance>default</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">

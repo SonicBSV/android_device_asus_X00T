@@ -1,9 +1,0 @@
-allow ueventd kcal_dev:dir r_dir_perms;
-allow ueventd kcal_dev:file rw_file_perms;
-allow ueventd kcal_dev:lnk_file r_file_perms;
-allow ueventd vfat:dir { search };
-allow ueventd mba_debug_dev:blk_file { read } ;
-allow ueventd mba_debug_dev:blk_file { open } ;
-allow ueventd vfat:file { getattr open read };
-allow ueventd tmp_root_mount_file:lnk_file read;
-dontaudit ueventd mba_debug_dev:blk_file r_file_perms;
