@@ -1,0 +1,2 @@
+allow hal_health_default mnt_vendor_file:dir { getattr read search open write add_name create };
+allow hal_health_default mnt_vendor_file:file { getattr open read write create };
