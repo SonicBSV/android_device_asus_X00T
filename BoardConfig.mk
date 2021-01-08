@@ -92,7 +92,6 @@ KERNEL_LLVM_SUPPORT := true
 KERNEL_SD_LLVM_SUPPORT := true
 
 # ANT+
-#TARGET_USES_PREBUILT_ANT := true
 BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
 
 # Audio
@@ -116,6 +115,12 @@ BOARD_HAVE_BLUETOOTH_QCOM := true
 TARGET_USE_QTI_BT_STACK := true
 TARGET_FWK_SUPPORTS_FULL_VALUEADDS := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
+TARGET_USE_QTI_BT_CONFIGSTORE := true
+TARGET_USE_QTI_BT_SAR := true
+TARGET_USE_QTI_VND_FWK_DETECT := true
+BOARD_HAS_QCA_BT_SOC := "cherokee"
+QCOM_BT_USE_BTNV := true
+BLUETOOTH_HCI_USE_MCT := true
 
 # Camera
 BOARD_QTI_CAMERA_32BIT_ONLY := true
@@ -137,8 +142,8 @@ BOARD_USES_QCNE := true
 HWUI_COMPILE_FOR_PERF := true
 
 # Crypto
-TARGET_HW_DISK_ENCRYPTION := true
-TARGET_CRYPTFS_HW_PATH ?= vendor/qcom/opensource/cryptfs_hw
+#TARGET_HW_DISK_ENCRYPTION := true
+#TARGET_CRYPTFS_HW_PATH ?= $(DEVICE_PATH)/cryptfs_hw
 
 # APEX image
 DEXPREOPT_GENERATE_APEX_IMAGE := true
@@ -185,6 +190,12 @@ USE_DEVICE_SPECIFIC_GPS := true
 #LOC_HIDL_VERSION := 3.0
 
 # HIDL
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/android.hardware.gnss@2.1-service-qti.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/android.hardware.graphics.composer-qti-display.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/android.hardware.graphics.mapper-impl-qti-display.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/android.hardware.neuralnetworks@1.3-service-qti.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/vendor.qti.gnss@4.0-service.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/vendor.qti.hardware.display.allocator-service.xml
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/vendor_framework_compatibility_matrix.xml
@@ -219,11 +230,12 @@ BOARD_ROOT_EXTRA_SYMLINKS := \
 TARGET_PER_MGR_ENABLED := true
 
 # Product partition support
-TARGET_COPY_OUT_PRODUCT := product
-BOARD_USES_PRODUCTIMAGE := false
-BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+#TARGET_COPY_OUT_PRODUCT := product
+#BOARD_USES_PRODUCTIMAGE := false
+#BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Power
+TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 TARGET_USES_INTERACTION_BOOST := true
 TARGET_USES_NON_LEGACY_POWERHAL := true
 
@@ -231,8 +243,8 @@ TARGET_USES_NON_LEGACY_POWERHAL := true
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 
 # System_ext support
-TARGET_COPY_OUT_SYSTEM_EXT := system_ext
-BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
+#TARGET_COPY_OUT_SYSTEM_EXT := system_ext
+#BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
@@ -246,19 +258,19 @@ TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_X00T
 TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # RIL
-TARGET_RIL_VARIANT := caf
+#TARGET_RIL_VARIANT := caf
 ENABLE_VENDOR_RIL_SERVICE := true
 TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 PROTOBUF_SUPPORTED := true
 
 # Security patch level
 # After June Google register fingerprints with security patch version.
-# Asus Android 9 084 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2018-06-05
+# Asus Android 10 438 fingerprint registered on this patch version
+VENDOR_SECURITY_PATCH := 2020-12-05
 
 # SELinux
 include device/qcom/sepolicy/SEPolicy.mk
-BOARD_SEPOLICY_VERS := 29.0
+BOARD_SEPOLICY_VERS := 30.0
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/temp
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
@@ -296,7 +308,6 @@ WIFI_DRIVER_FW_PATH_AP := "ap"
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_P2P := "p2p"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
-WIFI_DRIVER_OPERSTATE_PATH := "/sys/class/net/wlan0/operstate"
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 QC_WIFI_HIDL_FEATURE_DUAL_AP := true
 WIFI_HIDL_FEATURE_DISABLE_AP_MAC_RANDOMIZATION := true

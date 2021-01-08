@@ -50,18 +50,18 @@ $(shell mkdir -p $(TARGET_OUT_VENDOR)/lib/dsp)
 
 IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
 
-IMS_SYMLINKS := $(addprefix $(TARGET_OUT_PRODUCT_APPS_PRIVILEGED)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
+IMS_SYMLINKS := $(addprefix $(TARGET_OUT_SYSTEM_EXT_APPS_PRIVILEGED)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
 $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	@echo "IMS lib link: $@"
 	@mkdir -p $(dir $@)
 	@rm -rf $@
-	$(hide) ln -sf /system/product/lib64/$(notdir $@) $@
+	$(hide) ln -sf /system/system_ext/lib64/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
 CAM_CALI_LIBS := libarcsoft_single_chart_calibration.so libhqmpbase.so libjni_hq_dualcam_calibration.so
                                           
-CAM_CALI_SYMLINKS := $(addprefix $(TARGET_OUT_APPS)/CameraCalibration/lib/arm64/,$(notdir $(CAM_CALI_LIBS)))
+CAM_CALI_SYMLINKS := $(addprefix $(TARGET_OUT_SYSTEM_EXT_APPS)/CameraCalibration/lib/arm64/,$(notdir $(CAM_CALI_LIBS)))
 $(CAM_CALI_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	@echo "CAM_CALI lib link: $@"
 	@mkdir -p $(dir $@)
