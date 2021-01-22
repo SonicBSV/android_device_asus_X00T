@@ -101,9 +101,27 @@
         <permission name="android.permission.INTERACT_ACROSS_USERS" />
         <permission name="android.permission.REBOOT"/>
         <permission name="android.permission.CHANGE_CONFIGURATION"/>
+        <permission name="android.permission.RECOVERY"/>
+        <permission name="android.permission.SHUTDOWN" />
     </privapp-permissions>
-
+    
     <privapp-permissions package="com.android.cellbroadcastreceiver">
         <permission name="android.permission.STATUS_BAR"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.android.settings">
+        <permission name="android.permission.RESET_BATTERY_STATS"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.qualcomm.qti.callenhancement">
+        <permission name="android.permission.REGISTER_SIM_SUBSCRIPTION"/>
+        <permission name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+        <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
+        <permission name="android.permission.BIND_CARRIER_SERVICES"/>
+        <permission name="android.permission.STATUS_BAR"/>
+        <permission name="android.permission.BIND_CARRIER_MESSAGING_SERVICE"/>
+        <permission name="android.permission.ACCESS_NOTIFICATIONS"/>
+        <permission name="android.permission.READ_PRECISE_PHONE_STATE"/>
     </privapp-permissions> 
 </permissions>

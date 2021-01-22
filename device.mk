@@ -9,10 +9,27 @@ PRODUCT_AAPT_PREBUILT_DPI := xxhdpi
 PRODUCT_CHARACTERISTICS := nosdcard
 
 # Enable updating of APEXes
-#$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
+# Installs gsi keys into ramdisk, to boot a GSI with verified boot.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
 # skip boot jars check
 SKIP_BOOT_JARS_CHECK := true
+
+# ARCore
+TARGET_INCLUDE_STOCK_ARCORE := true
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/android.hardware.camera.ar.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.ar.xml
+
+# AR Stickers
+PRODUCT_PACKAGES += \
+    Playground
+
+# Disable EAP Proxy because it depends on proprietary headers
+# and breaks WPA Supplicant compilation.
+DISABLE_EAP_PROXY := true
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
@@ -242,9 +259,12 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
+    BluetoothExt \
+    com.qualcomm.qti.bluetooth_audio@1.0 \
     liba2dpoffload \
     libbtconfigstore \
     libbthost_if \
+    libbt-hidlclient \
     libbt-logClient \
     vendor.qti.hardware.btconfigstore@1.0 \
     android.hardware.bluetooth@1.0 \
@@ -421,8 +441,7 @@ PRODUCT_PACKAGES += \
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0.vendor \
-    android.hidl.base@1.0 \
-    android.hidl.base@1.0_system
+    android.hidl.base@1.0
 
 # IOP and Workload Classifier props
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -438,11 +457,21 @@ PRODUCT_BOOT_JARS += \
 # IMS
 PRODUCT_PACKAGES += \
     ims-ext-common \
-    ims_ext_common.xml \
-    qti-telephony-hidl-wrapper \
-    qti_telephony_hidl_wrapper.xml \
-    qti-telephony-utils \
-    qti_telephony_utils.xml
+    ims_ext_common.xml
+
+HIDL_WRAPPER := qti-telephony-hidl-wrapper
+HIDL_WRAPPER += qti_telephony_hidl_wrapper.xml
+
+QTI_TELEPHONY_UTILS := qti-telephony-utils
+QTI_TELEPHONY_UTILS += qti_telephony_utils.xml
+
+PRODUCT_PACKAGES += $(HIDL_WRAPPER)
+PRODUCT_PACKAGES += $(QTI_TELEPHONY_UTILS)
+
+PRODUCT_PACKAGES += libvndfwk_detect_jni.qti
+PRODUCT_PACKAGES += libqti_vndfwk_detect
+PRODUCT_PACKAGES += libvndfwk_detect_jni.qti.vendor
+PRODUCT_PACKAGES += libqti_vndfwk_detect.vendor
     
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.ims.disableADBLogs=1 \
@@ -556,7 +585,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf
 
 PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.2-service \
+    android.hardware.nfc@1.1-service \
     com.android.nfc_extras \
     NfcNci \
     Tag 
@@ -631,6 +660,7 @@ PRODUCT_PACKAGES += \
     init.qti.fm.rc \
     init.baseband.sh \
     init.fixgpay.sh \
+    vold.fstab \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.recovery.qcom.rc \
@@ -683,19 +713,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml \
     $(LOCAL_PATH)/configs/privapp-permissions-android.xml:$(TARGET_COPY_OUT_SYSTEM)/product/etc/permissions/privapp-permissions-android.xml \
-    $(LOCAL_PATH)/configs/apns-conf.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/apns-conf.xml \
     $(LOCAL_PATH)/configs/privapp-permissions-platform2.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-platform2.xml \
     $(LOCAL_PATH)/configs/sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/sysconfig.xml \
     $(LOCAL_PATH)/configs/whitelist_verizon_packages.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/whitelist_verizon_packages.xml
 
 # QMI
 PRODUCT_PACKAGES += \
-    libqti_vndfwk_detect \
-    libvndfwk_detect_jni.qti \
-    libqti_vndfwk_detect.vendor \
-    libvndfwk_detect_jni.qti.vendor \
+    tcmiface \
     libjson
 
+PRODUCT_BOOT_JARS += \
+    tcmiface
+    
 # QNS
 PRODUCT_PACKAGES += \
     libstdc++.vendor
@@ -760,7 +789,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
-    telephony-ext
+    telephony-ext \
+    ims-ext-common \
+    services-ext
 
 #PRODUCT_BOOT_JARS += \
     telephony-ext
