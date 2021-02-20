@@ -21,14 +21,18 @@ SKIP_BOOT_JARS_CHECK := true
 # and breaks WPA Supplicant compilation.
 DISABLE_EAP_PROXY := true
 
+# RRO
+PRODUCT_ENFORCE_RRO_TARGETS := \
+    framework-res
+
 # Soong namespaces
-PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH)
+PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH) \
+    hardware/google/pixel
 
 # Set soong namespaces
-#PRODUCT_SOONG_NAMESPACES += \
-    hardware/qcom/audio/msm8998 \
-    hardware/qcom/display/msm8998 \
-    hardware/qcom/media/msm8998
+PRODUCT_SOONG_NAMESPACES += \
+    hardware/qcom/msm8998/display \
+    hardware/qcom/msm8998/media
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -224,12 +228,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.use.sw.alac.decoder=true \
     vendor.audio.use.sw.ape.decoder=true \
     vendor.audio.volume.headset.gain.depcal=true \
-    vendor.voice.path.for.pcm.voip=true \
-    persist.dirac.acs.controller=qem \
-    persist.dirac.acs.storeSettings=1 \
-    persist.dirac.acs.ignore_error=1 \
-    ro.audio.soundfx.dirac=true \
-    persist.audio.dirac.speaker=true
+    vendor.voice.path.for.pcm.voip=true
 
 # ASUS
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -254,6 +253,8 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
+    BluetoothQti \
+    com.qualcomm.qti.bluetooth_audio@1.0 \
     liba2dpoffload \
     libbtconfigstore \
     libbthost_if \
@@ -269,6 +270,9 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.bluetooth_dun@1.0 \
     vendor.qti.hardware.bluetooth_audio@2.0.vendor \
     vendor.qti.hardware.btconfigstore@1.0.vendor
+    
+PRODUCT_SOONG_NAMESPACES += \
+    vendor/qcom/opensource/commonsys/packages/apps/Bluetooth
     
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/bluetooth/bt_profile.conf \
@@ -414,7 +418,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/apdr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/apdr.conf \
-    $(LOCAL_PATH)/configs/gps/flp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/flp.conf \
     $(LOCAL_PATH)/configs/gps/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf \
     $(LOCAL_PATH)/configs/gps/izat.conf:$(TARGET_COPY_OUT_VENDOR)/etc/izat.conf \
     $(LOCAL_PATH)/configs/gps/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
@@ -530,6 +533,7 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.media_vol_default=10 \
     vendor.vidc.enc.disable.pq=true
  
 # Media Extensions
@@ -566,13 +570,6 @@ PRODUCT_PACKAGES += \
     android.system.net.netd@1.0 \
     libandroid_net \
     netutils-wrapper-1.0
-
-# NFC
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hce.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.xml \
-    frameworks/native/data/etc/com.android.nfc_extras.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.android.nfc_extras.xml \
-    frameworks/native/data/etc/com.nxp.mifare.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.nxp.mifare.xml
 
 # NFC
 PRODUCT_COPY_FILES += \
@@ -619,7 +616,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # ONS
 PRODUCT_PACKAGES += \
-    NetworkSetting \
     ONS
 
 # Overlays
@@ -634,8 +630,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service.X00T \
-    android.hardware.power.stats@1.0-service.mock
+    android.hardware.power@1.2-service \
+    vendor.xperience.power@1.0
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.power.pasr.enabled=true
@@ -699,7 +695,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.fflag.override.settings_network_and_internet_v2=true \
     ro.carrier=unknown \
     ro.com.android.dataroaming=false \
-    ro.config.vc_call_vol_steps=11 \
     ro.ril.ecclist=112,911 \
     ro.telephony.use_old_mnc_mcc_format=true \
     ro.telephony.iwlan_operation_mode=legacy \
@@ -711,19 +706,26 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sys.sdcardfs=1
 
+# System Helper
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.systemhelper@1.0
+
 # QCOM
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml \
     $(LOCAL_PATH)/configs/privapp-permissions-android.xml:$(TARGET_COPY_OUT_SYSTEM)/product/etc/permissions/privapp-permissions-android.xml \
-    $(LOCAL_PATH)/configs/apns-conf.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/apns-conf.xml \
     $(LOCAL_PATH)/configs/privapp-permissions-platform2.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-platform2.xml \
     $(LOCAL_PATH)/configs/sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/sysconfig.xml \
     $(LOCAL_PATH)/configs/whitelist_verizon_packages.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/whitelist_verizon_packages.xml
 
 # QMI
 PRODUCT_PACKAGES += \
+    tcmiface \
     libjson
 
+PRODUCT_BOOT_JARS += \
+    tcmiface
+    
 # QNS
 PRODUCT_PACKAGES += \
     libstdc++.vendor

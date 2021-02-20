@@ -18,6 +18,5 @@ soong_namespace {
 subdirs = [
     "light",
     "usb",
-    "power",
     "health",
 ]
