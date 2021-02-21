@@ -709,4 +709,11 @@
     <!-- True if the display hardware only has brightness buckets rather than a full range of
          backlight values -->
     <bool name="config_displayBrightnessBucketsInDoze">true</bool>
+    
+    <!-- Enable face auth when swiping security view  
+         for popup cameras-->
+    <bool name="config_faceAuthOnSecurityView">true</bool>
+    
+    <!-- Use only if devices have variable intensity support for haptics-->
+    <bool name="config_vibration_supports_multiple_intensities">true</bool>
 </resources>

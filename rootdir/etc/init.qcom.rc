@@ -709,18 +709,10 @@ service fix-gpay /vendor/bin/init.fixgpay.sh
     disabled
     oneshot
 
-service clean-youtube /vendor/bin/init.youtube.sh
-    class late_start
-    user root
-    group root system
-    disabled
-    oneshot
-
 on property:sys.boot_completed=1
     start qcom-post-boot
     start fix-baseband
     start fix-gpay
-    start clean-youtube
 
 on property:vendor.post_boot.parsed=*
     setprop sys.post_boot.parsed ${vendor.post_boot.parsed}
