@@ -66,7 +66,8 @@ BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x01E00000
 BOARD_RAMDISK_OFFSET     := 0x02000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-#TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-
 #TARGET_KERNEL_CLANG_PATH := $(PWD)/vendor/qcom/sdclang/8.0/prebuilt/linux-x86_64/bin
 TARGET_KERNEL_SOURCE := kernel/asus/sdm660
@@ -100,6 +101,12 @@ BOARD_HAVE_BLUETOOTH_QCOM := true
 TARGET_USE_QTI_BT_STACK := true
 TARGET_FWK_SUPPORTS_FULL_VALUEADDS := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
+TARGET_USE_QTI_BT_CONFIGSTORE := true
+TARGET_USE_QTI_BT_SAR := true
+TARGET_USE_QTI_VND_FWK_DETECT := true
+BOARD_HAS_QCA_BT_SOC := "cherokee"
+QCOM_BT_USE_BTNV := true
+BLUETOOTH_HCI_USE_MCT := true
 
 # Camera
 BOARD_QTI_CAMERA_32BIT_ONLY := true
@@ -228,8 +235,8 @@ PROTOBUF_SUPPORTED := true
 
 # Security patch level
 # After June Google register fingerprints with security patch version.
-# Asus Android 9 084 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2018-06-05
+# Asus Android 10 438 fingerprint registered on this patch version
+VENDOR_SECURITY_PATCH := 2020-12-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
@@ -243,7 +250,8 @@ SELINUX_IGNORE_NEVERALLOWS := true
 -include $(DEVICE_PATH)/system.prop
 
 # Telephony
-#TARGET_USES_ALTERNATIVE_MANUAL_NETWORK_SELECT := true
+TARGET_USES_ALTERNATIVE_MANUAL_NETWORK_SELECT := true
+PRODUCT_WANTS_QTI_SIM_SETTINGS := true
 
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
