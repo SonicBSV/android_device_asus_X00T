@@ -21,6 +21,15 @@ SKIP_BOOT_JARS_CHECK := true
 # and breaks WPA Supplicant compilation.
 DISABLE_EAP_PROXY := true
 
+# GApps
+ifeq ($(WITH_GAPPS),true)
+include vendor/gapps/config.mk
+endif
+
+# RRO
+#PRODUCT_ENFORCE_RRO_TARGETS := \
+    framework-res
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
@@ -219,12 +228,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.use.sw.alac.decoder=true \
     vendor.audio.use.sw.ape.decoder=true \
     vendor.audio.volume.headset.gain.depcal=true \
-    vendor.voice.path.for.pcm.voip=true \
-    persist.dirac.acs.controller=qem \
-    persist.dirac.acs.storeSettings=1 \
-    persist.dirac.acs.ignore_error=1 \
-    ro.audio.soundfx.dirac=true \
-    persist.audio.dirac.speaker=true
+    vendor.voice.path.for.pcm.voip=true
 
 # ASUS
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -250,6 +254,7 @@ PRODUCT_COPY_FILES += \
 # Bluetooth
 PRODUCT_PACKAGES += \
     BluetoothQti \
+    com.qualcomm.qti.bluetooth_audio@1.0 \
     liba2dpoffload \
     libbtconfigstore \
     libbthost_if \
@@ -410,7 +415,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/apdr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/apdr.conf \
-    $(LOCAL_PATH)/configs/gps/flp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/flp.conf \
     $(LOCAL_PATH)/configs/gps/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf \
     $(LOCAL_PATH)/configs/gps/izat.conf:$(TARGET_COPY_OUT_VENDOR)/etc/izat.conf \
     $(LOCAL_PATH)/configs/gps/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
@@ -430,8 +434,7 @@ PRODUCT_PACKAGES += \
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0.vendor \
-    android.hidl.base@1.0 \
-    android.hidl.base@1.0_system
+    android.hidl.base@1.0
 
 # IOP and Workload Classifier props
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -447,11 +450,21 @@ PRODUCT_BOOT_JARS += \
 # IMS
 PRODUCT_PACKAGES += \
     ims-ext-common \
-    ims_ext_common.xml \
-    qti-telephony-hidl-wrapper \
-    qti_telephony_hidl_wrapper.xml \
-    qti-telephony-utils \
-    qti_telephony_utils.xml
+    ims_ext_common.xml
+
+HIDL_WRAPPER := qti-telephony-hidl-wrapper
+HIDL_WRAPPER += qti_telephony_hidl_wrapper.xml
+
+QTI_TELEPHONY_UTILS := qti-telephony-utils
+QTI_TELEPHONY_UTILS += qti_telephony_utils.xml
+
+PRODUCT_PACKAGES += $(HIDL_WRAPPER)
+PRODUCT_PACKAGES += $(QTI_TELEPHONY_UTILS)
+
+PRODUCT_PACKAGES += libvndfwk_detect_jni.qti
+PRODUCT_PACKAGES += libqti_vndfwk_detect
+PRODUCT_PACKAGES += libvndfwk_detect_jni.qti.vendor
+PRODUCT_PACKAGES += libqti_vndfwk_detect.vendor
     
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.ims.disableADBLogs=1 \
@@ -520,6 +533,7 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.media_vol_default=10 \
     vendor.vidc.enc.disable.pq=true
  
 # Media Extensions
@@ -569,7 +583,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf
 
 PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.2-service \
+    android.hardware.nfc@1.1-service \
     com.android.nfc_extras \
     NfcNci \
     Tag 
@@ -644,6 +658,7 @@ PRODUCT_PACKAGES += \
     init.qti.fm.rc \
     init.baseband.sh \
     init.fixgpay.sh \
+    vold.fstab \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.recovery.qcom.rc \
@@ -657,15 +672,8 @@ PRODUCT_PACKAGES += \
 
 # RenderScript HAL
 PRODUCT_PACKAGES += \
-    android.hardware.renderscript@1.0-impl 
-       
-# Sounds
-PRODUCT_PROPERTY_OVERRIDES += \
-   ro.config.mms_notification=free.ogg \
-   ro.config.notification_sound=meet.ogg \
-   ro.config.alarm_alert=spring.ogg \
-   ro.config.ringtone=oneplus_tune.ogg
-   
+    android.hardware.renderscript@1.0-impl    
+
 # RIL
 PRODUCT_PACKAGES += \
     android.hardware.radio@1.4 \
@@ -687,7 +695,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.fflag.override.settings_network_and_internet_v2=true \
     ro.carrier=unknown \
     ro.com.android.dataroaming=false \
-    ro.config.vc_call_vol_steps=11 \
     ro.ril.ecclist=112,911 \
     ro.telephony.use_old_mnc_mcc_format=true \
     ro.telephony.iwlan_operation_mode=legacy \
@@ -703,19 +710,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml \
     $(LOCAL_PATH)/configs/privapp-permissions-android.xml:$(TARGET_COPY_OUT_SYSTEM)/product/etc/permissions/privapp-permissions-android.xml \
-    $(LOCAL_PATH)/configs/apns-conf.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/apns-conf.xml \
     $(LOCAL_PATH)/configs/privapp-permissions-platform2.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-platform2.xml \
     $(LOCAL_PATH)/configs/sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/sysconfig.xml \
     $(LOCAL_PATH)/configs/whitelist_verizon_packages.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/whitelist_verizon_packages.xml
 
 # QMI
 PRODUCT_PACKAGES += \
-    libqti_vndfwk_detect \
-    libvndfwk_detect_jni.qti \
-    libqti_vndfwk_detect.vendor \
-    libvndfwk_detect_jni.qti.vendor \
+    tcmiface \
     libjson
 
+PRODUCT_BOOT_JARS += \
+    tcmiface
+    
 # QNS
 PRODUCT_PACKAGES += \
     libstdc++.vendor
@@ -780,7 +786,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
-    telephony-ext
+    telephony-ext \
+    services-ext
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
