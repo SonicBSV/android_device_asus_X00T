@@ -212,12 +212,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.use.sw.alac.decoder=true \
     vendor.audio.use.sw.ape.decoder=true \
     vendor.audio.volume.headset.gain.depcal=true \
-    vendor.voice.path.for.pcm.voip=true \
-    persist.dirac.acs.controller=qem \
-    persist.dirac.acs.storeSettings=1 \
-    persist.dirac.acs.ignore_error=1 \
-    ro.audio.soundfx.dirac=true \
-    persist.audio.dirac.speaker=true
+    vendor.voice.path.for.pcm.voip=true
 
 # ASUS
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -243,7 +238,7 @@ PRODUCT_COPY_FILES += \
 # Bluetooth
 PRODUCT_PACKAGES += \
     BluetoothQti \
-    liba2dpoffload \
+    com.qualcomm.qti.bluetooth_audio@1.0 \
     libbtconfigstore \
     libbthost_if \
     vendor.qti.hardware.btconfigstore@1.0 \
@@ -345,6 +340,7 @@ PRODUCT_PACKAGES += \
     memtrack.sdm660 \
     libqdMetaData \
     libqdMetaData.system \
+    libgpu_tonemapper \
     libdisplayconfig \
     libhwc2on1adapter \
     libhwc2onfbadapter \
@@ -400,7 +396,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/apdr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/apdr.conf \
-    $(LOCAL_PATH)/configs/gps/flp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/flp.conf \
     $(LOCAL_PATH)/configs/gps/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf \
     $(LOCAL_PATH)/configs/gps/izat.conf:$(TARGET_COPY_OUT_VENDOR)/etc/izat.conf \
     $(LOCAL_PATH)/configs/gps/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
@@ -487,6 +482,7 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.media_vol_default=10 \
     vendor.vidc.enc.disable.pq=true
  
 # Media Extensions
@@ -536,7 +532,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf
 
 PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.2-service \
+    android.hardware.nfc@1.1-service \
     com.android.nfc_extras \
     NfcNci \
     Tag 
@@ -615,6 +611,7 @@ PRODUCT_PACKAGES += \
     init.qti.fm.rc \
     init.baseband.sh \
     init.fixgpay.sh \
+    vold.fstab \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.recovery.qcom.rc \
@@ -651,13 +648,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.fflag.override.settings_network_and_internet_v2=true \
     ro.carrier=unknown \
     ro.com.android.dataroaming=false \
-    ro.config.vc_call_vol_steps=11 \
     ro.ril.ecclist=112,911 \
     ro.telephony.use_old_mnc_mcc_format=true \
     ro.telephony.iwlan_operation_mode=legacy \
     persist.vendor.radio.procedure_bytes=SKIP \
     persist.vendor.radio.aosp_usr_pref_sel=true \
     persist.vendor.radio.flexmap_type=none 
+
+# SD Card
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.sdcardfs=1
 
 # QCOM
 PRODUCT_COPY_FILES += \
@@ -736,7 +736,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
-    telephony-ext
+    telephony-ext \
+    services-ext
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
@@ -825,14 +826,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.accept \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.deny \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd_default.conf 
-
-# Wallpapers
-PRODUCT_PACKAGES += \
-    PixelLiveWallpaperPrebuilt \
-    WallpapersBReel2019 \
-    libgdx \
-    NexusWallpapersStubPrebuilt2019 \
-    MicropaperPrebuilt
 
 # ZenParts
 PRODUCT_PACKAGES += \
