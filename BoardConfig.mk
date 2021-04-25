@@ -92,13 +92,10 @@ BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
-
-ifneq ($(TARGET_USES_AOSP_FOR_AUDIO), true)
 AUDIO_FEATURE_ENABLED_FM_POWER_OPT := true
 USE_CUSTOM_AUDIO_POLICY := 1
-endif
-
 #AUDIO_FEATURE_ENABLED_GEF_SUPPORT := true
+AUDIO_FEATURE_ENABLED_DLKM := false
 AUDIO_FEATURE_ENABLED_SSR := true
 AUDIO_FEATURE_ENABLED_AHAL_EXT := false
 BOARD_SUPPORTS_SOUND_TRIGGER := true
@@ -255,7 +252,7 @@ PROTOBUF_SUPPORTED := true
 # Security patch level
 # After June Google register fingerprints with security patch version.
 # Asus Android 10 438 fingerprint registered on this patch version
-VENDOR_SECURITY_PATCH := 2020-12-05
+# VENDOR_SECURITY_PATCH := 2020-12-05
 
 # SELinux
 include device/qcom/sepolicy/SEPolicy.mk

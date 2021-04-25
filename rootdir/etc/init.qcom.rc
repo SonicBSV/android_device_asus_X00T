@@ -26,7 +26,6 @@
 #
 
 import /vendor/etc/init/hw/init.qcom.usb.rc
-import /vendor/etc/init/hw/init.msm.usb.configfs.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -72,8 +71,6 @@ on early-boot
     write /sys/kernel/boot_slpi/boot 1
     write /sys/devices/virtual/cvp/cvp/boot 1
     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qcom.early_boot.sh
-    exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qti.can.sh
-    setprop ro.sf.lcd_density ${vendor.display.lcd_density}
 
     # for backward compatibility
     chown system system /persist/sensors
@@ -412,9 +409,6 @@ on post-fs-data
 
 #on property:persist.sys.nvinit=Ready
 #    start nvram_country
-
-on property:sys.boot_completed=1
-    start nvram_btwifi
 
 on property:sys.nvram.btmac=*
     start vendor-btmac-sh
@@ -899,15 +893,15 @@ service vendor.qseecomd /vendor/bin/qseecomd
 #    oneshot
 #
 
-#service adsprpcd_root /vendor/bin/adsprpcd
-#   class main
-#   user media
-#   group media
+service adsprpcd_root /vendor/bin/adsprpcd
+   class main
+   user media
+   group media
 
-#service adsprpcd /vendor/bin/adsprpcd audiopd
-#   class main
-#   user media
-#   group media
+service adsprpcd /vendor/bin/adsprpcd audiopd
+   class main
+   user media
+   group media
 
 service audiod /system/vendor/bin/audiod
    class late_start
