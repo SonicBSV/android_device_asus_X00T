@@ -13,8 +13,12 @@
 // limitations under the License.
 
 soong_namespace {
+    imports: [
+        "hardware/google/interfaces",
+        "hardware/google/pixel",
+    ],
 }
 
 subdirs = [
-    "light",    
+    "light",
 ]

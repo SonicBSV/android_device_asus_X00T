@@ -164,6 +164,14 @@ persist.vendor.camera.preview.ubwc=0
 #set maximum supported adapter voltage
 persist.chg.max_volt_mv=9000
 
+#add for dirac algo tsx 9/12
+persist.dirac.acs.controller=qem
+persist.dirac.acs.storeSettings=1
+persist.dirac.acs.ignore_error=1
+
+#set for headset effect
+ro.audio.soundfx.dirac=true
+
 #system prop for Bluetooth SOC type
 persist.vendor.qcom.bluetooth.soc=cherokee
 vendor.bluetooth.soc=cherokee

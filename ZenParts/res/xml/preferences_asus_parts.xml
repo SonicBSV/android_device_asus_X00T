@@ -65,13 +65,6 @@
             android:summary="@string/fps_info_summary"
             android:persistent="true" />
 
-        <com.asus.zenparts.preferences.SecureSettingSwitchPreference
-            android:defaultValue="false"
-            android:key="backlight_dimmer"
-            android:icon="@drawable/ic_backlight"
-            android:title="@string/backlight_dimmer"
-            android:summary="@string/backlight_summary" />
-
     </PreferenceCategory>
 
     <PreferenceCategory

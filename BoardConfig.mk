@@ -221,7 +221,7 @@ TARGET_COPY_OUT_PRODUCT := system/product
 #BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
+#TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 TARGET_USES_INTERACTION_BOOST := true
 TARGET_USES_NON_LEGACY_POWERHAL := true
 
