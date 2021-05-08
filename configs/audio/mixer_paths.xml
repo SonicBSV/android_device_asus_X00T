@@ -2375,9 +2375,11 @@
 
     <path name="handset">
 	<!-- Huaqin add for optimize handset ctl path by xudayi at 2018/03/07 start -->
+        <ctl name="INT0_MI2S_RX SampleRate" value="KHZ_96" />
         <ctl name="INT0_MI2S_RX Channels" value="Two" />
         <ctl name="RX1 MIX1 INP1" value="RX1" />
         <ctl name="RDAC2 MUX" value="RX1" />
+        <ctl name="RX1 Digital Volume" value="84" />
         <ctl name="EAR PA Gain" value="POS_6_DB" />
         <ctl name="EAR_S" value="Switch" />
 	<!-- Huaqin add for optimize handset ctl path by xudayi at 2018/03/07 end -->
