@@ -54,9 +54,6 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String TORCH_2_BRIGHTNESS_PATH = "/sys/devices/soc/800f000.qcom," +
             "spmi/spmi-0/spmi0-03/800f000.qcom,spmi:qcom,pm660l@3:qcom,leds@d300/leds/led:torch_1/max_brightness";
 
-    public static final String PREF_BACKLIGHT_DIMMER = "backlight_dimmer";
-    public static final String BACKLIGHT_DIMMER_PATH = "/sys/module/mdss_fb/parameters/backlight_dimmer";
-
     public static final String KEY_VIBSTRENGTH = "vib_strength";
     public static final String CATEGORY_DISPLAY = "display";
 
@@ -90,7 +87,6 @@ public class DeviceSettings extends PreferenceFragment implements
     private CustomSeekBarPreference mEarpieceGain;
     private CustomSeekBarPreference mSpeakerGain;
     private SecureSettingSwitchPreference mFastcharge;
-    private SecureSettingSwitchPreference mBacklightDimmer;
     private SecureSettingSwitchPreference mTouchboost;
 
     private static Context mContext;
@@ -119,15 +115,6 @@ public class DeviceSettings extends PreferenceFragment implements
                 return true;
             }
         });
-
-        if (FileUtils.fileWritable(BACKLIGHT_DIMMER_PATH)) {
-            mBacklightDimmer = (SecureSettingSwitchPreference) findPreference(PREF_BACKLIGHT_DIMMER);
-            mBacklightDimmer.setEnabled(BacklightDimmer.isSupported());
-            mBacklightDimmer.setChecked(BacklightDimmer.isCurrentlyEnabled(this.getContext()));
-            mBacklightDimmer.setOnPreferenceChangeListener(new BacklightDimmer(getContext()));
-        } else {
-            getPreferenceScreen().removePreference(findPreference(PREF_BACKLIGHT_DIMMER));
-        }
 
         mVibratorStrength = (VibratorStrengthPreference) findPreference(KEY_VIBSTRENGTH);
         if (mVibratorStrength != null) {
