@@ -1000,9 +1000,6 @@ on property:init.svc.vendor.per_mgr=running
 on property:sys.shutdown.requested=*
     stop vendor.per_proxy
 
-on property:sys.post_boot.parsed=1
-    setprop vendor.powerhal.init 1
-
 service vendor.qseecomd /vendor/bin/qseecomd
    class core
    user root
@@ -1032,6 +1029,12 @@ service vendor.cdsprpcd /vendor/bin/cdsprpcd
    user system
    group system
    disabled
+
+service energy-awareness /system/vendor/bin/energy-awareness
+    class main
+    user system
+    group system
+    oneshot
 
 service vendor.pd_mapper /system/vendor/bin/pd-mapper
      class core

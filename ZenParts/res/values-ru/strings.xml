@@ -19,10 +19,7 @@
 
     <string name="display_title">Дисплей</string>
 
-    <!-- Backlight Dimmer -->
-    <string name="backlight_dimmer">Диммер подсветки</string>
-    <string name="backlight_summary">Уменьшите яркость дисплея до максимального значения</string>
-
+    <!-- Torch,vibration -->
     <string name="torch_title">Фонарик</string>
     <string name="torch_brightness_title">Яркость</string>
     <string name="vibration_title">Вибрация</string>
