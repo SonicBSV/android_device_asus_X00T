@@ -365,6 +365,11 @@ PRODUCT_COPY_FILES += \
 
 $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
 
+# Keylayout
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/keylayout/gxfp_input.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gxfp_input.kl \
+    $(LOCAL_PATH)/configs/keylayout/cdfinger_input.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/cdfinger_input.kl
+
 ###################################################################################
 # This is the End of target.mk file.
 # Now, Pickup other split product.mk files:
