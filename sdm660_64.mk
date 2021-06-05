@@ -324,7 +324,7 @@ KMGK_USE_QTI_SERVICE := true
 endif
 
 #Enable KEYMASTER 4.0
-ENABLE_KM_4_0 := true
+ENABLE_KM_4_0 := false
 
 #Enable AOSP KEYMASTER and GATEKEEPER HIDLs
 ifneq ($(KMGK_USE_QTI_SERVICE), true)
