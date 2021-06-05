@@ -69,6 +69,12 @@ on post-fs-data
     mkdir /data/vendor/hbtp 0750 system system
     mkdir /data/misc/seemp 0700 system system
 
+on early-boot
+    # add by wildbook at 20190828 +++
+     chown system system /dev/input/event4  # stk3x3x-light
+     chown system system /dev/input/event5  # stk3x3x-proximity
+    # add by wildbook at 20190828 ---
+
 on boot
     start rmt_storage
     start rfs_access
@@ -94,6 +100,36 @@ on boot
     chown system system /persist/speccfg/vendor_persist.prop
     chown system system /persist/speccfg/submask
     chown system system /persist/speccfg/partition
+
+    #add for als/ps permission by wildbook at 2019/09/03 start
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_enable
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_delay
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_calibrate
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_enable_wakeup
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_flush
+    chmod 0644 /sys/class/sensors/stk3x1x-proximity/sensors_name
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_enable
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_delay
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_calibrate
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_enable_wakeup
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_flush
+    chown system system /sys/class/sensors/stk3x1x-proximity/sensors_name
+
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_enable
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_delay
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_calibrate
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_enable_wakeup
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_flush
+    chmod 0644 /sys/class/sensors/stk3x1x-light/sensors_name
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_enable
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_delay
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_calibrate
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_enable_wakeup
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_flush
+    chown system system /sys/class/sensors/stk3x1x-light/sensors_name
+
+    chown radio radio sys/module/stk3x1x/parameters/call_status_flag
+    #add for als/ps permission by wildbook at 2019/09/03 end
 
 #Create folder dump yuv images while debugging
     mkdir /data/vendor/camera 0770 camera camera
