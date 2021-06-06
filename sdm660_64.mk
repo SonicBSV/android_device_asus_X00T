@@ -48,7 +48,7 @@ endif
 BOARD_AVB_ENABLE := false
 
 # Enable product partition
-PRODUCT_BUILD_PRODUCT_IMAGE := true
+PRODUCT_BUILD_PRODUCT_IMAGE := false
 # Enable vbmeta_system
 BOARD_AVB_VBMETA_SYSTEM := system product
 BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
