@@ -96,7 +96,7 @@ ifneq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
 else
   #dtbo support
   BOARD_DTBOIMG_PARTITION_SIZE := 0x0800000
-  BOARD_KERNEL_SEPARATED_DTBO := true
+  BOARD_KERNEL_SEPARATED_DTBO := false
 
   # Product partition support
   TARGET_COPY_OUT_PRODUCT := product
