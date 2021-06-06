@@ -6,7 +6,7 @@ ENABLE_VENDOR_IMAGE := true
 endif
 
 # Default A/B configuration.
-ENABLE_AB ?= true
+ENABLE_AB ?= false
 
 ifneq ($(wildcard kernel/msm-4.14),)
     TARGET_KERNEL_VERSION := 4.14
