@@ -181,8 +181,8 @@ BOARD_VENDOR_KERNEL_MODULES := \
     $(KERNEL_MODULES_OUT)/mpq-adapter.ko \
     $(KERNEL_MODULES_OUT)/mpq-dmx-hw-plugin.ko
 
-ifeq ($(TARGET_KERNEL_VERSION), 4.14)
-BOARD_VENDOR_KERNEL_MODULES += \
+#ifeq ($(TARGET_KERNEL_VERSION), 4.14)
+#BOARD_VENDOR_KERNEL_MODULES += \
     $(KERNEL_MODULES_OUT)/audio_apr.ko \
     $(KERNEL_MODULES_OUT)/audio_wglink.ko \
     $(KERNEL_MODULES_OUT)/audio_q6_pdr.ko \
@@ -215,7 +215,7 @@ BOARD_VENDOR_KERNEL_MODULES += \
     $(KERNEL_MODULES_OUT)/audio_mbhc.ko \
     $(KERNEL_MODULES_OUT)/audio_wcd9xxx.ko \
     $(KERNEL_MODULES_OUT)/audio_wcd_core.ko
-endif
+#endif
 
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
