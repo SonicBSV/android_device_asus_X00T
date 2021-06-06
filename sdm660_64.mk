@@ -1,5 +1,5 @@
 ALLOW_MISSING_DEPENDENCIES := true
-TARGET_USES_AOSP := true
+TARGET_USES_AOSP := false
 # Default vendor configuration.
 ifeq ($(ENABLE_VENDOR_IMAGE),)
 ENABLE_VENDOR_IMAGE := true
