@@ -119,7 +119,7 @@ else
   BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
   # Metadata partition (applicable only for new launches)
   BOARD_METADATAIMAGE_PARTITION_SIZE := 16777216
-  BOARD_USES_METADATA_PARTITION := true
+  BOARD_USES_METADATA_PARTITION := false
 endif
 ### Dynamic partition Handling
 
