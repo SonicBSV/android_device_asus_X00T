@@ -100,7 +100,7 @@ else
 
   # Product partition support
   TARGET_COPY_OUT_PRODUCT := product
-  BOARD_USES_PRODUCTIMAGE := true
+  BOARD_USES_PRODUCTIMAGE := false
   BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
   # Define the Dynamic Partition sizes and groups.
   ifeq ($(ENABLE_AB), true)
