@@ -30,7 +30,7 @@ ifeq ($(strip $(TARGET_KERNEL_VERSION)),4.14)
     endif
 else
     BOARD_DYNAMIC_PARTITION_ENABLE := false
-    $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
+    $(call inherit-product, build/make/target/product/product_launched_with_o_mr1.mk)
 endif
 
 # New launch config
