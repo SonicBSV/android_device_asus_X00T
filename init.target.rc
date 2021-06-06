@@ -61,6 +61,10 @@ on post-fs-data
     mkdir /data/vendor/hbtp 0750 system system
     mkdir /data/misc/seemp 0700 system system
 
+#add by suyumei end
+	chown system system /sys/class/leds/red/blink
+	chown system system /sys/class/leds/green/blink
+
 on early-boot
     # add by wildbook at 20190828 +++
      chown system system /dev/input/event4  # stk3x3x-light
