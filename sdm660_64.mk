@@ -45,7 +45,7 @@ else
 PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstab_non_AB_dynamic_partition_variant.qti:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
 endif
 
-BOARD_AVB_ENABLE := true
+BOARD_AVB_ENABLE := false
 
 # Enable product partition
 PRODUCT_BUILD_PRODUCT_IMAGE := true
