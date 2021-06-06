@@ -20,7 +20,7 @@ endif
 
 ifeq ($(strip $(TARGET_KERNEL_VERSION)),4.14)
     # Dynamic-partition enabled by default for new launch config
-    BOARD_DYNAMIC_PARTITION_ENABLE ?= true
+    BOARD_DYNAMIC_PARTITION_ENABLE ?= false
 
     SHIPPING_API_LEVEL ?= 29
 
