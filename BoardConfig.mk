@@ -174,12 +174,7 @@ endif
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
 BOARD_VENDOR_KERNEL_MODULES := \
-    $(KERNEL_MODULES_OUT)/wil6210.ko \
-    $(KERNEL_MODULES_OUT)/msm_11ad_proxy.ko \
-    $(KERNEL_MODULES_OUT)/qca_cld3_wlan.ko \
-    $(KERNEL_MODULES_OUT)/rdbg.ko \
-    $(KERNEL_MODULES_OUT)/mpq-adapter.ko \
-    $(KERNEL_MODULES_OUT)/mpq-dmx-hw-plugin.ko
+    $(KERNEL_MODULES_OUT)/qca_cld3_wlan.ko
 
 #ifeq ($(TARGET_KERNEL_VERSION), 4.14)
 #BOARD_VENDOR_KERNEL_MODULES += \
