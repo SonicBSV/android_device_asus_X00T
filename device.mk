@@ -28,8 +28,6 @@ SKIP_BOOT_JARS_CHECK := true
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    hardware/google/interfaces \
-    hardware/google/pixel \
     $(LOCAL_PATH)
 
 # Permissions
@@ -67,6 +65,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level-0.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version-1_1.xml \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml \
+    frameworks/native/data/etc/android.software.vulkan.deqp.level-2019-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
@@ -83,8 +82,12 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.adb.secure=0 \
     ro.secure=0 \
     ro.debuggable=1 
-    
-#ANT+ stack
+
+# Atrace
+PRODUCT_PACKAGES += \
+    android.hardware.atrace@1.0-service
+
+# ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
     antradio_app
@@ -133,18 +136,26 @@ PRODUCT_PACKAGES += \
     tinycap \
     tinyplay \
     tinypcminfo \
-    tinymix
-
+    tinymix \
+    libhfp:32 \
+    libsndmonitor:32 \
+    libspkrprot:32 \
+    liba2dpoffload \
+    libcirrusspkrprot \
+    libcomprcapture \
+    libexthwplugin \
+    libssrec \
+    libvorbisidec \
+    libbatterylistener
+    
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/configs/audio/audio_configs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_configs.xml \
     $(LOCAL_PATH)/configs/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/configs/audio/audio_platform_info_intcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_intcodec.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
     $(LOCAL_PATH)/configs/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
-    $(LOCAL_PATH)/configs/audio/bluetooth_qti_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_qti_audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
     $(LOCAL_PATH)/configs/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
     $(LOCAL_PATH)/configs/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
@@ -160,40 +171,34 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio.deep_buffer.media=true \
     audio.offload.min.duration.secs=30 \
     audio.offload.video=true \
-    audio.sys.noisy.broadcast.delay=600 \
-    audio.sys.offload.pstimeout.secs=3 \
     persist.vendor.audio.fluence.speaker=false \
     persist.vendor.audio.fluence.voicecall=true \
     persist.vendor.audio.fluence.voicerec=true \
     persist.vendor.audio.hifi.int_codec=true \
     persist.vendor.audio.hw.binder.size_kbyte=1024 \
     persist.vendor.audio.ras.enabled=false \
-    persist.vendor.audio.fluence.voicecomm=true \
     ro.af.client_heap_size_kbyte=7168 \
     ro.vendor.audio.sdk.fluencetype=fluence \
     ro.vendor.audio.sdk.ssr=false \
-    ro.vendor.audio.sos=true \
     vendor.audio.dolby.ds2.enabled=false \
     vendor.audio.dolby.ds2.hardbypass=false \
+    vendor.audio.feature.a2dp_offload.enable=true \
     vendor.audio.feature.afe_proxy.enable=true \
     vendor.audio.feature.anc_headset.enable=true \
-    vendor.audio.feature.audiozoom.enable=false \
-    vendor.audio.feature.a2dp_offload.enable=true \
     vendor.audio.feature.battery_listener.enable=false \
     vendor.audio.feature.compr_cap.enable=false \
     vendor.audio.feature.compress_in.enable=false \
     vendor.audio.feature.compress_meta_data.enable=true \
-    vendor.audio.feature.compr_voip.enable=true \
+    vendor.audio.feature.compr_voip.enable=false \
     vendor.audio.feature.concurrent_capture.enable=false \
     vendor.audio.feature.custom_stereo.enable=true \
-    vendor.audio.feature.deepbuffer_as_primary.enable=false \
     vendor.audio.feature.display_port.enable=true \
     vendor.audio.feature.dsm_feedback.enable=false \
     vendor.audio.feature.dynamic_ecns.enable=false \
+    vendor.audio.feature.ext_hw_plugin.enable=false \
     vendor.audio.feature.external_dsp.enable=false \
     vendor.audio.feature.external_speaker.enable=false \
     vendor.audio.feature.external_speaker_tfa.enable=false \
-    vendor.audio.feature.ext_hw_plugin.enable=false \
     vendor.audio.feature.fluence.enable=true \
     vendor.audio.feature.fm.enable=true \
     vendor.audio.feature.hdmi_edid.enable=true \
@@ -202,22 +207,25 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.feature.hifi_audio.enable=true \
     vendor.audio.feature.hwdep_cal.enable=false \
     vendor.audio.feature.incall_music.enable=true \
+    vendor.audio.feature.multi_voice_session.enable=true \
     vendor.audio.feature.keep_alive.enable=false \
     vendor.audio.feature.kpi_optimize.enable=true \
     vendor.audio.feature.maxx_audio.enable=false \
-    vendor.audio.feature.multi_voice_session.enable=true \
     vendor.audio.feature.ras.enable=true \
     vendor.audio.feature.record_play_concurency.enable=false \
-    vendor.audio.feature.snd_mon.enable=true \
-    vendor.audio.feature.spkr_prot.enable=false \
     vendor.audio.feature.src_trkn.enable=true \
+    vendor.audio.feature.spkr_prot.enable=true \
     vendor.audio.feature.ssrec.enable=true \
-    vendor.audio.feature.usb_offload_burst_mode.enable=false \
     vendor.audio.feature.usb_offload.enable=true \
+    vendor.audio.feature.usb_offload_burst_mode.enable=false \
     vendor.audio.feature.usb_offload_sidetone_volume.enable=false \
+    vendor.audio.feature.deepbuffer_as_primary.enable=false \
     vendor.audio.feature.vbat.enable=true \
     vendor.audio.feature.wsa.enable=false \
+    vendor.audio.feature.audiozoom.enable=false \
+    vendor.audio.feature.snd_mon.enable=true
     vendor.audio.flac.sw.decoder.24bit=true \
+    vendor.audio.hal.boot.timeout.ms=20000 \
     vendor.audio_hal.period_size=240 \
     vendor.audio.hw.aac.encoder=true \
     vendor.audio.offload.buffer.size.kb=64 \
@@ -240,10 +248,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.asus.project.name=ZB601KL \
     ro.vendor.manufacturer.product.name=zb601kl_m1
 
-# Atrace
-PRODUCT_PACKAGES += \
-    android.hardware.atrace@1.0-service
-
 # Automotive
 PRODUCT_PACKAGES += \
     android.hardware.automotive.vehicle@2.0-manager-lib
@@ -263,6 +267,9 @@ PRODUCT_PACKAGES += \
     libbtconfigstore \
     libbt-hidlclient \
     libbt-logClient \
+    android.hardware.bluetooth@1.1 \
+    android.hardware.bluetooth.a2dp@1.0 \
+    android.hardware.bluetooth.audio@2.0 \
     vendor.qti.hardware.btconfigstore@1.0 \
     vendor.qti.hardware.btconfigstore@2.0 \
     android.hardware.bluetooth@1.0 \
@@ -284,10 +291,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.qcom.bluetooth.soc=cherokee \
     ro.bluetooth.a2dp_offload.supported=true \
     persist.bluetooth.a2dp_offload.disabled=false \
-    persist.bluetooth.a2dp_offload.cap=sbc-aptx-aptxhd-aac \
+    persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac \
     persist.vendor.bt.aac_frm_ctl.enabled=true \
     persist.vendor.qcom.bluetooth.enable.splita2dp=true \
     persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
+    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac \
     persist.vendor.bluetooth.modem_nv_support=true \
     ro.vendor.bluetooth.wipower=false
         
@@ -299,11 +307,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
+    android.hardware.camera.provider@2.4 \
     android.frameworks.cameraservice.common@2.0 \
     android.frameworks.cameraservice.device@2.0 \
     android.frameworks.cameraservice.service@2.0 \
     camera.device@3.2-impl \
-    SnapdragonCamera
+    camera.sdm660 \
+    Snap
    
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.camera.aux.packagelist=org.codeaurora.snapcam,org.lineageos.snap \
@@ -313,11 +323,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.camera.mpo.disabled=1 \
     vendor.vidc.enc.disable.pq=true \
     vendor.vidc.dec.enable.downscalar=0
-   
-# Charger
-PRODUCT_PACKAGES += \
-    asus_charger \
-    asus_charger_res_images
 
 # Codec2 modules
 PRODUCT_PACKAGES += \
@@ -355,6 +360,8 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-service \
     android.hardware.graphics.mapper@2.0-impl-2.1 \
+    vendor.display.config@1.0.vendor \
+    vendor.display.config@2.0 \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     hwcomposer.sdm660 \
@@ -362,7 +369,6 @@ PRODUCT_PACKAGES += \
     memtrack.sdm660 \
     libqdMetaData \
     libqdMetaData.system \
-    libgpu_tonemapper \
     libdisplayconfig \
     libhwc2on1adapter \
     libhwc2onfbadapter \
@@ -468,6 +474,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.ims.disableQXDMLogs=1 \
     persist.ims.disableIMSLogs=1
 
+# IPA Manager
+PRODUCT_PACKAGES += \
+    ipacm \
+    IPACM_cfg.xml \
+    libipanat \
+    liboffloadhal
+
 # IPv6
 PRODUCT_PACKAGES += \
     ebtables \
@@ -491,7 +504,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     qemu.hw.mainkeys=0
 
-# Keymaster configuration
+# Keymaster
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
 
@@ -507,8 +520,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/media/media_codecs_vendor_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor_audio.xml \
-    $(LOCAL_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
+    $(LOCAL_PATH)/configs/media/media_profiles_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_vendor.xml
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
@@ -517,7 +529,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.config.media_vol_default=10 \
     vendor.vidc.enc.disable.pq=true
  
 # Media Extensions
@@ -623,13 +634,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.asus_X00T-libperfmgr \
-    android.hardware.power.stats@1.0-service.mock
-
-# Powerhint
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/power-libperfmgr/sdm636_powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
-    
+    android.hardware.power-service-qti  
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.power.pasr.enabled=true
@@ -655,6 +660,7 @@ PRODUCT_PACKAGES += \
     init.qcom.sensors.sh \
     init.qcom.early_boot.sh \
     init.qcom.sh \
+    init.qcom.usb.sh \
     init.qti.ims.sh \
     init.qti.fm.sh \
     init.qti.fm.rc \
@@ -663,6 +669,7 @@ PRODUCT_PACKAGES += \
     emmc_prop_init.sh \
     vold.fstab \
     fstab.qcom \
+    init.msm.usb.configfs.rc \
     init.recovery.qcom.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
@@ -819,7 +826,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.basic
+    android.hardware.usb@1.0-service.X00T
     
 # Vibrator
 PRODUCT_PACKAGES += \
@@ -853,7 +860,8 @@ PRODUCT_PACKAGES += \
 
 # WFD
 PRODUCT_PACKAGES += \
-    libnl
+    libnl \
+    libstagefright_enc_common
 
 PRODUCT_BOOT_JARS += \
     WfdCommon

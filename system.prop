@@ -1,4 +1,4 @@
-ro.hq.project=ZQL1650
+#ro.hq.project=ZQL1650
 
 #
 # system.prop for sdm660
@@ -56,8 +56,9 @@ media.stagefright.enable-scan=true
 mmp.enable.3g2=true
 media.aac_51_output_enabled=true
 #media.settings.xml=/vendor/etc/media_profiles_vendor.xml
+#16777215 is decimal sum of supported codecs in AAL
 #codecs:(PARSER_)AAC AC3 AMR_NB AMR_WB ASF AVI DTS FLV 3GP 3G2 MKV MP2PS MP2TS MP3 OGG QCP WAV FLAC AIFF APE DSD
-vendor.mm.enable.qcom_parser=13631487
+vendor.mm.enable.qcom_parser=16777215
 persist.mm.enable.prefetch=true
 
 #prefer HW codec over SW for thumbnail
@@ -171,6 +172,9 @@ persist.dirac.acs.ignore_error=1
 
 #set for headset effect
 ro.audio.soundfx.dirac=true
+
+# Charger
+ro.charger.enable_suspend=true
 
 #system prop for Bluetooth SOC type
 persist.vendor.qcom.bluetooth.soc=cherokee

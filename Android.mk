@@ -1,11 +1,11 @@
 #
-# Copyright (C) 2019
+# Copyright (C) 2021
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+# This contains the module build definitions for the hardware-specific
+# components for this device.
+#
+# As much as possible, those components should be built unconditionally,
+# with device-specific names to avoid collisions, to avoid device-specific
+# bitrot and build breakages. Building a component unconditionally does
+# *not* include it on all devices, so it is safe even with hardware-specific
+# components.
 
 LOCAL_PATH := $(call my-dir)
 
@@ -59,6 +68,17 @@ $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
+CNE_LIBS := libvndfwk_detect_jni.qti.so
+
+CNE_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR_APPS)/CneApp/lib/arm64/vendor/lib64/,$(notdir $(CNE_LIBS)))
+$(CNE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "CNE lib link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(CNE_SYMLINKS)
+
 CAM_CALI_LIBS := libarcsoft_single_chart_calibration.so libhqmpbase.so libjni_hq_dualcam_calibration.so
                                           
 CAM_CALI_SYMLINKS := $(addprefix $(TARGET_OUT_SYSTEM_EXT_APPS)/CameraCalibration/lib/arm64/,$(notdir $(CAM_CALI_LIBS)))
@@ -85,6 +105,14 @@ $(WCNSS_MAC_SYMLINK): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /mnt/vendor/persist/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(WCNSS_INI_SYMLINK) $(WCNSS_MAC_SYMLINK)
+
+METADATA_SYMLINK := $(TARGET_ROOT_OUT)/metadata
+$(METADATA_SYMLINK): $(LOCAL_INSTALLED_MODULE)
+	@echo "Creating $@"
+	@mkdir -p $(TARGET_ROOT_OUT)/metadata
+	$(hide) ln -sf /data/vendor/metadata_apex $@/apex
+
+ALL_DEFAULT_INSTALLED_MODULES += $(METADATA_SYMLINK)
 
 #########################################################################
 # Create Folder Structure
