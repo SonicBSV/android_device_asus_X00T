@@ -954,7 +954,9 @@ PRODUCT_PACKAGES += \
     
 # Vibrator
 PRODUCT_PACKAGES += \
-    vendor.qti.hardware.vibrator.service
+    android.hardware.vibrator@1.0-impl \
+    android.hardware.vibrator@1.0-service \
+    android.hardware.vibrator@1.3
 
 #vendor prop to disable advanced network scanning
 PRODUCT_PROPERTY_OVERRIDES += \
