@@ -47,11 +47,12 @@ if [ -f /sys/class/android_usb/f_mass_storage/lun/nofua ]; then
 	echo 1  > /sys/class/android_usb/f_mass_storage/lun/nofua
 fi
 
+buildvariant1=`getprop ro.build.type`
 #
 # Override USB default composition
 #
 # If USB persist config not set, set default configuration
-if [ "$(getprop persist.vendor.usb.config)" == "" -a \
+if [ "$(getprop persist.vendor.usb.config)" == "" -a "$(getprop ro.build.type)" != "user" -a \
 	"$(getprop init.svc.vendor.usb-gadget-hal-1-0)" != "running" ]; then
     if [ "$esoc_name" != "" ]; then
 	  setprop persist.vendor.usb.config diag,diag_mdm,qdss,qdss_mdm,serial_cdev,dpl,rmnet,adb
@@ -73,10 +74,21 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a \
 		    *)
 	            case "$target" in
 	              "msm8998" | "sdm660" | "apq8098_latv")
-                          build_type=`getprop ro.build.type`
-                          if [ "$build_type" == "userdebug" ]; then
-                              setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
-                          fi
+#set usb permission
+				  case "$buildvariant1" in
+				  "userdebug" | "eng")
+		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
+				  ;;
+				  "user")
+					setprop persist.sys.usb.config mass_storage
+				  ;;
+				  esac
+		      ;;
+	              "sdm845" | "sdm710")
+		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
+		      ;;
+	              "msmnile" | "sm6150" | "trinket" | "lito" | "atoll" | "bengal" | "lahaina" | "holi")
+			  setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,qdss,adb
 		      ;;
 	              *)
 		          setprop persist.vendor.usb.config diag,adb
@@ -89,6 +101,12 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a \
 	      ;;
 	  esac
       fi
+fi
+
+# This check is needed for GKI 1.0 targets where QDSS is not available
+if [ "$(getprop persist.vendor.usb.config)" == "diag,serial_cdev,rmnet,dpl,qdss,adb" -a \
+     ! -d /config/usb_gadget/g1/functions/qdss.qdss ]; then
+      setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
 fi
 
 # Start peripheral mode on primary USB controllers for Automotive platforms
