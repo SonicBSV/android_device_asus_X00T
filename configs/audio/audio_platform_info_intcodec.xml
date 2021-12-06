@@ -62,10 +62,8 @@
         <usecase name="USECASE_AUDIO_PLAYBACK_SILENCE" type="out" id="27" />
         <usecase name="USECASE_AUDIO_HFP_SCO" type="in" id="12" />
         <usecase name="USECASE_AUDIO_HFP_SCO_WB" type="in" id="12" />
-        <usecase name="USECASE_INCALL_REC_UPLINK" type="in" id="27" />
-        <usecase name="USECASE_INCALL_REC_DOWNLINK" type="in" id="27" />
-        <usecase name="USECASE_INCALL_REC_UPLINK_AND_DOWNLINK" type="in" id="27" />
-        <usecase name="USECASE_INCALL_MUSIC_UPLINK" type="out" id="27" />
+	<!-- modified by qiaoqiheng @2021.7.26 for incall music -->
+        <usecase name="USECASE_INCALL_MUSIC_UPLINK" type="out" id="1" />
         <usecase name="USECASE_INCALL_MUSIC_UPLINK2" type="out" id="27" />
         <usecase name="USECASE_AUDIO_PLAYBACK_VOIP" type="out" id="16" />
         <usecase name="USECASE_AUDIO_RECORD_VOIP" type="in" id="16" />
@@ -106,8 +104,11 @@
         <device name="SND_DEVICE_IN_HANDSET_TMIC_FLUENCE_PRO" acdb_id="125"/>
         <device name="SND_DEVICE_IN_HANDSET_TMIC" acdb_id="125"/>
         <device name="SND_DEVICE_IN_HEADSET_MIC_FLUENCE" acdb_id="8"/>
+	<!-- added by qiaoqiheng @2021.7.26 for incall music -->
+        <device name="SND_DEVICE_OUT_VOICE_MUSIC_TX" acdb_id="3"/>
     </acdb_ids>
     <backend_names>
+	<!-- modified speaker&handset interface to INT0_MI2S_RX by qiaoqiheng 2021.7.26 for headphones change to speaker no sound  -->
         <device name="SND_DEVICE_OUT_HEADPHONES" backend="headphones" interface="INT0_MI2S_RX"/>
         <device name="SND_DEVICE_OUT_BT_SCO_WB" backend="bt-sco-wb" interface="SLIMBUS_7_RX"/>
         <device name="SND_DEVICE_OUT_BT_SCO" backend="bt-sco" interface="SLIMBUS_7_RX"/>
@@ -154,6 +155,7 @@
         <device name="SND_DEVICE_OUT_VOICE_SPEAKER_WSA" interface="INT4_MI2S_RX"/>
         <device name="SND_DEVICE_OUT_VOICE_SPEAKER_2_WSA" interface="INT4_MI2S_RX"/>
         <device name="SND_DEVICE_IN_HANDSET_MIC" interface="INT3_MI2S_TX"/>
+        <device name="SND_DEVICE_IN_HANDSET_MIC_OZO" interface="INT3_MI2S_TX"/>
         <device name="SND_DEVICE_IN_HANDSET_MIC_EXTERNAL" interface="INT3_MI2S_TX"/>
         <device name="SND_DEVICE_IN_HANDSET_MIC_AEC" interface="INT3_MI2S_TX"/>
         <device name="SND_DEVICE_IN_HANDSET_MIC_NS" interface="INT3_MI2S_TX"/>
@@ -192,7 +194,8 @@
         <device name="SND_DEVICE_IN_VOICE_REC_DMIC_FLUENCE" interface="INT3_MI2S_TX"/>
         <device name="SND_DEVICE_IN_AANC_HANDSET_MIC" interface="INT3_MI2S_TX"/>
         <device name="SND_DEVICE_IN_QUAD_MIC" interface="INT3_MI2S_TX"/>
-        <device name="SND_DEVICE_IN_HANDSET_STEREO_DMIC" interface="INT3_MI2S_TX"/>
+        <device name="SND_DEVICE_IN_HANDSET_DMIC_STEREO" interface="INT3_MI2S_TX"/>
+        <device name="SND_DEVICE_IN_HANDSET_STEREO_DMIC_OZO" interface="INT3_MI2S_TX"/>
         <device name="SND_DEVICE_IN_SPEAKER_STEREO_DMIC" interface="INT3_MI2S_TX"/>
         <device name="SND_DEVICE_IN_CAPTURE_VI_FEEDBACK" interface="INT5_MI2S_TX"/>
         <device name="SND_DEVICE_IN_CAPTURE_VI_FEEDBACK_MONO_1" interface="INT5_MI2S_TX"/>
@@ -245,6 +248,10 @@
         <input_snd_device>
             <input_snd_device_mic_mapping>
                     <snd_dev in_snd_device="SND_DEVICE_IN_HANDSET_MIC">
+                        <mic_info mic_device_id="builtin_mic_1"
+                            channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
+                    </snd_dev>
+                    <snd_dev in_snd_device="SND_DEVICE_IN_HANDSET_MIC_OZO">
                         <mic_info mic_device_id="builtin_mic_1"
                             channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
                     </snd_dev>
@@ -400,7 +407,13 @@
                         <mic_info mic_device_id="builtin_mic_4"
                             channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
                     </snd_dev>
-                    <snd_dev in_snd_device="SND_DEVICE_IN_HANDSET_STEREO_DMIC">
+                    <snd_dev in_snd_device="SND_DEVICE_IN_HANDSET_DMIC_STEREO">
+                        <mic_info mic_device_id="builtin_mic_1"
+                            channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
+                        <mic_info mic_device_id="builtin_mic_2"
+                            channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
+                    </snd_dev>
+                    <snd_dev in_snd_device="SND_DEVICE_IN_HANDSET_STEREO_DMIC_OZO">
                         <mic_info mic_device_id="builtin_mic_1"
                             channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
                         <mic_info mic_device_id="builtin_mic_2"
@@ -590,4 +603,3 @@
         </input_snd_device>
     </snd_devices>
 </audio_platform_info>
-
