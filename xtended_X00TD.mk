@@ -8,7 +8,6 @@ $(call inherit-product, build/make/target/product/product_launched_with_o_mr1.mk
 IS_PHONE := true
 TARGET_FACE_UNLOCK_SUPPORTED := true
 TARGET_BOOT_ANIMATION_RES := 1080
-$(call inherit-product, vendor/google-customization/config.mk)
 $(call inherit-product, vendor/xtended/config/common_full_phone.mk)
 
 XTENDED_BUILD_MAINTAINER := SonicBSV
