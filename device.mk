@@ -180,133 +180,133 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 ##fluencetype can be "fluence" or "fluencepro" or "none"
 PRODUCT_PROPERTY_OVERRIDES += \
-ro.vendor.audio.sdk.fluencetype=none\
-persist.vendor.audio.fluence.voicecall=true\
-persist.vendor.audio.fluence.voicerec=false\
-persist.vendor.audio.fluence.speaker=true
+    ro.vendor.audio.sdk.fluencetype=fluence \
+    persist.vendor.audio.fluence.voicecall=true \
+    persist.vendor.audio.fluence.voicerec=false \
+    persist.vendor.audio.fluence.speaker=true
 
 #disable tunnel encoding
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.tunnel.encode=false
+    vendor.audio.tunnel.encode=false
 
 #Disable RAS Feature by default
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.vendor.audio.ras.enabled=false
+    persist.vendor.audio.ras.enabled=false
 
 #Buffer size in kbytes for compress offload playback
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.offload.buffer.size.kb=64
+    vendor.audio.offload.buffer.size.kb=64
 
 #Minimum duration for offload playback in secs
 PRODUCT_PROPERTY_OVERRIDES += \
-audio.offload.min.duration.secs=30
+    audio.offload.min.duration.secs=30
 
 #Enable offload audio video playback by default
 PRODUCT_PROPERTY_OVERRIDES += \
-audio.offload.video=true
+    audio.offload.video=true
 
 #Enable audio track offload by default
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.offload.track.enable=true
+    vendor.audio.offload.track.enable=true
 
 #Enable music through deep buffer
 PRODUCT_PROPERTY_OVERRIDES += \
-audio.deep_buffer.media=true
+    audio.deep_buffer.media=true
 
 #enable voice path for PCM VoIP by default
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.voice.path.for.pcm.voip=true
+    vendor.voice.path.for.pcm.voip=true
 
 #Enable multi channel aac through offload
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.offload.multiaac.enable=true
+    vendor.audio.offload.multiaac.enable=true
 
 #Enable DS2, Hardbypass feature for Dolby
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.dolby.ds2.enabled=false\
-vendor.audio.dolby.ds2.hardbypass=false
+    vendor.audio.dolby.ds2.enabled=false \
+    vendor.audio.dolby.ds2.hardbypass=false
 
 #Disable Multiple offload sesison
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.offload.multiple.enabled=false
+    vendor.audio.offload.multiple.enabled=false
 
 #Disable Compress passthrough playback
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.offload.passthrough=false
+    vendor.audio.offload.passthrough=false
 
 #Disable surround sound recording
 PRODUCT_PROPERTY_OVERRIDES += \
-ro.vendor.audio.sdk.ssr=false
+    ro.vendor.audio.sdk.ssr=false
 
 #enable dsp gapless mode by default
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.offload.gapless.enabled=true
+    vendor.audio.offload.gapless.enabled=true
 
 #enable pbe effects
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.safx.pbe.enabled=false
+    vendor.audio.safx.pbe.enabled=false
 
 #parser input buffer size(256kb) in byte stream mode
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.parser.ip.buffer.size=262144
+    vendor.audio.parser.ip.buffer.size=262144
 
 #flac sw decoder 24 bit decode capability
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.flac.sw.decoder.24bit=true
+    vendor.audio.flac.sw.decoder.24bit=true
 
 #timeout crash duration set to 20sec before system is ready.
 #timeout duration updates to default timeout of 5sec once the system is ready.
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.hal.boot.timeout.ms=20000
+    vendor.audio.hal.boot.timeout.ms=20000
 
 #split a2dp DSP supported encoder list
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac
+    persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxhd-aac
 
 # A2DP offload support
 PRODUCT_PROPERTY_OVERRIDES += \
-ro.bluetooth.a2dp_offload.supported=true
+    ro.bluetooth.a2dp_offload.supported=true
 
 # Disable A2DP offload
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.bluetooth.a2dp_offload.disabled=false
+    persist.bluetooth.a2dp_offload.disabled=false
 
 # A2DP offload DSP supported encoder list
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac
+    persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac
 
 #enable software decoders for ALAC and APE
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.use.sw.alac.decoder=true
+    vendor.audio.use.sw.alac.decoder=true
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.use.sw.ape.decoder=true
+    vendor.audio.use.sw.ape.decoder=true
 
 #enable hw aac encoder by default
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.hw.aac.encoder=true
+    vendor.audio.hw.aac.encoder=true
 
 #Enable HIFI audio support for internal codec
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.vendor.audio.hifi.int_codec=true
+    persist.vendor.audio.hifi.int_codec=true
 
 #Set AudioFlinger client heap size
 PRODUCT_PROPERTY_OVERRIDES += \
-ro.af.client_heap_size_kbyte=7168
+    ro.af.client_heap_size_kbyte=7168
 
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.vendor.audio.hw.binder.size_kbyte=1024
+    persist.vendor.audio.hw.binder.size_kbyte=1024
 
 #enable headset calibration
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.volume.headset.gain.depcal=true
+    vendor.audio.volume.headset.gain.depcal=true
 
 #enable AAC frame ctl for A2DP sinks
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.vendor.bt.aac_frm_ctl.enabled=true
+    persist.vendor.bt.aac_frm_ctl.enabled=true
 
 #Set speaker protection cal tx path sampling rate to 48k
 PRODUCT_PROPERTY_OVERRIDES += \
-vendor.audio.spkr_prot.tx.sampling_rate=48000
+    vendor.audio.spkr_prot.tx.sampling_rate=48000
 
 #add dynamic feature flags here
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -316,7 +316,7 @@ vendor.audio.feature.anc_headset.enable=true \
 vendor.audio.feature.battery_listener.enable=false \
 vendor.audio.feature.compr_cap.enable=false \
 vendor.audio.feature.compress_in.enable=false \
-vendor.audio.feature.compress_meta_data.enable=true \
+vendor.audio.feature.compress_meta_data.enable=false \
 vendor.audio.feature.compr_voip.enable=true \
 vendor.audio.feature.concurrent_capture.enable=false \
 vendor.audio.feature.custom_stereo.enable=true \
@@ -334,7 +334,7 @@ vendor.audio.feature.hdmi_passthrough.enable=true \
 vendor.audio.feature.hfp.enable=true \
 vendor.audio.feature.hifi_audio.enable=true \
 vendor.audio.feature.hwdep_cal.enable=false \
-vendor.audio.feature.incall_music.enable=false \
+vendor.audio.feature.incall_music.enable=true \
 vendor.audio.feature.multi_voice_session.enable=true \
 vendor.audio.feature.keep_alive.enable=false \
 vendor.audio.feature.kpi_optimize.enable=true \
