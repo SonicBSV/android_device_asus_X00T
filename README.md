@@ -1,4 +1,4 @@
-# Device Tree for ASUS ZB601 & ZB602KL (X00T)
+# Device Tree for ASUS ZB601 & ZB602KL (X00T/D)
 
 ## Device specifications
 
@@ -6,8 +6,8 @@
 |:---------------- |:----------------------------------------- |:-------------------------------------- |
 | SoC              | QCOM SDM636                               | QRD                                    |
 | Memory           | 3/4/6 GB RAM                              | LPDDR4X 1333 MHz                       |
-| Shipped Android  | 8.1.0                                     | LA.UM.6.2.r1.xxxxx-sdm660.0            |
-| Storage          | 32/64 GB                                  | EMMC                                   |
+| Shipped Android  | 8.1.0/9.0/10.0                            | LA.UM.6.2/7.2/8.2.r1.xxxxx-sdm660.0    |
+| Storage          | 32/64/128 GB                              | EMMC                                   |
 | MicroSD          | Up to 512 GB (dedicated)                  | microSD, microSDHC, microSDXC          |
 | Battery          | Non-removable Li-Po 5000 mAh              | Coslight QL1626cos                     |
 | Dimensions       | 159 x 76 x 8.5 mm                         |                                        |
